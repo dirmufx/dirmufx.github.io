@@ -174,6 +174,39 @@ canvas{display:block;width:100%;height:100%;touch-action:pan-y}
 .imp3{color:var(--down)} .imp2{color:var(--amber)} .imp1{color:var(--muted)}
 .dots{font-size:10px;letter-spacing:2px;white-space:nowrap}
 .cd{font-family:var(--f-mono);font-size:11px;color:var(--up);white-space:nowrap}
+.nextcard{position:relative;overflow:hidden;border-radius:16px;padding:18px;border:1px solid var(--violet-dim);background:radial-gradient(120% 140% at 100% 0%,rgba(227,184,92,.14),var(--panel) 55%)}
+.nextcard .lbl{font-family:var(--f-display);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--violet)}
+.nextcard h3{margin:6px 0 2px;font-size:19px;line-height:1.3;text-wrap:balance}
+.nextcard .when{font-size:13px;color:var(--muted)}
+.nextcard .big{font-family:var(--f-mono);font-size:clamp(28px,9vw,40px);font-weight:700;letter-spacing:.02em;margin-top:10px;color:var(--fg);font-variant-numeric:tabular-nums}
+.nextcard .big small{font-size:12px;color:var(--muted);font-family:var(--f-body);font-weight:400;margin-left:6px;letter-spacing:0}
+.nextcard.soon{border-color:#7a3a17;background:radial-gradient(120% 140% at 100% 0%,rgba(240,138,75,.18),var(--panel) 55%)}
+.nextcard.soon .big{color:var(--amber)}
+.nextcard .fp{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+.pill{display:inline-flex;gap:6px;align-items:baseline;background:var(--panel2);border:1px solid var(--line);border-radius:999px;padding:4px 11px;font-size:12px;color:var(--muted)}
+.pill b{font-family:var(--f-mono);color:var(--fg);font-weight:600;font-size:13px}
+.calcard{padding:0;overflow:hidden}
+.calhead{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;padding:12px 12px 10px;border-bottom:1px solid var(--line)}
+.calseg{display:flex;background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:3px;gap:3px}
+.calseg button{background:none;border:0;border-radius:9px;padding:8px 12px;font-size:13px;font-weight:600;color:var(--muted);display:flex;gap:7px;align-items:center}
+.calseg button[aria-selected="true"]{background:var(--panel2);color:var(--fg);box-shadow:inset 0 0 0 1px var(--violet-dim)}
+.cnt{font-family:var(--f-mono);font-size:11px;background:var(--line);color:var(--fg);border-radius:999px;padding:1px 7px}
+.calsrc{font-size:11px;color:var(--muted)}
+.cday{font-family:var(--f-display);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--violet);padding:14px 14px 6px;display:flex;justify-content:space-between}
+.cday span{color:var(--muted);letter-spacing:.08em}
+.crow{display:grid;grid-template-columns:58px minmax(0,1fr) auto;gap:12px;align-items:center;padding:12px 14px;border-top:1px solid var(--line)}
+.crow .t{font-family:var(--f-mono);font-size:15px;font-weight:600}
+.crow .nm{font-weight:600;font-size:14px;line-height:1.35}
+.crow .vals{display:flex;gap:12px;margin-top:3px;font-size:12px;color:var(--muted)}
+.crow .vals b{font-family:var(--f-mono);color:var(--fg);font-weight:500}
+.crow .right{text-align:right;display:flex;flex-direction:column;align-items:flex-end;gap:4px}
+.flag{font-family:var(--f-mono);font-size:10px;font-weight:700;letter-spacing:.06em;padding:2px 6px;border-radius:5px;background:var(--down-dim);color:var(--down)}
+.crow .cdn{font-family:var(--f-mono);font-size:12px;color:var(--up);white-space:nowrap}
+.crow.soon{background:linear-gradient(90deg,rgba(240,138,75,.10),transparent 70%)}
+.crow.soon .cdn{color:var(--amber);font-weight:700}
+.crow.past{opacity:.55}
+.crow.past .cdn{color:var(--muted)}
+.calempty{padding:28px 16px;text-align:center;color:var(--muted);font-size:13px}
 .seg{display:flex;gap:4px;flex-wrap:wrap}
 .seg button{background:var(--panel2);border:1px solid var(--line);border-radius:999px;padding:4px 11px;font-size:12px;color:var(--muted)}
 .seg button[aria-pressed="true"]{color:var(--fg);border-color:var(--violet)}
@@ -388,11 +421,19 @@ a.btn{text-decoration:none;display:inline-flex;align-items:center}
 
   <!-- KALENDER -->
   <section class="view" id="v-kalender" hidden>
-    <div class="card">
-      <h2>Kalender ekonomi</h2>
-      <p class="note" style="margin:0 0 8px">Hanya berita Amerika (USD) berdampak tinggi. Jam mengikuti zona waktu HP kamu. Hindari entry 30 menit sebelum rilis.</p>
-      <div class="tvwide" id="tvCal"></div>
+    <div class="nextcard" id="calNext"></div>
+    <div class="card calcard">
+      <div class="calhead">
+        <div class="calseg" role="tablist">
+          <button role="tab" id="calUp" aria-selected="true">Akan datang <span id="calUpN" class="cnt">0</span></button>
+          <button role="tab" id="calPast" aria-selected="false">Sudah lewat <span id="calPastN" class="cnt">0</span></button>
+        </div>
+        <span class="calsrc" id="calSrc"></span>
+      </div>
+      <div id="calList"></div>
+      <div class="tvwide" id="tvCal" hidden></div>
     </div>
+    <p class="note" style="margin:0 4px">Hanya berita Amerika (USD) berdampak tinggi. Jam mengikuti zona waktu HP kamu. Hindari entry 30 menit sebelum dan sesudah rilis.</p>
   </section>
 
   <!-- FUNDAMENTAL -->
@@ -841,7 +882,7 @@ function mountAnalisa(){
 function mountView(v){
   if(v==="analisa"){mountAnalisa();draw()}
   if(v==="berita")mountTV("tvNews","timeline",{feedMode:"market",market:"forex",isTransparent:false,backgroundColor:"#131316",displayMode:"regular",width:"100%",height:640,colorTheme:"dark",theme:"dark",locale:"id"});
-  if(v==="kalender")mountTV("tvCal","events",{colorTheme:"dark",theme:"dark",isTransparent:false,backgroundColor:"#131316",width:"100%",height:640,locale:"id",importanceFilter:"1",countryFilter:"us"});
+  if(v==="kalender")loadCal();
 }
 
 /* ================= fundamentals (manual snapshot) ================= */
@@ -984,6 +1025,78 @@ function notifyCheck(a,tf,p){
     toast("PRE",`SIAP-SIAP ${pre} ${S.sym} · ${tfName(tf)}`,`Sinyal hampir terbentuk (konfluensi ${a.strength}%). Tunggu konfirmasi.`);
   }
 }
+
+/* ================= kalender USD high impact ================= */
+const CAL_SNAP=[ // cadangan minggu 2–6 Nov 2026 (UTC)
+ ["2026-11-02T15:00:00Z","ISM Manufacturing PMI","54.7","54.5"],
+ ["2026-11-03T15:00:00Z","JOLTS Job Openings","7.12M","7.08M"],
+ ["2026-11-04T13:15:00Z","ADP Non-Farm Employment","65K","90K"],
+ ["2026-11-04T15:00:00Z","ISM Services PMI","54.8","54.9"],
+ ["2026-11-05T13:30:00Z","Initial Jobless Claims","195K","194K"],
+ ["2026-11-06T13:30:00Z","Non-Farm Payrolls","55K","29K"],
+ ["2026-11-06T13:30:00Z","Unemployment Rate","4.2%","4.2%"],
+ ["2026-11-06T13:30:00Z","Average Hourly Earnings m/m","0.3%","0.1%"],
+ ["2026-11-06T15:00:00Z","UoM Consumer Sentiment (Prelim)","",""]
+].map(r=>({ts:Date.parse(r[0]),title:r[1],forecast:r[2],previous:r[3]}));
+const CAL={items:null,src:"",tab:"up"};
+async function loadCal(){
+  if(!CAL.items){
+    try{const c=JSON.parse(store.get("dfx-ffcal")||"null");if(c&&Date.now()-c.at<3*3600e3){CAL.items=c.items;CAL.src="Forex Factory"}}catch(e){}
+  }
+  if(!CAL.items){
+    renderCalList();
+    try{const r=await fetch("https://nfs.faireconomy.media/ff_calendar_thisweek.json",{cache:"no-store"});if(!r.ok)throw 0;const j=await r.json();
+      const items=j.filter(x=>x.country==="USD"&&x.impact==="High").map(x=>({ts:Date.parse(x.date),title:x.title,forecast:x.forecast||"",previous:x.previous||""})).filter(x=>!isNaN(x.ts));
+      if(!items.length)throw 0;CAL.items=items;CAL.src="Forex Factory";store.set("dfx-ffcal",JSON.stringify({at:Date.now(),items}))}
+    catch(e){
+      const weekEnd=Date.parse("2026-11-07T23:59:00Z");
+      if(Date.now()<=weekEnd){CAL.items=CAL_SNAP;CAL.src="jadwal tersimpan"}
+      else{CAL.items=[];CAL.src="tv"}
+    }
+  }
+  renderCalList();
+}
+function dayLabel(ts){const d=new Date(ts),t=new Date();const k=x=>new Date(x.getFullYear(),x.getMonth(),x.getDate()).getTime();const diff=Math.round((k(d)-k(t))/864e5);
+  const base=d.toLocaleDateString("id-ID",{weekday:"long",day:"numeric",month:"short"});return diff===0?["Hari ini",base]:diff===1?["Besok",base]:diff===-1?["Kemarin",base]:[base,""]}
+function cdLong(ms){const s=Math.max(0,Math.floor(ms/1000)),d=Math.floor(s/86400),h=Math.floor(s%86400/3600),m=Math.floor(s%3600/60),x=s%60;
+  return d?`${d} hari ${h}j`:h?`${h}j ${String(m).padStart(2,"0")}m ${String(x).padStart(2,"0")}d`:`${String(m).padStart(2,"0")}:${String(x).padStart(2,"0")}`}
+function agoTxt(ms){const m=Math.floor(ms/60000);return m<60?`${m} mnt lalu`:m<1440?`${Math.floor(m/60)} jam lalu`:`${Math.floor(m/1440)} hari lalu`}
+function renderCalList(){
+  const list=$("calList"),next=$("calNext");
+  if(CAL.src==="tv"){list.innerHTML="";$("tvCal").hidden=false;next.hidden=true;document.querySelector(".calseg").hidden=true;$("calSrc").textContent="TradingView";
+    mountTV("tvCal","events",{colorTheme:"dark",theme:"dark",isTransparent:false,backgroundColor:"#131316",width:"100%",height:640,locale:"id",importanceFilter:"1",countryFilter:"us"});return}
+  if(!CAL.items){list.innerHTML='<div class="calempty">Memuat kalender…</div>';next.hidden=true;return}
+  const now=Date.now(),SOON=30*60e3,LIVE=15*60e3;
+  const up=CAL.items.filter(x=>x.ts+LIVE>now).sort((a,b)=>a.ts-b.ts);
+  const past=CAL.items.filter(x=>x.ts+LIVE<=now).sort((a,b)=>b.ts-a.ts);
+  $("calUpN").textContent=up.length;$("calPastN").textContent=past.length;
+  $("calSrc").textContent="Sumber: "+CAL.src;
+  // kartu "berikutnya"
+  const n=up[0];next.hidden=!n;
+  if(n){const same=up.filter(x=>x.ts===n.ts),ms=n.ts-now,live=ms<=0;
+    next.className="nextcard"+(ms<SOON?" soon":"");
+    next.innerHTML=`<div class="lbl">${live?"Sedang rilis":"Berita berikutnya"} · USD</div><h3>${esc(same.map(x=>x.title).join(" + "))}</h3>
+      <div class="when">${dayLabel(n.ts)[0]}, ${hm(n.ts)} ${tzName}</div>
+      <div class="big" data-nts="${n.ts}">${live?"RILIS":cdLong(ms)}<small>${live?"volatilitas tinggi":"lagi"}</small></div>
+      ${n.forecast||n.previous?`<div class="fp">${n.forecast?`<span class="pill">Prakiraan <b>${esc(n.forecast)}</b></span>`:""}${n.previous?`<span class="pill">Sebelumnya <b>${esc(n.previous)}</b></span>`:""}</div>`:""}`}
+  const rows=CAL.tab==="up"?up:past;
+  if(!rows.length){list.innerHTML=`<div class="calempty">${CAL.tab==="up"?"Tidak ada berita USD berdampak tinggi yang tersisa minggu ini.":"Belum ada berita yang lewat minggu ini."}</div>`;return}
+  let html="",lastDay="";
+  rows.forEach(x=>{const [d1,d2]=dayLabel(x.ts);if(d1!==lastDay){html+=`<div class="cday">${d1}<span>${d2}</span></div>`;lastDay=d1}
+    const ms=x.ts-now,cls=CAL.tab==="past"?" past":ms<SOON?" soon":"";
+    const vals=[x.forecast&&`<span>Prakiraan <b>${esc(x.forecast)}</b></span>`,x.previous&&`<span>Sebelumnya <b>${esc(x.previous)}</b></span>`].filter(Boolean).join("");
+    html+=`<div class="crow${cls}"><div class="t">${hm(x.ts)}</div><div><div class="nm">${esc(x.title)}</div>${vals?`<div class="vals">${vals}</div>`:""}</div>
+      <div class="right"><span class="flag">USD</span><span class="cdn" data-ts="${x.ts}">${CAL.tab==="past"?agoTxt(-ms):ms<=0?"rilis":cdLong(ms)}</span></div></div>`});
+  list.innerHTML=html;
+}
+function tickCalNew(){
+  if(S.view!=="kalender"||!CAL.items||CAL.src==="tv")return;
+  const now=Date.now(),b=document.querySelector("#calNext .big[data-nts]");
+  if(b){const ms=+b.dataset.nts-now;if(ms<=-15*60e3){renderCalList();return}b.firstChild.textContent=ms<=0?"RILIS":cdLong(ms);if(ms<30*60e3&&!$("calNext").classList.contains("soon"))renderCalList()}
+  if(CAL.tab==="up")document.querySelectorAll("#calList .cdn[data-ts]").forEach(el=>{const ms=+el.dataset.ts-now;el.textContent=ms<=0?"rilis":cdLong(ms)});
+}
+setInterval(tickCalNew,1000);
+[["calUp","up"],["calPast","past"]].forEach(([id,t])=>$(id).addEventListener("click",()=>{CAL.tab=t;$("calUp").setAttribute("aria-selected",t==="up");$("calPast").setAttribute("aria-selected",t==="past");renderCalList()}));
 
 /* ================= boot ================= */
 schedule();refresh(false);show(location.hash.slice(1));
