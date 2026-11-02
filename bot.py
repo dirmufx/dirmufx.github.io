@@ -11,6 +11,8 @@ PAIRS = {  # nama : (simbol Binance, ukuran 1 pip, sesuaikan ke harga emas spot?
 TFS = [5, 15]                       # M5 = scalping, M15 = intraday
 HTF = {1: 5, 5: 15, 15: 60, 30: 60, 60: 240}
 SL_PIPS = {1: 30, 5: 30, 15: 50, 30: 50, 60: 100, 240: 100}
+# BTC jauh lebih volatil: SL dalam dolar (1 "pip" BTC = $1)
+SL_PAIR = {"BTCUSD": {1: 200, 5: 250, 15: 400, 30: 400, 60: 800, 240: 800}}
 RR = 2
 SIG_MIN = 0.5      # ambang konfluensi sinyal
 PRE_MIN = 0.4      # ambang "siap-siap"
@@ -241,14 +243,15 @@ def run():
             print(f"{key}: norm={a['norm']:.2f} adx={a['adx']:.1f} htf={htrend} -> {sig} (sebelumnya {st['last']})")
 
             if sig != "WAIT" and st["last"] != sig:
-                s = 1 if sig == "BUY" else -1; slp = SL_PIPS[tf]; dist = slp * pip
+                s = 1 if sig == "BUY" else -1; slp = SL_PAIR.get(sym, SL_PIPS)[tf]; dist = slp * pip
+                u = (lambda n: f"${n:,}") if sym == "BTCUSD" else (lambda n: f"{n} pips")
                 sl, tp1, tp2 = live - s * dist, live + s * dist, live + s * dist * RR
                 icon = "🟢" if sig == "BUY" else "🔴"
                 send(f"{icon} <b>SINYAL {sig} {sym}</b> · {TFN[tf]}\n\n"
                      f"Entry: <b>{fmt(live, pip)}</b>\n"
-                     f"SL: <b>{fmt(sl, pip)}</b> ({slp} pips)\n"
-                     f"TP1: <b>{fmt(tp1, pip)}</b> ({slp} pips)\n"
-                     f"TP2: <b>{fmt(tp2, pip)}</b> ({slp * RR} pips)\n\n"
+                     f"SL: <b>{fmt(sl, pip)}</b> ({u(slp)})\n"
+                     f"TP1: <b>{fmt(tp1, pip)}</b> ({u(slp)})\n"
+                     f"TP2: <b>{fmt(tp2, pip)}</b> ({u(slp * RR)})\n\n"
                      f"Konfluensi {a['strength']}% · ADX {a['adx']:.0f} · searah tren {TFN[HTF[tf]]} ✓\n"
                      f"Saat TP1 kena, geser SL ke entry.\n\n"
                      f"<i>Bukan saran keuangan. Selalu pakai stop loss.</i>")

@@ -1098,6 +1098,7 @@ function analyse(d,tf){
 }
 /* SL tetap (pips) per timeframe, TP = SL x RR. Emas: 1 pip = 0.10 */
 const SL_CAP={1:30,5:30,15:50,30:50,60:100,240:100,1440:100};
+const SL_PAIR={BTCUSD:{1:200,5:250,15:400,30:400,60:800,240:800,1440:1500}}; // BTC: dalam dolar
 const PIP={XAUUSD:0.1,XAGUSD:0.01,EURUSD:0.0001,GBPUSD:0.0001,USDJPY:0.01,BTCUSD:1};
 /* Filter sinyal: makin tinggi makin jarang tapi lebih kuat */
 const SIG_MIN=0.5;       // ambang konfluensi (sebelumnya 0.30)
@@ -1123,7 +1124,7 @@ function plan(a,rr,slm){
   let sl=dir==="BUY"?e-slm*atrv:e+slm*atrv;
   if(dir==="BUY"){const s=v.sw.sup.find(x=>x<e-.5*atrv&&x>e-2.6*atrv);if(s)sl=Math.min(sl,s-.25*atrv)}
   else{const r=v.sw.res.find(x=>x>e+.5*atrv&&x<e+2.6*atrv);if(r)sl=Math.max(sl,r+.25*atrv)}
-  const s=dir==="BUY"?1:-1,pip=PIP[S.sym]||0.1,cap=(SL_CAP[currentTf()]||50)*pip;
+  const s=dir==="BUY"?1:-1,pip=PIP[S.sym]||0.1,cap=(((SL_PAIR[S.sym]||SL_CAP)[currentTf()])||50)*pip;
   let risk=cap;sl=e-s*risk;
   return{lean:dir,entry:e,sl,tp1:e+s*risk,tp2:e+s*risk*rr,risk,slPips:risk/pip,capped:Math.abs(e-sl)>=cap-1e-9};
 }
@@ -1162,7 +1163,7 @@ function render(){
   $("sigstr").textContent=a.strength+"%";$("sigbar").style.width=a.strength+"%";
   $("lvE").textContent=fx(p.entry);$("lvSL").textContent=fx(p.sl);$("lvTP1").textContent=fx(p.tp1);$("lvTP2").textContent=fx(p.tp2);
   $("tp2k").textContent="TP 2 ("+rr+"R)";
-  const why=[`SL ${p.slPips.toFixed(0)} pips · TP2 ${(p.slPips*rr).toFixed(0)} pips (SL tetap ${tfName(tf)})`,`ATR ${fx(a.v.atr)}`,`ADX ${isNaN(a.v.adx)?"—":a.v.adx.toFixed(0)}${a.v.adx<20?" (sideways)":a.v.adx>25?" (tren kuat)":""}`];
+  const U=S.sym==="BTCUSD"?(n=>"$"+Math.round(n).toLocaleString("en-US")):(n=>n.toFixed(0)+" pips");const why=[`SL ${U(p.slPips)} · TP2 ${U(p.slPips*rr)} (SL tetap ${tfName(tf)})`,`ATR ${fx(a.v.atr)}`,`ADX ${isNaN(a.v.adx)?"—":a.v.adx.toFixed(0)}${a.v.adx<20?" (sideways)":a.v.adx>25?" (tren kuat)":""}`];
   if(a.dir==="WAIT")why.push(`${a.reason} Level di atas hanya rencana jika ${p.lean} terkonfirmasi.`);else if(a.htf)why.push(`Searah tren ${tfName(a.htf.tf)} ✓`);
   if(SYMS[S.sym].spot&&mode()==="live"){const n=new Date(),dy=n.getUTCDay(),hr=n.getUTCHours();if((dy===5&&hr>=21)||dy===6||(dy===0&&hr<22))why.unshift("Pasar emas sedang tutup (weekend). Jangan pakai sinyal ini untuk entry.")}
   if(mode()==="live"&&S.lastAt)why.unshift("Dihitung "+hm(S.lastAt)+" dari candle yang sudah tutup · harga "+fx(a.live));$("sigwhy").textContent=why.join(" · ");
