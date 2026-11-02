@@ -1121,6 +1121,43 @@ function filterSignal(a,tf){
   }
   return a;
 }
+/* ===== sinyal terkunci: entry tetap dari candle saat sinyal pertama muncul ===== */
+const LOOKBACK=36; // sinyal kedaluwarsa setelah 36 candle
+function sigDirAt(closed,i,tf,htfClosed){
+  const sub=closed.slice(0,i+1);if(sub.length<60)return"WAIT";
+  const a=analyse(sub,tf);if(a.dir==="WAIT")return"WAIT";
+  if(isNaN(a.v.adx)||a.v.adx<ADX_MIN)return"WAIT";
+  const h=HTF[tf];
+  if(h){if(!htfClosed)return"WAIT";const end=closed[i].t+tf*60000;const hs=htfClosed.filter(x=>x.t+h*60000<=end);if(hs.length<60)return"WAIT";
+    const ha=analyse(hs,h),ht=ha.norm>=.15?"BUY":ha.norm<=-.15?"SELL":"WAIT";if(ht!==a.dir)return"WAIT"}
+  return a.dir;
+}
+function activeSignal(d,tf){
+  if(mode()!=="live")return null;
+  const closed=d.slice(0,-1),n=closed.length,h=HTF[tf];
+  const hc=h&&S.live[S.sym+"|"+h]?S.live[S.sym+"|"+h].data.slice(0,-1):null;
+  if(h&&!hc)return null;
+  const from=Math.max(60,n-LOOKBACK-1),dirs={};
+  for(let i=from;i<n;i++)dirs[i]=sigDirAt(closed,i,tf,hc);
+  let st=-1;for(let i=n-1;i>from;i--){if(dirs[i]!=="WAIT"&&dirs[i-1]!==dirs[i]){st=i;break}}
+  if(st<0)return null;
+  const dir=dirs[st],sgn=dir==="BUY"?1:-1,t=closed[st].t;
+  const key="dfx-sig-"+S.sym+"-"+tf+"-"+t;let entry=closed[st].c;
+  try{const c=store.get(key);if(c)entry=+c;else store.set(key,String(entry))}catch(e){}
+  const pip=PIP[S.sym]||0.1,risk=(((SL_PAIR[S.sym]||SL_CAP)[tf])||50)*pip;
+  const L={entry,sl:entry-sgn*risk,be:entry+sgn*risk,tp1:entry+sgn*risk*2,tp2:entry+sgn*risk*3,risk,slPips:risk/pip};
+  let be=false,tp1=false,res=null,resT=null;
+  const after=d.slice(st+1);
+  for(const c of after){
+    const hi=sgn>0?c.h:-c.l,lo=sgn>0?c.l:-c.h,E=sgn*entry;
+    const stop=be?E:sgn*L.sl;
+    if(lo<=stop){res=be?"BE":"SL";resT=c.t;break}
+    if(hi>=sgn*L.be)be=true;
+    if(hi>=sgn*L.tp1)tp1=true;
+    if(hi>=sgn*L.tp2){res="TP";resT=c.t;break}
+  }
+  return{dir,t,L,be,tp1,res,resT,age:n-1-st};
+}
 function plan(a,rr,slm){
   const v=a.v,atrv=v.atr,e=a.live??v.close,dir=a.dir==="WAIT"?(a.norm>=0?"BUY":"SELL"):a.dir;
   let sl=dir==="BUY"?e-slm*atrv:e+slm*atrv;
@@ -1156,21 +1193,32 @@ function render(){
   $("mtfBtn").hidden=m!=="live"||isLocked();
   const d=currentData(),tf=currentTf();
   if(!d){clearAll(S.loading?"Memuat data…":(S.err||"Belum ada data"));$("sigwhy").textContent=m==="nosig"?"Sinyal hanya tersedia untuk XAUUSD.":(S.loading?"Memuat data…":(S.err||""));return}
-  const a=filterSignal(analyse(d.slice(0,-1),tf),tf);a.live=d[d.length-1].c;const rr=+$("rr").value,p=plan(a,rr,+$("slm").value);
+  const a=filterSignal(analyse(d.slice(0,-1),tf),tf);a.live=d[d.length-1].c;const rr=+$("rr").value;
+  const act=activeSignal(d,tf),on=act&&!act.res;
+  let p=plan(a,rr,+$("slm").value);
+  if(on){p={lean:act.dir,...act.L};a.shown=act.dir}else a.shown=mode()==="live"?"WAIT":a.dir;
   last={d,a,p,tf};
   const prevC=d[d.length-2].c,chg=a.live-prevC;
   $("lastpx").innerHTML=`${fx(a.live)}<small style="color:${chg>=0?"var(--up)":"var(--down)"}">${chg>=0?"+":""}${fx(chg)}</small>`;
-  $("sigcard").dataset.dir=a.dir;$("sigtf").textContent=tfName(tf);
-  $("sigword").textContent=a.dir==="WAIT"?"TUNGGU":a.dir;
+  $("sigcard").dataset.dir=a.shown;$("sigtf").textContent=tfName(tf);
+  $("sigword").textContent=a.shown==="WAIT"?"TUNGGU":a.shown;
   $("sigstr").textContent=a.strength+"%";$("sigbar").style.width=a.strength+"%";
   $("lvE").textContent=fx(p.entry);$("lvSL").textContent=fx(p.sl);$("lvBE").textContent=fx(p.be);$("lvTP1").textContent=fx(p.tp1);$("lvTP2").textContent=fx(p.tp2);
   $("tp2k").textContent="TP MAX (1:3)";
   const U=S.sym==="BTCUSD"?(n=>"$"+Math.round(n).toLocaleString("en-US")):(n=>n.toFixed(0)+" pips");const why=[`SL ${U(p.slPips)} · TP MAX ${U(p.slPips*3)} (SL tetap ${tfName(tf)})`,`ATR ${fx(a.v.atr)}`,`ADX ${isNaN(a.v.adx)?"—":a.v.adx.toFixed(0)}${a.v.adx<20?" (sideways)":a.v.adx>25?" (tren kuat)":""}`];
-  if(a.dir==="WAIT")why.push(`${a.reason} Level di atas hanya rencana jika ${p.lean} terkonfirmasi.`);else if(a.htf)why.push(`Searah tren ${tfName(a.htf.tf)} ✓`);
+  const PX=v=>S.sym==="BTCUSD"?"$"+Math.round(v).toLocaleString("en-US"):(v/(PIP[S.sym]||.1)).toFixed(0)+" pips";
+  if(on){const sg=act.dir==="BUY"?1:-1,mv=(a.live-act.L.entry)*sg;
+    const stt=act.tp1?"TP1 tercapai ✓ — sisakan posisi ke TP MAX":act.be?"SL+ tercapai — geser SL ke entry":(mv<0?"belum bergerak, harga di bawah entry":"menuju SL+");
+    why.unshift(`🔒 Sinyal ${act.dir} terkunci sejak ${hm(act.t)} · entry ${fx(act.L.entry)} · harga sekarang ${fx(a.live)} (${mv>=0?"+":"−"}${PX(Math.abs(mv))}) · ${stt}`);
+    if(act.be)why.push("Jangan entry baru, harga sudah lewat SL+.");else why.push("Entry di sekitar harga entry. Kalau harga sudah jauh, lebih baik tunggu sinyal berikutnya.");
+  }else{
+    if(act&&act.res)why.unshift(`Sinyal terakhir ${act.dir} ${hm(act.t)} (entry ${fx(act.L.entry)}): ${act.res==="TP"?"TP MAX tercapai ✓ +"+PX(act.L.risk*3):act.res==="BE"?"selesai di entry (break even)":"kena SL ✗ −"+PX(act.L.risk)}. Tunggu sinyal baru.`);
+    why.push(`${a.dir==="WAIT"?a.reason:"Kondisi "+a.dir+" masih ada tapi sinyal sudah lewat."} Level di atas hanya rencana jika ${p.lean} terkonfirmasi.`);
+  }
   if(SYMS[S.sym].spot&&mode()==="live"){const n=new Date(),dy=n.getUTCDay(),hr=n.getUTCHours();if((dy===5&&hr>=21)||dy===6||(dy===0&&hr<22))why.unshift("Pasar emas sedang tutup (weekend). Jangan pakai sinyal ini untuk entry.")}
-  if(mode()==="live"&&S.lastAt)why.unshift("Dihitung "+hm(S.lastAt)+" dari candle yang sudah tutup · harga "+fx(a.live));$("sigwhy").textContent=why.join(" · ");
+  if(mode()==="live"&&S.lastAt)why.unshift("Update "+hm(S.lastAt));$("sigwhy").textContent=why.join(" · ");
   lotCalc();
-  notifyCheck(a,tf,p);
+  notifyCheck({...a,dir:a.shown},tf,p);
   $("indTbl").innerHTML="<tr><th>Indikator</th><th class='r'>Nilai</th><th class='r'>Status</th></tr>"+a.votes.map(x=>`<tr><td>${x.name}</td><td class="r num">${x.val}</td><td class="r"><span class="chip ${x.score>0?"up":x.score<0?"down":"flat"}">${x.txt}</span></td></tr>`).join("")
     +`<tr><td>ADX 14</td><td class="r num">${isNaN(a.v.adx)?"—":a.v.adx.toFixed(1)}</td><td class="r"><span class="chip flat">${a.v.adx<20?"Lemah":a.v.adx<25?"Sedang":"Kuat"}${a.v.pdi>a.v.mdi?" · +DI":" · −DI"}</span></td></tr>`;
   const pv=a.v.pv,sw=a.v.sw;

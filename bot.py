@@ -243,10 +243,11 @@ def run():
             if sig != "WAIT" and st["last"] != sig:
                 s = 1 if sig == "BUY" else -1; slp = SL_PAIR.get(sym, SL_PIPS)[tf]; dist = slp * pip
                 u = (lambda n: f"${n:,}") if sym == "BTCUSD" else (lambda n: f"{n} pips")
-                sl, be, tp1, tp2 = live - s * dist, live + s * dist, live + s * dist * 2, live + s * dist * RR
+                ent = closed[-1]["c"]  # entry = close candle sinyal (sama dengan Signal Room)
+                sl, be, tp1, tp2 = ent - s * dist, ent + s * dist, ent + s * dist * 2, ent + s * dist * RR
                 icon = "🟢" if sig == "BUY" else "🔴"
                 send(f"{icon} <b>SINYAL {sig} {sym}</b> · {TFN[tf]}\n\n"
-                     f"Entry: <b>{fmt(live, pip)}</b>\n"
+                     f"Entry: <b>{fmt(ent, pip)}</b> (candle {time.strftime('%H:%M', time.gmtime(cand_t/1000 + 8*3600))} WITA)\n"
                      f"SL: <b>{fmt(sl, pip)}</b> ({u(slp)})\n"
                      f"SL+ (1:1): <b>{fmt(be, pip)}</b> ({u(slp)}) → geser SL ke entry\n"
                      f"TP1 (1:2): <b>{fmt(tp1, pip)}</b> ({u(slp * 2)})\n"
