@@ -1,0 +1,468 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0a0a0c">
+<title>DirmuFX Trade</title>
+<link rel="icon" href="data:image/svg+xml,<svg viewBox='0 0 314 343' xmlns='http://www.w3.org/2000/svg'><path d='M15 15H140A156.5 156.5 0 0 1 140 328H15Z' fill='none' stroke='%2363d297' stroke-width='30' stroke-linejoin='round'/><g fill='%23fff'><rect x='87' y='159' width='10' height='138' rx='5'/><rect x='69' y='202' width='46' height='58' rx='5'/><rect x='147' y='114' width='10' height='160' rx='5'/><rect x='129' y='153' width='46' height='75' rx='5'/></g><g fill='%2363d297'><rect x='207' y='54' width='10' height='175' rx='5'/><rect x='189' y='89' width='46' height='99' rx='5'/></g></svg>">
+<meta name="description" content="Komunitas edukasi trading XAUUSD: terminal sinyal, kalender ekonomi, fundamental, dan kalkulator lot gratis.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<style>
+/* Landing page: sticky nav, hero with live gold quote, channel cards, features, terminal preview, calculator, topics, FAQ, footer. Dark charcoal + champagne gold, same tokens as the terminal. */
+:root{
+  --bg:#0a0a0c; --bg2:#0f0f12; --panel:#131316; --panel2:#1b1b20; --line:#2a2a31;
+  --fg:#f2efe8; --muted:#9b978d; --gold:#e3b85c; --gold-hi:#f6e3a8; --gold-lo:#b8862b; --gold-dim:#4d3d1a;
+  --up:#2fd39b; --up-dim:#0f3a2c; --down:#f05d6c; --down-dim:#3d1820;
+  --f-display:"Chakra Petch","Segoe UI",system-ui,sans-serif;
+  --f-body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased}
+[hidden]{display:none!important}
+a{color:inherit}
+button,input,select{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.wrap{max-width:1120px;margin:0 auto;padding-left:max(18px,env(safe-area-inset-left,0px));padding-right:max(18px,env(safe-area-inset-right,0px))}
+.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+.gold{background:linear-gradient(100deg,var(--gold-hi),var(--gold) 45%,var(--gold-lo));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:var(--gold)}
+.eyebrow{font-family:var(--f-display);font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);font-weight:600}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;line-height:1.15}
+h2{font-size:clamp(26px,4.4vw,38px);font-weight:700}
+.lead{color:var(--muted);max-width:60ch;margin:12px 0 0}
+section{padding-block:72px}
+.sec-head{display:flex;flex-direction:column;gap:6px;margin-bottom:32px}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;border-radius:12px;padding:12px 20px;font-weight:600;font-size:15px;border:1px solid var(--line);background:var(--panel2);cursor:pointer;transition:transform .15s,border-color .15s,background .15s;white-space:nowrap}
+.btn:hover{border-color:var(--gold-dim);transform:translateY(-1px)}
+.btn.gold-btn{background:linear-gradient(100deg,var(--gold-hi),var(--gold) 50%,var(--gold-lo));color:#1a1305;border:0}
+.btn.ghost{background:transparent}
+.btn svg{width:18px;height:18px}
+
+/* nav */
+.nav{position:sticky;top:0;z-index:20;background:rgba(10,10,12,.86);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-block:12px}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.dmark{width:34px;height:auto;flex:none}
+.dword{display:flex;flex-direction:column;line-height:1}
+.dname{font-family:"Montserrat",var(--f-body);font-weight:700;font-size:21px;letter-spacing:-.01em;color:#fff}
+.dname i{font-style:normal;color:#63d297}
+.dtrade{font-family:"Montserrat",var(--f-body);font-weight:600;font-size:9.5px;letter-spacing:.62em;color:#a3abc2;margin-top:4px}
+.hero-logo{display:flex;align-items:center;gap:14px;margin-bottom:22px}
+.hero-logo .dmark{width:58px}
+.hero-logo .dname{font-size:34px}
+.hero-logo .dtrade{font-size:13px;margin-top:6px}
+.navlinks{display:flex;gap:4px}
+.navlinks a{text-decoration:none;color:var(--muted);font-size:14px;padding:8px 10px;border-radius:8px}
+.navlinks a:hover{color:var(--fg)}
+@media(max-width:760px){.navlinks{display:none}.nav .btn{padding:9px 14px;font-size:14px}}
+
+/* hero */
+.hero{position:relative;overflow:hidden;padding-block:64px 56px}
+.hero::before{content:"";position:absolute;inset:0;background:
+  radial-gradient(60% 70% at 85% 10%,rgba(227,184,92,.16),transparent 70%),
+  linear-gradient(rgba(42,42,49,.35) 1px,transparent 1px) 0 0/100% 44px,
+  linear-gradient(90deg,rgba(42,42,49,.35) 1px,transparent 1px) 0 0/44px 100%;
+  -webkit-mask-image:linear-gradient(180deg,#000 40%,transparent);mask-image:linear-gradient(180deg,#000 40%,transparent);pointer-events:none}
+.hero .wrap{position:relative;display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:40px;align-items:center}
+@media(max-width:860px){.hero .wrap{grid-template-columns:minmax(0,1fr)}}
+.hero h1{font-size:clamp(36px,7vw,64px);font-weight:700;letter-spacing:-.01em;margin-top:14px}
+.hero .lead{font-size:17px}
+.cta{display:flex;gap:10px;flex-wrap:wrap;margin-top:28px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:24px}
+.chip{font-size:12px;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:5px 12px;background:var(--panel)}
+.chip b{color:var(--fg);font-weight:600}
+
+.quotecard{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:0 30px 80px rgba(0,0,0,.45)}
+.qhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.live{display:inline-flex;align-items:center;gap:7px;font-family:var(--f-display);font-size:11px;letter-spacing:.14em;color:var(--up);text-transform:uppercase;font-weight:600}
+.live::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--up);animation:pulse 1.6s infinite}
+@keyframes pulse{50%{opacity:.25}}
+.tvq{height:96px;border-radius:10px;overflow:hidden;background:var(--panel)}
+.miniStats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:12px}
+.miniStats div{background:var(--panel2);border-radius:10px;padding:10px}
+.miniStats span{display:block;font-size:11px;color:var(--muted)}
+.miniStats b{font-family:var(--f-mono);font-size:14px}
+.qfoot{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:14px;font-size:13px;color:var(--muted);flex-wrap:wrap}
+
+/* channels */
+.channels{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+@media(max-width:860px){.channels{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:400px){.channels{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:440px){.channels{grid-template-columns:minmax(0,1fr)}}
+.ch{display:flex;flex-direction:column;gap:10px;text-decoration:none;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:18px;transition:border-color .15s,transform .15s}
+.ch:hover{border-color:var(--gold-dim);transform:translateY(-2px)}
+.ch .ic{width:40px;height:40px;border-radius:11px;display:grid;place-items:center;background:var(--panel2)}
+.ch .ic svg{width:22px;height:22px}
+.ch h3{font-size:17px}
+.ch p{margin:0;font-size:13px;color:var(--muted)}
+.ch .h{font-family:var(--f-mono);font-size:13px;color:var(--gold);word-break:break-all}
+.warn{margin-top:14px;font-size:13px;color:var(--muted);display:flex;gap:8px;align-items:flex-start;background:var(--bg2);border:1px dashed var(--line);border-radius:12px;padding:12px 14px}
+.warn b{color:var(--fg)}
+
+/* features */
+.feats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media(max-width:700px){.feats{grid-template-columns:minmax(0,1fr)}}
+.feat{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:22px;display:grid;grid-template-columns:44px minmax(0,1fr);gap:16px}
+.feat .ic{width:44px;height:44px;border-radius:12px;background:linear-gradient(140deg,rgba(227,184,92,.22),rgba(227,184,92,.04));border:1px solid var(--gold-dim);display:grid;place-items:center;color:var(--gold)}
+.feat .ic svg{width:22px;height:22px}
+.feat h3{font-size:18px;margin-bottom:6px}
+.feat p{margin:0;color:var(--muted);font-size:14px}
+
+/* terminal preview */
+.term{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:28px;align-items:center;background:linear-gradient(135deg,var(--panel),var(--bg2));border:1px solid var(--line);border-radius:22px;padding:32px}
+@media(max-width:860px){.term{grid-template-columns:minmax(0,1fr);padding:22px}}
+.tabsprev{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.tp{background:var(--panel2);border:1px solid var(--line);border-radius:14px;padding:14px}
+.tp b{font-family:var(--f-display);letter-spacing:.12em;font-size:12px;text-transform:uppercase;color:var(--gold)}
+.tp p{margin:4px 0 0;font-size:13px;color:var(--muted)}
+.sigmock{margin-top:18px;background:var(--panel2);border:1px solid var(--line);border-top:3px solid var(--up);border-radius:14px;overflow:hidden}
+.sigmock .top{display:flex;justify-content:space-between;align-items:center;padding:12px 14px}
+.sigmock .w{font-family:var(--f-display);font-weight:700;font-size:28px;color:var(--up);line-height:1}
+.sigmock .lv{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid var(--line);text-align:center}
+.sigmock .lv div{padding:9px 4px;font-size:11px;color:var(--muted)}
+.sigmock .lv b{display:block;font-family:var(--f-mono);color:var(--fg);font-size:13px;filter:blur(5px)}
+.sigmock .note{padding:8px 14px;font-size:11px;color:var(--muted);border-top:1px solid var(--line)}
+
+/* calculator */
+.calc{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:0;background:var(--panel);border:1px solid var(--line);border-radius:22px;overflow:hidden}
+@media(max-width:860px){.calc{grid-template-columns:minmax(0,1fr)}}
+.cin{padding:24px;display:flex;flex-direction:column;gap:16px}
+.cout{padding:24px;background:linear-gradient(160deg,#16130c,var(--bg2) 60%);border-left:1px solid var(--line);display:flex;flex-direction:column;gap:14px}
+@media(max-width:860px){.cout{border-left:0;border-top:1px solid var(--line)}}
+.ctabs{display:flex;background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:3px;gap:3px;overflow-x:auto;scrollbar-width:none}
+.ctabs button{flex:1;background:none;border:0;border-radius:9px;padding:9px 12px;font-size:13px;font-weight:600;color:var(--muted);white-space:nowrap;cursor:pointer}
+.ctabs button[aria-selected="true"]{background:var(--panel2);color:var(--fg);box-shadow:inset 0 0 0 1px var(--gold-dim)}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media(max-width:420px){.grid2{grid-template-columns:minmax(0,1fr)}}
+.fld{display:flex;flex-direction:column;gap:6px;min-width:0}
+.fld label{font-size:12px;color:var(--muted);font-weight:500}
+.fld input,.fld select{width:100%;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:11px 12px;font-family:var(--f-mono);font-size:15px;outline:none;min-width:0}
+.fld input:focus,.fld select:focus{border-color:var(--gold)}
+.fld .hint{font-size:11px;color:var(--muted)}
+.seg2{display:flex;gap:6px}
+.seg2 button{flex:1;padding:10px;border-radius:10px;border:1px solid var(--line);background:var(--bg);font-weight:600;font-size:14px;cursor:pointer;color:var(--muted)}
+.seg2 button[aria-pressed="true"].buy{border-color:var(--up);color:var(--up);background:var(--up-dim)}
+.seg2 button[aria-pressed="true"].sell{border-color:var(--down);color:var(--down);background:var(--down-dim)}
+.seg2 button[aria-pressed="true"].neutral{border-color:var(--gold);color:var(--gold);background:#221b0e}
+.res-main span{font-size:12px;color:var(--muted);letter-spacing:.14em;text-transform:uppercase;font-family:var(--f-display)}
+.res-main b{display:block;font-family:var(--f-mono);font-size:clamp(34px,7vw,48px);line-height:1.1;margin-top:4px}
+.res-main small{font-size:13px;color:var(--muted)}
+.res-list{display:flex;flex-direction:column;border-top:1px solid var(--line)}
+.res-list div{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid var(--line);font-size:14px}
+.res-list div span{color:var(--muted)}
+.res-list div b{font-family:var(--f-mono);font-weight:500;text-align:right}
+.pos{color:var(--up)} .neg{color:var(--down)}
+.cnote{font-size:12px;color:var(--muted);margin:0}
+
+/* topics */
+.topics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+@media(max-width:860px){.topics{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:480px){.topics{grid-template-columns:minmax(0,1fr)}}
+.topic{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:18px;display:flex;flex-direction:column;gap:8px}
+.topic .lvl{align-self:flex-start;font-size:11px;font-family:var(--f-display);letter-spacing:.12em;text-transform:uppercase;padding:3px 9px;border-radius:999px;border:1px solid var(--line);color:var(--muted)}
+.topic .lvl.b{color:var(--up);border-color:#1f5a45}
+.topic .lvl.m{color:var(--gold);border-color:var(--gold-dim)}
+.topic .lvl.a{color:var(--down);border-color:#5a2730}
+.topic h3{font-size:17px}
+.topic p{margin:0;font-size:13px;color:var(--muted)}
+
+/* faq */
+.faq{display:flex;flex-direction:column;gap:10px;max-width:820px}
+.faq details{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:0 18px}
+.faq summary{list-style:none;cursor:pointer;padding:16px 0;font-weight:600;display:flex;justify-content:space-between;gap:12px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";font-family:var(--f-mono);color:var(--gold);font-size:18px;line-height:1}
+.faq details[open] summary::after{content:"–"}
+.faq details p{margin:0 0 16px;color:var(--muted);font-size:14px;max-width:70ch}
+
+/* closing + footer */
+.closing{text-align:center;background:radial-gradient(70% 120% at 50% 0%,rgba(227,184,92,.14),transparent 70%),var(--panel);border:1px solid var(--gold-dim);border-radius:22px;padding:44px 22px}
+.closing .cta{justify-content:center}
+footer{border-top:1px solid var(--line);padding-block:36px 44px;color:var(--muted);font-size:13px}
+.foot{display:grid;grid-template-columns:minmax(0,1.4fr) repeat(2,minmax(0,1fr));gap:24px}
+@media(max-width:700px){.foot{grid-template-columns:minmax(0,1fr)}}
+.foot h4{margin:0 0 10px;color:var(--fg);font-family:var(--f-display);letter-spacing:.12em;text-transform:uppercase;font-size:12px}
+.foot a{display:block;text-decoration:none;padding:3px 0}
+.foot a:hover{color:var(--fg)}
+.risk{margin-top:26px;padding-top:18px;border-top:1px solid var(--line);font-size:12px;line-height:1.7}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap">
+    <a class="logo" href="#top" aria-label="DirmuFX Trade beranda">
+      <svg class="dmark" viewBox="0 0 314 343" aria-hidden="true"><path d="M15 15H140A156.5 156.5 0 0 1 140 328H15Z" fill="none" stroke="#63d297" stroke-width="30" stroke-linejoin="round"/><g fill="#fff"><rect x="87" y="159" width="10" height="138" rx="5"/><rect x="69" y="202" width="46" height="58" rx="5"/><rect x="147" y="114" width="10" height="160" rx="5"/><rect x="129" y="153" width="46" height="75" rx="5"/></g><g fill="#63d297"><rect x="207" y="54" width="10" height="175" rx="5"/><rect x="189" y="89" width="46" height="99" rx="5"/></g></svg><span class="dword"><span class="dname">Dirmu<i>FX</i></span><span class="dtrade">TRADE</span></span>
+    </a>
+    <div class="navlinks">
+      <a href="#fitur">Fitur</a><a href="#terminal">Terminal</a><a href="#kalkulator">Kalkulator</a><a href="#materi">Materi</a><a href="#faq">FAQ</a>
+    </div>
+    <a class="btn gold-btn" href="dirmufx.html">Buka Terminal</a>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="wrap">
+    <div>
+      <div class="hero-logo"><svg class="dmark" viewBox="0 0 314 343" aria-hidden="true"><path d="M15 15H140A156.5 156.5 0 0 1 140 328H15Z" fill="none" stroke="#63d297" stroke-width="30" stroke-linejoin="round"/><g fill="#fff"><rect x="87" y="159" width="10" height="138" rx="5"/><rect x="69" y="202" width="46" height="58" rx="5"/><rect x="147" y="114" width="10" height="160" rx="5"/><rect x="129" y="153" width="46" height="75" rx="5"/></g><g fill="#63d297"><rect x="207" y="54" width="10" height="175" rx="5"/><rect x="189" y="89" width="46" height="99" rx="5"/></g></svg><span class="dword"><span class="dname">Dirmu<i>FX</i></span><span class="dtrade">TRADE</span></span></div>
+      <span class="eyebrow">Komunitas trading XAUUSD</span>
+      <h1>Trading emas lebih <span class="gold">terarah</span>, bukan asal tebak.</h1>
+      <p class="lead">DirmuFX membantu kamu membaca pasar XAUUSD dengan sinyal konfluensi, kalender berita, analisa fundamental, dan manajemen risiko yang jelas. Fokus pada gaya scalping dan intraday.</p>
+      <div class="cta">
+        <a class="btn gold-btn" href="dirmufx.html">Buka Terminal Sinyal
+          <svg viewBox="0 0 20 20" fill="none"><path d="M5 10h10M11 6l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <a class="btn ghost" href="https://t.me/dirmufxofficial" target="_blank" rel="noopener">Gabung Telegram</a>
+      </div>
+      <div class="chips">
+        <span class="chip"><b>XAUUSD</b> fokus utama</span>
+        <span class="chip"><b>M5 &amp; M15</b> scalping · intraday</span>
+        <span class="chip"><b>24 jam</b> bot sinyal Telegram</span>
+      </div>
+    </div>
+    <aside class="quotecard" aria-label="Harga emas live">
+      <div class="qhead"><span class="eyebrow" style="letter-spacing:.16em">XAUUSD · Gold Spot</span><span class="live">Live</span></div>
+      <div class="tvq" id="tvQuote"></div>
+      <div class="miniStats">
+        <div><span>SL scalping</span><b>30 pips</b></div>
+        <div><span>SL intraday</span><b>50 pips</b></div>
+        <div><span>Risk/Reward</span><b>1 : 2</b></div>
+      </div>
+      <div class="qfoot"><span>Hitung lot sebelum entry.</span><a class="btn" style="padding:8px 14px;font-size:13px" href="#kalkulator">Ke kalkulator</a></div>
+    </aside>
+  </div>
+</header>
+
+<section id="channel" style="padding-top:24px">
+  <div class="wrap">
+    <div class="sec-head"><span class="eyebrow">Channel resmi</span><h2>Ikuti DirmuFX di sini saja</h2></div>
+    <div class="channels">
+      <a class="ch" href="https://t.me/dirmufxofficial" target="_blank" rel="noopener">
+        <span class="ic"><svg viewBox="0 0 24 24" fill="#2aa3df"><path d="M21.5 4.3 18.4 19c-.2 1-.9 1.3-1.7.8l-4.7-3.5-2.3 2.2c-.3.3-.5.5-1 .5l.3-4.8 8.8-7.9c.4-.3-.1-.5-.6-.2L6.3 13 1.6 11.6c-1-.3-1-1 .2-1.5L20.1 3c.8-.3 1.6.2 1.4 1.3Z"/></svg></span>
+        <h3>Telegram</h3><p>Info market, berita, dan diskusi harian.</p><span class="h">t.me/dirmufxofficial</span></a>
+      <a class="ch" href="https://www.tiktok.com/@dirmufxofficial" target="_blank" rel="noopener">
+        <span class="ic"><svg viewBox="0 0 24 24" fill="#f2efe8"><path d="M16.6 3c.4 2.3 1.9 3.8 4.1 4v3.1c-1.5 0-2.9-.4-4.1-1.2v6.2c0 3.3-2.7 5.9-6 5.9s-6-2.6-6-5.9 2.7-6 6-6c.3 0 .6 0 .9.1v3.2a2.8 2.8 0 1 0 2 2.7V3h3.1Z"/></svg></span>
+        <h3>TikTok</h3><p>Video edukasi singkat dan live trading.</p><span class="h">@dirmufxofficial</span></a>
+      <a class="ch" href="https://www.instagram.com/mudirr_/" target="_blank" rel="noopener">
+        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#f472b6" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="#f472b6" stroke="none"/></svg></span>
+        <h3>Instagram</h3><p>Update harian, analisa, dan konten edukasi.</p><span class="h">@mudirr_</span></a>
+      <a class="ch" href="https://wa.me/6285823444392" target="_blank" rel="noopener">
+        <span class="ic"><svg viewBox="0 0 24 24" fill="#2fd39b"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.8 14.1c-.2.7-1.4 1.3-2 1.4-.5.1-1.2.1-1.9-.1-.4-.1-1-.3-1.7-.6-3-1.3-4.9-4.3-5.1-4.5-.1-.2-1.2-1.6-1.2-3.1s.8-2.2 1-2.5c.3-.3.6-.4.8-.4h.6c.2 0 .4 0 .6.5l.9 2.1c.1.2.1.4 0 .5l-.3.5-.4.5c-.1.1-.3.3-.1.6.2.3.8 1.2 1.6 2 1.1 1 2 1.3 2.3 1.4.3.1.4.1.6-.1l.8-1c.2-.3.4-.2.6-.1l2 1c.3.1.5.2.5.3.1.1.1.7-.1 1.4Z"/></svg></span>
+        <h3>WhatsApp</h3><p>Pertanyaan dan verifikasi member.</p><span class="h">0858-2344-4392</span></a>
+    </div>
+    <p class="warn"><span aria-hidden="true">⚠️</span><span>Waspada akun palsu. Admin resmi hanya <b>@dirmufxtrader</b> di Telegram. DirmuFX tidak pernah meminta transfer dana untuk dikelola.</span></p>
+  </div>
+</section>
+
+<section id="fitur">
+  <div class="wrap">
+    <div class="sec-head"><span class="eyebrow">Kenapa DirmuFX</span><h2>Semua yang kamu butuhkan sebelum entry</h2></div>
+    <div class="feats">
+      <div class="feat"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 17l5-6 4 3 7-9"/><path d="M15 5h4v4"/></svg></span>
+        <div><h3>Sinyal konfluensi</h3><p>Delapan indikator dihitung bersama, lalu disaring dengan kekuatan tren (ADX) dan arah timeframe yang lebih besar. Sinyal hanya muncul saat semuanya searah.</p></div></div>
+      <div class="feat"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2" stroke-linecap="round"/></svg></span>
+        <div><h3>Kalender berita USD</h3><p>Jadwal rilis berdampak tinggi seperti NFP, CPI, dan FOMC, lengkap dengan hitung mundur supaya kamu tidak entry tepat saat berita keluar.</p></div></div>
+      <div class="feat"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></span>
+        <div><h3>Fundamental per pair</h3><p>Ringkasan penggerak harga emas, perak, euro, pound, yen, dan bitcoin: kebijakan Fed, yield, geopolitik, dan sentimen pasar.</p></div></div>
+      <div class="feat"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7l8-4Z"/><path d="M9 12l2 2 4-4" stroke-linecap="round"/></svg></span>
+        <div><h3>Risiko terukur</h3><p>Stop loss tetap per timeframe dan kalkulator lot otomatis, supaya kerugian per posisi selalu sesuai batas yang kamu tentukan.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="terminal" style="padding-top:0">
+  <div class="wrap">
+    <div class="term">
+      <div>
+        <span class="eyebrow">Terminal DirmuFX</span>
+        <h2 style="margin-top:8px">Chart, sinyal, berita, dan fundamental di satu layar</h2>
+        <p class="lead">Buka dari HP tanpa install aplikasi. Data harga live dari TradingView, dan sinyal diperbarui otomatis setiap menit.</p>
+        <div class="tabsprev" style="margin-top:22px">
+          <div class="tp"><b>Analisa</b><p>Chart candle, EMA 20/50/200, sinyal entry, SL &amp; TP.</p></div>
+          <div class="tp"><b>Berita</b><p>Kabar forex dan emas terbaru.</p></div>
+          <div class="tp"><b>Kalender</b><p>Berita USD berdampak tinggi + hitung mundur.</p></div>
+          <div class="tp"><b>Fundamental</b><p>Bias dan faktor penggerak per pair.</p></div>
+        </div>
+        <div class="cta"><a class="btn gold-btn" href="dirmufx.html">Buka Terminal</a></div>
+      </div>
+      <div aria-hidden="true">
+        <div class="sigmock">
+          <div class="top"><div><span class="eyebrow" style="font-size:10px">Sinyal entry · M15</span><div class="w">BUY</div></div><span class="live">Searah H1</span></div>
+          <div class="lv"><div>Entry<b>0000.00</b></div><div>SL<b>0000.00</b></div><div>TP1<b>0000.00</b></div><div>TP2<b>0000.00</b></div></div>
+          <div class="note">Contoh tampilan. Angka asli muncul di terminal.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="kalkulator">
+  <div class="wrap">
+    <div class="sec-head"><span class="eyebrow">Kalkulator trading</span><h2>Hitung lot, profit, dan margin</h2><p class="lead">Masukkan angka dari akun kamu. Semua dihitung langsung di HP, tidak ada data yang dikirim ke mana pun.</p></div>
+    <div class="calc">
+      <div class="cin">
+        <div class="ctabs" role="tablist">
+          <button role="tab" data-t="lot" aria-selected="true">Ukuran lot</button>
+          <button role="tab" data-t="pl" aria-selected="false">Profit / Loss</button>
+          <button role="tab" data-t="margin" aria-selected="false">Margin</button>
+        </div>
+        <div class="grid2">
+          <div class="fld"><label for="cPair">Pair</label><select id="cPair">
+            <option value="XAUUSD">XAUUSD · Emas</option><option value="XAGUSD">XAGUSD · Perak</option><option value="EURUSD">EURUSD</option><option value="GBPUSD">GBPUSD</option><option value="USDJPY">USDJPY</option><option value="BTCUSD">BTCUSD</option></select></div>
+          <div class="fld"><label for="cAcc">Jenis akun</label><select id="cAcc"><option value="std">Standar (USD)</option><option value="cent">Cent (USC)</option></select></div>
+        </div>
+
+        <div data-p="lot" class="grid2">
+          <div class="fld"><label for="cBal">Saldo <span class="accU">$</span></label><input id="cBal" inputmode="decimal" value="1000"></div>
+          <div class="fld"><label for="cRisk">Risiko per posisi (%)</label><input id="cRisk" inputmode="decimal" value="1"></div>
+          <div class="fld"><label for="cSL">Stop loss (pips)</label><input id="cSL" inputmode="decimal" value="30"><span class="hint">Scalping 30 · Intraday 50</span></div>
+          <div class="fld"><label for="cRR">Target (RR)</label><select id="cRR"><option value="1">1 : 1</option><option value="1.5">1 : 1.5</option><option value="2" selected>1 : 2</option><option value="3">1 : 3</option></select></div>
+        </div>
+
+        <div data-p="pl" hidden>
+          <div class="seg2" style="margin-bottom:12px"><button class="buy" id="dBuy" aria-pressed="true">BUY</button><button class="sell" id="dSell" aria-pressed="false">SELL</button></div>
+          <div class="grid2">
+            <div class="fld"><label for="cEntry">Harga entry</label><input id="cEntry" inputmode="decimal" value="3900.00"></div>
+            <div class="fld"><label for="cExit">Harga tutup</label><input id="cExit" inputmode="decimal" value="3906.00"></div>
+            <div class="fld"><label for="cLot">Lot</label><input id="cLot" inputmode="decimal" value="0.10"></div>
+          </div>
+        </div>
+
+        <div data-p="margin" class="grid2" hidden>
+          <div class="fld"><label for="mPrice">Harga</label><input id="mPrice" inputmode="decimal" value="3900.00"></div>
+          <div class="fld"><label for="mLot">Lot</label><input id="mLot" inputmode="decimal" value="0.10"></div>
+          <div class="fld"><label for="mLev">Leverage</label><select id="mLev"><option>50</option><option>100</option><option>200</option><option selected>500</option><option>1000</option><option>2000</option></select></div>
+        </div>
+
+        <div class="grid2">
+          <div class="fld" id="pxWrap"><label for="cPx">Harga sekarang</label><input id="cPx" inputmode="decimal" value="150.00"><span class="hint">Dipakai untuk menghitung nilai pip USDJPY</span></div>
+          <div class="fld"><label for="cKurs">Kurs Rp per $1</label><input id="cKurs" inputmode="decimal" value="16300"><span class="hint">Ubah sesuai kurs hari ini</span></div>
+        </div>
+      </div>
+
+      <div class="cout" aria-live="polite">
+        <div class="res-main"><span id="rLbl">Ukuran lot</span><b id="rMain">0.00</b><small id="rSub"></small></div>
+        <div class="res-list" id="rList"></div>
+        <p class="cnote" id="rNote"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="materi" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head"><span class="eyebrow">Materi edukasi</span><h2>Belajar bertahap, dari dasar sampai strategi</h2><p class="lead">Materi dibahas di komunitas DirmuFX lewat modul, video, dan diskusi.</p></div>
+    <div class="topics">
+      <div class="topic"><span class="lvl b">Dasar</span><h3>Dasar Trading XAUUSD</h3><p>Cara kerja emas, sesi pasar, spread, lot, dan istilah penting di MT5.</p></div>
+      <div class="topic"><span class="lvl b">Dasar</span><h3>Candlestick &amp; Price Action</h3><p>Membaca pola candle dan perilaku harga tanpa terlalu banyak indikator.</p></div>
+      <div class="topic"><span class="lvl m">Menengah</span><h3>SnR, SnD &amp; Fibonacci</h3><p>Menentukan area support, resistance, supply, demand, dan retracement yang valid.</p></div>
+      <div class="topic"><span class="lvl m">Menengah</span><h3>Manajemen Risiko</h3><p>Ukuran lot, batas rugi harian, dan risk/reward yang konsisten.</p></div>
+      <div class="topic"><span class="lvl a">Lanjutan</span><h3>Scalping &amp; Intraday</h3><p>Setup M5 dan M15, konfirmasi dari timeframe besar, dan kapan harus diam.</p></div>
+      <div class="topic"><span class="lvl a">Lanjutan</span><h3>Fundamental &amp; News Trading</h3><p>Dampak NFP, CPI, FOMC, dan yield terhadap pergerakan emas.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="faq" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head"><span class="eyebrow">FAQ</span><h2>Pertanyaan yang sering muncul</h2></div>
+    <div class="faq">
+      <details><summary>Apa itu DirmuFX?</summary><p>DirmuFX adalah komunitas edukasi trading yang fokus ke XAUUSD (emas), dengan terminal sinyal, kalender berita, fundamental, dan diskusi di Telegram.</p></details>
+      <details><summary>Apakah cocok untuk pemula?</summary><p>Cocok. Mulai dari materi dasar dan kalkulator lot di halaman ini, lalu pelajari cara membaca sinyal di terminal sebelum memakai akun real.</p></details>
+      <details><summary>Apakah ada jaminan profit?</summary><p>Tidak ada. Trading forex dan emas berisiko tinggi. Sinyal dan analisa adalah alat bantu, bukan jaminan. Selalu pakai stop loss dan jangan memakai dana yang tidak siap hilang.</p></details>
+      <details><summary>Dari mana sinyal DirmuFX dihitung?</summary><p>Dari gabungan delapan indikator teknikal (EMA, MACD, RSI, Stochastic, Bollinger, pivot, ADX) yang disaring dengan arah tren timeframe lebih besar. Hanya dihitung dari candle yang sudah tutup.</p></details>
+      <details><summary>Bagaimana cara memakai kalkulator lot?</summary><p>Isi saldo, persentase risiko, dan jarak stop loss dalam pips. Kalkulator menampilkan lot yang aman beserta nilai rugi dan target dalam dolar dan rupiah. Untuk akun cent, pilih "Cent (USC)".</p></details>
+      <details><summary>Bagaimana cara bergabung dengan komunitas?</summary><p>Ikuti channel Telegram <b>t.me/dirmufxofficial</b> atau hubungi admin lewat WhatsApp untuk informasi lebih lanjut.</p></details>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="closing">
+      <span class="eyebrow">Mulai sekarang</span>
+      <h2 style="margin-top:8px">Cek sinyal hari ini di terminal DirmuFX</h2>
+      <p class="lead" style="margin-inline:auto">Gratis dibuka dari HP. Pantau XAUUSD, kalender berita, dan fundamental di satu tempat.</p>
+      <div class="cta"><a class="btn gold-btn" href="dirmufx.html">Buka Terminal</a><a class="btn ghost" href="https://t.me/dirmufxofficial" target="_blank" rel="noopener">Gabung Telegram</a></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div><a class="logo" href="#top" style="display:inline-flex"><svg class="dmark" viewBox="0 0 314 343" aria-hidden="true"><path d="M15 15H140A156.5 156.5 0 0 1 140 328H15Z" fill="none" stroke="#63d297" stroke-width="30" stroke-linejoin="round"/><g fill="#fff"><rect x="87" y="159" width="10" height="138" rx="5"/><rect x="69" y="202" width="46" height="58" rx="5"/><rect x="147" y="114" width="10" height="160" rx="5"/><rect x="129" y="153" width="46" height="75" rx="5"/></g><g fill="#63d297"><rect x="207" y="54" width="10" height="175" rx="5"/><rect x="189" y="89" width="46" height="99" rx="5"/></g></svg><span class="dword"><span class="dname">Dirmu<i>FX</i></span><span class="dtrade">TRADE</span></span></a><p style="margin:10px 0 0;max-width:42ch">Komunitas edukasi trading XAUUSD untuk trader Indonesia.</p></div>
+      <div><h4>Halaman</h4><a href="dirmufx.html">Terminal</a><a href="#kalkulator">Kalkulator</a><a href="#materi">Materi</a><a href="#faq">FAQ</a></div>
+      <div><h4>Channel</h4><a href="https://t.me/dirmufxofficial" target="_blank" rel="noopener">Telegram</a><a href="https://www.tiktok.com/@dirmufxofficial" target="_blank" rel="noopener">TikTok</a><a href="https://www.instagram.com/mudirr_/" target="_blank" rel="noopener">Instagram</a><a href="https://wa.me/6285823444392" target="_blank" rel="noopener">WhatsApp</a></div>
+    </div>
+    <p class="risk"><b style="color:var(--fg)">Peringatan risiko:</b> Trading forex, emas, dan kripto dengan leverage memiliki risiko tinggi dan bisa menyebabkan kehilangan seluruh modal. Semua konten DirmuFX bersifat edukasi, bukan saran keuangan. Hasil masa lalu tidak menjamin hasil di masa depan.<br>© 2026 DirmuFX Trade.</p>
+  </div>
+</footer>
+
+<script>
+(()=>{
+"use strict";
+const $=id=>document.getElementById(id);
+/* live gold quote (TradingView) */
+(function(){const box=$("tvQuote");box.innerHTML='<div class="tradingview-widget-container" style="height:100%"><div class="tradingview-widget-container__widget"></div></div>';
+  const sc=document.createElement("script");sc.async=true;sc.src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js";
+  sc.text=JSON.stringify({symbol:"OANDA:XAUUSD",width:"100%",isTransparent:false,backgroundColor:"#131316",colorTheme:"dark",locale:"id"});box.firstChild.appendChild(sc)})();
+
+/* ===== kalkulator ===== */
+// cs = ukuran kontrak per 1 lot standar, pip = ukuran 1 pip, d = desimal harga
+const P={XAUUSD:{cs:100,pip:.1,d:2},XAGUSD:{cs:5000,pip:.01,d:3},EURUSD:{cs:100000,pip:.0001,d:5},GBPUSD:{cs:100000,pip:.0001,d:5},USDJPY:{cs:100000,pip:.01,d:3,jpy:true},BTCUSD:{cs:1,pip:1,d:1}};
+const DEF={XAUUSD:["3900.00","3906.00",30],XAGUSD:["48.950","49.250",30],EURUSD:["1.08000","1.08300",15],GBPUSD:["1.28000","1.28300",15],USDJPY:["150.000","150.300",15],BTCUSD:["78000.0","78300.0",300]};
+let tab="lot",dir=1;
+const num=id=>{const v=parseFloat(String($(id).value).replace(/\s/g,"").replace(",","."));return isFinite(v)?v:0};
+const fmt=(v,d=2)=>v.toLocaleString("id-ID",{minimumFractionDigits:d,maximumFractionDigits:d});
+const rp=v=>"Rp "+Math.round(v).toLocaleString("id-ID");
+function pipValUSD(pair){const p=P[pair];let v=p.cs*p.pip;if(p.jpy){const px=num("cPx")||150;v=v/px}return v} // per 1 lot standar
+function calc(){
+  const pair=$("cPair").value,p=P[pair],cent=$("cAcc").value==="cent",kurs=num("cKurs")||0;
+  const U=cent?"USC":"$",toAcc=usd=>cent?usd*100:usd,toUSD=acc=>cent?acc/100:acc;
+  document.querySelectorAll(".accU").forEach(e=>e.textContent=cent?"(USC)":"$");
+  $("pxWrap").hidden=!p.jpy;
+  const pv=pipValUSD(pair),list=[],money=usd=>`${fmt(toAcc(usd))} ${U}${kurs?` · ${rp(usd*kurs)}`:""}`;
+  let main="",sub="",lbl="",note="";
+  if(tab==="lot"){
+    const bal=toUSD(num("cBal")),risk=num("cRisk"),sl=num("cSL"),rr=+$("cRR").value;
+    const riskUSD=bal*risk/100,lot=sl>0&&pv>0?Math.floor(riskUSD/(sl*pv)*100)/100:0,realRisk=lot*sl*pv;
+    lbl="Ukuran lot";main=fmt(cent?lot*100:lot);sub=cent?`lot cent (setara ${fmt(lot)} lot standar)`:"lot standar";
+    list.push(["Risiko maksimal",money(riskUSD)],["Rugi jika kena SL",`<span class="neg">${money(realRisk)}</span>`],[`Target TP (${sl*rr} pips)`,`<span class="pos">${money(realRisk*rr)}</span>`],["Nilai 1 pip / lot",money(pv)],["Jarak SL dalam harga",fmt(sl*p.pip,p.d)]);
+    note=lot<0.01?"Saldo atau risiko terlalu kecil untuk lot minimum 0.01. Naikkan saldo, risiko, atau perkecil SL.":"Lot dibulatkan ke bawah supaya risiko tidak melebihi batas.";
+  }else if(tab==="pl"){
+    const e=num("cEntry"),x=num("cExit"),lot=num("cLot"),stdLot=cent?lot/100:lot;
+    const pips=(x-e)*dir/p.pip,usd=(x-e)*dir*p.cs*stdLot/(p.jpy?(x||1):1);
+    lbl=usd>=0?"Profit":"Loss";main=`<span class="${usd>=0?"pos":"neg"}">${usd>=0?"+":""}${fmt(toAcc(usd))} ${U}</span>`;sub=kurs?`${usd>=0?"+":""}${rp(usd*kurs)}`:"";
+    list.push(["Arah",dir>0?"BUY":"SELL"],["Pergerakan",`${pips>=0?"+":""}${fmt(pips,1)} pips`],["Selisih harga",fmt(Math.abs(x-e),p.d)],["Nilai 1 pip",money(pv*stdLot)]);
+    note="Belum termasuk spread, komisi, dan swap dari broker.";
+  }else{
+    const px=num("mPrice"),lot=num("mLot"),lev=+$("mLev").value,stdLot=cent?lot/100:lot;
+    const notional=p.jpy?p.cs*stdLot:px*p.cs*stdLot,margin=lev?notional/lev:0;
+    lbl="Margin dibutuhkan";main=`${fmt(toAcc(margin))} ${U}`;sub=kurs?rp(margin*kurs):"";
+    list.push(["Nilai posisi",money(notional)],["Leverage",`1 : ${lev}`],["Margin 1 lot standar",money(stdLot?margin/stdLot:0)]);
+    note="Perkiraan. Broker bisa memakai leverage berbeda untuk emas dan kripto, terutama saat berita besar.";
+  }
+  $("rLbl").textContent=lbl;$("rMain").innerHTML=main;$("rSub").textContent=sub;
+  $("rList").innerHTML=list.map(([k,v])=>`<div><span>${k}</span><b>${v}</b></div>`).join("");$("rNote").textContent=note;
+}
+document.querySelector(".ctabs").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;tab=b.dataset.t;
+  document.querySelectorAll(".ctabs button").forEach(x=>x.setAttribute("aria-selected",x===b));
+  document.querySelectorAll("[data-p]").forEach(x=>x.hidden=x.dataset.p!==tab);calc()});
+$("dBuy").addEventListener("click",()=>{dir=1;$("dBuy").setAttribute("aria-pressed",true);$("dSell").setAttribute("aria-pressed",false);calc()});
+$("dSell").addEventListener("click",()=>{dir=-1;$("dSell").setAttribute("aria-pressed",true);$("dBuy").setAttribute("aria-pressed",false);calc()});
+$("cPair").addEventListener("change",()=>{const d=DEF[$("cPair").value];$("cEntry").value=d[0];$("cExit").value=d[1];$("mPrice").value=d[0];$("cSL").value=d[2];if(P[$("cPair").value].jpy)$("cPx").value=d[0];calc()});
+$("cAcc").addEventListener("change",()=>{const c=$("cAcc").value==="cent";const b=num("cBal");$("cBal").value=c?String(Math.round(b*100)):String(+(b/100).toFixed(2));
+  ["cLot","mLot"].forEach(id=>{const l=num(id);$(id).value=c?String(+(l*100).toFixed(2)):String(+(l/100).toFixed(2))});calc()});
+document.querySelectorAll(".calc input,.calc select").forEach(el=>el.addEventListener("input",calc));
+calc();
+})();
+</script>
+</body>
+</html>
