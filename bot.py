@@ -13,7 +13,7 @@ HTF = {1: 5, 5: 15, 15: 60, 30: 60, 60: 240}
 SL_PIPS = {1: 30, 5: 30, 15: 50, 30: 50, 60: 100, 240: 100}
 # BTC jauh lebih volatil: SL dalam dolar (1 "pip" BTC = $1)
 SL_PAIR = {"BTCUSD": {1: 200, 5: 250, 15: 400, 30: 400, 60: 800, 240: 800}}
-RR = 2
+RR = 3        # TP MAX = 1:3, TP1 = 1:2, SL+ (break even) di 1:1
 SIG_MIN = 0.5      # ambang konfluensi sinyal
 PRE_MIN = 0.4      # ambang "siap-siap"
 ADX_MIN = 20
@@ -245,15 +245,16 @@ def run():
             if sig != "WAIT" and st["last"] != sig:
                 s = 1 if sig == "BUY" else -1; slp = SL_PAIR.get(sym, SL_PIPS)[tf]; dist = slp * pip
                 u = (lambda n: f"${n:,}") if sym == "BTCUSD" else (lambda n: f"{n} pips")
-                sl, tp1, tp2 = live - s * dist, live + s * dist, live + s * dist * RR
+                sl, be, tp1, tp2 = live - s * dist, live + s * dist, live + s * dist * 2, live + s * dist * RR
                 icon = "🟢" if sig == "BUY" else "🔴"
                 send(f"{icon} <b>SINYAL {sig} {sym}</b> · {TFN[tf]}\n\n"
                      f"Entry: <b>{fmt(live, pip)}</b>\n"
                      f"SL: <b>{fmt(sl, pip)}</b> ({u(slp)})\n"
-                     f"TP1: <b>{fmt(tp1, pip)}</b> ({u(slp)})\n"
-                     f"TP2: <b>{fmt(tp2, pip)}</b> ({u(slp * RR)})\n\n"
+                     f"SL+ (1:1): <b>{fmt(be, pip)}</b> ({u(slp)}) → geser SL ke entry\n"
+                     f"TP1 (1:2): <b>{fmt(tp1, pip)}</b> ({u(slp * 2)})\n"
+                     f"TP MAX (1:3): <b>{fmt(tp2, pip)}</b> ({u(slp * RR)})\n\n"
                      f"Konfluensi {a['strength']}% · ADX {a['adx']:.0f} · searah tren {TFN[HTF[tf]]} ✓\n"
-                     f"Saat TP1 kena, geser SL ke entry.\n\n"
+                     f"1:1 tercapai → SL+ (pindah SL ke entry). 1:2 → TP1. 1:3 → TP MAX.\n\n"
                      f"<i>Bukan saran keuangan. Selalu pakai stop loss.</i>")
                 st["pre"] = ""
             elif sig == "WAIT" and PRE_ALERT and st["last"] == "WAIT":

@@ -288,6 +288,10 @@ html{scroll-behavior:auto}}
 #app .levels{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));border-top:1px solid var(--line)}
 #app .lv{padding:11px 14px;border-bottom:1px solid var(--line)}
 #app .lv:nth-child(odd){border-right:1px solid var(--line)}
+#app .lv.max{grid-column:1/-1;border-right:0}
+#app .lv.be{background:#221b0e}
+#app .lv.be .v{color:var(--violet)}
+#app .lv .hint2{font-size:11px;color:var(--muted);margin-top:2px}
 #app .lv .k{font-size:11px;letter-spacing:.14em;color:var(--muted);font-family:var(--f-display);text-transform:uppercase}
 #app .lv .v{font-family:var(--f-mono);font-size:19px;font-weight:700}
 #app .lv.sl{background:var(--down-dim)}
@@ -468,7 +472,7 @@ html{scroll-behavior:auto}
       <div class="miniStats">
         <div><span>SL scalping</span><b>30 pips</b></div>
         <div><span>SL intraday</span><b>50 pips</b></div>
-        <div><span>Risk/Reward</span><b>1 : 2</b></div>
+        <div><span>Risk/Reward</span><b>1 : 3</b></div>
       </div>
       <div class="qfoot"><span>Hitung lot sebelum entry.</span><a class="btn" style="padding:8px 14px;font-size:13px" href="#kalkulator">Ke kalkulator</a></div>
     </aside>
@@ -533,7 +537,7 @@ html{scroll-behavior:auto}
       <div aria-hidden="true">
         <div class="sigmock">
           <div class="top"><div><span class="eyebrow" style="font-size:10px">Sinyal entry · M15</span><div class="w">BUY</div></div><span class="live">Searah H1</span></div>
-          <div class="lv"><div>Entry<b>0000.00</b></div><div>SL<b>0000.00</b></div><div>TP1<b>0000.00</b></div><div>TP2<b>0000.00</b></div></div>
+          <div class="lv"><div>Entry<b>0000.00</b></div><div>SL<b>0000.00</b></div><div>TP1<b>0000.00</b></div><div>TP MAX<b>0000.00</b></div></div>
           <div class="note">Contoh tampilan. Angka asli muncul di Signal Room.</div>
         </div>
       </div>
@@ -561,7 +565,7 @@ html{scroll-behavior:auto}
           <div class="fld"><label for="cBal">Saldo <span class="accU">$</span></label><input id="cBal" inputmode="decimal" value="1000"></div>
           <div class="fld"><label for="cRisk">Risiko per posisi (%)</label><input id="cRisk" inputmode="decimal" value="1"></div>
           <div class="fld"><label for="cSL">Stop loss (pips)</label><input id="cSL" inputmode="decimal" value="30"><span class="hint">Scalping 30 · Intraday 50</span></div>
-          <div class="fld"><label for="cRR">Target (RR)</label><select id="cRR"><option value="1">1 : 1</option><option value="1.5">1 : 1.5</option><option value="2" selected>1 : 2</option><option value="3">1 : 3</option></select></div>
+          <div class="fld"><label for="cRR">Target (RR)</label><select id="cRR"><option value="1">1 : 1</option><option value="1.5">1 : 1.5</option><option value="2">1 : 2</option><option value="3" selected>1 : 3</option></select></div>
         </div>
 
         <div data-p="pl" hidden>
@@ -733,8 +737,9 @@ html{scroll-behavior:auto}
           <div class="levels">
             <div class="lv"><div class="k">Entry</div><div class="v lockable" id="lvE">—</div></div>
             <div class="lv sl"><div class="k">Stop loss</div><div class="v lockable" id="lvSL">—</div></div>
-            <div class="lv tp"><div class="k">TP 1 (1R)</div><div class="v lockable" id="lvTP1">—</div></div>
-            <div class="lv tp"><div class="k" id="tp2k">TP 2</div><div class="v lockable" id="lvTP2">—</div></div>
+            <div class="lv be"><div class="k">SL+ (1:1)</div><div class="v lockable" id="lvBE">—</div></div>
+            <div class="lv tp"><div class="k">TP 1 (1:2)</div><div class="v lockable" id="lvTP1">—</div></div>
+            <div class="lv tp max"><div class="k" id="tp2k">TP MAX (1:3)</div><div class="v lockable" id="lvTP2">—</div></div>
           </div>
           <div class="lockbar">
             <p>Entry, SL, TP &amp; lot khusus <b>member DirmuFX</b>. Gratis dengan buka akun lewat link kami.</p>
@@ -744,7 +749,7 @@ html{scroll-behavior:auto}
             <div class="small muted" id="sigwhy"></div>
             <div class="row notifrow"><button class="btn" id="notifBtn">Aktifkan notifikasi sinyal</button><span class="small muted" id="notifState">Bunyi + pop-up saat sinyal muncul (selama tool terbuka)</span></div>
             <div class="grid2">
-              <div class="field"><label for="rr">Rasio RR</label><select id="rr"><option value="1.5">1 : 1.5</option><option value="2" selected>1 : 2</option><option value="3">1 : 3</option></select></div>
+              <div class="field"><label for="rr">Rasio RR</label><select id="rr"><option value="3" selected>1 : 3</option></select></div>
               <div class="field"><label for="slm">SL</label><select id="slm"><option value="1">1.0 × ATR</option><option value="1.5" selected>1.5 × ATR</option><option value="2">2.0 × ATR</option></select></div>
               <div class="field"><label for="bal">Saldo $</label><input id="bal" class="num" inputmode="decimal" value="1000"></div>
               <div class="field"><label for="risk">Risiko %</label><input id="risk" class="num" inputmode="decimal" value="1"></div>
@@ -1126,7 +1131,7 @@ function plan(a,rr,slm){
   else{const r=v.sw.res.find(x=>x>e+.5*atrv&&x<e+2.6*atrv);if(r)sl=Math.max(sl,r+.25*atrv)}
   const s=dir==="BUY"?1:-1,pip=PIP[S.sym]||0.1,cap=(((SL_PAIR[S.sym]||SL_CAP)[currentTf()])||50)*pip;
   let risk=cap;sl=e-s*risk;
-  return{lean:dir,entry:e,sl,tp1:e+s*risk,tp2:e+s*risk*rr,risk,slPips:risk/pip,capped:Math.abs(e-sl)>=cap-1e-9};
+  return{lean:dir,entry:e,sl,be:e+s*risk,tp1:e+s*risk*2,tp2:e+s*risk*3,risk,slPips:risk/pip,capped:Math.abs(e-sl)>=cap-1e-9};
 }
 
 /* ================= UI build ================= */
@@ -1161,9 +1166,9 @@ function render(){
   $("sigcard").dataset.dir=a.dir;$("sigtf").textContent=tfName(tf);
   $("sigword").textContent=a.dir==="WAIT"?"TUNGGU":a.dir;
   $("sigstr").textContent=a.strength+"%";$("sigbar").style.width=a.strength+"%";
-  $("lvE").textContent=fx(p.entry);$("lvSL").textContent=fx(p.sl);$("lvTP1").textContent=fx(p.tp1);$("lvTP2").textContent=fx(p.tp2);
-  $("tp2k").textContent="TP 2 ("+rr+"R)";
-  const U=S.sym==="BTCUSD"?(n=>"$"+Math.round(n).toLocaleString("en-US")):(n=>n.toFixed(0)+" pips");const why=[`SL ${U(p.slPips)} · TP2 ${U(p.slPips*rr)} (SL tetap ${tfName(tf)})`,`ATR ${fx(a.v.atr)}`,`ADX ${isNaN(a.v.adx)?"—":a.v.adx.toFixed(0)}${a.v.adx<20?" (sideways)":a.v.adx>25?" (tren kuat)":""}`];
+  $("lvE").textContent=fx(p.entry);$("lvSL").textContent=fx(p.sl);$("lvBE").textContent=fx(p.be);$("lvTP1").textContent=fx(p.tp1);$("lvTP2").textContent=fx(p.tp2);
+  $("tp2k").textContent="TP MAX (1:3)";
+  const U=S.sym==="BTCUSD"?(n=>"$"+Math.round(n).toLocaleString("en-US")):(n=>n.toFixed(0)+" pips");const why=[`SL ${U(p.slPips)} · TP MAX ${U(p.slPips*3)} (SL tetap ${tfName(tf)})`,`ATR ${fx(a.v.atr)}`,`ADX ${isNaN(a.v.adx)?"—":a.v.adx.toFixed(0)}${a.v.adx<20?" (sideways)":a.v.adx>25?" (tren kuat)":""}`];
   if(a.dir==="WAIT")why.push(`${a.reason} Level di atas hanya rencana jika ${p.lean} terkonfirmasi.`);else if(a.htf)why.push(`Searah tren ${tfName(a.htf.tf)} ✓`);
   if(SYMS[S.sym].spot&&mode()==="live"){const n=new Date(),dy=n.getUTCDay(),hr=n.getUTCHours();if((dy===5&&hr>=21)||dy===6||(dy===0&&hr<22))why.unshift("Pasar emas sedang tutup (weekend). Jangan pakai sinyal ini untuk entry.")}
   if(mode()==="live"&&S.lastAt)why.unshift("Dihitung "+hm(S.lastAt)+" dari candle yang sudah tutup · harga "+fx(a.live));$("sigwhy").textContent=why.join(" · ");
@@ -1185,7 +1190,7 @@ function renderMTF(){
     if(!d)return`<div class="${mm===tf?"cur":""}"><div class="t">${n}</div><div class="s NA">—</div><div class="t">&nbsp;</div></div>`;
     const r=analyse(d,mm);return`<div class="${mm===tf?"cur":""}"><div class="t">${n}</div><div class="s ${r.dir}">${r.dir}</div><div class="t">${r.strength}%</div></div>`}).join("");
 }
-function clearAll(msg){last=null;["lvE","lvSL","lvTP1","lvTP2","lot","riskusd","rewusd"].forEach(i=>$(i).textContent="—");$("sigword").textContent="—";$("sigstr").textContent="0%";$("sigbar").style.width=0;$("indTbl").innerHTML="";$("lvlTbl").innerHTML="";$("sigwhy").textContent="";$("lastpx").textContent="—";renderMTF();draw(msg)}
+function clearAll(msg){last=null;["lvE","lvSL","lvBE","lvTP1","lvTP2","lot","riskusd","rewusd"].forEach(i=>$(i).textContent="—");$("sigword").textContent="—";$("sigstr").textContent="0%";$("sigbar").style.width=0;$("indTbl").innerHTML="";$("lvlTbl").innerHTML="";$("sigwhy").textContent="";$("lastpx").textContent="—";renderMTF();draw(msg)}
 function lotCalc(){
   if(!last)return;const cfg=SYMS[S.sym],{p}=last,bal=parseFloat($("bal").value)||0,rk=parseFloat($("risk").value)||0;
   const riskUsd=bal*rk/100;let perLot=p.risk*cfg.cs;if(!cfg.quoteUSD)perLot/=p.entry;
@@ -1224,7 +1229,7 @@ function draw(msg){
   const hline=(v,col,label,dash)=>{const yy=Math.round(y(v))+.5;ctx.setLineDash(dash);ctx.strokeStyle=col;ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(0,yy);ctx.lineTo(plotW,yy);ctx.stroke();ctx.setLineDash([]);
     ctx.fillStyle=col;ctx.fillRect(plotW+1,yy-9,axisW-1,18);ctx.fillStyle=C.bg;ctx.textAlign="left";ctx.fillText(fx(v),plotW+5,yy);
     if(label){ctx.fillStyle=col;ctx.fillText(label,4,yy-8)}};
-  if(!isLocked()){hline(p.sl,C.down,"SL",[5,4]);hline(p.tp1,C.up,"TP1",[2,4]);hline(p.tp2,C.up,"TP2",[5,4])}
+  if(!isLocked()){hline(p.sl,C.down,"SL",[5,4]);hline(p.be,C.violet,"SL+",[2,4]);hline(p.tp1,C.up,"TP1",[2,4]);hline(p.tp2,C.up,"TP MAX",[5,4])}
   hline(a.v.close,C.fg,null,[1,3]);
   ctx.strokeStyle=C.line;ctx.beginPath();ctx.moveTo(0,rsiTop-6.5);ctx.lineTo(W,rsiTop-6.5);ctx.stroke();
   const ry=v=>rsiTop+(100-v)/100*rsiH;
@@ -1480,7 +1485,7 @@ function notifyCheck(a,tf,p){
   if(!NT.on||!prev)return;   // render pertama hanya mencatat, tidak membunyikan
   const locked=isLocked();
   if(a.dir!=="WAIT"&&prev.dir!==a.dir){
-    toast(a.dir,`SINYAL ${a.dir} ${S.sym} · ${tfName(tf)}`,locked?`Konfluensi ${a.strength}%. Entry, SL & TP khusus member.`:`Entry ${fx(p.entry)} · SL ${fx(p.sl)} · TP1 ${fx(p.tp1)} · TP2 ${fx(p.tp2)}`);
+    toast(a.dir,`SINYAL ${a.dir} ${S.sym} · ${tfName(tf)}`,locked?`Konfluensi ${a.strength}%. Entry, SL & TP khusus member.`:`Entry ${fx(p.entry)} · SL ${fx(p.sl)} · SL+ ${fx(p.be)} · TP1 ${fx(p.tp1)} · TP MAX ${fx(p.tp2)}`);
   }else if(pre&&prev.dir==="WAIT"&&prev.pre!==pre){
     toast("PRE",`SIAP-SIAP ${pre} ${S.sym} · ${tfName(tf)}`,`Sinyal hampir terbentuk (konfluensi ${a.strength}%). Tunggu konfirmasi.`);
   }
