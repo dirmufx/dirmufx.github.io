@@ -93,6 +93,12 @@ main{padding-block:16px 40px}
 .tvwide iframe,.tvtape iframe,.tvbox iframe{color-scheme:normal}
 .tvbox,.tvwide,.tvtape,.qbox{color-scheme:light;border-radius:10px;overflow:hidden;background:#13111d}
 .tvbox iframe,.tvwide iframe,.tvtape iframe{color-scheme:light}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:50;width:min(92vw,440px);background:var(--panel2);border:1px solid var(--line);border-left:4px solid var(--violet);border-radius:12px;padding:12px 14px;box-shadow:0 10px 30px rgba(0,0,0,.5);display:flex;gap:10px;align-items:flex-start}
+.toast.BUY{border-left-color:var(--up)} .toast.SELL{border-left-color:var(--down)} .toast.PRE{border-left-color:var(--amber)}
+.toast b{display:block;font-family:var(--f-display);letter-spacing:.06em;font-size:15px}
+.toast p{margin:2px 0 0;font-size:13px;color:var(--muted)}
+.toast button{margin-left:auto;background:none;border:0;color:var(--muted);font-size:18px;line-height:1}
+#notifBtn[aria-pressed="true"]{border-color:var(--up);color:var(--up)}
 .canvasbox{position:relative;width:100%;height:clamp(300px,52vh,460px)}
 canvas{display:block;width:100%;height:100%;touch-action:pan-y}
 .legend{display:flex;gap:12px;flex-wrap:wrap;font-size:11px;color:var(--muted);padding:8px 4px 0}
@@ -253,7 +259,7 @@ a.btn{text-decoration:none;display:inline-flex;align-items:center}
 
       <div class="settings" id="settings" hidden>
                 <div class="row">
-          <div class="field" style="width:220px"><label for="every">Hitung ulang sinyal</label><select id="every"><option value="1">tiap 1 menit</option><option value="5" selected>tiap 5 menit</option><option value="15">tiap 15 menit</option><option value="0">manual</option></select></div>
+          <div class="field" style="width:220px"><label for="every">Hitung ulang sinyal</label><select id="every"><option value="1" selected>tiap 1 menit</option><option value="5">tiap 5 menit</option><option value="15">tiap 15 menit</option><option value="0">manual</option></select></div>
           <button class="btn primary" id="saveSet">Simpan</button>
           <span class="small muted" id="setMsg"></span>
         </div>
@@ -308,6 +314,7 @@ a.btn{text-decoration:none;display:inline-flex;align-items:center}
           </div>
           <div class="sigfoot">
             <div class="small muted" id="sigwhy"></div>
+            <div class="row notifrow"><button class="btn" id="notifBtn">Aktifkan notifikasi sinyal</button><span class="small muted" id="notifState">Bunyi + pop-up saat sinyal muncul (selama tool terbuka)</span></div>
             <div class="grid2">
               <div class="field"><label for="rr">Rasio RR</label><select id="rr"><option value="1.5">1 : 1.5</option><option value="2" selected>1 : 2</option><option value="3">1 : 3</option></select></div>
               <div class="field"><label for="slm">SL</label><select id="slm"><option value="1">1.0 × ATR</option><option value="1.5" selected>1.5 × ATR</option><option value="2">2.0 × ATR</option></select></div>
@@ -390,41 +397,32 @@ a.btn{text-decoration:none;display:inline-flex;align-items:center}
   <!-- FUNDAMENTAL -->
   <section class="view" id="v-fundamental" hidden>
     <div class="card">
-      <h2>Bias fundamental emas (XAUUSD)</h2>
-      <div class="bias">
-        <span class="biasword" style="color:var(--down)">Bearish–Netral</span>
-        <span class="chip warn">Snapshot 2 Nov 2026</span>
-      </div>
-      <p class="note" style="margin:8px 0 0;max-width:70ch">Tekanan utama: ekspektasi kenaikan suku bunga Fed dan aksi jual paksa (margin call). Penahan: geopolitik Selat Hormuz, yield yang turun, dan RSI H4 yang sangat oversold. Bagian ini ditulis manual; cek tab Berita untuk perkembangan terbaru.</p>
+      <h2 id="fTitle">Bias fundamental</h2>
+      <div class="bias"><span class="biasword" id="fBias"></span><span class="chip warn">Snapshot 2 Nov 2026</span></div>
+      <p class="note" id="fSum" style="margin:8px 0 0;max-width:70ch"></p>
     </div>
     <div class="card">
       <h2>Faktor penggerak</h2>
       <div class="drivers" id="drvList"></div>
     </div>
     <div class="card">
-      <h2>Zona harga penting (referensi analis)</h2>
-      <div class="lvlgrid">
-        <div><div class="k">Resistance 3</div><div class="num">4104 – 4115</div></div>
-        <div><div class="k">Support 1</div><div class="num">3885 – 3904</div></div>
-        <div><div class="k">Resistance 2</div><div class="num">4074 – 4083</div></div>
-        <div><div class="k">Support 2</div><div class="num">3829 – 3849</div></div>
-        <div><div class="k">Resistance 1</div><div class="num">3971 – 3982</div></div>
-        <div><div class="k">Support 3</div><div class="num">3780 – 3800</div></div>
-      </div>
-      <p class="note" style="margin:10px 0 0">Sumber: analisa Mitrade 2 Nov 2026. Low tahunan 3879.90.</p>
+      <h2>Zona harga penting</h2>
+      <div class="lvlgrid" id="fLv"></div>
+      <p class="note" id="fSrc" style="margin:10px 0 0"></p>
     </div>
     <div class="card">
-      <h2>Data makro (2 Nov 2026)</h2>
+      <h2>Data makro AS (2 Nov 2026)</h2>
       <table class="tbl">
-        <tr><th>Indikator</th><th class="r">Nilai</th><th class="r">Efek ke emas</th></tr>
-        <tr><td>Fed Funds Rate</td><td class="r num">3.75–4.00%</td><td class="r"><span class="chip down">Bearish</span></td></tr>
-        <tr><td>Core PCE</td><td class="r num">3.1%</td><td class="r"><span class="chip down">Bearish</span></td></tr>
-        <tr><td>GDP AS Q3</td><td class="r num">3.4%</td><td class="r"><span class="chip down">Bearish</span></td></tr>
-        <tr><td>Yield US 10 tahun</td><td class="r num">4.93%</td><td class="r"><span class="chip flat">Netral</span></td></tr>
-        <tr><td>Yield US 2 tahun</td><td class="r num">4.58%</td><td class="r"><span class="chip flat">Netral</span></td></tr>
-        <tr><td>Brent</td><td class="r num">$117.64</td><td class="r"><span class="chip flat">Campuran</span></td></tr>
-        <tr><td>Pengangguran AS</td><td class="r num">4.2%</td><td class="r"><span class="chip flat">Netral</span></td></tr>
+        <tr><th>Indikator</th><th class="r">Nilai</th></tr>
+        <tr><td>Fed Funds Rate</td><td class="r num">3.75–4.00%</td></tr>
+        <tr><td>Core PCE</td><td class="r num">3.1%</td></tr>
+        <tr><td>GDP AS Q3</td><td class="r num">3.4%</td></tr>
+        <tr><td>Yield US 10 tahun</td><td class="r num">4.93%</td></tr>
+        <tr><td>Yield US 2 tahun</td><td class="r num">4.58%</td></tr>
+        <tr><td>Brent</td><td class="r num">$117.64</td></tr>
+        <tr><td>Pengangguran AS</td><td class="r num">4.2%</td></tr>
       </table>
+      <p class="note" style="margin:10px 0 0">Data AS menggerakkan semua pair yang ada USD-nya. Jadwal rilis berikutnya ada di tab Kalender.</p>
     </div>
   </section>
 
@@ -465,6 +463,7 @@ a.btn{text-decoration:none;display:inline-flex;align-items:center}
   </section>
 </main>
 
+<div class="toast" id="toast" role="status" aria-live="polite" hidden><div><b id="toastT"></b><p id="toastM"></p></div><button id="toastX" aria-label="Tutup">×</button></div>
 <script>
 /* ===== PENGATURAN IB — ubah bagian ini saja ===== */
 const IB={
@@ -492,7 +491,7 @@ const TFS=[["M1",1,"1min"],["M5",5,"5min"],["M15",15,"15min"],["M30",30,"30min"]
 const $=id=>document.getElementById(id);
 const store={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
 const cfgSaved=(()=>{try{return JSON.parse(store.get("dfx-cfg")||"{}")}catch(e){return{}}})();
-const S={sym:cfgSaved.sym||"XAUUSD",tf:cfgSaved.tf||5,every:[0,1,5,15].includes(cfgSaved.every)?cfgSaved.every:5,
+const S={sym:cfgSaved.sym||"XAUUSD",tf:cfgSaved.tf||5,every:[0,1,5,15].includes(cfgSaved.every)?cfgSaved.every:1,
   imported:{},view:"analisa",hover:null,live:{},loading:false,err:"",newsF:"all",calImp:2,calCur:"USD"};
 if(cfgSaved.anchors)for(const k in cfgSaved.anchors)if(SYMS[k])SYMS[k].anchor=cfgSaved.anchors[k];
 if(!SYMS[S.sym])S.sym="XAUUSD";
@@ -593,14 +592,33 @@ function analyse(d,tf){
   add("Pivot harian",fx(v.pv.P),.5,close>v.pv.P?1:-1,close>v.pv.P?"Di atas pivot":"Di bawah pivot");
   const adxF=isNaN(v.adx)?.85:v.adx<18?.65:v.adx<25?.85:1;
   const max=votes.reduce((a,x)=>a+x.w,0),norm=votes.reduce((a,x)=>a+x.w*x.score,0)/max;
-  const dir=norm>=.3?"BUY":norm<=-.3?"SELL":"WAIT";
+  const dir=norm>=SIG_MIN?"BUY":norm<=-SIG_MIN?"SELL":"WAIT";
   return{v,votes,dir,strength:Math.round(Math.min(1,Math.abs(norm))*100*adxF),norm,series:{e20,e50,R,B}};
 }
 /* SL tetap (pips) per timeframe, TP = SL x RR. Emas: 1 pip = 0.10 */
 const SL_CAP={1:30,5:30,15:50,30:50,60:100,240:100,1440:100};
 const PIP={XAUUSD:0.1,XAGUSD:0.01,EURUSD:0.0001,GBPUSD:0.0001,USDJPY:0.01,BTCUSD:1};
+/* Filter sinyal: makin tinggi makin jarang tapi lebih kuat */
+const SIG_MIN=0.5;       // ambang konfluensi (sebelumnya 0.30)
+const ADX_MIN=20;        // pasar harus sedang trending
+const HTF={1:5,5:15,15:60,30:60,60:240,240:1440,1440:null}; // scalping: M1→M5, M5→M15 · intraday: M15/M30→H1 // TF besar untuk konfirmasi
+function filterSignal(a,tf){
+  a.reason="";
+  if(a.dir==="WAIT"){a.reason="Konfluensi indikator belum cukup kuat.";return a}
+  if(isNaN(a.v.adx)||a.v.adx<ADX_MIN){a.reason=`ADX ${isNaN(a.v.adx)?"—":a.v.adx.toFixed(0)} di bawah ${ADX_MIN}: pasar sideways.`;a.dir="WAIT";return a}
+  const h=HTF[tf];
+  if(h&&mode()==="live"){
+    const c=S.live[S.sym+"|"+h];
+    if(!c){a.reason=`Menunggu konfirmasi ${tfName(h)}.`;a.dir="WAIT";return a}
+    const hd=c.data.slice(0,-1),ha=analyse(hd,h);
+    const htrend=ha.norm>=0.15?"BUY":ha.norm<=-0.15?"SELL":"WAIT";
+    a.htf={tf:h,dir:htrend};
+    if(htrend!==a.dir){a.reason=`Tren ${tfName(h)} ${htrend==="WAIT"?"belum jelas":"berlawanan ("+htrend+")"}.`;a.dir="WAIT";return a}
+  }
+  return a;
+}
 function plan(a,rr,slm){
-  const v=a.v,atrv=v.atr,e=v.close,dir=a.dir==="WAIT"?(a.norm>=0?"BUY":"SELL"):a.dir;
+  const v=a.v,atrv=v.atr,e=a.live??v.close,dir=a.dir==="WAIT"?(a.norm>=0?"BUY":"SELL"):a.dir;
   let sl=dir==="BUY"?e-slm*atrv:e+slm*atrv;
   if(dir==="BUY"){const s=v.sw.sup.find(x=>x<e-.5*atrv&&x>e-2.6*atrv);if(s)sl=Math.min(sl,s-.25*atrv)}
   else{const r=v.sw.res.find(x=>x>e+.5*atrv&&x<e+2.6*atrv);if(r)sl=Math.max(sl,r+.25*atrv)}
@@ -634,20 +652,21 @@ function render(){
   $("mtfBtn").hidden=m!=="live"||isLocked();
   const d=currentData(),tf=currentTf();
   if(!d){clearAll(S.loading?"Memuat data…":(S.err||"Belum ada data"));$("sigwhy").textContent=m==="nosig"?"Pilih XAUUSD, EURUSD, atau BTCUSD untuk sinyal entry/SL/TP.":(S.loading?"Memuat data…":(S.err||""));return}
-  const a=analyse(d,tf),rr=+$("rr").value,p=plan(a,rr,+$("slm").value);
+  const a=filterSignal(analyse(d.slice(0,-1),tf),tf);a.live=d[d.length-1].c;const rr=+$("rr").value,p=plan(a,rr,+$("slm").value);
   last={d,a,p,tf};
-  const prevC=d[d.length-2].c,chg=a.v.close-prevC;
-  $("lastpx").innerHTML=`${fx(a.v.close)}<small style="color:${chg>=0?"var(--up)":"var(--down)"}">${chg>=0?"+":""}${fx(chg)}</small>`;
+  const prevC=d[d.length-2].c,chg=a.live-prevC;
+  $("lastpx").innerHTML=`${fx(a.live)}<small style="color:${chg>=0?"var(--up)":"var(--down)"}">${chg>=0?"+":""}${fx(chg)}</small>`;
   $("sigcard").dataset.dir=a.dir;$("sigtf").textContent=tfName(tf);
   $("sigword").textContent=a.dir==="WAIT"?"TUNGGU":a.dir;
   $("sigstr").textContent=a.strength+"%";$("sigbar").style.width=a.strength+"%";
   $("lvE").textContent=fx(p.entry);$("lvSL").textContent=fx(p.sl);$("lvTP1").textContent=fx(p.tp1);$("lvTP2").textContent=fx(p.tp2);
   $("tp2k").textContent="TP 2 ("+rr+"R)";
   const why=[`SL ${p.slPips.toFixed(0)} pips · TP2 ${(p.slPips*rr).toFixed(0)} pips (SL tetap ${tfName(tf)})`,`ATR ${fx(a.v.atr)}`,`ADX ${isNaN(a.v.adx)?"—":a.v.adx.toFixed(0)}${a.v.adx<20?" (sideways)":a.v.adx>25?" (tren kuat)":""}`];
-  if(a.dir==="WAIT")why.push(`Konfluensi belum cukup. Level di atas adalah rencana jika ${p.lean} terkonfirmasi.`);
+  if(a.dir==="WAIT")why.push(`${a.reason} Level di atas hanya rencana jika ${p.lean} terkonfirmasi.`);else if(a.htf)why.push(`Searah tren ${tfName(a.htf.tf)} ✓`);
   if(SYMS[S.sym].spot&&mode()==="live"){const n=new Date(),dy=n.getUTCDay(),hr=n.getUTCHours();if((dy===5&&hr>=21)||dy===6||(dy===0&&hr<22))why.unshift("Pasar emas sedang tutup (weekend). Jangan pakai sinyal ini untuk entry.")}
-  if(mode()==="live"&&S.lastAt)why.unshift("Dihitung "+hm(S.lastAt)+" dari harga "+fx(a.v.close));$("sigwhy").textContent=why.join(" · ");
+  if(mode()==="live"&&S.lastAt)why.unshift("Dihitung "+hm(S.lastAt)+" dari candle yang sudah tutup · harga "+fx(a.live));$("sigwhy").textContent=why.join(" · ");
   lotCalc();
+  notifyCheck(a,tf,p);
   $("indTbl").innerHTML="<tr><th>Indikator</th><th class='r'>Nilai</th><th class='r'>Status</th></tr>"+a.votes.map(x=>`<tr><td>${x.name}</td><td class="r num">${x.val}</td><td class="r"><span class="chip ${x.score>0?"up":x.score<0?"down":"flat"}">${x.txt}</span></td></tr>`).join("")
     +`<tr><td>ADX 14</td><td class="r num">${isNaN(a.v.adx)?"—":a.v.adx.toFixed(1)}</td><td class="r"><span class="chip flat">${a.v.adx<20?"Lemah":a.v.adx<25?"Sedang":"Kuat"}${a.v.pdi>a.v.mdi?" · +DI":" · −DI"}</span></td></tr>`;
   const pv=a.v.pv,sw=a.v.sw;
@@ -724,12 +743,12 @@ async function refresh(force){
   if(mode()!=="live"){render();return}
   S.loading=true;S.err="";setStatus("Memuat…");
   if(!currentData())render();
-  try{await loadLive(S.sym,S.tf,force);S.lastAt=Date.now();setStatus("Update "+hm(S.lastAt))}
+  try{await loadLive(S.sym,S.tf,force);if(HTF[S.tf])await loadLive(S.sym,HTF[S.tf],force).catch(()=>{});S.lastAt=Date.now();setStatus("Update "+hm(S.lastAt))}
   catch(e){S.err=e.message||"Gagal memuat data. Cek koneksi internet.";setStatus(S.err,true)}
   S.loading=false;render();
 }
 let timer=null;
-function schedule(){clearInterval(timer);if(S.every>0)timer=setInterval(()=>{if(document.visibilityState==="visible"&&S.view==="analisa")refresh(true)},S.every*60000)}
+function schedule(){clearInterval(timer);if(S.every>0)timer=setInterval(()=>{if(document.visibilityState==="visible")refresh(true)},S.every*60000)}
 document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible"&&mode()==="live"&&S.lastAt&&Date.now()-S.lastAt>S.every*60000&&S.every>0)refresh(true)});
 
 $("mtfBtn").addEventListener("click",async()=>{
@@ -745,7 +764,7 @@ setInterval(()=>{const tf=currentTf()*60,now=Date.now()/1000,r=Math.ceil(tf-(now
   if(r<=1&&mode()==="demo")setTimeout(render,1200);},1000);
 
 /* ================= events ================= */
-symSel.addEventListener("change",()=>{S.sym=symSel.value;S.hover=null;saveCfg();resetAI();refresh(false)});
+symSel.addEventListener("change",()=>{S.sym=symSel.value;renderFund();S.hover=null;saveCfg();resetAI();refresh(false)});
 tfrow.addEventListener("click",e=>{const b=e.target.closest(".tf");if(!b||b.disabled)return;S.tf=+b.dataset.m;S.hover=null;saveCfg();resetAI();refresh(false)});
 ["rr","slm"].forEach(i=>$(i).addEventListener("change",render));
 ["bal","risk"].forEach(i=>$(i).addEventListener("input",lotCalc));
@@ -804,15 +823,65 @@ function mountView(v){
 }
 
 /* ================= fundamentals (manual snapshot) ================= */
-const DRV=[
- ["Kebijakan Fed","down","Bearish","Fed menahan 3.75–4.00%, dua pejabat minta kenaikan. Pasar memperkirakan kenaikan Desember. Suku bunga tinggi membuat emas kurang menarik."],
- ["Likuidasi & margin call","down","Bearish jk. pendek","Penurunan saham teknologi memaksa investor menjual emas dan perak untuk dana tunai."],
- ["Geopolitik Selat Hormuz","up","Bullish","Serangan kapal tanker menaikkan risiko pasokan minyak dan permintaan aset aman."],
- ["Minyak & inflasi","flat","Campuran","Brent 117.64 menjaga emas sebagai lindung nilai, tapi juga mendorong Fed lebih hawkish."],
- ["Yield obligasi AS","up","Bullish (tertunda)","Yield 10 tahun turun ke 4.93%. Biasanya positif untuk emas, kali ini tertutup kebutuhan dana tunai."],
- ["Pemilu sela AS & NFP","flat","Volatilitas","Hasil pemilu dan NFP Jumat malam bisa memicu pergerakan besar dua arah. Kurangi lot menjelang rilis."]
-];
-$("drvList").innerHTML=DRV.map(d=>`<div class="drv"><h3>${d[0]}</h3><span class="chip ${d[1]}">${d[2]}</span><p>${d[3]}</p></div>`).join("");
+const FUND={
+ XAUUSD:{name:"Emas (XAUUSD)",bias:"Bearish–Netral",col:"down",
+  sum:"Tekanan utama: ekspektasi kenaikan suku bunga Fed dan aksi jual paksa (margin call). Penahan: geopolitik Selat Hormuz, yield yang turun, dan RSI H4 yang sangat oversold.",
+  drv:[["Kebijakan Fed","down","Bearish","Fed menahan 3.75–4.00%, dua pejabat minta kenaikan. Pasar memperkirakan kenaikan Desember. Suku bunga tinggi membuat emas kurang menarik."],
+   ["Likuidasi & margin call","down","Bearish jk. pendek","Penurunan saham teknologi memaksa investor menjual emas dan perak untuk dana tunai."],
+   ["Geopolitik Selat Hormuz","up","Bullish","Serangan kapal tanker menaikkan risiko pasokan minyak dan permintaan aset aman."],
+   ["Minyak & inflasi","flat","Campuran","Brent 117.64 menjaga emas sebagai lindung nilai, tapi juga mendorong Fed lebih hawkish."],
+   ["Pemilu sela AS & NFP","flat","Volatilitas","Hasil pemilu dan NFP Jumat malam bisa memicu pergerakan besar dua arah. Kurangi lot menjelang rilis."]],
+  lv:[["Resistance 1","3971 – 3982"],["Support 1","3885 – 3904"],["Resistance 2","4074 – 4083"],["Support 2","3829 – 3849"],["Resistance 3","4104 – 4115"],["Support 3","3780 – 3800"]],
+  src:"Sumber: Mitrade, 2 Nov 2026. Low tahunan 3879.90."},
+ XAGUSD:{name:"Perak (XAGUSD)",bias:"Bearish",col:"down",
+  sum:"Perak jatuh lebih dari 6% ke sekitar 48.95 karena likuidasi yang sama dengan emas. Analis memilih menjual saat harga naik selama di bawah 55.",
+  drv:[["Likuidasi pasar","down","Bearish","Aksi jual saham teknologi memaksa investor melepas logam mulia untuk dana tunai."],
+   ["Yield riil AS","down","Bearish","Imbal hasil riil yang menarik mengurangi minat pada logam tanpa bunga."],
+   ["Ekspektasi Fed","down","Bearish","Pasar memperkirakan kenaikan suku bunga Desember."],
+   ["Permintaan industri","flat","Netral","Belum ada katalis baru dari sisi industri minggu ini."]],
+  lv:[["Resistance kunci","55.00"],["Level psikologis","50.00"],["Low terbaru","48.95"],["",""]],
+  src:"Sumber: Mitrade & DailyForex, 2 Nov 2026."},
+ EURUSD:{name:"Euro (EURUSD)",bias:"Bearish",col:"down",
+  sum:"Fed dan ECB sama-sama menahan suku bunga, tapi selisih bunga masih menguntungkan USD. Risiko gangguan energi di Eropa ikut menekan euro. Analis memilih jual saat rally jangka pendek.",
+  drv:[["Selisih suku bunga","down","Bearish","Bunga AS lebih tinggi daripada zona euro, jadi modal cenderung ke USD."],
+   ["Energi Eropa","down","Bearish","Harga minyak tinggi (Brent 117) dan risiko pasokan membebani ekonomi Eropa."],
+   ["Inflasi zona euro","flat","Perhatikan","CPI flash Oktober rilis Rabu (sebelumnya 3.8%). Angka tinggi bisa mendorong ECB lebih hawkish."],
+   ["NFP & pemilu AS","flat","Volatilitas","Data tenaga kerja AS lemah bisa melemahkan USD dan mengangkat EURUSD."]],
+  lv:[],src:"Sumber: DailyForex & Newsquawk, 2 Nov 2026. Lihat Level kunci di tab Analisa untuk angka teknikal."},
+ GBPUSD:{name:"Pound (GBPUSD)",bias:"Netral–Bullish",col:"up",
+  sum:"Bank of England diperkirakan menaikkan suku bunga 25bp hari Kamis untuk memulai siklus pengetatan. Ini mendukung pound, tapi NFP dan pemilu AS bisa membalikkan arah.",
+  drv:[["Kenaikan bunga BoE","up","Bullish","Kenaikan 25bp hampir pasti. Fokus pada hasil voting dan arah setelah November."],
+   ["Ekspektasi Fed","down","Bearish","Fed condong naikkan bunga di Desember, menahan pelemahan USD."],
+   ["NFP Jumat","flat","Volatilitas","Konsensus +55 ribu. Data lemah bisa mengangkat GBPUSD."]],
+  lv:[],src:"Sumber: Newsquawk, 2 Nov 2026. Lihat Level kunci di tab Analisa untuk angka teknikal."},
+ USDJPY:{name:"Yen (USDJPY)",bias:"Netral (USD unggul)",col:"flat",
+  sum:"Fed dan Bank of Japan sama-sama menahan suku bunga. Jangka panjang analis lebih memilih USD, tapi jangka pendek pasangan ini cenderung bergerak menyamping di 156.50–159.",
+  drv:[["Selisih suku bunga","up","Bullish USD","Bunga AS jauh di atas Jepang, mendukung USDJPY naik."],
+   ["Risiko intervensi","down","Waspada","Mendekati 159–160, risiko intervensi pemerintah Jepang meningkat."],
+   ["Sentimen risiko","flat","Campuran","Saat pasar saham panik, yen biasanya menguat sebagai aset aman."]],
+  lv:[["Resistance","159.00"],["Support","156.50"]],
+  src:"Sumber: DailyForex, 2 Nov 2026. Tembus 156.50 bisa memicu tekanan jual lanjutan."},
+ BTCUSD:{name:"Bitcoin (BTCUSD)",bias:"Bearish–Netral",col:"down",
+  sum:"BTC di sekitar 78.000 setelah sempat turun ke 76.300. Sentimen tertekan oleh peretasan Binance sekitar $6.3 miliar, arus keluar ETF, dan aksi jual saham teknologi. Fear & Greed di 37 (takut).",
+  drv:[["Peretasan Binance","down","Bearish","Peretasan sekitar $6.3 miliar; FBI mengaitkannya dengan kelompok Korea Utara. Arus keluar dari Binance besar setelah penarikan dibuka lagi."],
+   ["ETF spot BTC","down","Bearish","Arus keluar bersih $643 juta pada 30 Okt; dana institusi belum kembali."],
+   ["Saham teknologi","down","Bearish","Nasdaq turun 2.86% dan indeks semikonduktor turun 7.2% hari Jumat."],
+   ["Ekspektasi Fed","down","Bearish","Kemungkinan kenaikan bunga menekan aset berisiko."],
+   ["Pemilu sela AS","flat","Volatilitas","Hasil pemilu bisa mengubah arah regulasi kripto."]],
+  lv:[["Resistance","80,000"],["Support","76,000"]],
+  src:"Sumber: KuCoin Daily Report, 2 Nov 2026. Tembus 80,000 dengan arus ETF membaik bisa memicu pemulihan."}
+};
+function renderFund(){
+  const f=FUND[S.sym]||FUND.XAUUSD;
+  $("fTitle").textContent="Bias fundamental "+f.name;
+  $("fBias").textContent=f.bias;$("fBias").style.color=f.col==="up"?"var(--up)":f.col==="down"?"var(--down)":"var(--amber)";
+  $("fSum").textContent=f.sum;
+  $("drvList").innerHTML=f.drv.map(d=>`<div class="drv"><h3>${d[0]}</h3><span class="chip ${d[1]}">${d[2]}</span><p>${d[3]}</p></div>`).join("");
+  const lv=f.lv.filter(x=>x[0]);$("fLv").hidden=!lv.length;
+  $("fLv").innerHTML=lv.map(x=>`<div><div class="k">${x[0]}</div><div class="num">${x[1]}</div></div>`).join("");
+  $("fSrc").textContent=f.src;
+}
+renderFund();
 
 /* ================= AI (only when opened inside Claude) ================= */
 let sample=null,aiCtl=null;
@@ -853,6 +922,46 @@ $("codeBtn").addEventListener("click",async()=>{
   if(IB.codeHashes.includes(h)){store.set("dfx-member","1");applyLock();render();$("codeMsg").innerHTML='<span class="unlocked-msg">Akses member aktif. Semua sinyal sudah terbuka di tab Analisa.</span>'}
   else{$("codeMsg").innerHTML='<span class="err">Kode tidak cocok. Cek lagi atau hubungi admin DirmuFX.</span>'}
 });
+
+/* ================= notifikasi sinyal (selama tool terbuka) ================= */
+const NT={on:store.get("dfx-notif")==="1",ctx:null,seen:{},titleT:null};
+function setNotifUI(){$("notifBtn").setAttribute("aria-pressed",NT.on);$("notifBtn").textContent=NT.on?"Notifikasi aktif":"Aktifkan notifikasi sinyal";
+  $("notifState").textContent=NT.on?"Bunyi + pop-up saat sinyal / siap-siap muncul. Biarkan tool tetap terbuka.":"Bunyi + pop-up saat sinyal muncul (selama tool terbuka)"}
+$("notifBtn").addEventListener("click",async()=>{
+  NT.on=!NT.on;store.set("dfx-notif",NT.on?"1":"0");
+  if(NT.on){try{NT.ctx=NT.ctx||new (window.AudioContext||window.webkitAudioContext)();await NT.ctx.resume()}catch(e){}
+    try{if(window.Notification&&Notification.permission==="default")await Notification.requestPermission()}catch(e){}
+    beep("PRE");if(S.every===0||S.every>1){S.every=1;$("every").value="1";saveCfg();schedule()}}
+  setNotifUI();
+});
+setNotifUI();
+function beep(kind){
+  try{const c=NT.ctx;if(!c)return;const tones=kind==="PRE"?[660]:kind==="BUY"?[660,880,1100]:[1100,880,660];
+    tones.forEach((f,i)=>{const o=c.createOscillator(),g=c.createGain();o.frequency.value=f;o.type="sine";o.connect(g);g.connect(c.destination);
+      const t=c.currentTime+i*.18;g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.3,t+.02);g.gain.exponentialRampToValueAtTime(.0001,t+.16);o.start(t);o.stop(t+.17)})}catch(e){}
+}
+function toast(kind,title,msg){
+  const el=$("toast");el.className="toast "+kind;$("toastT").textContent=title;$("toastM").textContent=msg;el.hidden=false;
+  clearTimeout(NT.hideT);NT.hideT=setTimeout(()=>el.hidden=true,20000);
+  beep(kind);try{navigator.vibrate&&navigator.vibrate(kind==="PRE"?200:[200,100,200])}catch(e){}
+  try{if(window.Notification&&Notification.permission==="granted")new Notification(title,{body:msg,tag:"dfx-"+kind})}catch(e){}
+  clearInterval(NT.titleT);let n=0;const base="DirmuFX Trade Terminal";NT.titleT=setInterval(()=>{document.title=(n++%2)?base:title;if(n>20){clearInterval(NT.titleT);document.title=base}},1000);
+}
+$("toastX").addEventListener("click",()=>$("toast").hidden=true);
+function htfTrend(tf){const h=HTF[tf];if(!h)return null;const c=S.live[S.sym+"|"+h];if(!c)return null;const x=analyse(c.data.slice(0,-1),h);return x.norm>=.15?"BUY":x.norm<=-.15?"SELL":"WAIT"}
+function notifyCheck(a,tf,p){
+  if(mode()!=="live")return;
+  const key=S.sym+"|"+tf,prev=NT.seen[key];
+  const pre=a.dir==="WAIT"&&Math.abs(a.norm)>=0.4&&!isNaN(a.v.adx)&&a.v.adx>=ADX_MIN-2&&htfTrend(tf)===(a.norm>0?"BUY":"SELL")?(a.norm>0?"BUY":"SELL"):"";
+  const now={dir:a.dir,pre};NT.seen[key]=now;
+  if(!NT.on||!prev)return;   // render pertama hanya mencatat, tidak membunyikan
+  const locked=isLocked();
+  if(a.dir!=="WAIT"&&prev.dir!==a.dir){
+    toast(a.dir,`SINYAL ${a.dir} ${S.sym} · ${tfName(tf)}`,locked?`Konfluensi ${a.strength}%. Entry, SL & TP khusus member.`:`Entry ${fx(p.entry)} · SL ${fx(p.sl)} · TP1 ${fx(p.tp1)} · TP2 ${fx(p.tp2)}`);
+  }else if(pre&&prev.dir==="WAIT"&&prev.pre!==pre){
+    toast("PRE",`SIAP-SIAP ${pre} ${S.sym} · ${tfName(tf)}`,`Sinyal hampir terbentuk (konfluensi ${a.strength}%). Tunggu konfirmasi.`);
+  }
+}
 
 /* ================= boot ================= */
 schedule();refresh(false);show(location.hash.slice(1));
