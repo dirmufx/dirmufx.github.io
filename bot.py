@@ -16,7 +16,7 @@ SIG_MIN = 0.5      # ambang konfluensi sinyal
 PRE_MIN = 0.4      # ambang "siap-siap"
 ADX_MIN = 20
 PRE_ALERT = os.environ.get("PRE_ALERT", "1") == "1"
-TOOL_URL = "https://dirmufx.github.io/dirmufx.html"
+TOOL_URL = "https://dirmufx.github.io/#signal-room"
 IB_URL = "https://sc.myuserhub.com/?pt=224062"
 BROKER = "Windsor Brokers"
 STATE_FILE = "state.json"
@@ -54,7 +54,7 @@ def send(text):
     if not TOKEN or not CHAT:
         print("[TIDAK TERKIRIM - token/chat id kosong]\n" + text)
         return
-    kb = json.dumps({"inline_keyboard": [[{"text": "Buka DirmuFX Trade", "url": TOOL_URL}]]})
+    kb = json.dumps({"inline_keyboard": [[{"text": "Buka Signal Room", "url": TOOL_URL}]]})
     extra = {"message_thread_id": THREAD} if THREAD else {}
     r = tg("sendMessage", chat_id=CHAT, text=text, parse_mode="HTML",
            disable_web_page_preview="true", reply_markup=kb, **extra)
