@@ -1,0 +1,39 @@
+name: Sinyal DirmuFX
+on:
+  schedule:
+    - cron: "*/5 * * * *"
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "run / test / chatid"
+        default: "run"
+        type: choice
+        options: [run, test, chatid]
+permissions:
+  contents: read
+concurrency:
+  group: sinyal
+jobs:
+  sinyal:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/cache/restore@v4
+        with:
+          path: state.json
+          key: state-${{ github.run_id }}
+          restore-keys: state-
+      - name: Cek sinyal
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          MODE: ${{ github.event.inputs.mode || 'run' }}
+        run: |
+          [ -f state.json ] || echo '{}' > state.json
+          python3 bot.py
+      - uses: actions/cache/save@v4
+        if: always()
+        with:
+          path: state.json
+          key: state-${{ github.run_id }}
