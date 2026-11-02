@@ -54,8 +54,7 @@ def send(text):
     if not TOKEN or not CHAT:
         print("[TIDAK TERKIRIM - token/chat id kosong]\n" + text)
         return
-    kb = json.dumps({"inline_keyboard": [[{"text": f"Buka akun {BROKER}", "url": IB_URL}],
-                                         [{"text": "Buka DirmuFX Trade", "url": TOOL_URL}]]})
+    kb = json.dumps({"inline_keyboard": [[{"text": "Buka DirmuFX Trade", "url": TOOL_URL}]]})
     extra = {"message_thread_id": THREAD} if THREAD else {}
     r = tg("sendMessage", chat_id=CHAT, text=text, parse_mode="HTML",
            disable_web_page_preview="true", reply_markup=kb, **extra)
