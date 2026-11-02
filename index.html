@@ -191,6 +191,10 @@ html{scroll-behavior:auto}}
 #app .top{position:sticky;top:0;z-index:9;background:rgba(10,10,12,.94);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
 #app .top .wrap{display:flex;flex-direction:column;gap:10px;padding-block:12px 0}
 #app .brandrow{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+#app .brandleft{display:flex;align-items:center;gap:12px}
+#app .backbtn{display:inline-flex;align-items:center;gap:4px;text-decoration:none;color:var(--fg);background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:7px 11px 7px 7px;font-size:13px;font-weight:600;white-space:nowrap}
+#app .backbtn svg{width:18px;height:18px}
+#app .backbtn:hover{border-color:var(--violet-dim)}
 #app .tlogo{display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit}
 #app .tlogo .dmark{width:36px;height:auto;flex:none}
 #app .dword{display:flex;flex-direction:column;line-height:1}
@@ -644,7 +648,7 @@ html{scroll-behavior:auto}
 <header class="top">
   <div class="wrap">
     <div class="brandrow">
-      <a class="tlogo" href="#top" aria-label="DirmuFX Trade beranda"><svg class="dmark" viewBox="0 0 314 343" aria-hidden="true"><path d="M15 15H140A156.5 156.5 0 0 1 140 328H15Z" fill="none" stroke="#63d297" stroke-width="30" stroke-linejoin="round"/><g fill="#fff"><rect x="87" y="159" width="10" height="138" rx="5"/><rect x="69" y="202" width="46" height="58" rx="5"/><rect x="147" y="114" width="10" height="160" rx="5"/><rect x="129" y="153" width="46" height="75" rx="5"/></g><g fill="#63d297"><rect x="207" y="54" width="10" height="175" rx="5"/><rect x="189" y="89" width="46" height="99" rx="5"/></g></svg><span class="dword"><span class="dname">Dirmu<i>FX</i></span><span class="dtrade">TRADE</span></span></a>
+      <div class="brandleft"><a class="backbtn" href="#top" aria-label="Kembali ke beranda"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M12 5l-5 5 5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Beranda</a><div class="tlogo"><svg class="dmark" viewBox="0 0 314 343" aria-hidden="true"><path d="M15 15H140A156.5 156.5 0 0 1 140 328H15Z" fill="none" stroke="#63d297" stroke-width="30" stroke-linejoin="round"/><g fill="#fff"><rect x="87" y="159" width="10" height="138" rx="5"/><rect x="69" y="202" width="46" height="58" rx="5"/><rect x="147" y="114" width="10" height="160" rx="5"/><rect x="129" y="153" width="46" height="75" rx="5"/></g><g fill="#63d297"><rect x="207" y="54" width="10" height="175" rx="5"/><rect x="189" y="89" width="46" height="99" rx="5"/></g></svg><span class="dword"><span class="dname">Dirmu<i>FX</i></span><span class="dtrade">TRADE</span></span></div></div>
       <div class="quote">
         <select class="symsel" id="sym" aria-label="Pilih pair"></select>
         <div class="lastpx" id="lastpx" hidden>—</div>
