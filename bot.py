@@ -25,7 +25,8 @@ TFN = {1: "M1", 5: "M5", 15: "M15", 30: "M30", 60: "H1", 240: "H4"}
 # ======================================================
 
 TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN", "").strip()
-CHAT = os.environ.get("TELEGRAM_CHAT_ID", "").strip()
+CHAT_RAW = os.environ.get("TELEGRAM_CHAT_ID", "").strip()
+CHAT, _, THREAD = CHAT_RAW.partition(":")   # format "-100xxx:123" untuk kirim ke topik tertentu
 MODE = (sys.argv[1] if len(sys.argv) > 1 else os.environ.get("MODE", "run")).strip() or "run"
 NAN = float("nan")
 
@@ -55,8 +56,9 @@ def send(text):
         return
     kb = json.dumps({"inline_keyboard": [[{"text": f"Buka akun {BROKER}", "url": IB_URL}],
                                          [{"text": "Buka DirmuFX Trade", "url": TOOL_URL}]]})
+    extra = {"message_thread_id": THREAD} if THREAD else {}
     r = tg("sendMessage", chat_id=CHAT, text=text, parse_mode="HTML",
-           disable_web_page_preview="true", reply_markup=kb)
+           disable_web_page_preview="true", reply_markup=kb, **extra)
     print("terkirim" if r.get("ok") else f"gagal kirim: {r}")
 
 
@@ -272,13 +274,23 @@ if __name__ == "__main__":
         json.dump({}, open(STATE_FILE, "w"))
     if MODE == "chatid":
         r = tg("getUpdates")
-        chats = {}
+        found = {}
         for u in r.get("result", []):
-            m = u.get("message") or u.get("channel_post") or u.get("my_chat_member") or {}
+            m = u.get("message") or u.get("channel_post") or {}
             ch = m.get("chat")
-            if ch: chats[ch["id"]] = ch.get("title") or ch.get("username") or ch.get("first_name")
-        print("CHAT ID YANG DITEMUKAN:" if chats else "Belum ada. Kirim satu pesan di grup/channel setelah bot ditambahkan, lalu jalankan lagi.")
-        for i, t in chats.items(): print(f"  {i}  ->  {t}")
+            if not ch: continue
+            name = ch.get("title") or ch.get("username") or ch.get("first_name")
+            th = m.get("message_thread_id") if m.get("is_topic_message") else None
+            topic = ""
+            rt = (m.get("reply_to_message") or {}).get("forum_topic_created")
+            if rt: topic = rt.get("name", "")
+            key = f"{ch['id']}:{th}" if th else str(ch["id"])
+            found[key] = f"{name}" + (f" / topik {topic or th}" if th else "")
+        if not found:
+            print("Belum ada. Kirim satu pesan di grup/topik setelah bot jadi admin, lalu jalankan lagi.")
+        else:
+            print("ISI TELEGRAM_CHAT_ID DENGAN SALAH SATU INI:")
+            for k, v in found.items(): print(f"  {k}   ->  {v}")
     elif MODE == "test":
         send("✅ <b>Bot DirmuFX aktif.</b>\nSinyal XAUUSD, EURUSD, dan BTCUSD (M5 & M15) akan dikirim ke sini otomatis.")
     else:
