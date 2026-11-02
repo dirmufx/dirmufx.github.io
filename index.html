@@ -1336,7 +1336,7 @@ function mountChart(tf){
   }).catch(()=>{box.innerHTML='<p class="note" style="padding:16px">Chart TradingView gagal dimuat. Cek koneksi lalu refresh halaman.</p>'});
 }
 function mountAnalisa(){
-  mountTV("tvTape","ticker-tape",{symbols:[{proName:"OANDA:XAUUSD",title:"XAUUSD"},{proName:"TVC:DXY",title:"Dollar Index"},{proName:"TVC:US10Y",title:"Yield US 10Y"},{proName:"TVC:UKOIL",title:"Brent"},{proName:"OANDA:XAGUSD",title:"Perak"}],showSymbolLogo:false,isTransparent:false,backgroundColor:"#131316",displayMode:"compact",colorTheme:"dark",theme:"dark",locale:"id"});
+  mountTV("tvTape","ticker-tape",{symbols:[{proName:"OANDA:XAUUSD",title:"XAUUSD"},{proName:"CAPITALCOM:DXY",title:"DXY"},{proName:"FRED:DGS10",title:"Yield US 10Y"},{proName:"TVC:UKOIL",title:"Brent"},{proName:"OANDA:XAGUSD",title:"Perak"}],showSymbolLogo:false,isTransparent:false,backgroundColor:"#131316",displayMode:"compact",colorTheme:"dark",theme:"dark",locale:"id"});
   const tf=currentTf();
   mountChart(tf);
   mountTV("tvTA","technical-analysis",{interval:TVTA[tf]||"5m",width:"100%",isTransparent:false,backgroundColor:"#131316",height:420,symbol:TVSYM[S.sym],showIntervalTabs:true,displayMode:"single",locale:"id",colorTheme:"dark",theme:"dark"});
