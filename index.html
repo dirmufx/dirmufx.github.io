@@ -206,6 +206,7 @@ html{scroll-behavior:auto}}
 @supports not ((-webkit-background-clip:text) or (background-clip:text)){#app .brand b{-webkit-text-fill-color:#e3b85c}}
 #app .brand small{display:block;font-size:10px;letter-spacing:.3em;color:var(--muted);font-weight:500}
 #app .quote{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+#app .symsel:disabled{opacity:1;-webkit-appearance:none;appearance:none;color:var(--fg)}
 #app .symsel{background:var(--panel);border:1px solid var(--violet-dim);border-radius:10px;padding:7px 10px;font-family:var(--f-display);font-weight:600;letter-spacing:.06em}
 #app .lastpx{font-family:var(--f-mono);font-size:18px;font-weight:700;text-align:right;line-height:1.2}
 #app .lastpx small{display:block;font-size:11px;font-weight:500}
@@ -512,7 +513,7 @@ html{scroll-behavior:auto}
       <div class="feat"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2" stroke-linecap="round"/></svg></span>
         <div><h3>Kalender berita USD</h3><p>Jadwal rilis berdampak tinggi seperti NFP, CPI, dan FOMC, lengkap dengan hitung mundur supaya kamu tidak entry tepat saat berita keluar.</p></div></div>
       <div class="feat"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></span>
-        <div><h3>Fundamental per pair</h3><p>Ringkasan penggerak harga emas, perak, euro, pound, yen, dan bitcoin: kebijakan Fed, yield, geopolitik, dan sentimen pasar.</p></div></div>
+        <div><h3>Fundamental emas</h3><p>Ringkasan penggerak harga XAUUSD: kebijakan Fed, dolar AS, yield, minyak, geopolitik, dan sentimen pasar.</p></div></div>
       <div class="feat"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7l8-4Z"/><path d="M9 12l2 2 4-4" stroke-linecap="round"/></svg></span>
         <div><h3>Risiko terukur</h3><p>Stop loss tetap per timeframe dan kalkulator lot otomatis, supaya kerugian per posisi selalu sesuai batas yang kamu tentukan.</p></div></div>
     </div>
@@ -557,7 +558,7 @@ html{scroll-behavior:auto}
         </div>
         <div class="grid2">
           <div class="fld"><label for="cPair">Pair</label><select id="cPair">
-            <option value="XAUUSD">XAUUSD · Emas</option><option value="XAGUSD">XAGUSD · Perak</option><option value="EURUSD">EURUSD</option><option value="GBPUSD">GBPUSD</option><option value="USDJPY">USDJPY</option><option value="BTCUSD">BTCUSD</option></select></div>
+            <option value="XAUUSD">XAUUSD · Emas</option></select></div>
           <div class="fld"><label for="cAcc">Jenis akun</label><select id="cAcc"><option value="std">Standar (USD)</option><option value="cent">Cent (USC)</option></select></div>
         </div>
 
@@ -658,7 +659,7 @@ html{scroll-behavior:auto}
     <div class="brandrow">
       <div class="brandleft"><a class="backbtn" href="#top" aria-label="Kembali ke beranda"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M12 5l-5 5 5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Beranda</a><div class="tlogo"><svg class="dmark" viewBox="0 0 314 343" aria-hidden="true"><path d="M15 15H140A156.5 156.5 0 0 1 140 328H15Z" fill="none" stroke="#63d297" stroke-width="30" stroke-linejoin="round"/><g fill="#fff"><rect x="87" y="159" width="10" height="138" rx="5"/><rect x="69" y="202" width="46" height="58" rx="5"/><rect x="147" y="114" width="10" height="160" rx="5"/><rect x="129" y="153" width="46" height="75" rx="5"/></g><g fill="#63d297"><rect x="207" y="54" width="10" height="175" rx="5"/><rect x="189" y="89" width="46" height="99" rx="5"/></g></svg><span class="dword"><span class="dname">Dirmu<i>FX</i></span><span class="dtrade">TRADE</span></span></div></div>
       <div class="quote">
-        <select class="symsel" id="sym" aria-label="Pilih pair"></select>
+        <select class="symsel" id="sym" aria-label="Pair" disabled></select>
         <div class="lastpx" id="lastpx" hidden>—</div>
         <a class="btn cta ibLink" target="_blank" rel="noopener">Buka Akun</a>
       </div>
@@ -695,7 +696,7 @@ html{scroll-behavior:auto}
           <button class="btn primary" id="saveSet">Simpan</button>
           <span class="small muted" id="setMsg"></span>
         </div>
-        <p class="note" style="margin:0">Semua data gratis tanpa API key. Chart, berita, dan kalender dari TradingView. Sinyal DirmuFX dihitung dari data Binance (emas memakai PAXG yang disesuaikan ke harga emas spot). Sinyal tersedia untuk XAUUSD, EURUSD, dan BTCUSD.</p>
+        <p class="note" style="margin:0">Semua data gratis tanpa API key. Chart, berita, dan kalender dari TradingView. Sinyal DirmuFX dihitung dari data Binance (emas memakai PAXG yang disesuaikan ke harga emas spot). Fokus hanya XAUUSD.</p>
       </div>
 
       <div class="importbox" id="importbox" hidden style="margin-top:12px">
@@ -986,12 +987,8 @@ const IB={
 "use strict";
 /* ================= config ================= */
 const SYMS={
-  XAUUSD:{name:"Gold",bn:"PAXGUSDT",spot:"XAU",api:"XAU/USD",d:2,vol:.016,cs:100,anchor:3909.11,quoteUSD:true},
-  XAGUSD:{name:"Silver",api:"XAG/USD",d:3,vol:.025,cs:5000,anchor:48.95,quoteUSD:true},
-  EURUSD:{name:"Euro",bn:"EURUSDT",api:"EUR/USD",d:5,vol:.005,cs:100000,anchor:1.08,quoteUSD:true},
-  GBPUSD:{name:"Pound",api:"GBP/USD",d:5,vol:.006,cs:100000,anchor:1.28,quoteUSD:true},
-  USDJPY:{name:"Yen",api:"USD/JPY",d:3,vol:.006,cs:100000,anchor:150,quoteUSD:false},
-  BTCUSD:{name:"Bitcoin",bn:"BTCUSDT",api:"BTC/USD",d:1,vol:.03,cs:1,anchor:100000,quoteUSD:true}
+  XAUUSD:{name:"Gold",bn:"PAXGUSDT",spot:"XAU",api:"XAU/USD",d:2,vol:.016,cs:100,anchor:3909.11,quoteUSD:true}
+
 };
 const TFS=[["M1",1,"1min"],["M5",5,"5min"],["M15",15,"15min"],["M30",30,"30min"],["H1",60,"1h"],["H4",240,"4h"],["D1",1440,"1day"]];
 const $=id=>document.getElementById(id);
@@ -1155,10 +1152,10 @@ function render(){
   [...tfrow.children].forEach(b=>{b.disabled=m==="imp";b.setAttribute("aria-pressed",+b.dataset.m===currentTf())});
   $("srcnote").textContent=m==="live"?`Chart live dari TradingView. Sinyal DirmuFX dihitung dari data Binance${SYMS[S.sym].spot?(S.adj!=null?" (PAXG, disesuaikan ke harga emas spot)":" (PAXG)"):""}${S.every?`, diperbarui tiap ${S.every} menit`:""}. Tekan Refresh untuk hitung ulang.`
     :m==="imp"?`Analisa memakai ${S.imported[S.sym].data.length} candle ${tfName(S.imported[S.sym].tf)} yang kamu impor.`
-    :`Sinyal DirmuFX belum tersedia untuk ${S.sym}. Chart dan meteran TradingView tetap live. Sinyal lengkap ada di XAUUSD, EURUSD, dan BTCUSD.`;
+    :`Sinyal DirmuFX belum tersedia untuk ${S.sym}. Chart dan meteran TradingView tetap live. `;
   $("mtfBtn").hidden=m!=="live"||isLocked();
   const d=currentData(),tf=currentTf();
-  if(!d){clearAll(S.loading?"Memuat data…":(S.err||"Belum ada data"));$("sigwhy").textContent=m==="nosig"?"Pilih XAUUSD, EURUSD, atau BTCUSD untuk sinyal entry/SL/TP.":(S.loading?"Memuat data…":(S.err||""));return}
+  if(!d){clearAll(S.loading?"Memuat data…":(S.err||"Belum ada data"));$("sigwhy").textContent=m==="nosig"?"Sinyal hanya tersedia untuk XAUUSD.":(S.loading?"Memuat data…":(S.err||""));return}
   const a=filterSignal(analyse(d.slice(0,-1),tf),tf);a.live=d[d.length-1].c;const rr=+$("rr").value,p=plan(a,rr,+$("slm").value);
   last={d,a,p,tf};
   const prevC=d[d.length-2].c,chg=a.live-prevC;
@@ -1339,7 +1336,7 @@ function mountChart(tf){
   }).catch(()=>{box.innerHTML='<p class="note" style="padding:16px">Chart TradingView gagal dimuat. Cek koneksi lalu refresh halaman.</p>'});
 }
 function mountAnalisa(){
-  mountTV("tvTape","ticker-tape",{symbols:Object.entries(TVSYM).map(([k,v])=>({proName:v,title:k})),showSymbolLogo:false,isTransparent:false,backgroundColor:"#131316",displayMode:"compact",colorTheme:"dark",theme:"dark",locale:"id"});
+  mountTV("tvTape","ticker-tape",{symbols:[{proName:"OANDA:XAUUSD",title:"XAUUSD"},{proName:"TVC:DXY",title:"Dollar Index"},{proName:"TVC:US10Y",title:"Yield US 10Y"},{proName:"TVC:UKOIL",title:"Brent"},{proName:"OANDA:XAGUSD",title:"Perak"}],showSymbolLogo:false,isTransparent:false,backgroundColor:"#131316",displayMode:"compact",colorTheme:"dark",theme:"dark",locale:"id"});
   const tf=currentTf();
   mountChart(tf);
   mountTV("tvTA","technical-analysis",{interval:TVTA[tf]||"5m",width:"100%",isTransparent:false,backgroundColor:"#131316",height:420,symbol:TVSYM[S.sym],showIntervalTabs:true,displayMode:"single",locale:"id",colorTheme:"dark",theme:"dark"});
@@ -1360,44 +1357,8 @@ const FUND={
    ["Minyak & inflasi","flat","Campuran","Brent 117.64 menjaga emas sebagai lindung nilai, tapi juga mendorong Fed lebih hawkish."],
    ["Pemilu sela AS & NFP","flat","Volatilitas","Hasil pemilu dan NFP Jumat malam bisa memicu pergerakan besar dua arah. Kurangi lot menjelang rilis."]],
   lv:[["Resistance 1","3971 – 3982"],["Support 1","3885 – 3904"],["Resistance 2","4074 – 4083"],["Support 2","3829 – 3849"],["Resistance 3","4104 – 4115"],["Support 3","3780 – 3800"]],
-  src:"Sumber: Mitrade, 2 Nov 2026. Low tahunan 3879.90."},
- XAGUSD:{name:"Perak (XAGUSD)",bias:"Bearish",col:"down",
-  sum:"Perak jatuh lebih dari 6% ke sekitar 48.95 karena likuidasi yang sama dengan emas. Analis memilih menjual saat harga naik selama di bawah 55.",
-  drv:[["Likuidasi pasar","down","Bearish","Aksi jual saham teknologi memaksa investor melepas logam mulia untuk dana tunai."],
-   ["Yield riil AS","down","Bearish","Imbal hasil riil yang menarik mengurangi minat pada logam tanpa bunga."],
-   ["Ekspektasi Fed","down","Bearish","Pasar memperkirakan kenaikan suku bunga Desember."],
-   ["Permintaan industri","flat","Netral","Belum ada katalis baru dari sisi industri minggu ini."]],
-  lv:[["Resistance kunci","55.00"],["Level psikologis","50.00"],["Low terbaru","48.95"],["",""]],
-  src:"Sumber: Mitrade & DailyForex, 2 Nov 2026."},
- EURUSD:{name:"Euro (EURUSD)",bias:"Bearish",col:"down",
-  sum:"Fed dan ECB sama-sama menahan suku bunga, tapi selisih bunga masih menguntungkan USD. Risiko gangguan energi di Eropa ikut menekan euro. Analis memilih jual saat rally jangka pendek.",
-  drv:[["Selisih suku bunga","down","Bearish","Bunga AS lebih tinggi daripada zona euro, jadi modal cenderung ke USD."],
-   ["Energi Eropa","down","Bearish","Harga minyak tinggi (Brent 117) dan risiko pasokan membebani ekonomi Eropa."],
-   ["Inflasi zona euro","flat","Perhatikan","CPI flash Oktober rilis Rabu (sebelumnya 3.8%). Angka tinggi bisa mendorong ECB lebih hawkish."],
-   ["NFP & pemilu AS","flat","Volatilitas","Data tenaga kerja AS lemah bisa melemahkan USD dan mengangkat EURUSD."]],
-  lv:[],src:"Sumber: DailyForex & Newsquawk, 2 Nov 2026. Lihat Level kunci di tab Analisa untuk angka teknikal."},
- GBPUSD:{name:"Pound (GBPUSD)",bias:"Netral–Bullish",col:"up",
-  sum:"Bank of England diperkirakan menaikkan suku bunga 25bp hari Kamis untuk memulai siklus pengetatan. Ini mendukung pound, tapi NFP dan pemilu AS bisa membalikkan arah.",
-  drv:[["Kenaikan bunga BoE","up","Bullish","Kenaikan 25bp hampir pasti. Fokus pada hasil voting dan arah setelah November."],
-   ["Ekspektasi Fed","down","Bearish","Fed condong naikkan bunga di Desember, menahan pelemahan USD."],
-   ["NFP Jumat","flat","Volatilitas","Konsensus +55 ribu. Data lemah bisa mengangkat GBPUSD."]],
-  lv:[],src:"Sumber: Newsquawk, 2 Nov 2026. Lihat Level kunci di tab Analisa untuk angka teknikal."},
- USDJPY:{name:"Yen (USDJPY)",bias:"Netral (USD unggul)",col:"flat",
-  sum:"Fed dan Bank of Japan sama-sama menahan suku bunga. Jangka panjang analis lebih memilih USD, tapi jangka pendek pasangan ini cenderung bergerak menyamping di 156.50–159.",
-  drv:[["Selisih suku bunga","up","Bullish USD","Bunga AS jauh di atas Jepang, mendukung USDJPY naik."],
-   ["Risiko intervensi","down","Waspada","Mendekati 159–160, risiko intervensi pemerintah Jepang meningkat."],
-   ["Sentimen risiko","flat","Campuran","Saat pasar saham panik, yen biasanya menguat sebagai aset aman."]],
-  lv:[["Resistance","159.00"],["Support","156.50"]],
-  src:"Sumber: DailyForex, 2 Nov 2026. Tembus 156.50 bisa memicu tekanan jual lanjutan."},
- BTCUSD:{name:"Bitcoin (BTCUSD)",bias:"Bearish–Netral",col:"down",
-  sum:"BTC di sekitar 78.000 setelah sempat turun ke 76.300. Sentimen tertekan oleh peretasan Binance sekitar $6.3 miliar, arus keluar ETF, dan aksi jual saham teknologi. Fear & Greed di 37 (takut).",
-  drv:[["Peretasan Binance","down","Bearish","Peretasan sekitar $6.3 miliar; FBI mengaitkannya dengan kelompok Korea Utara. Arus keluar dari Binance besar setelah penarikan dibuka lagi."],
-   ["ETF spot BTC","down","Bearish","Arus keluar bersih $643 juta pada 30 Okt; dana institusi belum kembali."],
-   ["Saham teknologi","down","Bearish","Nasdaq turun 2.86% dan indeks semikonduktor turun 7.2% hari Jumat."],
-   ["Ekspektasi Fed","down","Bearish","Kemungkinan kenaikan bunga menekan aset berisiko."],
-   ["Pemilu sela AS","flat","Volatilitas","Hasil pemilu bisa mengubah arah regulasi kripto."]],
-  lv:[["Resistance","80,000"],["Support","76,000"]],
-  src:"Sumber: KuCoin Daily Report, 2 Nov 2026. Tembus 80,000 dengan arus ETF membaik bisa memicu pemulihan."}
+  src:"Sumber: Mitrade, 2 Nov 2026. Low tahunan 3879.90."}
+
 };
 function renderFund(){
   const f=FUND[S.sym]||FUND.XAUUSD;

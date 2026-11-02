@@ -5,8 +5,6 @@ import json, os, sys, time, urllib.request, urllib.parse, math
 # ===================== PENGATURAN =====================
 PAIRS = {  # nama : (simbol Binance, ukuran 1 pip, sesuaikan ke harga emas spot?)
     "XAUUSD": ("PAXGUSDT", 0.1, True),
-    "EURUSD": ("EURUSDT", 0.0001, False),
-    "BTCUSD": ("BTCUSDT", 1.0, False),
 }
 TFS = [5, 15]                       # M5 = scalping, M15 = intraday
 HTF = {1: 5, 5: 15, 15: 60, 30: 60, 60: 240}
@@ -295,6 +293,6 @@ if __name__ == "__main__":
             print("ISI TELEGRAM_CHAT_ID DENGAN SALAH SATU INI:")
             for k, v in found.items(): print(f"  {k}   ->  {v}")
     elif MODE == "test":
-        send("✅ <b>Bot DirmuFX aktif.</b>\nSinyal XAUUSD, EURUSD, dan BTCUSD (M5 & M15) akan dikirim ke sini otomatis.")
+        send("✅ <b>Bot DirmuFX aktif.</b>\nSinyal XAUUSD (M5 scalping & M15 intraday) akan dikirim ke sini otomatis.")
     else:
         run()
