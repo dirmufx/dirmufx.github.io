@@ -811,10 +811,31 @@ function mountTV(id,name,cfg){
   box.innerHTML='<div class="tradingview-widget-container" style="height:100%;width:100%"><div class="tradingview-widget-container__widget" style="height:100%;width:100%"></div></div>';
   const sc=document.createElement("script");sc.type="text/javascript";sc.async=true;sc.src="https://s3.tradingview.com/external-embedding/embed-widget-"+name+".js";sc.text=JSON.stringify(cfg);box.firstChild.appendChild(sc);
 }
+/* Chart TradingView (tv.js) dengan EMA 20/50/200 + candle hijau/putih */
+const CHART_UP="#22c55e", CHART_DOWN="#f5f5f4";
+function loadTvJs(){return window.TradingView?Promise.resolve():(window._tvjs=window._tvjs||new Promise((ok,no)=>{const sc=document.createElement("script");sc.src="https://s3.tradingview.com/tv.js";sc.onload=ok;sc.onerror=no;document.head.appendChild(sc)}))}
+function mountChart(tf){
+  const key=S.sym+"|"+tf;if(mounted.tvChart===key)return;mounted.tvChart=key;
+  const box=$("tvChart");box.innerHTML='<div id="tvChartInner" style="height:100%;width:100%"></div>';
+  loadTvJs().then(()=>{
+    new TradingView.widget({container_id:"tvChartInner",autosize:true,symbol:TVSYM[S.sym],interval:TVIV[tf]||"5",timezone:TZ,theme:"dark",style:"1",locale:"id",
+      toolbar_bg:"#131316",hide_top_toolbar:true,hide_side_toolbar:true,hide_legend:false,hide_volume:true,allow_symbol_change:false,save_image:false,enable_publishing:false,
+      studies:[{id:"MAExp@tv-basicstudies",inputs:{length:20}},{id:"MAExp@tv-basicstudies",inputs:{length:50}},{id:"MAExp@tv-basicstudies",inputs:{length:200}}],
+      studies_overrides:{"moving average exponential.plot.linewidth":2,"volume.volume.transparency":100,"volume.volume ma.transparency":100},
+      overrides:{
+        "paneProperties.background":"#131316","paneProperties.backgroundType":"solid",
+        "paneProperties.vertGridProperties.color":"rgba(42,42,49,0.6)","paneProperties.horzGridProperties.color":"rgba(42,42,49,0.6)",
+        "mainSeriesProperties.candleStyle.upColor":CHART_UP,"mainSeriesProperties.candleStyle.downColor":CHART_DOWN,
+        "mainSeriesProperties.candleStyle.borderUpColor":CHART_UP,"mainSeriesProperties.candleStyle.borderDownColor":CHART_DOWN,
+        "mainSeriesProperties.candleStyle.wickUpColor":CHART_UP,"mainSeriesProperties.candleStyle.wickDownColor":CHART_DOWN,
+        "mainSeriesProperties.candleStyle.drawBorder":true}
+    });
+  }).catch(()=>{box.innerHTML='<p class="note" style="padding:16px">Chart TradingView gagal dimuat. Cek koneksi lalu refresh halaman.</p>'});
+}
 function mountAnalisa(){
   mountTV("tvTape","ticker-tape",{symbols:Object.entries(TVSYM).map(([k,v])=>({proName:v,title:k})),showSymbolLogo:false,isTransparent:false,backgroundColor:"#131316",displayMode:"compact",colorTheme:"dark",theme:"dark",locale:"id"});
   const tf=currentTf();
-  mountTV("tvChart","advanced-chart",{autosize:true,symbol:TVSYM[S.sym],interval:TVIV[tf]||"5",timezone:TZ,theme:"dark",style:"1",locale:"id",backgroundColor:"rgba(19,19,22,1)",gridColor:"rgba(42,42,49,0.6)",hide_top_toolbar:true,hide_side_toolbar:true,hide_volume:true,save_image:false,allow_symbol_change:false,calendar:false,studies:[],support_host:"https://www.tradingview.com"});
+  mountChart(tf);
   mountTV("tvTA","technical-analysis",{interval:TVTA[tf]||"5m",width:"100%",isTransparent:false,backgroundColor:"#131316",height:420,symbol:TVSYM[S.sym],showIntervalTabs:true,displayMode:"single",locale:"id",colorTheme:"dark",theme:"dark"});
 }
 function mountView(v){
