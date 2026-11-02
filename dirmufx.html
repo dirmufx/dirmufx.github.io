@@ -88,7 +88,11 @@ main{padding-block:16px 40px}
 .ohlc b{color:var(--fg);font-weight:500}
 .tvbox{width:100%;height:clamp(380px,62vh,560px);border-radius:10px;overflow:hidden}
 .tvtape{min-height:46px;margin-bottom:-4px}
-.tvwide{width:100%;min-height:420px}
+.tvwide{width:100%;min-height:420px;border-radius:12px;overflow:hidden;background:#13111d}
+.tvtape{border-radius:12px;overflow:hidden;background:#13111d}
+.tvwide iframe,.tvtape iframe,.tvbox iframe{color-scheme:normal}
+.tvbox,.tvwide,.tvtape,.qbox{color-scheme:light;border-radius:10px;overflow:hidden;background:#13111d}
+.tvbox iframe,.tvwide iframe,.tvtape iframe{color-scheme:light}
 .canvasbox{position:relative;width:100%;height:clamp(300px,52vh,460px)}
 canvas{display:block;width:100%;height:100%;touch-action:pan-y}
 .legend{display:flex;gap:12px;flex-wrap:wrap;font-size:11px;color:var(--muted);padding:8px 4px 0}
@@ -280,22 +284,6 @@ a.btn{text-decoration:none;display:inline-flex;align-items:center}
           <div class="tvbox" id="tvChart"></div>
           <div class="canvasbox" hidden><canvas id="chart"></canvas></div>
         </div>
-        <div class="card">
-          <h2>Meteran sinyal TradingView</h2>
-          <div class="tvwide" id="tvTA"></div>
-        </div>
-        <div class="card">
-          <h2>Konfluensi indikator</h2>
-          <div class="scroll-x"><table class="tbl" id="indTbl"></table></div>
-        </div>
-        <div class="card">
-          <div class="row" style="justify-content:space-between;margin-bottom:10px"><h2 style="margin:0">Multi-timeframe</h2><button class="btn" id="mtfBtn" hidden>Muat semua TF</button></div>
-          <div class="mtf lockable" id="mtf"></div>
-          <p class="note" id="mtfnote" style="margin:8px 0 0">Sinyal paling kuat saat TF besar (H1–D1) searah dengan TF entry.</p>
-        </div>
-      </div>
-
-      <div class="col">
         <div class="card signal" id="sigcard" data-dir="WAIT">
           <div class="sighead">
             <div>
@@ -338,6 +326,22 @@ a.btn{text-decoration:none;display:inline-flex;align-items:center}
           <a class="btn cta ibLink" target="_blank" rel="noopener">Buka akun</a>
         </div>
         <div class="card">
+          <h2>Meteran sinyal TradingView</h2>
+          <div class="tvwide" id="tvTA"></div>
+        </div>
+        <div class="card">
+          <h2>Konfluensi indikator</h2>
+          <div class="scroll-x"><table class="tbl" id="indTbl"></table></div>
+        </div>
+        <div class="card">
+          <div class="row" style="justify-content:space-between;margin-bottom:10px"><h2 style="margin:0">Multi-timeframe</h2><button class="btn" id="mtfBtn" hidden>Muat semua TF</button></div>
+          <div class="mtf lockable" id="mtf"></div>
+          <p class="note" id="mtfnote" style="margin:8px 0 0">Sinyal paling kuat saat TF besar (H1–D1) searah dengan TF entry.</p>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="card">
           <h2>Level kunci</h2>
           <table class="tbl" id="lvlTbl"></table>
         </div>
@@ -378,7 +382,7 @@ a.btn{text-decoration:none;display:inline-flex;align-items:center}
   <section class="view" id="v-kalender" hidden>
     <div class="card">
       <h2>Kalender ekonomi</h2>
-      <p class="note" style="margin:0 0 8px">Jam mengikuti zona waktu HP kamu. Fokus ke event berdampak tinggi (USD) saat trading emas.</p>
+      <p class="note" style="margin:0 0 8px">Hanya berita Amerika (USD) berdampak tinggi. Jam mengikuti zona waktu HP kamu. Hindari entry 30 menit sebelum rilis.</p>
       <div class="tvwide" id="tvCal"></div>
     </div>
   </section>
@@ -592,13 +596,17 @@ function analyse(d,tf){
   const dir=norm>=.3?"BUY":norm<=-.3?"SELL":"WAIT";
   return{v,votes,dir,strength:Math.round(Math.min(1,Math.abs(norm))*100*adxF),norm,series:{e20,e50,R,B}};
 }
+/* SL tetap (pips) per timeframe, TP = SL x RR. Emas: 1 pip = 0.10 */
+const SL_CAP={1:30,5:30,15:50,30:50,60:100,240:100,1440:100};
+const PIP={XAUUSD:0.1,XAGUSD:0.01,EURUSD:0.0001,GBPUSD:0.0001,USDJPY:0.01,BTCUSD:1};
 function plan(a,rr,slm){
   const v=a.v,atrv=v.atr,e=v.close,dir=a.dir==="WAIT"?(a.norm>=0?"BUY":"SELL"):a.dir;
   let sl=dir==="BUY"?e-slm*atrv:e+slm*atrv;
   if(dir==="BUY"){const s=v.sw.sup.find(x=>x<e-.5*atrv&&x>e-2.6*atrv);if(s)sl=Math.min(sl,s-.25*atrv)}
   else{const r=v.sw.res.find(x=>x>e+.5*atrv&&x<e+2.6*atrv);if(r)sl=Math.max(sl,r+.25*atrv)}
-  const risk=Math.abs(e-sl),s=dir==="BUY"?1:-1;
-  return{lean:dir,entry:e,sl,tp1:e+s*risk,tp2:e+s*risk*rr,risk};
+  const s=dir==="BUY"?1:-1,pip=PIP[S.sym]||0.1,cap=(SL_CAP[currentTf()]||50)*pip;
+  let risk=cap;sl=e-s*risk;
+  return{lean:dir,entry:e,sl,tp1:e+s*risk,tp2:e+s*risk*rr,risk,slPips:risk/pip,capped:Math.abs(e-sl)>=cap-1e-9};
 }
 
 /* ================= UI build ================= */
@@ -635,7 +643,7 @@ function render(){
   $("sigstr").textContent=a.strength+"%";$("sigbar").style.width=a.strength+"%";
   $("lvE").textContent=fx(p.entry);$("lvSL").textContent=fx(p.sl);$("lvTP1").textContent=fx(p.tp1);$("lvTP2").textContent=fx(p.tp2);
   $("tp2k").textContent="TP 2 ("+rr+"R)";
-  const why=[`ATR ${fx(a.v.atr)}`,`ADX ${isNaN(a.v.adx)?"—":a.v.adx.toFixed(0)}${a.v.adx<20?" (sideways)":a.v.adx>25?" (tren kuat)":""}`];
+  const why=[`SL ${p.slPips.toFixed(0)} pips · TP2 ${(p.slPips*rr).toFixed(0)} pips (SL tetap ${tfName(tf)})`,`ATR ${fx(a.v.atr)}`,`ADX ${isNaN(a.v.adx)?"—":a.v.adx.toFixed(0)}${a.v.adx<20?" (sideways)":a.v.adx>25?" (tren kuat)":""}`];
   if(a.dir==="WAIT")why.push(`Konfluensi belum cukup. Level di atas adalah rencana jika ${p.lean} terkonfirmasi.`);
   if(SYMS[S.sym].spot&&mode()==="live"){const n=new Date(),dy=n.getUTCDay(),hr=n.getUTCHours();if((dy===5&&hr>=21)||dy===6||(dy===0&&hr<22))why.unshift("Pasar emas sedang tutup (weekend). Jangan pakai sinyal ini untuk entry.")}
   if(mode()==="live"&&S.lastAt)why.unshift("Dihitung "+hm(S.lastAt)+" dari harga "+fx(a.v.close));$("sigwhy").textContent=why.join(" · ");
@@ -784,15 +792,15 @@ function mountTV(id,name,cfg){
   const sc=document.createElement("script");sc.type="text/javascript";sc.async=true;sc.src="https://s3.tradingview.com/external-embedding/embed-widget-"+name+".js";sc.text=JSON.stringify(cfg);box.firstChild.appendChild(sc);
 }
 function mountAnalisa(){
-  mountTV("tvTape","ticker-tape",{symbols:Object.entries(TVSYM).map(([k,v])=>({proName:v,title:k})),showSymbolLogo:false,isTransparent:true,displayMode:"compact",colorTheme:"dark",theme:"dark",locale:"id"});
+  mountTV("tvTape","ticker-tape",{symbols:Object.entries(TVSYM).map(([k,v])=>({proName:v,title:k})),showSymbolLogo:false,isTransparent:false,backgroundColor:"#13111d",displayMode:"compact",colorTheme:"dark",theme:"dark",locale:"id"});
   const tf=currentTf();
-  mountTV("tvChart","advanced-chart",{autosize:true,symbol:TVSYM[S.sym],interval:TVIV[tf]||"5",timezone:TZ,theme:"dark",style:"1",locale:"id",backgroundColor:"rgba(19,17,29,1)",gridColor:"rgba(39,35,57,0.6)",hide_side_toolbar:true,allow_symbol_change:false,calendar:false,studies:["STD;RSI"],support_host:"https://www.tradingview.com"});
-  mountTV("tvTA","technical-analysis",{interval:TVTA[tf]||"5m",width:"100%",isTransparent:true,height:420,symbol:TVSYM[S.sym],showIntervalTabs:true,displayMode:"single",locale:"id",colorTheme:"dark",theme:"dark"});
+  mountTV("tvChart","advanced-chart",{autosize:true,symbol:TVSYM[S.sym],interval:TVIV[tf]||"5",timezone:TZ,theme:"dark",style:"1",locale:"id",backgroundColor:"rgba(19,17,29,1)",gridColor:"rgba(39,35,57,0.6)",hide_top_toolbar:true,hide_side_toolbar:true,hide_volume:true,save_image:false,allow_symbol_change:false,calendar:false,studies:[],support_host:"https://www.tradingview.com"});
+  mountTV("tvTA","technical-analysis",{interval:TVTA[tf]||"5m",width:"100%",isTransparent:false,backgroundColor:"#13111d",height:420,symbol:TVSYM[S.sym],showIntervalTabs:true,displayMode:"single",locale:"id",colorTheme:"dark",theme:"dark"});
 }
 function mountView(v){
   if(v==="analisa"){mountAnalisa();draw()}
-  if(v==="berita")mountTV("tvNews","timeline",{feedMode:"market",market:"forex",isTransparent:true,displayMode:"regular",width:"100%",height:640,colorTheme:"dark",theme:"dark",locale:"id"});
-  if(v==="kalender")mountTV("tvCal","events",{colorTheme:"dark",theme:"dark",isTransparent:true,width:"100%",height:640,locale:"id",importanceFilter:"0,1",countryFilter:"us,eu,gb,jp,au,cn,ca,ch"});
+  if(v==="berita")mountTV("tvNews","timeline",{feedMode:"market",market:"forex",isTransparent:false,backgroundColor:"#13111d",displayMode:"regular",width:"100%",height:640,colorTheme:"dark",theme:"dark",locale:"id"});
+  if(v==="kalender")mountTV("tvCal","events",{colorTheme:"dark",theme:"dark",isTransparent:false,backgroundColor:"#13111d",width:"100%",height:640,locale:"id",importanceFilter:"1",countryFilter:"us"});
 }
 
 /* ================= fundamentals (manual snapshot) ================= */
