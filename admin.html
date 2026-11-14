@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Admin Member · DirmuFX</title>
+<script src="dfx-config.js"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+:root{--bg:#0a0a0c;--bg2:#0f0f12;--panel:#131316;--panel2:#1b1b20;--line:#2a2a31;--fg:#f2efe8;--muted:#9b978d;--gold:#e3b85c;--up:#2fd39b;--up-dim:#0f3a2c;--down:#f05d6c;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:"IBM Plex Sans",system-ui,sans-serif;font-size:15px;line-height:1.5}
+.w{max-width:760px;margin:0 auto;padding:22px max(16px,env(safe-area-inset-left,0px)) 40px}
+h1{font-family:"Chakra Petch",sans-serif;font-size:24px;margin:0}
+h1 i{font-style:normal;color:#63d297}
+.top{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:16px}
+.muted{color:var(--muted);font-size:13.5px}
+.btn{font:inherit;font-weight:600;font-size:14px;border-radius:10px;padding:9px 14px;border:1px solid var(--line);background:var(--panel2);color:var(--fg);cursor:pointer}
+.btn.gold{background:linear-gradient(100deg,#f6e3a8,#e3b85c 50%,#b8862b);color:#1a1305;border:0}
+.btn.ok{background:var(--up-dim);color:var(--up);border-color:#1d5c46}
+.btn.no{background:#2a1418;color:var(--down);border-color:#5a2530}
+.box{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:18px}
+input{width:100%;font:inherit;color:var(--fg);background:var(--bg2);border:1px solid var(--line);border-radius:10px;padding:11px 12px;margin-top:8px}
+.tabs{display:flex;gap:6px;overflow-x:auto;margin:14px 0 10px}
+.tabs button{flex:none}.tabs button[aria-pressed="true"]{border-color:var(--gold);color:var(--gold)}
+.m{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px;margin-top:10px;display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}
+.m b{font-size:15px}.m .mt5{font-family:"JetBrains Mono",monospace;color:var(--gold);font-size:14px}
+.st{font-size:12px;font-weight:600;border-radius:999px;padding:3px 10px;margin-left:6px}
+.st.pending{background:#2a210d;color:var(--gold)}.st.active{background:var(--up-dim);color:var(--up)}.st.inactive{background:#3d1820;color:var(--down)}
+.acts{display:flex;gap:6px}
+.err{color:var(--down)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px}
+.stats div{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:10px;text-align:center}
+.stats b{display:block;font-family:"Chakra Petch",sans-serif;font-size:22px}
+</style>
+</head>
+<body>
+<div class="w">
+ <div class="top"><h1>Dirmu<i>FX</i> · Admin Member</h1><button class="btn" id="out" hidden>Keluar</button></div>
+
+ <div class="box" id="login">
+  <p class="muted" style="margin-top:0">Masuk dengan akun admin.</p>
+  <button class="btn gold" id="g" style="width:100%;padding:12px">Login dengan Google</button>
+  <p class="muted" style="text-align:center;margin:12px 0 0">atau</p>
+  <input id="em" type="email" placeholder="Email admin"><input id="pw" type="password" placeholder="Password">
+  <button class="btn" id="go" style="width:100%;margin-top:10px;padding:12px">Masuk</button>
+  <p id="lmsg" class="muted"></p>
+ </div>
+
+ <div id="panel" hidden>
+  <p class="muted" id="who" style="margin:0"></p>
+  <div class="stats"><div><b id="nP">0</b><span class="muted">Menunggu</span></div><div><b id="nA">0</b><span class="muted">Aktif</span></div><div><b id="nT">0</b><span class="muted">Total</span></div></div>
+  <input id="q" placeholder="Cari nama, email, atau nomor MT5">
+  <div class="tabs"><button class="btn" data-f="pending" aria-pressed="true">Menunggu</button><button class="btn" data-f="active" aria-pressed="false">Aktif</button><button class="btn" data-f="inactive" aria-pressed="false">Nonaktif</button><button class="btn" data-f="all" aria-pressed="false">Semua</button></div>
+  <p class="muted">Cek nomor MT5 di portal IB Windsor (link partner dan deposit minimal $25) sebelum mengaktifkan.</p>
+  <div id="list"></div>
+ </div>
+</div>
+<script type="module">
+const CFG=window.DFX_FIREBASE||{};const $=id=>document.getElementById(id);
+if(!CFG.apiKey){$("lmsg").textContent="Firebase belum diisi di dfx-config.js.";$("g").disabled=$("go").disabled=true}
+else{
+const u="https://www.gstatic.com/firebasejs/10.12.2/";
+const [app,auth,fs]=await Promise.all([import(u+"firebase-app.js"),import(u+"firebase-auth.js"),import(u+"firebase-firestore.js")]);
+const a=app.initializeApp(CFG),A=auth.getAuth(a),D=fs.getFirestore(a);
+let rows=[],filt="pending",unsub=null;
+const esc=t=>String(t||"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const label={pending:"Menunggu",active:"Aktif",inactive:"Nonaktif"};
+function draw(){
+ const q=$("q").value.trim().toLowerCase();
+ $("nP").textContent=rows.filter(r=>(r.status||"pending")==="pending").length;$("nA").textContent=rows.filter(r=>r.status==="active").length;$("nT").textContent=rows.length;
+ const L=rows.filter(r=>(filt==="all"||(r.status||"pending")===filt)&&(!q||[r.name,r.email,r.mt5].join(" ").toLowerCase().includes(q)));
+ $("list").innerHTML=L.length?L.map(r=>{const st=r.status||"pending";const d=r.createdAt&&r.createdAt.toDate?r.createdAt.toDate().toLocaleDateString("id-ID",{day:"numeric",month:"short",year:"numeric"}):"";
+  return `<div class="m"><div><b>${esc(r.name)||"(tanpa nama)"}</b><span class="st ${st}">${label[st]||st}</span><div class="muted">${esc(r.email)} ${d?"· "+d:""}</div><div class="mt5">MT5: ${esc(r.mt5)||"<span class='muted'>belum diisi</span>"}</div></div>
+  <div class="acts">${st!=="active"?`<button class="btn ok" data-id="${r.id}" data-s="active">Aktifkan</button>`:""}${st!=="inactive"?`<button class="btn no" data-id="${r.id}" data-s="inactive">Nonaktifkan</button>`:""}</div></div>`}).join(""):'<p class="muted" style="margin-top:14px">Tidak ada member di daftar ini.</p>';
+}
+$("list").onclick=async e=>{const b=e.target.closest("button[data-id]");if(!b)return;b.disabled=true;
+ try{await fs.updateDoc(fs.doc(D,"members",b.dataset.id),{status:b.dataset.s,updatedAt:fs.serverTimestamp()})}catch(err){alert("Gagal: "+err.code);b.disabled=false}};
+document.querySelectorAll(".tabs button").forEach(b=>b.onclick=()=>{filt=b.dataset.f;document.querySelectorAll(".tabs button").forEach(x=>x.setAttribute("aria-pressed",x===b));draw()});
+$("q").oninput=draw;
+$("g").onclick=async()=>{try{await auth.signInWithPopup(A,new auth.GoogleAuthProvider())}catch(e){$("lmsg").textContent="Gagal: "+e.code}};
+$("go").onclick=async()=>{try{await auth.signInWithEmailAndPassword(A,$("em").value.trim(),$("pw").value)}catch(e){$("lmsg").textContent="Gagal: "+e.code}};
+$("out").onclick=()=>auth.signOut(A);
+auth.onAuthStateChanged(A,u2=>{
+ if(unsub){unsub();unsub=null}
+ $("login").hidden=!!u2;$("panel").hidden=!u2;$("out").hidden=!u2;
+ if(!u2)return;$("who").textContent="Masuk sebagai "+u2.email;
+ unsub=fs.onSnapshot(fs.query(fs.collection(D,"members"),fs.orderBy("createdAt","desc")),s=>{rows=s.docs.map(d=>({id:d.id,...d.data()}));draw()},
+  e=>{$("list").innerHTML='<p class="err">Akun ini bukan admin atau aturan Firestore belum dipasang.</p>'});
+});
+}
+</script>
+</body>
+</html>

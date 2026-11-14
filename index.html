@@ -6,6 +6,7 @@
 <meta name="theme-color" content="#0a0a0c">
 <title>DirmuFX Signal Room</title>
 <link rel="icon" href="data:image/svg+xml,<svg viewBox='0 0 314 343' xmlns='http://www.w3.org/2000/svg'><path d='M15 15H140A156.5 156.5 0 0 1 140 328H15Z' fill='none' stroke='%2363d297' stroke-width='30' stroke-linejoin='round'/><g fill='%23fff'><rect x='87' y='159' width='10' height='138' rx='5'/><rect x='69' y='202' width='46' height='58' rx='5'/><rect x='147' y='114' width='10' height='160' rx='5'/><rect x='129' y='153' width='46' height='75' rx='5'/></g><g fill='%2363d297'><rect x='207' y='54' width='10' height='175' rx='5'/><rect x='189' y='89' width='46' height='99' rx='5'/></g></svg>">
+<script src="dfx-config.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap">
 <style>
@@ -54,7 +55,12 @@ html{scroll-behavior:smooth;padding-top:env(safe-area-inset-top,0px);padding-bot
 #landing .navlinks{display:flex;gap:4px}
 #landing .navlinks a{text-decoration:none;color:var(--muted);font-size:14px;padding:8px 10px;border-radius:8px}
 #landing .navlinks a:hover{color:var(--fg)}
-@media(max-width:760px){#landing .navlinks{display:none}
+#landing .navcta{display:flex;gap:8px;flex:none}
+#landing .navcta .btn{letter-spacing:.02em}
+@media(max-width:760px){#landing .nav .wrap{flex-wrap:wrap;row-gap:10px;padding-bottom:10px}
+#landing .navlinks{order:3;width:100%;overflow-x:auto;scrollbar-width:none;gap:8px;-webkit-overflow-scrolling:touch}
+#landing .navlinks::-webkit-scrollbar{display:none}
+#landing .navlinks a{flex:none;border:1px solid var(--line);border-radius:999px;padding:6px 14px;font-size:13px}
 #landing .nav .btn{padding:9px 14px;font-size:14px}}
 #landing .hero{position:relative;overflow:hidden;padding-block:64px 56px}
 #landing .hero::before{content:"";position:absolute;inset:0;background:
@@ -94,6 +100,33 @@ html{scroll-behavior:smooth;padding-top:env(safe-area-inset-top,0px);padding-bot
 #landing .ch .h{font-family:var(--f-mono);font-size:13px;color:var(--gold);word-break:break-all}
 #landing .warn{margin-top:14px;font-size:13px;color:var(--muted);display:flex;gap:8px;align-items:flex-start;background:var(--bg2);border:1px dashed var(--line);border-radius:12px;padding:12px 14px}
 #landing .warn b{color:var(--fg)}
+#landing .jsteps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;counter-reset:js}
+@media(max-width:900px){#landing .jsteps{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){#landing .jsteps{grid-template-columns:minmax(0,1fr)}}
+#landing .jstep{position:relative;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:18px;display:flex;flex-direction:column;gap:8px}
+#landing .jstep::before{counter-increment:js;content:counter(js);font-family:var(--f-display);font-weight:700;font-size:15px;width:32px;height:32px;border-radius:10px;display:grid;place-items:center;background:var(--up-dim);color:var(--up)}
+#landing .jstep h3{font-size:17px}
+#landing .jstep p{margin:0;font-size:13.5px;color:var(--muted)}
+#landing .jstep .btn{margin-top:auto;align-self:flex-start;padding:9px 14px;font-size:13.5px}
+#landing .jcopy{display:flex;gap:6px;align-items:center;background:var(--bg2);border:1px solid var(--line);border-radius:10px;padding:6px 6px 6px 10px;font-family:var(--f-mono);font-size:12px;color:var(--gold);word-break:break-all}
+#landing .jcopy button{flex:none;border:1px solid var(--line);background:var(--panel2);border-radius:8px;padding:5px 10px;font-size:12px;cursor:pointer}
+#landing .jreq{margin-top:18px;background:var(--bg2);border:1px solid var(--line);border-radius:16px;padding:18px}
+#landing .jreq h3{font-size:16px;margin-bottom:8px}
+#landing .jreq ul{margin:0;padding-left:18px;color:var(--muted);font-size:13.5px}
+#landing .jreq li+li{margin-top:4px}
+#landing .jreq b{color:var(--fg)}
+#landing .plans{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:18px}
+@media(max-width:700px){#landing .plans{grid-template-columns:minmax(0,1fr)}}
+#landing .plan{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:20px;display:flex;flex-direction:column;gap:10px}
+#landing .plan.vip{border-color:var(--gold-dim);background:linear-gradient(160deg,#1c170c,var(--panel) 55%)}
+#landing .plan .pname{font-family:var(--f-display);font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:var(--up);font-weight:600}
+#landing .plan.vip .pname{color:var(--gold)}
+#landing .plan .price{font-family:var(--f-display);font-size:26px;font-weight:700}
+#landing .plan .price small{display:block;font-size:13px;color:var(--muted);font-weight:500;margin-top:2px}
+#landing section[id]{scroll-margin-top:120px}
+#landing .plan ul{margin:0;padding-left:18px;color:var(--muted);font-size:13.5px}
+#landing .plan li+li{margin-top:4px}
+#landing .plan .btn{margin-top:auto;align-self:flex-start}
 #landing .feats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
 @media(max-width:700px){#landing .feats{grid-template-columns:minmax(0,1fr)}}
 #landing .feat{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:22px;display:grid;grid-template-columns:44px minmax(0,1fr);gap:16px}
@@ -442,9 +475,9 @@ html{scroll-behavior:auto}
       <svg class="dmark" viewBox="0 0 314 343" aria-hidden="true"><path d="M15 15H140A156.5 156.5 0 0 1 140 328H15Z" fill="none" stroke="#63d297" stroke-width="30" stroke-linejoin="round"/><g fill="#fff"><rect x="87" y="159" width="10" height="138" rx="5"/><rect x="69" y="202" width="46" height="58" rx="5"/><rect x="147" y="114" width="10" height="160" rx="5"/><rect x="129" y="153" width="46" height="75" rx="5"/></g><g fill="#63d297"><rect x="207" y="54" width="10" height="175" rx="5"/><rect x="189" y="89" width="46" height="99" rx="5"/></g></svg><span class="dword"><span class="dname">Dirmu<i>FX</i></span><span class="dtrade">TRADE</span></span>
     </a>
     <div class="navlinks">
-      <a href="#fitur">Fitur</a><a href="#terminal">Signal Room</a><a href="#kalkulator">Kalkulator</a><a href="#materi">Materi</a><a href="#faq">FAQ</a>
+      <a href="#fitur">Fitur</a><a href="#cara-gabung">Cara Gabung</a><a href="#terminal">Signal Room</a><a href="#kalkulator">Kalkulator</a><a href="#materi">Materi</a><a href="#faq">FAQ</a>
     </div>
-    <a class="btn gold-btn" href="#analisa">Buka Signal Room</a>
+    <div class="navcta"><a class="btn ghost" href="#masuk" id="navMasuk">Masuk</a><a class="btn gold-btn" href="#daftar">GABUNG</a></div>
   </div>
 </nav>
 
@@ -546,6 +579,39 @@ html{scroll-behavior:auto}
   </div>
 </section>
 
+<section id="cara-gabung" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head"><span class="eyebrow">Cara gabung</span><h2>Jadi member DirmuFX dalam 4 langkah</h2><p class="lead">Akses member gratis, tanpa biaya langganan. Cukup buka akun trading lewat link partner DirmuFX.</p></div>
+    <div class="jsteps">
+      <div class="jstep"><h3>Daftar akun DirmuFX</h3><p>Buat akun gratis di website ini pakai email &amp; password atau akun Google.</p>
+        <a class="btn gold-btn" href="#daftar">Daftar gratis</a></div>
+      <div class="jstep"><h3>Buka akun Windsor Brokers</h3><p>Daftar lewat link partner DirmuFX, lengkapi verifikasi, lalu deposit minimal <b style="color:var(--fg)">$25</b>.</p>
+        <div class="jcopy"><span>https://sc.myuserhub.com/?pt=224062</span><button type="button" id="jCopy">Salin</button></div>
+        <a class="btn" href="https://sc.myuserhub.com/?pt=224062" target="_blank" rel="noopener">Buka akun Windsor</a></div>
+      <div class="jstep"><h3>Isi nomor akun MT5</h3><p>Masuk ke akun DirmuFX-mu, lalu isi nomor akun MT5 di halaman Akun Saya.</p>
+        <a class="btn" href="#masuk">Masuk</a></div>
+      <div class="jstep"><h3>Verifikasi admin</h3><p>Admin mengecek akunmu di daftar partner. Setelah aktif, entry, SL, dan TP terbuka di HP mana pun kamu login.</p></div>
+    </div>
+    <div class="jreq">
+      <h3>Syarat member</h3>
+      <ul>
+        <li>Akun harus dibuat lewat <b>link partner DirmuFX</b>. Akun Windsor lama yang dibuat di luar link ini tidak bisa diverifikasi, jadi buka akun baru.</li>
+        <li>Deposit minimal <b>$25</b> dan akun tetap aktif dipakai trading.</li>
+        <li>Verifikasi dicek manual oleh admin, biasanya di hari yang sama. Status bisa dilihat di halaman Akun Saya.</li>
+      </ul>
+    </div>
+    <div class="plans">
+      <div class="plan"><span class="pname">Member Free</span><div class="price">Gratis<small>lewat link partner</small></div>
+        <ul><li>Entry, SL, SL+, TP1 &amp; TP MAX di Signal Room</li><li>Kalkulator lot &amp; multi-timeframe</li><li>Grup diskusi &amp; info market</li></ul>
+        <a class="btn gold-btn" href="#daftar">Daftar gratis</a></div>
+      <div class="plan vip"><span class="pname">VIP ELITE CLUB</span><div class="price">Rp 500.000<small>sekali bayar, seumur hidup</small></div>
+        <ul><li>Semua fitur Member Free</li><li>Grup VIP DirmuFX ELITE CLUB</li><li>Modul trading PDF &amp; penjelasan berita/fundamental mendalam</li></ul>
+        <a class="btn" href="https://wa.me/6285823444392?text=Halo%20DirmuFX%2C%20saya%20mau%20gabung%20VIP%20DirmuFX%20ELITE%20CLUB." target="_blank" rel="noopener">Tanya VIP via WhatsApp</a></div>
+    </div>
+    <p class="warn"><span aria-hidden="true">⚠️</span><span>Trading emas dengan leverage berisiko tinggi dan bisa menghabiskan seluruh modal. Sinyal DirmuFX adalah alat bantu edukasi, bukan jaminan profit. DirmuFX mendapat komisi dari broker atas aktivitas trading member.</span></p>
+  </div>
+</section>
+
 <section id="kalkulator">
   <div class="wrap">
     <div class="sec-head"><span class="eyebrow">Kalkulator trading</span><h2>Hitung lot, profit, dan margin</h2><p class="lead">Masukkan angka dari akun kamu. Semua dihitung langsung di HP, tidak ada data yang dikirim ke mana pun.</p></div>
@@ -622,7 +688,7 @@ html{scroll-behavior:auto}
       <details><summary>Apakah ada jaminan profit?</summary><p>Tidak ada. Trading forex dan emas berisiko tinggi. Sinyal dan analisa adalah alat bantu, bukan jaminan. Selalu pakai stop loss dan jangan memakai dana yang tidak siap hilang.</p></details>
       <details><summary>Dari mana sinyal DirmuFX dihitung?</summary><p>Dari gabungan delapan indikator teknikal (EMA, MACD, RSI, Stochastic, Bollinger, pivot, ADX) yang disaring dengan arah tren timeframe lebih besar. Hanya dihitung dari candle yang sudah tutup.</p></details>
       <details><summary>Bagaimana cara memakai kalkulator lot?</summary><p>Isi saldo, persentase risiko, dan jarak stop loss dalam pips. Kalkulator menampilkan lot yang aman beserta nilai rugi dan target dalam dolar dan rupiah. Untuk akun cent, pilih "Cent (USC)".</p></details>
-      <details><summary>Bagaimana cara bergabung dengan komunitas?</summary><p>Ikuti channel Telegram <b>t.me/dirmufxofficial</b>, gabung grup WhatsApp DirmuFX lewat tombol di bagian Channel resmi, atau hubungi admin lewat WhatsApp untuk informasi lebih lanjut.</p></details>
+      <details><summary>Bagaimana cara bergabung dengan komunitas?</summary><p>Buka akun Windsor Brokers lewat link partner DirmuFX, deposit minimal $25, lalu kirim nomor akun MT5 ke admin via WhatsApp. Langkah lengkapnya ada di bagian <a href="#cara-gabung" style="color:var(--gold)">Cara Gabung</a>. Info market juga ada di Telegram <b>t.me/dirmufxofficial</b>.</p></details>
     </div>
   </div>
 </section>
@@ -642,7 +708,7 @@ html{scroll-behavior:auto}
   <div class="wrap">
     <div class="foot">
       <div><a class="logo" href="#top" style="display:inline-flex"><svg class="dmark" viewBox="0 0 314 343" aria-hidden="true"><path d="M15 15H140A156.5 156.5 0 0 1 140 328H15Z" fill="none" stroke="#63d297" stroke-width="30" stroke-linejoin="round"/><g fill="#fff"><rect x="87" y="159" width="10" height="138" rx="5"/><rect x="69" y="202" width="46" height="58" rx="5"/><rect x="147" y="114" width="10" height="160" rx="5"/><rect x="129" y="153" width="46" height="75" rx="5"/></g><g fill="#63d297"><rect x="207" y="54" width="10" height="175" rx="5"/><rect x="189" y="89" width="46" height="99" rx="5"/></g></svg><span class="dword"><span class="dname">Dirmu<i>FX</i></span><span class="dtrade">TRADE</span></span></a><p style="margin:10px 0 0;max-width:42ch">Komunitas edukasi trading XAUUSD untuk trader Indonesia.</p></div>
-      <div><h4>Halaman</h4><a href="#analisa">Signal Room</a><a href="#kalkulator">Kalkulator</a><a href="#materi">Materi</a><a href="#faq">FAQ</a></div>
+      <div><h4>Halaman</h4><a href="#cara-gabung">Cara Gabung</a><a href="#analisa">Signal Room</a><a href="#kalkulator">Kalkulator</a><a href="#materi">Materi</a><a href="#faq">FAQ</a></div>
       <div><h4>Channel</h4><a href="https://t.me/dirmufxofficial" target="_blank" rel="noopener">Telegram</a><a href="https://chat.whatsapp.com/E4zPvDufMNqAaLdo9BLSmg" target="_blank" rel="noopener">Grup WhatsApp</a><a href="https://www.tiktok.com/@dirmufxofficial" target="_blank" rel="noopener">TikTok</a><a href="https://www.instagram.com/mudirr_/" target="_blank" rel="noopener">Instagram</a><a href="https://wa.me/6285823444392" target="_blank" rel="noopener">WhatsApp</a></div>
     </div>
     <p class="risk"><b style="color:var(--fg)">Peringatan risiko:</b> Trading forex, emas, dan kripto dengan leverage memiliki risiko tinggi dan bisa menyebabkan kehilangan seluruh modal. Semua konten DirmuFX bersifat edukasi, bukan saran keuangan. Hasil masa lalu tidak menjamin hasil di masa depan.<br>© 2026 DirmuFX Trade.</p>
@@ -652,6 +718,107 @@ html{scroll-behavior:auto}
 
 
 </div>
+<style>
+#auth{--bg:#0a0a0c;--bg2:#0f0f12;--panel:#131316;--panel2:#1b1b20;--line:#2a2a31;--fg:#f2efe8;--muted:#9b978d;--gold:#e3b85c;--gold-hi:#f6e3a8;--gold-lo:#b8862b;--up:#2fd39b;--up-dim:#0f3a2c;--down:#f05d6c;
+  --f-display:"Chakra Petch","Segoe UI",system-ui,sans-serif;--f-body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;--f-mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+  min-height:100vh;min-height:100dvh;background:radial-gradient(900px 500px at 50% -10%,rgba(227,184,92,.14),transparent 60%),radial-gradient(700px 400px at 50% 110%,rgba(47,211,155,.08),transparent 60%),var(--bg);color:var(--fg);font-family:var(--f-body);font-size:15px;line-height:1.55;color-scheme:dark}
+#auth .aw{max-width:440px;margin:0 auto;padding:36px max(20px,env(safe-area-inset-left,0px)) 40px}
+#auth .ahead{text-align:center;margin-bottom:24px}
+#auth .ahead svg{width:64px;height:auto}
+#auth .eyb{display:block;margin-top:14px;font-family:var(--f-display);font-size:12px;letter-spacing:.3em;color:var(--up);font-weight:600}
+#auth .atitle{font-family:"Montserrat",var(--f-display);font-size:30px;font-weight:700;margin:6px 0 2px;letter-spacing:-.01em}
+#auth .atitle i{font-style:normal;color:#63d297}
+#auth .asub{font-family:var(--f-display);font-size:12px;letter-spacing:.32em;color:var(--gold);font-weight:600}
+#auth .seg{display:grid;grid-template-columns:1fr 1fr;gap:4px;background:var(--bg2);border:1px solid var(--line);border-radius:14px;padding:4px;margin-bottom:20px}
+#auth .seg a{text-align:center;text-decoration:none;color:var(--muted);font-weight:600;padding:10px;border-radius:10px;font-size:14.5px}
+#auth .seg a[aria-current="true"]{background:var(--panel2);color:var(--fg);box-shadow:inset 0 0 0 1px #3a3a44}
+#auth label{display:block;font-family:var(--f-display);font-size:12px;letter-spacing:.14em;color:var(--muted);font-weight:600;margin:14px 0 6px}
+#auth input{width:100%;font:inherit;color:var(--fg);background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:13px 14px;outline:0}
+#auth input:focus{border-color:var(--gold-lo)}
+#auth .pw{position:relative}
+#auth .pw input{padding-right:48px}
+#auth .eye{position:absolute;right:6px;top:50%;transform:translateY(-50%);width:38px;height:38px;border:0;background:none;color:var(--muted);cursor:pointer;display:grid;place-items:center}
+#auth .eye svg{width:20px;height:20px}
+#auth .abtn{display:flex;width:100%;align-items:center;justify-content:center;gap:8px;font:inherit;font-weight:700;font-size:15.5px;border-radius:14px;padding:14px;cursor:pointer;border:1px solid var(--line);background:var(--panel2);color:var(--fg);text-decoration:none}
+#auth .abtn.gold{background:linear-gradient(100deg,var(--gold-hi),var(--gold) 50%,var(--gold-lo));color:#1a1305;border:0;margin-top:20px;box-shadow:0 8px 30px -10px rgba(227,184,92,.5)}
+#auth .abtn:disabled{opacity:.5;cursor:not-allowed}
+#auth .or{display:flex;align-items:center;gap:12px;color:var(--muted);font-size:12px;letter-spacing:.14em;margin:18px 0}
+#auth .or::before,#auth .or::after{content:"";flex:1;height:1px;background:var(--line)}
+#auth .gbtn{gap:12px;font-weight:600}
+#auth .gbtn .g{width:24px;height:24px;border-radius:50%;background:#fff;display:grid;place-items:center}
+#auth .gbtn .g svg{width:16px;height:16px}
+#auth .alinks{text-align:center;margin-top:18px;font-size:13.5px;color:var(--muted)}
+#auth .alinks a{color:var(--gold);text-decoration:none;font-weight:600}
+#auth .back{display:block;text-align:center;margin-top:16px;color:var(--fg);text-decoration:none;font-weight:600;font-size:14px}
+#auth .msg{margin-top:12px;font-size:13.5px;min-height:1em}
+#auth .msg.err{color:var(--down)}#auth .msg.ok{color:var(--up)}
+#auth .disc{margin-top:26px;font-size:12px;color:var(--muted);text-align:center}
+#auth .notice{background:#1c170c;border:1px solid #4d3d1a;color:var(--gold-hi);border-radius:12px;padding:12px 14px;font-size:13px;margin-bottom:16px}
+#auth .card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:18px;margin-top:14px}
+#auth .card h3{font-family:var(--f-display);font-size:17px;margin:0 0 6px}
+#auth .card p{margin:0;color:var(--muted);font-size:13.5px}
+#auth .badge{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:600;border-radius:999px;padding:5px 12px;margin-top:8px}
+#auth .badge::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor}
+#auth .badge.wait{color:var(--gold);background:#2a210d}#auth .badge.ok{color:var(--up);background:var(--up-dim)}#auth .badge.off{color:var(--down);background:#3d1820}
+#auth .row2{display:flex;gap:8px;margin-top:10px}
+#auth .row2 input{flex:1}
+#auth .row2 .abtn{width:auto;padding:12px 16px;font-size:14px}
+#auth .hello{font-family:var(--f-display);font-size:22px;font-weight:700;margin:0}
+#auth .muted{color:var(--muted);font-size:13.5px}
+</style>
+<div id="auth" hidden>
+ <div class="aw">
+  <div class="ahead">
+   <svg viewBox="0 0 314 343" aria-hidden="true"><path d="M15 15H140A156.5 156.5 0 0 1 140 328H15Z" fill="none" stroke="#63d297" stroke-width="30" stroke-linejoin="round"/><g fill="#fff"><rect x="87" y="159" width="10" height="138" rx="5"/><rect x="69" y="202" width="46" height="58" rx="5"/><rect x="147" y="114" width="10" height="160" rx="5"/><rect x="129" y="153" width="46" height="75" rx="5"/></g><g fill="#63d297"><rect x="207" y="54" width="10" height="175" rx="5"/><rect x="189" y="89" width="46" height="99" rx="5"/></g></svg>
+   <span class="eyb">AKSES MEMBER</span>
+   <div class="atitle">Dirmu<i>FX</i> TRADE</div>
+   <div class="asub">KOMUNITAS XAUUSD</div>
+  </div>
+
+  <div class="notice" id="aOff" hidden>Login member sedang disiapkan admin. Sementara itu, hubungi admin lewat <a href="https://wa.me/6285823444392" target="_blank" rel="noopener" style="color:var(--gold)">WhatsApp</a>.</div>
+
+  <!-- MASUK / DAFTAR -->
+  <div id="aForms">
+   <nav class="seg"><a href="#masuk" id="tMasuk">Masuk</a><a href="#daftar" id="tDaftar">Daftar Gratis</a></nav>
+   <form id="fAuth" novalidate>
+    <div id="nameWrap" hidden><label for="aName">NAMA</label><input id="aName" autocomplete="name" placeholder="Nama kamu"></div>
+    <label for="aEmail">EMAIL</label><input id="aEmail" type="email" inputmode="email" autocomplete="email" placeholder="nama@email.com">
+    <div id="pwBlock"><label for="aPass">PASSWORD</label>
+     <div class="pw"><input id="aPass" type="password" autocomplete="current-password" placeholder="Minimal 6 karakter"><button type="button" class="eye" id="aEye" aria-label="Tampilkan password"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg></button></div></div>
+    <button class="abtn gold" id="aSubmit" type="submit">Masuk Signal Room →</button>
+   </form>
+   <div id="gBlock"><div class="or">ATAU</div>
+    <button class="abtn gbtn" id="aGoogle" type="button"><span class="g"><svg viewBox="0 0 48 48"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.4-.4-3.5z"/><path fill="#FF3D00" d="m6.3 14.7 6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-7.9l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.4-.4-3.5z"/></svg></span>Login dengan Google</button></div>
+   <p class="msg" id="aMsg" role="status"></p>
+   <div class="alinks" id="forgotLine"><a href="#lupa">Lupa password?</a> Reset lewat email dalam 1 menit.</div>
+  </div>
+
+  <!-- AKUN SAYA -->
+  <div id="aAcc" hidden>
+   <p class="muted" style="margin:0">Akun Saya</p>
+   <h2 class="hello" id="accName">Halo</h2>
+   <p class="muted" id="accEmail" style="margin:2px 0 0"></p>
+   <div class="card">
+    <h3>Status member</h3>
+    <span class="badge wait" id="accBadge">Memuat…</span>
+    <p id="accInfo" style="margin-top:10px"></p>
+   </div>
+   <div class="card">
+    <h3>Nomor akun MT5 Windsor</h3>
+    <p>Akun harus dibuat lewat <a href="https://sc.myuserhub.com/?pt=224062" target="_blank" rel="noopener" style="color:var(--gold)">link partner DirmuFX</a> dengan deposit minimal $25.</p>
+    <div class="row2"><input id="accMt5" inputmode="numeric" placeholder="Contoh: 12345678" autocomplete="off"><button class="abtn" id="accSave" type="button">Simpan</button></div>
+    <p class="msg" id="accMsg"></p>
+    <a class="abtn" id="accWa" target="_blank" rel="noopener" style="margin-top:10px">Kabari admin via WhatsApp</a>
+   </div>
+   <a class="abtn gold" href="#analisa">Buka Signal Room →</a>
+   <button class="abtn" id="accOut" type="button" style="margin-top:10px">Keluar</button>
+  </div>
+
+  <a class="back" href="#top">← Kembali ke beranda</a>
+  <p class="disc">⚠️ Trading emas/forex berisiko tinggi. Sinyal bersifat edukasi, bukan jaminan profit.</p>
+ </div>
+</div>
+
 <div id="app" hidden>
 
 <header class="top">
@@ -893,9 +1060,9 @@ html{scroll-behavior:auto}
         <div class="step"><div><h3>Daftar lewat link partner</h3><p>Wajib memakai link di bawah agar akun tercatat sebagai member DirmuFX. Akun yang dibuat langsung di situs broker tidak bisa diverifikasi.</p>
           <div class="copyline"><span class="ibLinkText"></span><button class="btn" data-copy="link">Salin</button></div></div></div>
         <div class="step"><div><h3>Verifikasi dan deposit</h3><p>Lengkapi verifikasi identitas di <span class="brokerName"></span>, lalu deposit sesuai kemampuan. Pakai dana yang siap kamu tanggung risikonya.</p></div></div>
-        <div class="step"><div><h3>Kirim nomor akun trading</h3><p>Kirim nomor akun MT4/MT5 kamu supaya kami cek di daftar member partner.</p>
-          <div class="row"><a class="btn primary" id="waBtn" target="_blank" rel="noopener" hidden>Kirim via WhatsApp</a><a class="btn" id="tgBtn" target="_blank" rel="noopener" hidden>Kirim via Telegram</a><span class="small muted" id="contactNone"></span></div></div></div>
-        <div class="step"><div><h3>Masukkan kode akses</h3><p>Setelah terverifikasi kamu menerima kode akses. Masukkan di sini.</p>
+        <div class="step"><div><h3>Masuk &amp; isi nomor akun MT5</h3><p>Daftar atau masuk ke akun DirmuFX, lalu isi nomor akun MT5 kamu. Admin akan mengaktifkan akses setelah akun dicek.</p>
+          <div class="row"><a class="btn primary" href="#daftar">Daftar gratis</a><a class="btn" href="#masuk">Masuk</a><a class="btn" id="waBtn" target="_blank" rel="noopener" hidden>Tanya admin via WhatsApp</a><a class="btn" id="tgBtn" target="_blank" rel="noopener" hidden>Telegram</a><span class="small muted" id="contactNone"></span></div></div></div>
+        <div class="step" id="codeStep"><div><h3>Punya kode akses?</h3><p>Masukkan kode akses dari admin di sini.</p>
           <div class="row"><div class="field" style="width:220px"><label for="codeIn">Kode</label><input id="codeIn" class="num" autocomplete="off" spellcheck="false" placeholder="DFX-XXXXXX" style="text-transform:uppercase"></div><button class="btn primary" id="codeBtn">Buka akses</button></div>
           <p id="codeMsg" class="small" style="margin-top:6px"></p></div></div>
       </div>
@@ -983,6 +1150,9 @@ const IB={
   // SHA-256 dari kode akses member (kode aslinya jangan ditulis di file ini)
   codeHashes:["8a53313fb5cb6a60c95074dbc5df98613e4128493d703096c4e5a3ac13ad866f"]
 };
+/* Kalau Firebase sudah diisi, akses member dikunci dan dibuka lewat login */
+const DFX_AUTH_ON=!!(window.DFX_FIREBASE&&window.DFX_FIREBASE.apiKey);
+if(DFX_AUTH_ON)IB.gate=true;
 (()=>{
 "use strict";
 /* ================= config ================= */
@@ -1459,6 +1629,8 @@ $("codeBtn").addEventListener("click",async()=>{
   if(IB.codeHashes.includes(h)){store.set("dfx-member","1");applyLock();render();$("codeMsg").innerHTML='<span class="unlocked-msg">Akses member aktif. Semua sinyal sudah terbuka di tab Analisa.</span>'}
   else{$("codeMsg").innerHTML='<span class="err">Kode tidak cocok. Cek lagi atau hubungi admin DirmuFX.</span>'}
 });
+if(DFX_AUTH_ON&&$("codeStep"))$("codeStep").hidden=true;
+window.DFX_setMember=on=>{store.set("dfx-member",on?"1":"0");applyLock();try{render()}catch(e){}};
 
 /* ================= notifikasi sinyal (selama tool terbuka) ================= */
 const NT={on:store.get("dfx-notif")==="1",ctx:null,seen:{},titleT:null};
@@ -1587,12 +1759,18 @@ let booted=false;window.DFX_openApp=v=>{if(!booted){booted=true;schedule();refre
   function route(){
     let h=decodeURIComponent(location.hash.slice(1));
     if(h==="terminal"||h==="signal-room"||h==="signalroom")h="analisa";
+    const AU=document.getElementById("auth");
+    if(["masuk","daftar","akun","lupa"].includes(h)){
+      L.hidden=true;A.hidden=true;AU.hidden=false;if(mode!=="auth")window.scrollTo(0,0);mode="auth";
+      if(window.DFX_authRoute)window.DFX_authRoute(h);return;
+    }
+    AU.hidden=true;
     const isApp=VIEWS.includes(h);
     if(isApp){
       if(mode!=="app"){L.hidden=true;A.hidden=false;mode="app";window.scrollTo(0,0)}
       window.DFX_openApp(h);
     }else{
-      if(mode!=="land"){A.hidden=true;L.hidden=false;mode="land";
+      if(mode!=="land"){A.hidden=true;L.hidden=false;mode="land";window.scrollTo(0,0);
         const t=h&&document.getElementById(h);if(t)setTimeout(()=>t.scrollIntoView(),0);else window.scrollTo(0,0)}
     }
   }
@@ -1601,5 +1779,106 @@ let booted=false;window.DFX_openApp=v=>{if(!booted){booted=true;schedule();refre
 })();
 
 </script>
+<script>
+(()=>{const b=document.getElementById("jCopy");if(!b)return;b.addEventListener("click",async()=>{const t="https://sc.myuserhub.com/?pt=224062";try{await navigator.clipboard.writeText(t)}catch(e){const a=document.createElement("textarea");a.value=t;document.body.appendChild(a);a.select();try{document.execCommand("copy")}catch(_){}a.remove()}b.textContent="Tersalin";setTimeout(()=>b.textContent="Salin",1500)})})();
+</script>
+<script type="module">
+/* ===== Login member DirmuFX (Firebase Auth + Firestore) ===== */
+const CFG=window.DFX_FIREBASE||{};const ON=!!CFG.apiKey;
+const $=id=>document.getElementById(id);
+const WA="6285823444392";
+let mode="masuk",user=null,profile=null,fb=null;
+
+function setMsg(t,c){const m=$("aMsg");m.textContent=t||"";m.className="msg"+(c?" "+c:"")}
+function errText(e){const c=(e&&e.code)||"";return({
+ "auth/invalid-email":"Format email salah.","auth/missing-password":"Isi password dulu.","auth/weak-password":"Password minimal 6 karakter.",
+ "auth/email-already-in-use":"Email ini sudah terdaftar. Silakan masuk.","auth/invalid-credential":"Email atau password salah.",
+ "auth/wrong-password":"Email atau password salah.","auth/user-not-found":"Email belum terdaftar. Silakan daftar dulu.",
+ "auth/too-many-requests":"Terlalu banyak percobaan. Coba lagi beberapa menit lagi.","auth/network-request-failed":"Koneksi internet bermasalah.",
+ "auth/popup-closed-by-user":"Login Google dibatalkan.","auth/unauthorized-domain":"Domain website belum diizinkan di Firebase."
+}[c])||"Gagal: "+(c||e.message||e)}
+
+function paint(){
+ const acc=!!user&&mode!=="lupa";
+ $("aForms").hidden=acc;$("aAcc").hidden=!acc;$("aOff").hidden=ON;
+ if(acc){renderAcc();return}
+ const d=mode==="daftar",l=mode==="lupa";
+ $("tMasuk").setAttribute("aria-current",mode==="masuk");$("tDaftar").setAttribute("aria-current",d);
+ $("nameWrap").hidden=!d;$("pwBlock").hidden=l;$("gBlock").hidden=l;$("forgotLine").hidden=mode!=="masuk";
+ $("aPass").autocomplete=d?"new-password":"current-password";
+ $("aSubmit").textContent=l?"Kirim link reset password":d?"Daftar Gratis →":"Masuk Signal Room →";
+ [$("aSubmit"),$("aGoogle")].forEach(b=>b.disabled=!ON);
+}
+function renderAcc(){
+ const p=profile||{};const st=p.status||"pending";const mt5=p.mt5||"";
+ $("accName").textContent="Halo, "+(p.name||user.displayName||"Trader");
+ $("accEmail").textContent=user.email||"";
+ if(document.activeElement!==$("accMt5"))$("accMt5").value=mt5;
+ const b=$("accBadge");
+ if(st==="active"){b.className="badge ok";b.textContent="Aktif";$("accInfo").textContent="Akses member aktif. Entry, SL, dan TP sudah terbuka di Signal Room."}
+ else if(st==="inactive"){b.className="badge off";b.textContent="Nonaktif";$("accInfo").textContent="Akses dinonaktifkan. Hubungi admin untuk info lebih lanjut."}
+ else if(!mt5){b.className="badge wait";b.textContent="Isi nomor akun";$("accInfo").textContent="Isi nomor akun MT5 Windsor kamu di bawah supaya admin bisa memverifikasi."}
+ else{b.className="badge wait";b.textContent="Menunggu verifikasi";$("accInfo").textContent="Nomor akun sudah terkirim. Admin sedang mengecek akunmu."}
+ $("accWa").href=`https://wa.me/${WA}?text=${encodeURIComponent(`Halo admin DirmuFX, saya sudah daftar di website.\nEmail: ${user.email||"-"}\nNomor akun MT5: ${mt5||"-"}`)}`;
+}
+window.DFX_authRoute=h=>{mode=h==="akun"?"masuk":h;setMsg("");paint()};
+
+$("aEye").onclick=()=>{const i=$("aPass");i.type=i.type==="password"?"text":"password"};
+
+async function load(){
+ const v="10.12.2",u=`https://www.gstatic.com/firebasejs/${v}/`;
+ const [app,auth,fs]=await Promise.all([import(u+"firebase-app.js"),import(u+"firebase-auth.js"),import(u+"firebase-firestore.js")]);
+ const a=app.initializeApp(CFG);const A=auth.getAuth(a);A.languageCode="id";const D=fs.getFirestore(a);
+ fb={A,D,auth,fs};
+ let unsub=null;
+ auth.onAuthStateChanged(A,async u2=>{
+  user=u2;profile=null;if(unsub){unsub();unsub=null}
+  const nav=$("navMasuk");if(nav){nav.textContent=u2?"Akun":"Masuk";nav.href=u2?"#akun":"#masuk"}
+  if(!u2){window.DFX_setMember&&window.DFX_setMember(false);paint();return}
+  const ref=fs.doc(D,"members",u2.uid);
+  try{
+   const snap=await fs.getDoc(ref);
+   if(!snap.exists()){await fs.setDoc(ref,{name:(pendingName||u2.displayName||"").slice(0,60),email:u2.email||"",mt5:"",status:"pending",createdAt:fs.serverTimestamp(),updatedAt:fs.serverTimestamp()})}
+  }catch(e){console.warn(e)}
+  pendingName="";
+  unsub=fs.onSnapshot(ref,s=>{profile=s.data()||{};window.DFX_setMember&&window.DFX_setMember(profile.status==="active");paint()},e=>{console.warn(e);paint()});
+  const h=location.hash.slice(1);if(h==="masuk"||h==="daftar")location.hash="akun";else paint();
+ });
+}
+let pendingName="";
+
+$("fAuth").addEventListener("submit",async e=>{
+ e.preventDefault();if(!fb)return;const {A,auth}=fb;
+ const em=$("aEmail").value.trim(),pw=$("aPass").value;
+ $("aSubmit").disabled=true;setMsg("Memproses…");
+ try{
+  if(mode==="lupa"){await auth.sendPasswordResetEmail(A,em);setMsg("Link reset sudah dikirim ke "+em+". Cek inbox atau folder spam.","ok")}
+  else if(mode==="daftar"){
+   const nm=$("aName").value.trim();if(!nm)throw{message:"Isi nama dulu."};
+   pendingName=nm;const c=await auth.createUserWithEmailAndPassword(A,em,pw);
+   try{await auth.updateProfile(c.user,{displayName:nm})}catch(_){}
+   setMsg("Akun berhasil dibuat.","ok");
+  }else{await auth.signInWithEmailAndPassword(A,em,pw);setMsg("")}
+ }catch(err){setMsg(err.code?errText(err):err.message,"err")}
+ $("aSubmit").disabled=false;
+});
+$("aGoogle").onclick=async()=>{
+ if(!fb)return;const {A,auth}=fb;const pr=new auth.GoogleAuthProvider();setMsg("");
+ try{await auth.signInWithPopup(A,pr)}
+ catch(e){if(e.code==="auth/popup-blocked"||e.code==="auth/operation-not-supported-in-this-environment"){await auth.signInWithRedirect(A,pr)}else setMsg(errText(e),"err")}
+};
+$("accSave").onclick=async()=>{
+ if(!fb||!user)return;const v=$("accMt5").value.replace(/\D/g,"");
+ if(v.length<5){$("accMsg").textContent="Nomor akun MT5 tidak valid.";$("accMsg").className="msg err";return}
+ try{await fb.fs.updateDoc(fb.fs.doc(fb.D,"members",user.uid),{mt5:v,updatedAt:fb.fs.serverTimestamp()});$("accMsg").textContent="Tersimpan. Kabari admin lewat WhatsApp supaya cepat dicek.";$("accMsg").className="msg ok"}
+ catch(e){$("accMsg").textContent="Gagal menyimpan. Coba lagi.";$("accMsg").className="msg err"}
+};
+$("accOut").onclick=async()=>{if(fb)await fb.auth.signOut(fb.A);location.hash="top"};
+
+{const h0=location.hash.slice(1);if(["masuk","daftar","lupa"].includes(h0))mode=h0}
+paint();
+if(ON)load().catch(e=>{console.warn(e);setMsg("Gagal memuat sistem login. Cek koneksi lalu muat ulang.","err")});
+</script>
+
 </body>
 </html>
