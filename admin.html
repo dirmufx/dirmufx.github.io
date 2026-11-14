@@ -30,7 +30,15 @@ input{width:100%;font:inherit;color:var(--fg);background:var(--bg2);border:1px s
 .st.pending{background:#2a210d;color:var(--gold)}.st.active{background:var(--up-dim);color:var(--up)}.st.inactive{background:#3d1820;color:var(--down)}
 .acts{display:flex;gap:6px}
 .err{color:var(--down)}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px}
+select,textarea{font:inherit;color:var(--fg);background:var(--bg2);border:1px solid var(--line);border-radius:10px;padding:9px 10px}
+textarea{width:100%;min-height:110px;margin-top:8px;resize:vertical}
+.st.expired{background:#3d1820;color:var(--down)}
+.meta{font-size:13px;color:var(--muted);margin-top:2px}
+.acts{flex-wrap:wrap;align-items:center}
+.grid4{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.grid4 label{font-size:12.5px;color:var(--muted)}
+.grid4 input{margin-top:4px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:14px}
 .stats div{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:10px;text-align:center}
 .stats b{display:block;font-family:"Chakra Petch",sans-serif;font-size:22px}
 </style>
@@ -50,11 +58,24 @@ input{width:100%;font:inherit;color:var(--fg);background:var(--bg2);border:1px s
 
  <div id="panel" hidden>
   <p class="muted" id="who" style="margin:0"></p>
-  <div class="stats"><div><b id="nP">0</b><span class="muted">Menunggu</span></div><div><b id="nA">0</b><span class="muted">Aktif</span></div><div><b id="nT">0</b><span class="muted">Total</span></div></div>
-  <input id="q" placeholder="Cari nama, email, atau nomor MT5">
-  <div class="tabs"><button class="btn" data-f="pending" aria-pressed="true">Menunggu</button><button class="btn" data-f="active" aria-pressed="false">Aktif</button><button class="btn" data-f="inactive" aria-pressed="false">Nonaktif</button><button class="btn" data-f="all" aria-pressed="false">Semua</button></div>
-  <p class="muted">Cek nomor MT5 di portal IB Windsor (link partner dan deposit minimal $25) sebelum mengaktifkan.</p>
-  <div id="list"></div>
+  <div class="stats"><div><b id="nP">0</b><span class="muted">Menunggu</span></div><div><b id="nA">0</b><span class="muted">Aktif</span></div><div><b id="nE">0</b><span class="muted">Berakhir</span></div><div><b id="nT">0</b><span class="muted">Total</span></div></div>
+  <div class="tabs"><button class="btn" data-f="pending" aria-pressed="true">Menunggu</button><button class="btn" data-f="active" aria-pressed="false">Aktif</button><button class="btn" data-f="expired" aria-pressed="false">Berakhir</button><button class="btn" data-f="inactive" aria-pressed="false">Nonaktif</button><button class="btn" data-f="all" aria-pressed="false">Semua</button><button class="btn" data-f="set" aria-pressed="false">⚙ Harga &amp; Rekening</button></div>
+  <div id="listWrap">
+   <input id="q" placeholder="Cari nama, email, atau nomor MT5" style="margin-top:0">
+   <p class="muted">Jalur broker: cek nomor MT5 di portal IB Windsor (link partner, deposit minimal $60). Jalur VIP seumur hidup: cek transfer Rp1.000.000 masuk dulu.</p>
+   <div id="list"></div>
+  </div>
+  <div id="setWrap" hidden>
+   <div class="box">
+    <b>Harga VIP seumur hidup (Rupiah)</b>
+    <input id="pLife" inputmode="numeric" placeholder="1000000">
+    <b style="display:block;margin-top:16px">Info pembayaran</b>
+    <p class="muted" style="margin:4px 0 0">Ditampilkan ke member setelah memilih paket. Tulis rekening/e-wallet, satu per baris.</p>
+    <textarea id="pay" placeholder="BCA 1234567890 a.n. Nama&#10;DANA 08xxxxxxxxxx a.n. Nama"></textarea>
+    <button class="btn gold" id="saveSet" style="width:100%;margin-top:12px;padding:12px">Simpan pengaturan</button>
+    <p class="muted" id="setMsg"></p>
+   </div>
+  </div>
  </div>
 </div>
 <script type="module">
@@ -66,26 +87,47 @@ const [app,auth,fs]=await Promise.all([import(u+"firebase-app.js"),import(u+"fir
 const a=app.initializeApp(CFG),A=auth.getAuth(a),D=fs.getFirestore(a);
 let rows=[],filt="pending",unsub=null;
 const esc=t=>String(t||"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-const label={pending:"Menunggu",active:"Aktif",inactive:"Nonaktif"};
+const toMs=t=>!t?0:t.toMillis?t.toMillis():new Date(t).getTime();
+const fd=t=>new Date(toMs(t)).toLocaleDateString("id-ID",{day:"numeric",month:"short",year:"numeric"});
+const label={pending:"Menunggu",active:"Aktif",inactive:"Nonaktif",expired:"Berakhir"};
+const state=r=>r.status==="active"?(r.until&&toMs(r.until)<=Date.now()?"expired":"active"):r.status==="inactive"?"inactive":"pending";
+function addMonths(base,m){const d=new Date(base);const day=d.getDate();d.setMonth(d.getMonth()+m);if(d.getDate()<day)d.setDate(0);return d}
 function draw(){
- const q=$("q").value.trim().toLowerCase();
- $("nP").textContent=rows.filter(r=>(r.status||"pending")==="pending").length;$("nA").textContent=rows.filter(r=>r.status==="active").length;$("nT").textContent=rows.length;
- const L=rows.filter(r=>(filt==="all"||(r.status||"pending")===filt)&&(!q||[r.name,r.email,r.mt5].join(" ").toLowerCase().includes(q)));
- $("list").innerHTML=L.length?L.map(r=>{const st=r.status||"pending";const d=r.createdAt&&r.createdAt.toDate?r.createdAt.toDate().toLocaleDateString("id-ID",{day:"numeric",month:"short",year:"numeric"}):"";
-  return `<div class="m"><div><b>${esc(r.name)||"(tanpa nama)"}</b><span class="st ${st}">${label[st]||st}</span><div class="muted">${esc(r.email)} ${d?"· "+d:""}</div><div class="mt5">MT5: ${esc(r.mt5)||"<span class='muted'>belum diisi</span>"}</div></div>
-  <div class="acts">${st!=="active"?`<button class="btn ok" data-id="${r.id}" data-s="active">Aktifkan</button>`:""}${st!=="inactive"?`<button class="btn no" data-id="${r.id}" data-s="inactive">Nonaktifkan</button>`:""}</div></div>`}).join(""):'<p class="muted" style="margin-top:14px">Tidak ada member di daftar ini.</p>';
+ const q=$("q").value.trim().toLowerCase();const S=rows.map(r=>({...r,_s:state(r)}));
+ $("nP").textContent=S.filter(r=>r._s==="pending").length;$("nA").textContent=S.filter(r=>r._s==="active").length;$("nE").textContent=S.filter(r=>r._s==="expired").length;$("nT").textContent=S.length;
+ const L=S.filter(r=>(filt==="all"||r._s===filt)&&(!q||[r.name,r.email,r.mt5].join(" ").toLowerCase().includes(q)));
+ $("list").innerHTML=L.length?L.map(r=>{const st=r._s;const d=r.createdAt&&r.createdAt.toDate?fd(r.createdAt):"";
+  const path=r.path==="sub"?"VIP seumur hidup (bayar)":r.path==="broker"?"Gratis via broker":"Belum pilih jalur";
+  const sel=[1,3,6,12].map(m=>`<option value="${m}" ${Number(r.plan||1)===m?"selected":""}>${m} bln</option>`).join("");
+  const actBtn=`<button class="btn ok" data-id="${r.id}" data-a="${r.path==="sub"?"sub":"broker"}" ${st==="active"?"hidden":""}>Aktifkan</button>`;
+  return `<div class="m"><div style="min-width:0"><b>${esc(r.name)||"(tanpa nama)"}</b><span class="st ${st}">${label[st]}</span>
+   <div class="meta">${esc(r.email)}${d?" · daftar "+d:""}</div>
+   <div class="meta">Jalur: <b style="color:var(--fg);font-size:13px">${path}</b>${r.until?" · berlaku s/d "+fd(r.until):""}</div>
+   <div class="mt5">MT5: ${esc(r.mt5)||"<span class='muted'>belum diisi</span>"}</div></div>
+   <div class="acts">${actBtn}${st!=="inactive"?`<button class="btn no" data-id="${r.id}" data-a="off">Nonaktifkan</button>`:""}</div></div>`}).join(""):'<p class="muted" style="margin-top:14px">Tidak ada member di daftar ini.</p>';
 }
-$("list").onclick=async e=>{const b=e.target.closest("button[data-id]");if(!b)return;b.disabled=true;
- try{await fs.updateDoc(fs.doc(D,"members",b.dataset.id),{status:b.dataset.s,updatedAt:fs.serverTimestamp()})}catch(err){alert("Gagal: "+err.code);b.disabled=false}};
-document.querySelectorAll(".tabs button").forEach(b=>b.onclick=()=>{filt=b.dataset.f;document.querySelectorAll(".tabs button").forEach(x=>x.setAttribute("aria-pressed",x===b));draw()});
+$("list").onclick=async e=>{const b=e.target.closest("button[data-id]");if(!b)return;const r=rows.find(x=>x.id===b.dataset.id);if(!r)return;
+ let data;
+ if(b.dataset.a==="off")data={status:"inactive"};
+ else if(b.dataset.a==="broker")data={status:"active",until:null};
+ else{if(!confirm(`Aktifkan VIP seumur hidup untuk ${r.email}?\nPastikan transfer sudah masuk.`))return;data={status:"active",until:null}}
+ b.disabled=true;
+ try{await fs.updateDoc(fs.doc(D,"members",r.id),{...data,updatedAt:fs.serverTimestamp()})}catch(err){alert("Gagal: "+err.code);b.disabled=false}};
+document.querySelectorAll(".tabs button").forEach(b=>b.onclick=()=>{filt=b.dataset.f;document.querySelectorAll(".tabs button").forEach(x=>x.setAttribute("aria-pressed",x===b));
+ $("setWrap").hidden=filt!=="set";$("listWrap").hidden=filt==="set";if(filt!=="set")draw()});
 $("q").oninput=draw;
+async function loadSet(){try{const s=await fs.getDoc(fs.doc(D,"settings","public"));const v=s.data()||{};const pr=v.prices||{};
+ $("pLife").value=v.lifetime||1000000;$("pay").value=v.pay||""}catch(e){$("setMsg").textContent="Gagal memuat: "+e.code}}
+$("saveSet").onclick=async()=>{const lifetime=Number(String($("pLife").value).replace(/\D/g,""))||1000000;
+ try{await fs.setDoc(fs.doc(D,"settings","public"),{lifetime,pay:$("pay").value.trim(),updatedAt:fs.serverTimestamp()},{merge:true});$("setMsg").textContent="Tersimpan. Member langsung melihat harga terbaru."}
+ catch(e){$("setMsg").textContent="Gagal menyimpan: "+e.code+" (cek Rules Firestore sudah diperbarui)"}};
 $("g").onclick=async()=>{try{await auth.signInWithPopup(A,new auth.GoogleAuthProvider())}catch(e){$("lmsg").textContent="Gagal: "+e.code}};
 $("go").onclick=async()=>{try{await auth.signInWithEmailAndPassword(A,$("em").value.trim(),$("pw").value)}catch(e){$("lmsg").textContent="Gagal: "+e.code}};
 $("out").onclick=()=>auth.signOut(A);
 auth.onAuthStateChanged(A,u2=>{
  if(unsub){unsub();unsub=null}
  $("login").hidden=!!u2;$("panel").hidden=!u2;$("out").hidden=!u2;
- if(!u2)return;$("who").textContent="Masuk sebagai "+u2.email;
+ if(!u2)return;$("who").textContent="Masuk sebagai "+u2.email;loadSet();
  unsub=fs.onSnapshot(fs.query(fs.collection(D,"members"),fs.orderBy("createdAt","desc")),s=>{rows=s.docs.map(d=>({id:d.id,...d.data()}));draw()},
   e=>{$("list").innerHTML='<p class="err">Akun ini bukan admin atau aturan Firestore belum dipasang.</p>'});
 });
