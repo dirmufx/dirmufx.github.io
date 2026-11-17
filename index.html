@@ -435,6 +435,13 @@ html{scroll-behavior:auto}}
 #app .btn.cta:hover{filter:brightness(1.08)}
 #app .quote .btn.cta{padding:7px 12px}
 #app .locked .lockable{filter:blur(7px);user-select:none;pointer-events:none}
+#app:not(.pro) .proonly{display:none!important}
+#app .waitnote{display:none;margin:4px 0 12px;padding:12px 14px;border-radius:12px;border:1px solid #5a4720;background:#1c170c;font-size:14px;line-height:1.5}
+#app .waitnote>b{display:block;color:#f6e3a8}
+#app .waitnote span b{color:var(--fg)}
+#app .waitnote span{color:var(--muted);font-size:13px}
+#app #sigcard.waiting .waitnote{display:block}
+#app #sigcard.waiting .levels{opacity:.38;filter:grayscale(.7);transition:opacity .2s}
 #app .lockbar{display:none;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;background:#221b0e;border-top:1px solid var(--violet-dim);padding:12px 14px}
 #app .locked .lockbar{display:flex}
 #app .lockbar p{margin:0;font-size:13px;max-width:44ch}
@@ -975,6 +982,7 @@ html{scroll-behavior:auto}
 </div>
 
 <div id="app" hidden>
+<script>(function(){try{var q=new URLSearchParams(location.search).get("pro");if(q==="1")localStorage.setItem("dfx-pro","1");if(q==="0")localStorage.removeItem("dfx-pro");if(localStorage.getItem("dfx-pro")==="1")document.getElementById("app").classList.add("pro")}catch(e){}})();</script>
 
 <header class="top">
   <div class="wrap">
@@ -1006,13 +1014,13 @@ html{scroll-behavior:auto}
         <span class="status" id="status"></span>
         <span style="flex:1"></span>
         <button class="btn" id="refreshBtn">Refresh</button>
-        <button class="btn" id="openImport">Impor OHLC</button>
-        <button class="btn" id="backLive" hidden>Tutup data impor</button>
-        <button class="btn" id="openSet">Pengaturan</button>
+        <button class="btn proonly" id="openImport">Impor OHLC</button>
+        <button class="btn proonly" id="backLive" hidden>Tutup data impor</button>
+        <button class="btn proonly" id="openSet">Pengaturan</button>
       </div>
       <p class="note" id="srcnote" style="margin:8px 0 0"></p>
 
-      <div class="settings" id="settings" hidden>
+      <div class="settings proonly" id="settings" hidden>
                 <div class="row">
           <div class="field" style="width:220px"><label for="every">Hitung ulang sinyal</label><select id="every"><option value="1" selected>tiap 1 menit</option><option value="5">tiap 5 menit</option><option value="15">tiap 15 menit</option><option value="0">manual</option></select></div>
           <button class="btn primary" id="saveSet">Simpan</button>
@@ -1021,7 +1029,7 @@ html{scroll-behavior:auto}
         <p class="note" style="margin:0">Semua data gratis tanpa API key. Chart, berita, dan kalender dari TradingView. Sinyal DirmuFX dihitung dari data Binance (emas memakai PAXG yang disesuaikan ke harga emas spot). Fokus hanya XAUUSD.</p>
       </div>
 
-      <div class="importbox" id="importbox" hidden style="margin-top:12px">
+      <div class="importbox proonly" id="importbox" hidden style="margin-top:12px">
         <p class="note" style="margin:0 0 6px">Tempel data candle dari MT4/MT5 atau TradingView. Format per baris: <span class="num">tanggal waktu, open, high, low, close</span>. Minimal 60 baris, urut lama ke baru.</p>
         <textarea id="csv" spellcheck="false" placeholder="2026.11.02 06:00,3901.20,3912.80,3896.10,3909.10&#10;2026.11.02 06:05,3909.10,3915.40,3904.30,3913.70"></textarea>
         <div class="row" style="margin-top:8px">
@@ -1057,6 +1065,7 @@ html{scroll-behavior:auto}
               <div class="meter" style="margin-left:auto"><span id="sigbar" style="width:0"></span></div>
             </div>
           </div>
+          <div class="waitnote" id="waitNote"><b>⏳ Belum ada sinyal aktif — jangan entry dulu.</b><span>Level di bawah hanya rencana jika <b id="waitLean">BUY</b> terkonfirmasi. Aktifkan notifikasi supaya tahu saat sinyal muncul.</span></div>
           <div class="levels">
             <div class="lv"><div class="k">Entry</div><div class="v lockable" id="lvE">—</div></div>
             <div class="lv sl"><div class="k">Stop loss</div><div class="v lockable" id="lvSL">—</div></div>
@@ -1072,8 +1081,8 @@ html{scroll-behavior:auto}
             <div class="small muted" id="sigwhy"></div>
             <div class="row notifrow"><button class="btn" id="notifBtn">Aktifkan notifikasi sinyal</button><span class="small muted" id="notifState">Bunyi + pop-up saat sinyal muncul (selama tool terbuka)</span></div>
             <div class="grid2">
-              <div class="field"><label for="rr">Rasio RR</label><select id="rr"><option value="3" selected>1 : 3</option></select></div>
-              <div class="field"><label for="slm">SL</label><select id="slm"><option value="1">1.0 × ATR</option><option value="1.5" selected>1.5 × ATR</option><option value="2">2.0 × ATR</option></select></div>
+              <div class="field proonly"><label for="rr">Rasio RR</label><select id="rr"><option value="3" selected>1 : 3</option></select></div>
+              <div class="field proonly"><label for="slm">SL</label><select id="slm"><option value="1">1.0 × ATR</option><option value="1.5" selected>1.5 × ATR</option><option value="2">2.0 × ATR</option></select></div>
               <div class="field"><label for="bal">Saldo $</label><input id="bal" class="num" inputmode="decimal" value="1000"></div>
               <div class="field"><label for="risk">Risiko %</label><input id="risk" class="num" inputmode="decimal" value="1"></div>
             </div>
@@ -1525,7 +1534,7 @@ function render(){
   last={d,a,p,tf};
   const prevC=d[d.length-2].c,chg=a.live-prevC;
   $("lastpx").innerHTML=`${fx(a.live)}<small style="color:${chg>=0?"var(--up)":"var(--down)"}">${chg>=0?"+":""}${fx(chg)}</small>`;
-  $("sigcard").dataset.dir=a.shown;$("sigtf").textContent=tfName(tf);
+  $("sigcard").dataset.dir=a.shown;$("sigcard").classList.toggle("waiting",a.shown==="WAIT");$("waitLean").textContent=p.lean||"BUY";$("sigtf").textContent=tfName(tf);
   $("sigword").textContent=a.shown==="WAIT"?"TUNGGU":a.shown;
   $("sigstr").textContent=a.strength+"%";$("sigbar").style.width=a.strength+"%";
   $("lvE").textContent=fx(p.entry);$("lvSL").textContent=fx(p.sl);$("lvBE").textContent=fx(p.be);$("lvTP1").textContent=fx(p.tp1);$("lvTP2").textContent=fx(p.tp2);
@@ -1538,7 +1547,7 @@ function render(){
     if(act.be)why.push("Jangan entry baru, harga sudah lewat SL+.");else why.push("Entry di sekitar harga entry. Kalau harga sudah jauh, lebih baik tunggu sinyal berikutnya.");
   }else{
     if(act&&act.res)why.unshift(`Sinyal terakhir ${act.dir} ${hm(act.t)} (entry ${fx(act.L.entry)}): ${act.res==="TP"?"TP MAX tercapai ✓ +"+PX(act.L.risk*3):act.res==="BE"?"selesai di entry (break even)":"kena SL ✗ −"+PX(act.L.risk)}. Tunggu sinyal baru.`);
-    why.push(`${a.dir==="WAIT"?a.reason:"Kondisi "+a.dir+" masih ada tapi sinyal sudah lewat."} Level di atas hanya rencana jika ${p.lean} terkonfirmasi.`);
+    why.push(`${a.dir==="WAIT"?a.reason:"Kondisi "+a.dir+" masih ada tapi sinyal sudah lewat."}`);
   }
   if(SYMS[S.sym].spot&&mode()==="live"){const n=new Date(),dy=n.getUTCDay(),hr=n.getUTCHours();if((dy===5&&hr>=21)||dy===6||(dy===0&&hr<22))why.unshift("Pasar emas sedang tutup (weekend). Jangan pakai sinyal ini untuk entry.")}
   if(mode()==="live"&&S.lastAt)why.unshift("Update "+hm(S.lastAt));$("sigwhy").textContent=why.join(" · ");
