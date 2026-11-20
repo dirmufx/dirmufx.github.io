@@ -146,6 +146,187 @@ function chart(cl,o={}){
 const fig=(svg,cap)=>`<figure class="fig">${svg}${cap?`<figcaption>${cap}</figcaption>`:""}</figure>`;
 const tbl=(head,rows)=>`<div class="tblw"><table class="tbl"><tr>${head.map(h=>`<th>${h}</th>`).join("")}</tr>${rows.map(r=>`<tr>${r.map(c=>`<td>${c}</td>`).join("")}</tr>`).join("")}</table></div>`;
 const box=(t,h)=>`<div class="box ${t}">${h}</div>`;
+/* ===== Mesin chart realistis (gaya TradingView) ===== */
+const TV={bg:"#161a1e",grid:"#20262c",axis:"#7d858f",up:"#26a69a",dn:"#ef5350",blue:"#4c8ef7",gold:"#e0b04a",purple:"#a77bf3",txt:"#d1d4dc",orange:"#f39c4a"};
+function rng(seed){let s=seed>>>0||1;return()=>{s^=s<<13;s>>>=0;s^=s>>17;s^=s<<5;s>>>=0;return s/4294967296}}
+function gauss(r){let u=0,v=0;while(!u)u=r();while(!v)v=r();return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v)}
+function genCandles(o){
+ const n=o.n||60,r=rng(o.seed||7),pts=o.pts,vol=o.vol||1.2,wk=o.wick==null?1:o.wick;
+ const T=i=>{for(let k=0;k<pts.length-1;k++){const [a,pa]=pts[k],[b,pb]=pts[k+1];if(i>=a&&i<=b)return pa+(pb-pa)*(i-a)/(b-a)}return i<pts[0][0]?pts[0][1]:pts[pts.length-1][1]};
+ const cs=[],W0=o.warm==null?30:o.warm;let prev=T(0)+(r()-.5)*vol,e=0;
+ for(let i=-W0;i<n;i++){
+  let c;const op=prev;
+  if(i>=0&&o.set&&o.set[i]){const d=o.set[i];const oo=op+(d[0]||0),h=op+d[1],l=op+d[2],cc=op+d[3];cs.push([oo,Math.max(h,oo,cc),Math.min(l,oo,cc),cc]);prev=cc;e=cc-T(i);continue}
+  const vf=o.vk?o.vk(i):1;e=e*.55+gauss(r)*vol*.7*vf;c=T(i)+e;
+  const body=Math.abs(c-op),v=vol*(.35+r()*.5)*wk*vf;
+  const h=Math.max(op,c)+Math.abs(gauss(r))*v*.85+body*.06,l=Math.min(op,c)-Math.abs(gauss(r))*v*.85-body*.06;
+  cs.push([op,h,l,c]);prev=c;
+ }
+ cs.warm=W0;return cs;
+}
+function emaArr(v,p){const k=2/(p+1);let e=v[0];return v.map((x,i)=>e=i?x*k+e*(1-k):x)}
+function rsiArr(c,p=14){const out=[];let g=0,l=0;for(let i=0;i<c.length;i++){if(i===0){out.push(50);continue}const d=c[i]-c[i-1];const G=Math.max(d,0),Lo=Math.max(-d,0);if(i<=p){g+=G/p;l+=Lo/p}else{g=(g*(p-1)+G)/p;l=(l*(p-1)+Lo)/p}out.push(l===0?100:100-100/(1+g/l))}return out}
+const fmtP=(v,d=2)=>v.toLocaleString("en-US",{minimumFractionDigits:d,maximumFractionDigits:d});
+function niceStep(range,t=5){const raw=range/t,p=Math.pow(10,Math.floor(Math.log10(raw))),m=raw/p;return (m<1.5?1:m<2.25?2:m<3.5?2.5:m<7.5?5:10)*p}
+function rc(o){
+ const ALL=o.cs||genCandles(o),WM=ALL.warm||0,cs=ALL.slice(WM),n=cs.length,W=o.w||640,AX=86,BX=28,TP=8;
+ const subH=o.sub?110:0,H=(o.h||340)+subH,MH=(o.h||340)-BX-(o.sub?0:0);
+ const R=k=>{if(typeof k==="number")return k;if(typeof k==="function")return k(cs);const t=k[0],i=+k.slice(1);return t==="h"?cs[i][1]:t==="l"?cs[i][2]:t==="o"?cs[i][0]:cs[i][3]};
+ let vals=cs.flatMap(c=>[c[1],c[2]]);
+ const extra=[];(o.zones||[]).forEach(z=>extra.push(R(z.a),R(z.b)));(o.lines||[]).forEach(l=>extra.push(R(l.v)));(o.rr||[]).forEach(p=>extra.push(R(p.e),R(p.sl),R(p.tp)));
+ if(o.fit!==false)vals=vals.concat(extra);
+ let mn=Math.min(...vals),mx=Math.max(...vals);const pad=(mx-mn)*(o.pad||.1);mn-=pad;mx+=pad;
+ const pw=W-AX,step=pw/(n+(o.space==null?3:o.space)),bw=Math.max(2,step*.68);
+ const X=i=>step*(i+.5)+2,Y=v=>TP+(mx-v)/(mx-mn)*(MH-TP);
+ const uid="c"+Math.floor(Math.random()*1e9);
+ let s=`<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" font-family="Plus Jakarta Sans,system-ui,sans-serif" style="background:${TV.bg};border-radius:12px"><defs><clipPath id="${uid}"><rect x="0" y="0" width="${pw}" height="${MH}"/></clipPath></defs>`;
+ // grid + axis
+ const st=niceStep(mx-mn,o.ticks||6),d=o.dec==null?2:o.dec;
+ for(let v=Math.ceil(mn/st)*st;v<=mx;v+=st){const y=Y(v);s+=`<line x1="0" x2="${pw}" y1="${y}" y2="${y}" stroke="${TV.grid}"/><text x="${pw+6}" y="${y+4}" fill="${TV.axis}" font-size="15">${fmtP(v,d)}</text>`}
+ const tf=o.tf||15,start=o.start||[8,0],every=o.every||Math.max(4,Math.round(n/6));
+ for(let i=0;i<n;i+=every){const mins=start[0]*60+start[1]+i*tf,hh=Math.floor(mins/60)%24,mm=mins%60;s+=`<line x1="${X(i)}" x2="${X(i)}" y1="0" y2="${MH}" stroke="${TV.grid}"/><text x="${X(i)}" y="${MH+20}" fill="${TV.axis}" font-size="15" text-anchor="middle">${o.dates?o.dates(i):String(hh).padStart(2,"0")+":"+String(mm).padStart(2,"0")}</text>`}
+ s+=`<line x1="${pw}" x2="${pw}" y1="0" y2="${MH}" stroke="#2a3038"/><line x1="0" x2="${W}" y1="${MH}" y2="${MH}" stroke="#2a3038"/>`;
+ s+=`<g clip-path="url(#${uid})">`;
+ // bands (sesi)
+ (o.bands||[]).forEach(b=>{const x1=X(b.i1)-step/2,x2=X(b.i2)+step/2;s+=`<rect x="${x1}" y="0" width="${x2-x1}" height="${MH}" fill="${b.c}" fill-opacity=".09"/><text x="${x1+6}" y="${MH-8}" fill="${b.c}" font-size="16" font-weight="700">${b.t}</text>`});
+ // zones
+ (o.zones||[]).forEach(z=>{const c=z.c||TV.blue,x1=z.i1!=null?X(z.i1)-step/2:0,x2=z.i2!=null?X(z.i2)+step/2:pw,a=R(z.a),b=R(z.b);
+  s+=`<rect x="${x1}" y="${Y(Math.max(a,b))}" width="${x2-x1}" height="${Math.max(2,Math.abs(Y(a)-Y(b)))}" fill="${c}" fill-opacity="${z.op||.18}" stroke="${c}" stroke-opacity=".55" stroke-width="1"/>`;
+  if(z.t)s+=`<text x="${x1+6}" y="${(z.tb?Y(Math.min(a,b))+14:Y(Math.max(a,b))-6)}" fill="${c}" font-size="16" font-weight="700" stroke="${TV.bg}" stroke-width="3" paint-order="stroke">${z.t}</text>`});
+ // rr position tool
+ (o.rr||[]).forEach(p=>{const e=R(p.e),sl=R(p.sl),tp=R(p.tp),x1=X(p.i)-step/2,x2=X(p.i2||n-1)+step/2;
+  s+=`<rect x="${x1}" y="${Y(Math.max(e,tp))}" width="${x2-x1}" height="${Math.abs(Y(e)-Y(tp))}" fill="${TV.up}" fill-opacity=".22"/><rect x="${x1}" y="${Y(Math.max(e,sl))}" width="${x2-x1}" height="${Math.abs(Y(e)-Y(sl))}" fill="${TV.dn}" fill-opacity=".22"/><line x1="${x1}" x2="${x2}" y1="${Y(e)}" y2="${Y(e)}" stroke="#9aa3ad" stroke-width="1.2"/>`;
+  (p.marks||[]).forEach(m=>{const v=e+(tp-e)*m[0];s+=`<line x1="${x1}" x2="${x2}" y1="${Y(v)}" y2="${Y(v)}" stroke="${TV.up}" stroke-dasharray="4 4" stroke-opacity=".8"/><text x="${x1+6}" y="${Y(v)-4}" fill="#9fe3d9" font-size="15" font-weight="600">${m[1]}</text>`});
+  if(p.tl)s+=`<text x="${x1+6}" y="${Y(tp)+15*(tp>e?1:-0.2)}" fill="#9fe3d9" font-size="16" font-weight="700">${p.tl}</text>`;
+  if(p.sll)s+=`<text x="${x1+6}" y="${Y(sl)+(sl<e?-6:14)}" fill="#ffb3b1" font-size="16" font-weight="700">${p.sll}</text>`;
+  if(p.el)s+=`<text x="${x1+6}" y="${Y(e)+(sl<e?14:-6)}" fill="#e6e9ef" font-size="16" font-weight="700">${p.el}</text>`});
+ // ema
+ const closes=cs.map(c=>c[3]),closesAll=ALL.map(c=>c[3]);
+ (o.ema||[]).forEach(e=>{const a=emaArr(closesAll,e.p).slice(WM);s+=`<polyline points="${a.map((v,i)=>`${X(i).toFixed(1)},${Y(v).toFixed(1)}`).join(" ")}" fill="none" stroke="${e.c}" stroke-width="1.8"/>`});
+ // lines
+ (o.lines||[]).forEach(l=>{const c=l.c||TV.blue,v=R(l.v),x1=l.i1!=null?X(l.i1):0,x2=l.i2!=null?X(l.i2):pw;s+=`<line x1="${x1}" x2="${x2}" y1="${Y(v)}" y2="${Y(v)}" stroke="${c}" stroke-width="${l.sw||1.4}" ${l.solid?"":'stroke-dasharray="6 4"'}/>`;
+});
+ // fib
+ if(o.fib){const f=o.fib,a=R(f.from),b=R(f.to),x1=X(f.i1),x2=pw;
+  (f.levels||[0,.382,.5,.618,1]).forEach(L=>{const v=b-(b-a)*L,c=L===0||L===1?"#8a929c":L===.618?TV.gold:TV.blue;s+=`<line x1="${x1}" x2="${x2}" y1="${Y(v)}" y2="${Y(v)}" stroke="${c}" stroke-width="1.1" stroke-opacity=".9"/><text x="${x1+4}" y="${Y(v)-4}" fill="${c}" font-size="15" font-weight="600">${(L*100).toFixed(1).replace(".0","")}% (${fmtP(v,d)})</text>`});
+  s+=`<line x1="${X(f.i0)}" y1="${Y(a)}" x2="${X(f.i1)}" y2="${Y(b)}" stroke="#8a929c" stroke-dasharray="3 4"/>`}
+ // candles
+ cs.forEach((c,i)=>{const up=c[3]>=c[0],col=up?TV.up:TV.dn,x=X(i),t=Y(Math.max(c[0],c[3])),h=Math.max(1,Math.abs(Y(c[0])-Y(c[3])));
+  const hl=o.hl&&o.hl.includes(i);
+  s+=`<line x1="${x}" x2="${x}" y1="${Y(c[1])}" y2="${Y(c[2])}" stroke="${col}" stroke-width="1.2"/><rect x="${x-bw/2}" y="${t}" width="${bw}" height="${h}" fill="${col}" ${hl?'stroke="#fff" stroke-width="1.4"':""}/>`});
+ // poly (struktur)
+ (o.poly||[]).forEach(p=>{s+=`<polyline points="${p.pts.map(q=>`${X(q[0])},${Y(R(q[1]))}`).join(" ")}" fill="none" stroke="${p.c||"#e6e9ef"}" stroke-width="${p.sw||1.6}" ${p.dash?'stroke-dasharray="5 4"':""}/>`});
+ (o.lines||[]).forEach(l=>{if(!l.t)return;const c=l.c||TV.blue,v=R(l.v),x1=l.i1!=null?X(l.i1):0;s+=`<text x="${l.tx!=null?X(l.tx):x1+6}" y="${Y(v)+(l.below?15:-6)}" fill="${c}" font-size="16" font-weight="700" stroke="${TV.bg}" stroke-width="3" paint-order="stroke" ${l.tx!=null?'text-anchor="middle"':''}>${l.t}</text>`});
+ // labels
+ const lab=(x,y,t,c,bg)=>{const w=t.length*9.2+16;y=Math.max(16,Math.min(MH-8,y));x=Math.max(w/2+2,Math.min(pw-w/2-2,x));return `<rect x="${x-w/2}" y="${y-16}" width="${w}" height="23" rx="6" fill="${bg||"#0e1114"}" fill-opacity=".85" stroke="${c}" stroke-opacity=".7"/><text x="${x}" y="${y+1.5}" fill="${c}" font-size="15" font-weight="700" text-anchor="middle">${t}</text>`};
+ (o.labels||[]).forEach(l=>{const c=l.c||"#e6e9ef",up=l.pos!=="below";const v=l.v!=null?R(l.v):(up?cs[l.i][1]:cs[l.i][2]);s+=lab(X(l.i)+(l.dx||0),Y(v)+(up?-14:22)+(l.dy||0),l.t,c)});
+ (o.arrows||[]).forEach(a=>{const c=a.c||(a.d==="up"?TV.up:TV.dn),x=X(a.i);if(a.d==="up"){const y=Y(cs[a.i][2])+8;s+=`<path d="M${x} ${y} l-6 10 h12z" fill="${c}"/>`;if(a.t)s+=lab(x,y+28,a.t,c)}else{const y=Y(cs[a.i][1])-8;s+=`<path d="M${x} ${y} l-6 -10 h12z" fill="${c}"/>`;if(a.t)s+=lab(x,y-26,a.t,c)}});
+ s+="</g>";
+ // price tags on axis
+ (o.lines||[]).forEach(l=>{if(l.tag===false)return;const c=l.c||TV.blue,v=R(l.v);s+=`<rect x="${pw+1}" y="${Y(v)-11}" width="${AX-2}" height="22" rx="4" fill="${c}"/><text x="${pw+6}" y="${Y(v)+5}" fill="#0b0d10" font-size="15" font-weight="700">${fmtP(v,d)}</text>`});
+ const last=cs[n-1],lc=last[3]>=last[0]?TV.up:TV.dn;if(o.lastTag!==false)s+=`<line x1="0" x2="${pw}" y1="${Y(last[3])}" y2="${Y(last[3])}" stroke="${lc}" stroke-dasharray="2 3" stroke-opacity=".7"/><rect x="${pw+1}" y="${Y(last[3])-11}" width="${AX-2}" height="22" rx="4" fill="${lc}"/><text x="${pw+6}" y="${Y(last[3])+5}" fill="#fff" font-size="15" font-weight="700">${fmtP(last[3],d)}</text>`;
+ if(o.title)s+=`<text x="10" y="24" fill="${TV.txt}" font-size="17" font-weight="700">${o.title}</text>`;
+ if(o.legend)s+=o.legend.map((g,k)=>`<text x="10" y="${46+k*20}" fill="${g[1]}" font-size="15" font-weight="600">${g[0]}</text>`).join("");
+ // sub panel
+ if(o.sub){const y0=MH+BX+4,h=subH-10,y1=y0+h;s+=`<line x1="0" x2="${W}" y1="${y0-2}" y2="${y0-2}" stroke="#2a3038"/>`;
+  if(o.sub==="rsi"){const r=rsiArr(closesAll).slice(WM),YR=v=>y0+(100-v)/100*h;s+=`<rect x="0" y="${YR(70)}" width="${pw}" height="${YR(30)-YR(70)}" fill="${TV.purple}" fill-opacity=".07"/>`;
+   [70,30].forEach(v=>s+=`<line x1="0" x2="${pw}" y1="${YR(v)}" y2="${YR(v)}" stroke="#5d6570" stroke-dasharray="4 4"/><text x="${pw+6}" y="${YR(v)+4}" fill="${TV.axis}" font-size="15">${v}</text>`);
+   s+=`<polyline points="${r.map((v,i)=>`${X(i)},${YR(v)}`).join(" ")}" fill="none" stroke="${TV.purple}" stroke-width="1.6"/><text x="8" y="${y0+16}" fill="${TV.purple}" font-size="15" font-weight="700">RSI 14  ${r[n-1].toFixed(1)}</text>`;
+   (o.subLines||[]).forEach(L=>s+=`<line x1="${X(L[0])}" y1="${YR(r[L[0]])}" x2="${X(L[1])}" y2="${YR(r[L[1]])}" stroke="${L[2]||TV.gold}" stroke-width="2"/>`)}
+  if(o.sub==="macd"){const e12=emaArr(closesAll,12).slice(WM),e26=emaArr(closesAll,26).slice(WM),m=e12.map((v,i)=>v-e26[i]),sg=emaArr(m,9),hs=m.map((v,i)=>v-sg[i]);const ex=Math.max(...m.map(Math.abs),...hs.map(Math.abs))*1.1||1,YM=v=>y0+h/2-v/ex*h/2;
+   s+=hs.map((v,i)=>`<rect x="${X(i)-bw/2}" y="${Math.min(YM(v),YM(0))}" width="${bw}" height="${Math.abs(YM(v)-YM(0))}" fill="${v>=0?TV.up:TV.dn}" fill-opacity=".55"/>`).join("");
+   s+=`<polyline points="${m.map((v,i)=>`${X(i)},${YM(v)}`).join(" ")}" fill="none" stroke="${TV.blue}" stroke-width="1.5"/><polyline points="${sg.map((v,i)=>`${X(i)},${YM(v)}`).join(" ")}" fill="none" stroke="${TV.orange}" stroke-width="1.5"/><text x="8" y="${y0+16}" fill="${TV.blue}" font-size="15" font-weight="700">MACD 12 26 9</text>`}}
+ return s+"</svg>";
+}
+/* ===== Daftar ilustrasi chart ===== */
+const lo=(a,b)=>cs=>Math.min(...cs.slice(a,b+1).map(c=>c[2])),hi=(a,b)=>cs=>Math.max(...cs.slice(a,b+1).map(c=>c[1]));
+const cl=i=>cs=>cs[i][3],add=(f,d)=>cs=>(typeof f==="function"?f(cs):f)+d;
+const calm2=(...rg)=>i=>rg.some(([a,b])=>i>=a&&i<=b)?.5:1;
+const calm=(...rg)=>i=>rg.some(([a,b])=>i>=a&&i<=b)?.28:1;
+const FIG={
+ buy:()=>rc({seed:11,n:56,vol:1.1,pts:[[0,3848],[14,3843.5],[20,3844],[55,3861]],title:"XAUUSD · M15",
+  lines:[{v:cl(20),c:TV.blue,t:"Harga masuk (BUY)",i1:20,tag:true},{v:cl(52),c:TV.up,t:"Posisi ditutup",i1:40}],arrows:[{i:20,d:"up",t:"BUY"}],lastTag:false}),
+ sell:()=>rc({seed:5,n:56,vol:1.1,pts:[[0,3852],[12,3858],[20,3857],[55,3840]],title:"XAUUSD · M15",
+  lines:[{v:cl(20),c:TV.blue,t:"Harga masuk (SELL)",i1:20},{v:cl(52),c:TV.dn,t:"Posisi ditutup",i1:40,below:true}],arrows:[{i:20,d:"dn",t:"SELL"}],lastTag:false}),
+ spread:()=>rc({seed:21,n:44,vol:.35,pts:[[0,3850],[20,3851.5],[43,3850.8]],tf:1,start:[21,10],title:"XAUUSD · M1",dec:2,
+  lines:[{v:add(cl(43),.25),c:TV.blue,t:"Ask (harga BUY)",i1:26},{v:cl(43),c:TV.dn,t:"Bid (harga SELL)",i1:26,below:true}],lastTag:false}),
+ sesi:()=>rc({seed:3,n:72,vol:.8,tf:20,start:[7,0],every:9,vk:i=>i<27?.45:i<45?1.1:1.5,pts:[[0,3850],[10,3852],[20,3849.5],[27,3851],[33,3857],[45,3855],[52,3846],[62,3849],[71,3843]],
+  bands:[{i1:0,i2:26,c:TV.blue,t:"Asia"},{i1:27,i2:44,c:TV.purple,t:"London"},{i1:42,i2:71,c:TV.up,t:"New York"}],title:"XAUUSD · M20 (WITA)"}),
+ orders:()=>rc({seed:9,n:46,vol:.8,pts:[[0,3846],[20,3852],[30,3849],[45,3851]],title:"XAUUSD · M15",space:14,
+  lines:[{v:add(cl(45),5),c:TV.up,t:"Buy Stop / Sell Limit",tx:24},{v:add(cl(45),-5),c:TV.dn,t:"Buy Limit / Sell Stop",below:true,tx:24}]}),
+ pinbar:()=>rc({seed:14,n:40,vol:.9,pts:[[0,3862],[26,3849],[27,3849],[39,3858]],set:{27:[0,.3,-4.2,.7]},hl:[27],title:"XAUUSD · M15",
+  zones:[{a:lo(27,27),b:add(lo(27,27),1.6),c:TV.up,t:"Support"}],labels:[{i:27,t:"Pin bar",pos:"below",c:TV.up}]}),
+ star:()=>rc({seed:15,n:40,vol:.9,pts:[[0,3841],[26,3854],[27,3854],[39,3845]],set:{27:[0,4.2,-.3,-.7]},hl:[27],title:"XAUUSD · M15",
+  zones:[{a:hi(27,27),b:add(hi(27,27),-1.6),c:TV.dn,t:"Resistance",tb:true}],labels:[{i:27,t:"Shooting star",c:TV.dn}]}),
+ bullEng:()=>rc({seed:16,n:40,vol:.8,pts:[[0,3860],[25,3849],[27,3848],[39,3857]],set:{26:[0,.3,-1.6,-1.4],27:[-.2,3.4,-.5,3.1]},hl:[26,27],title:"XAUUSD · M15",
+  labels:[{i:27,t:"Bullish engulfing",pos:"below",c:TV.up,dy:6}]}),
+ bearEng:()=>rc({seed:17,n:40,vol:.8,pts:[[0,3842],[25,3853],[27,3854],[39,3845]],set:{26:[0,1.6,-.3,1.4],27:[.2,.5,-3.4,-3.1]},hl:[26,27],title:"XAUUSD · M15",
+  labels:[{i:27,t:"Bearish engulfing",c:TV.dn}]}),
+ doji:()=>rc({seed:18,n:40,vol:.8,pts:[[0,3842],[27,3856],[28,3856],[39,3850]],set:{28:[0,1.7,-1.6,.05]},hl:[28],title:"XAUUSD · M15",
+  labels:[{i:28,t:"Doji",c:TV.gold}]}),
+ inside:()=>rc({seed:19,n:40,vol:.8,pts:[[0,3846],[22,3849],[24,3849],[25,3852],[26,3851],[39,3859]],set:{24:[0,3.6,-.5,3.1],25:[0,.3,-1.7,-.8]},hl:[24,25],title:"XAUUSD · M15",
+  zones:[{i1:24,i2:31,a:hi(24,24),b:lo(24,24),c:TV.blue,op:.1}],labels:[{i:24,t:"Induk",c:TV.blue,dx:-14},{i:25,t:"Inside bar",pos:"below",c:TV.gold,dx:16}]}),
+ up:()=>rc({seed:22,n:60,vol:1.15,pts:[[0,3840],[10,3850],[16,3845],[28,3858],[34,3852],[46,3866],[52,3860],[59,3871]],title:"XAUUSD · H1",tf:60,start:[0,0],every:8,
+  poly:[{pts:[[0,"l0"],[10,"h10"],[16,"l16"],[28,"h28"],[34,"l34"],[46,"h46"],[52,"l52"],[59,"h59"]],c:"#8fa3b8",sw:1.3}],
+  labels:[{i:28,t:"HH",c:TV.up},{i:46,t:"HH",c:TV.up},{i:16,t:"HL",pos:"below",c:TV.up},{i:34,t:"HL",pos:"below",c:TV.up},{i:52,t:"HL",pos:"below",c:TV.up}]}),
+ down:()=>rc({seed:23,n:60,vol:1.15,pts:[[0,3870],[10,3860],[16,3865],[28,3852],[34,3858],[46,3844],[52,3850],[59,3839]],title:"XAUUSD · H1",tf:60,start:[0,0],every:8,
+  poly:[{pts:[[0,"h0"],[10,"l10"],[16,"h16"],[28,"l28"],[34,"h34"],[46,"l46"],[52,"h52"],[59,"l59"]],c:"#8fa3b8",sw:1.3}],
+  labels:[{i:16,t:"LH",c:TV.dn},{i:34,t:"LH",c:TV.dn},{i:52,t:"LH",c:TV.dn},{i:28,t:"LL",pos:"below",c:TV.dn},{i:46,t:"LL",pos:"below",c:TV.dn}]}),
+ range:()=>rc({seed:24,n:60,vol:.7,pts:[[0,3850],[7,3857],[15,3846],[23,3857],[31,3846.5],[39,3856.5],[47,3846],[55,3856],[59,3853]],title:"XAUUSD · M30",tf:30,
+  zones:[{a:hi(0,59),b:add(hi(0,59),-1.4),c:TV.dn,t:"Batas atas range",tb:true},{a:lo(0,59),b:add(lo(0,59),1.4),c:TV.up,t:"Batas bawah range"}]}),
+ rr:()=>rc({seed:31,n:56,vol:.8,pts:[[0,3850],[18,3845],[24,3847],[40,3857],[55,3860]],title:"XAUUSD · M15 · Long position",space:4,
+  rr:[{i:24,i2:52,e:cl(24),sl:add(cl(24),-3),tp:add(cl(24),9),marks:[[1/3,"SL+ (1:1)"],[2/3,"TP1 (1:2)"]],tl:"TP MAX (1:3)",sll:"Stop loss",el:"Entry"}],lastTag:false}),
+ snr:()=>rc({seed:33,n:64,vol:.75,pts:[[0,3846],[8,3855],[16,3846.5],[25,3855.2],[33,3846.8],[42,3855],[48,3852],[56,3861],[63,3864]],title:"XAUUSD · H1",tf:60,start:[0,0],every:8,
+  zones:[{i2:52,a:3855.6,b:3854.4,c:TV.dn,t:"Resistance"},{a:3846.9,b:3845.7,c:TV.up,t:"Support"}],labels:[{i:56,t:"Breakout",c:TV.up}],fit:true}),
+ flip:()=>rc({seed:34,n:56,vol:.7,pts:[[0,3846],[8,3854.5],[14,3849],[20,3854.6],[26,3858],[30,3860],[37,3855.2],[40,3856],[55,3866]],title:"XAUUSD · H1",tf:60,start:[0,0],every:8,
+  zones:[{a:3855.4,b:3854.2,c:TV.gold,t:"Resistance lama jadi support"}],arrows:[{i:37,d:"up",t:"Retest"}]}),
+ dbr:()=>rc({seed:41,n:58,vol:.85,vk:calm2([15,18]),pts:[[0,3861],[14,3847],[18,3847],[30,3863],[34,3862],[44,3848.8],[57,3860]],title:"Drop – Base – Rally (demand)",
+  zones:[{i1:15,a:lo(15,18),b:hi(15,18),c:TV.up,t:"Demand"}],arrows:[{i:45,d:"up"}]}),
+ rbr:()=>rc({seed:42,n:58,vol:.85,vk:calm2([15,18]),pts:[[0,3840],[14,3852],[18,3852],[30,3866],[34,3865],[44,3853.8],[57,3864]],title:"Rally – Base – Rally (demand)",
+  zones:[{i1:15,a:lo(15,18),b:hi(15,18),c:TV.up,t:"Demand"}],arrows:[{i:45,d:"up"}]}),
+ rbd:()=>rc({seed:43,n:58,vol:.85,vk:calm2([15,18]),pts:[[0,3846],[14,3861],[18,3861],[30,3845],[34,3846],[44,3860.2],[57,3848]],title:"Rally – Base – Drop (supply)",
+  zones:[{i1:15,a:hi(15,18),b:lo(15,18),c:TV.dn,t:"Supply",tb:true}],arrows:[{i:45,d:"dn"}]}),
+ dbd:()=>rc({seed:44,n:58,vol:.85,vk:calm2([15,18]),pts:[[0,3866],[14,3854],[18,3854],[30,3840],[34,3841],[44,3853.2],[57,3842]],title:"Drop – Base – Drop (supply)",
+  zones:[{i1:15,a:hi(15,18),b:lo(15,18),c:TV.dn,t:"Supply",tb:true}],arrows:[{i:45,d:"dn"}]}),
+ fibUp:()=>rc({seed:51,n:60,vol:1,pts:[[0,3842],[6,3840],[26,3864],[36,3853.5],[40,3854.5],[59,3870]],title:"XAUUSD · H1",tf:60,start:[0,0],every:8,
+  fib:{i0:6,from:"l6",i1:26,to:"h26",levels:[0,.382,.5,.618,1]},arrows:[{i:37,d:"up"}]}),
+ fibDn:()=>rc({seed:52,n:60,vol:1,pts:[[0,3866],[6,3868],[26,3844],[36,3854.5],[40,3853.5],[59,3838]],title:"XAUUSD · H1",tf:60,start:[0,0],every:8,
+  fib:{i0:6,from:"h6",i1:26,to:"l26",levels:[0,.382,.5,.618,1]},arrows:[{i:37,d:"dn"}]}),
+ ema:()=>rc({seed:61,n:90,vol:1,pts:[[0,3838],[20,3846],[28,3843],[48,3856],[56,3852],[78,3866],[89,3864]],title:"XAUUSD · M15",every:15,
+  ema:[{p:20,c:TV.gold},{p:50,c:TV.blue}],legend:[["EMA 20",TV.gold],["EMA 50",TV.blue]]}),
+ rsi:()=>rc({seed:62,n:70,vol:.85,pts:[[0,3840],[22,3858],[30,3851],[46,3860],[55,3856],[69,3846]],title:"XAUUSD · H1",tf:60,start:[0,0],every:10,sub:"rsi",
+  poly:[{pts:[[22,"h22"],[46,"h46"]],c:TV.gold,sw:2}],subLines:[[22,46,TV.gold]],labels:[{i:22,t:"High",c:TV.gold},{i:46,t:"Higher high",c:TV.gold}]}),
+ macd:()=>rc({seed:63,n:70,vol:.9,pts:[[0,3858],[25,3844],[35,3846],[69,3864]],title:"XAUUSD · H1",tf:60,start:[0,0],every:10,sub:"macd"}),
+ h4:()=>rc({seed:71,n:50,vol:1.6,pts:[[0,3800],[12,3830],[18,3818],[32,3858],[38,3846],[49,3874]],title:"XAUUSD · H4 · arah: naik",tf:240,every:8,dates:i=>(10+Math.floor(i/6))+" Nov",dec:0,
+  ema:[{p:50,c:TV.blue}],legend:[["EMA 50",TV.blue]]}),
+ h1:()=>rc({seed:72,n:50,vol:.9,vk:calm2([20,23]),pts:[[0,3852],[19,3846],[23,3846.5],[32,3866],[44,3855.5],[49,3857]],title:"XAUUSD · H1 · area: demand + Fibo 61,8%",tf:60,start:[0,0],every:8,
+  zones:[{i1:20,a:lo(20,23),b:hi(20,23),c:TV.up,t:"Demand H1"}]}),
+ m5:()=>rc({seed:73,n:48,vol:.45,pts:[[0,3858],[30,3855.6],[32,3855.2],[47,3859.5]],set:{31:[0,.15,-.8,-.6],32:[-.1,1.9,-.2,1.7]},hl:[31,32],title:"XAUUSD · M5 · entry: bullish engulfing",tf:5,start:[13,0],
+  labels:[{i:32,t:"Entry BUY",pos:"below",c:TV.up,dy:4}]}),
+ brk:()=>rc({seed:81,n:60,vol:.7,pts:[[0,3846],[8,3853.5],[16,3847],[24,3853.8],[30,3849],[36,3858],[42,3854.4],[46,3855],[59,3864]],title:"XAUUSD · M30",tf:30,
+  zones:[{a:3854.6,b:3853.4,c:TV.gold,t:"Resistance → support"}],labels:[{i:36,t:"Breakout",c:TV.up}],arrows:[{i:42,d:"up",t:"Retest"}]}),
+ fake:()=>rc({seed:82,n:56,vol:.7,pts:[[0,3848],[8,3854],[16,3848.5],[24,3854.2],[30,3850],[38,3853.6],[39,3853.6],[55,3843]],set:{39:[0,2.8,-.6,-.9]},hl:[39],title:"XAUUSD · M30",tf:30,
+  zones:[{a:3854.8,b:3853.8,c:TV.dn,t:"Resistance"}],labels:[{i:39,t:"False breakout",c:TV.dn}]}),
+ choch:()=>rc({seed:91,n:66,vol:.65,pts:[[0,3866],[8,3857],[14,3861],[24,3850],[30,3855],[40,3845],[46,3851],[52,3848],[58,3857],[65,3861]],title:"XAUUSD · M15",
+  lines:[{v:"h30",i1:30,i2:48,c:TV.gold,t:"CHoCH",tx:41,solid:true,tag:false},{v:"h46",i1:46,i2:60,c:TV.up,t:"BOS",tx:55,solid:true,tag:false}],
+  labels:[{i:14,t:"LH",c:TV.dn},{i:30,t:"LH",c:TV.dn},{i:24,t:"LL",pos:"below",c:TV.dn},{i:40,t:"LL",pos:"below",c:TV.dn},{i:52,t:"HL",pos:"below",c:TV.up}]}),
+ ob:()=>rc({seed:92,n:50,vol:.6,pts:[[0,3856],[22,3848],[23,3848],[30,3858],[38,3852],[49,3861]],set:{23:[0,.35,-.9,-.7],24:[-.1,2.6,-.2,2.4],25:[0,2.3,-.2,2.1]},hl:[23],title:"XAUUSD · M15",
+  zones:[{i1:23,a:hi(23,23),b:lo(23,23),c:TV.up,t:"Bullish order block"}],arrows:[{i:38,d:"up"}]}),
+ fvg:()=>rc({seed:93,n:46,vol:.55,pts:[[0,3850],[19,3848],[20,3848],[24,3855],[33,3851.6],[45,3858]],set:{20:[0,.6,-.4,.3],21:[0,3.4,-.1,3.2],22:[0,1.4,.9,1.2]},hl:[20,21,22],title:"XAUUSD · M15",
+  zones:[{i1:20,a:hi(20,20),b:lo(22,22),c:TV.purple,t:"Fair value gap"}],arrows:[{i:33,d:"up"}]}),
+ asia:()=>rc({seed:94,n:66,vol:.7,tf:15,start:[7,0],every:8,vk:i=>i<34?.4:1.2,pts:[[0,3851],[8,3853],[16,3850.5],[24,3852.8],[33,3851],[35,3853],[36,3853.6],[40,3850],[50,3846],[65,3842]],set:{36:[0,1.6,-.4,-.6]},hl:[36],
+  bands:[{i1:0,i2:33,c:TV.blue,t:"Asia"},{i1:34,i2:65,c:TV.purple,t:"London"}],lines:[{v:hi(0,33),i1:0,c:TV.gold,t:"High Asia"},{v:lo(0,33),i1:0,c:TV.gold,t:"Low Asia",below:true}],labels:[{i:36,t:"Sweep",c:TV.dn}]}),
+ pdh:()=>rc({seed:95,n:60,vol:.75,tf:30,start:[8,0],every:8,pts:[[0,3850],[10,3855],[20,3849],[30,3855.5],[40,3851],[46,3857.6],[47,3856],[59,3846]],set:{46:[0,2.2,-.3,-1.2]},hl:[46],
+  lines:[{v:3857.2,c:TV.gold,t:"PDH (high kemarin)"},{v:hi(10,30),i1:10,i2:44,c:"#9aa3ad",t:"Equal highs",tag:false}],labels:[{i:46,t:"Sweep",c:TV.dn}],title:"XAUUSD · M30"}),
+ news:()=>rc({seed:96,n:44,vol:.35,tf:5,start:[20,45],every:6,pts:[[0,3850],[9,3850.6],[10,3850.4],[20,3843],[43,3846]],set:{9:[0,.4,-.3,.1],10:[0,1.8,-6.8,-5.6]},hl:[10],title:"XAUUSD · M5",
+  labels:[{i:10,t:"CPI rilis 21:30",c:TV.gold,dx:70,dy:14}]})
+};
+function anatomySvg(){const c=(x,o,cl,h,l,col)=>{const t=Math.min(o,cl),b=Math.max(o,cl);return `<line x1="${x}" x2="${x}" y1="${h}" y2="${l}" stroke="${col}" stroke-width="3"/><rect x="${x-26}" y="${t}" width="52" height="${b-t}" rx="2" fill="${col}"/>`};
+ const lab=(x,yy,t,col="#d1d4dc",a="start")=>`<line x1="${a==="start"?x-36:x+36}" x2="${a==="start"?x-6:x+6}" y1="${yy}" y2="${yy}" stroke="#4a525c" stroke-dasharray="3 3"/><text x="${x}" y="${yy+4}" fill="${col}" font-size="17" font-weight="600" text-anchor="${a}">${t}</text>`;
+ return `<svg viewBox="0 0 640 260" xmlns="http://www.w3.org/2000/svg" font-family="Plus Jakarta Sans,system-ui" style="background:${TV.bg};border-radius:12px">${c(190,190,80,40,225,TV.up)}${c(450,80,190,40,225,TV.dn)}
+ ${lab(232,40,"High")}${lab(232,80,"Close",TV.up)}${lab(232,190,"Open",TV.up)}${lab(232,225,"Low")}${lab(132,135,"Body","#d1d4dc","end")}
+ ${lab(492,40,"High")}${lab(492,80,"Open",TV.dn)}${lab(492,190,"Close",TV.dn)}${lab(492,225,"Low")}${lab(392,60,"Wick","#d1d4dc","end")}
+ <text x="190" y="252" fill="${TV.up}" font-size="18" font-weight="700" text-anchor="middle">Bullish</text><text x="450" y="252" fill="${TV.dn}" font-size="18" font-weight="700" text-anchor="middle">Bearish</text></svg>`}
 /* ===== BAB DASAR ===== */
 const L=[];
 L.push({id:"pengenalan",lvl:"dasar",min:5,t:"Apa itu trading emas (XAUUSD)?",d:"Cara kerja trading emas, buy & sell, broker, dan risikonya",
@@ -154,7 +335,8 @@ body:()=>`<p><b>XAUUSD</b> adalah harga 1 troy ons emas (sekitar 31,1 gram) dala
 <h3>Bisa untung saat naik maupun turun</h3>
 <ul><li><b>BUY</b> (beli): kamu memperkirakan harga akan <b>naik</b>. Untung jika harga ditutup lebih tinggi dari harga masukmu.</li>
 <li><b>SELL</b> (jual): kamu memperkirakan harga akan <b>turun</b>. Untung jika harga ditutup lebih rendah dari harga masukmu.</li></ul>
-${fig(chart([10,10.6,10.3,11.2,11,11.9,12.4,12.1,13,13.6],{lines:[{v:10.3,t:"BUY di sini",c:COL.up},{v:13.6,t:"Tutup = untung",c:COL.gh}],right:118}),"Contoh BUY: masuk di harga rendah, harga naik, posisi ditutup di harga lebih tinggi.")}
+${fig(FIG.buy(),"Contoh BUY di XAUUSD M15: masuk saat harga di bawah, posisi ditutup setelah harga naik. Selisihnya menjadi keuntungan.")}
+${fig(FIG.sell(),"Contoh SELL: masuk saat harga di atas, posisi ditutup setelah harga turun.")}
 <h3>Siapa saja yang terlibat?</h3>
 <ul><li><b>Broker</b> (misalnya PU Prime): perusahaan perantara yang menyediakan harga dan tempat membuka posisi.</li>
 <li><b>Platform</b>: aplikasi untuk trading, umumnya <b>MetaTrader 5 (MT5)</b>, tersedia di HP dan komputer.</li>
@@ -170,6 +352,7 @@ L.push({id:"istilah",lvl:"dasar",min:7,t:"Istilah penting: pip, lot, spread & le
 body:()=>`<p>Sebelum membuka posisi pertama, kamu wajib paham beberapa istilah ini. Hampir semua kesalahan pemula berawal dari salah memahami <b>lot</b> dan <b>pip</b>.</p>
 <h3>Bid, Ask & Spread</h3>
 <p><b>Ask</b> adalah harga saat kamu BUY, <b>Bid</b> adalah harga saat kamu SELL. Selisih keduanya disebut <b>spread</b>, yaitu biaya yang langsung terasa saat posisi dibuka. Spread emas bisa melebar saat berita besar atau pasar sepi.</p>
+${fig(FIG.spread(),"Garis biru = Ask (harga BUY), garis merah = Bid (harga SELL). Jarak di antara keduanya adalah spread.")}
 <h3>Pip & point</h3>
 <p>Di DirmuFX, <b>1 pip emas = 0,10 pergerakan harga</b>. Contoh: dari <span class="k">3850,00</span> ke <span class="k">3850,10</span> = 1 pip. Dari <span class="k">3850,00</span> ke <span class="k">3853,00</span> = 30 pip. Satuan terkecil di MT5 (0,01) disebut <b>point</b>.</p>
 ${box("note","Setiap broker bisa berbeda cara menyebut pip. Yang paling aman: hitung dari <b>selisih harga</b>. SL 3,00 dolar dari entry = 30 pip versi DirmuFX.")}
@@ -190,7 +373,7 @@ quiz:[{q:"Harga bergerak dari 3850,00 ke 3852,00. Berapa pip (versi DirmuFX)?",o
 
 L.push({id:"sesi",lvl:"dasar",min:5,t:"Sesi pasar & jam terbaik (WITA)",d:"Kapan emas ramai bergerak dan kapan sebaiknya diam",
 body:()=>`<p>Pasar emas buka 24 jam dari Senin pagi sampai Sabtu dini hari (WITA). Tetapi karakter pergerakannya berbeda di tiap sesi, karena pelaku pasar di Asia, Eropa, dan Amerika aktif di jam yang berbeda.</p>
-${fig(sessionsSvg(),"Perkiraan jam sesi dalam WITA saat musim dingin (sekitar November–Maret). Saat musim panas Eropa/Amerika, sesi London & New York maju 1 jam lebih awal.")}
+${fig(FIG.sesi(),"Contoh pergerakan emas dalam sehari (WITA): sesi Asia sempit, London mulai menembus range, New York paling volatil. Saat musim panas Eropa/Amerika, London & New York maju 1 jam.")}
 ${tbl(["Sesi","Jam (WITA)","Karakter emas"],[["Asia (Tokyo)","± 07.00 – 16.00","Cenderung tenang, sering membentuk range"],["London","± 16.00 – 01.00","Volume naik, sering terjadi breakout dari range Asia"],["New York","± 21.00 – 06.00","Paling volatil, banyak rilis berita Amerika"],["Overlap London–NY","± 21.00 – 01.00","Pergerakan terbesar dalam sehari"]])}
 <h3>Jam berita penting</h3>
 <p>Data ekonomi Amerika (CPI, NFP, klaim pengangguran) biasanya rilis pukul <b>21.30 WITA</b> (20.30 saat musim panas). Keputusan suku bunga The Fed (FOMC) sekitar <b>03.00 WITA</b> (02.00 saat musim panas). Cek tab <b>Kalender</b> di Signal Room setiap hari.</p>
@@ -206,7 +389,7 @@ body:()=>`<p>MetaTrader 5 (MT5) adalah aplikasi yang dipakai untuk membuka posis
 <h3>Market order (langsung)</h3>
 <p>Posisi dibuka saat itu juga di harga sekarang. Pilih <b>Buy by Market</b> atau <b>Sell by Market</b>.</p>
 <h3>Pending order (menunggu harga)</h3>
-${fig(chart([20,20.4,20.1,20.6,20.3,20.5,20.2,20.4],{right:150,wick:.15,lines:[{v:22,t:"Buy Stop / Sell Limit",c:COL.gh},{v:20.4,t:"Harga sekarang",c:COL.fg,dash:false,sw:1},{v:18.8,t:"Buy Limit / Sell Stop",c:COL.gh}]}),"Order di atas harga: Buy Stop (ikut breakout naik) atau Sell Limit (jual di harga lebih tinggi). Order di bawah harga: Buy Limit (beli lebih murah) atau Sell Stop (ikut breakdown).")}
+${fig(FIG.orders(),"Garis hijau di atas harga: Buy Stop (ikut breakout naik) atau Sell Limit (jual di harga lebih tinggi). Garis merah di bawah harga: Buy Limit (beli lebih murah) atau Sell Stop (ikut breakdown).")}
 ${tbl(["Order","Posisi harga","Kapan dipakai"],[["Buy Limit","Di bawah harga","Ingin BUY saat harga turun ke support"],["Sell Limit","Di atas harga","Ingin SELL saat harga naik ke resistance"],["Buy Stop","Di atas harga","Ingin BUY saat harga menembus ke atas"],["Sell Stop","Di bawah harga","Ingin SELL saat harga menembus ke bawah"]])}
 <h3>Cara membuka posisi di MT5 HP</h3>
 <ol><li>Buka tab <b>Quotes</b>, ketuk simbol emas, pilih <b>Trade</b>.</li><li>Pilih jenis order (Market atau Pending).</li><li>Isi <b>Volume</b> (lot), contoh 0,01.</li><li>Isi <b>Stop Loss</b> dan <b>Take Profit</b>.</li><li>Ketuk <b>Buy</b> atau <b>Sell</b>.</li></ol>
@@ -232,13 +415,17 @@ L.push({id:"pola-candle",lvl:"dasar",min:7,t:"Pola candlestick penting",d:"Pin b
 body:()=>`<p>Pola candle membantu membaca siapa yang sedang menang: pembeli atau penjual. Tetapi pola <b>tidak berdiri sendiri</b>. Pola baru bermakna jika muncul di lokasi yang tepat, misalnya di area support, resistance, atau searah tren.</p>
 <h3>1. Pin bar / Hammer (bullish)</h3>
 <p>Body kecil di atas, wick bawah panjang (minimal 2× body). Muncul setelah penurunan atau di support, artinya penjual gagal menekan harga lebih rendah.</p>
-${fig(chart(null,{raw:[[14,14.3,13.2,13.4],[13.4,13.6,12.5,12.7],[12.7,12.9,11.8,12],[12,12.3,10.4,12.2],[12.2,13.3,12.1,13.1],[13.1,14,13,13.8]],right:110,lines:[{v:10.9,t:"Support",c:COL.gold}],labels:[{i:3,v:10.1,t:"Pin bar",c:COL.gh,dy:16}]}),"Pin bar bullish di support: wick bawah panjang = penolakan harga rendah.")}
+${fig(FIG.pinbar(),"Pin bar bullish di support: harga sempat turun jauh, tapi ditutup dekat atas. Setelahnya harga naik.")}
 <h3>2. Shooting star (bearish)</h3><p>Kebalikan pin bar bullish: wick atas panjang, body kecil di bawah, muncul di resistance atau setelah kenaikan.</p>
+${fig(FIG.star(),"Shooting star di resistance: harga sempat naik tinggi tapi ditolak, lalu turun.")}
 <h3>3. Engulfing</h3>
 <p><b>Bullish engulfing</b>: candle hijau yang body-nya "menelan" seluruh body candle merah sebelumnya. <b>Bearish engulfing</b>: kebalikannya. Pola ini menunjukkan perubahan kekuatan yang tajam.</p>
-${fig(chart(null,{raw:[[15,15.2,14.1,14.3],[14.3,14.5,13.5,13.7],[13.7,13.9,13,13.2],[13.3,15,13.1,14.8],[14.8,15.6,14.6,15.4]],right:110,labels:[{i:2.5,v:15.4,t:"Bullish engulfing",c:COL.gh}]}),"Candle hijau besar menelan body merah sebelumnya.")}
+${fig(FIG.bullEng(),"Bullish engulfing: candle hijau menelan seluruh body merah sebelumnya, lalu tren berbalik naik.")}
+${fig(FIG.bearEng(),"Bearish engulfing di puncak kenaikan: candle merah menelan body hijau sebelumnya.")}
 <h3>4. Doji</h3><p>Open dan close hampir sama, body sangat tipis. Artinya pasar ragu-ragu. Doji setelah tren panjang bisa menjadi tanda tren melemah, tapi perlu konfirmasi candle berikutnya.</p>
+${fig(FIG.doji(),"Doji di puncak kenaikan: open dan close hampir sama, tanda pasar ragu sebelum turun.")}
 <h3>5. Inside bar</h3><p>Candle yang seluruh high-low-nya berada di dalam candle sebelumnya. Menandakan konsolidasi. Trader biasanya menunggu harga menembus high atau low candle induk.</p>
+${fig(FIG.inside(),"Inside bar: candle kecil di dalam range candle induk, lalu harga menembus ke atas.")}
 ${box("tip","Aturan sederhana: <b>lokasi + pola + konfirmasi</b>. Pin bar di tengah-tengah range tanpa area penting biasanya tidak berarti apa-apa.")}`,
 quiz:[{q:"Pin bar bullish yang ideal memiliki…",o:["Wick atas panjang","Wick bawah panjang, body kecil di atas","Body besar tanpa wick"],a:1,e:"Wick bawah panjang menunjukkan harga rendah ditolak pembeli."},
 {q:"Bullish engulfing adalah…",o:["Candle hijau yang body-nya menelan body merah sebelumnya","Dua doji berturut-turut","Candle merah besar"],a:0,e:"Body hijau menutupi seluruh body merah sebelumnya."},
@@ -248,11 +435,13 @@ L.push({id:"tren",lvl:"dasar",min:6,t:"Tren & struktur pasar",d:"Higher high, lo
 body:()=>`<p>Harga tidak bergerak lurus. Ia naik-turun membentuk gelombang. Dari puncak (high) dan lembah (low) inilah kita membaca <b>struktur pasar</b>.</p>
 <h3>Uptrend (tren naik)</h3>
 <p>Harga membentuk <b>Higher High (HH)</b> dan <b>Higher Low (HL)</b>: setiap puncak dan lembah lebih tinggi dari sebelumnya. Fokus mencari peluang <b>BUY</b> saat harga koreksi ke HL.</p>
-${fig(chart([10,11,12,13,12.4,11.8,12.6,13.6,14.6,15.4,14.8,14.2,15,16,17,17.8],{right:20,path:[[0,10],[3,13.2],[5,11.6],[9,15.6],[11,14],[15,18]],labels:[{i:3,v:13.2,t:"HH",dy:-10,c:COL.gh},{i:5,v:11.6,t:"HL",dy:20,c:COL.gh},{i:9,v:15.6,t:"HH",dy:-10,c:COL.gh},{i:11,v:14,t:"HL",dy:20,c:COL.gh}]}),"Uptrend: puncak dan lembah terus naik.")}
+${fig(FIG.up(),"Uptrend H1: setiap puncak (HH) dan lembah (HL) lebih tinggi dari sebelumnya.")}
 <h3>Downtrend (tren turun)</h3>
 <p>Harga membentuk <b>Lower High (LH)</b> dan <b>Lower Low (LL)</b>. Fokus mencari peluang <b>SELL</b> saat harga naik sementara ke LH.</p>
+${fig(FIG.down(),"Downtrend H1: lower high (LH) dan lower low (LL) terus turun.")}
 <h3>Sideways (range)</h3>
 <p>Harga naik-turun di antara batas atas dan bawah yang relatif sama. Di kondisi ini, entry di tengah range sangat berisiko. Lebih baik menunggu harga di tepi range atau menunggu breakout.</p>
+${fig(FIG.range(),"Sideways: harga bolak-balik di antara batas atas dan batas bawah range.")}
 <h3>Tren berbeda di tiap timeframe</h3>
 <p>H4 bisa uptrend, sementara M5 sedang turun (koreksi). Biasakan melihat arah di timeframe besar dulu, lalu cari entry searah di timeframe kecil. Ini dibahas lebih dalam di bab Multi-timeframe.</p>
 ${box("tip","<b>Trend is your friend.</b> Untuk pemula, hanya ambil posisi searah tren timeframe besar. Melawan tren (counter-trend) jauh lebih sulit.")}`,
@@ -269,7 +458,7 @@ body:()=>`<p>Trader bertahan lama bukan karena selalu benar, tetapi karena <b>ke
 <p><b>Contoh:</b> saldo $500, risiko 1% = $5, SL 30 pip. Lot = 5 ÷ (30 × 10) = 0,0167 → dibulatkan ke bawah menjadi <b>0,01 lot</b> (risiko nyata $3).</p>
 ${box("note","Dengan saldo kecil (misalnya $30), lot minimum 0,01 dengan SL 30 pip berarti risiko $3 = 10% saldo. Terlalu besar. Solusinya: pakai <b>akun cent</b>, atau perkecil SL dengan entry yang lebih presisi. Kalkulator lot di Signal Room menghitung ini otomatis.")}
 <h3>Risk : Reward</h3>
-${fig(rrSvg(),"Contoh rasio 1:3. Rugi maksimal 1 bagian, target untung 3 bagian.")}
+${fig(FIG.rr(),"Contoh posisi BUY dengan rasio 1:3 (alat Long Position di TradingView). Area merah = risiko, area hijau = target.")}
 <p>Rasio <b>1:3</b> berarti target untung 3 kali lebih besar dari risiko. Dengan rasio ini, kamu tetap untung walau hanya menang 3 dari 10 posisi:</p>
 ${tbl(["Hasil 10 posisi","Perhitungan","Total"],[["3 menang, 7 kalah (RR 1:3)","3 × 3R − 7 × 1R","+2R"],["5 menang, 5 kalah (RR 1:1)","5 × 1R − 5 × 1R","0R"]])}
 <h3>Batas rugi harian</h3><p>Tentukan batas, misalnya berhenti trading jika rugi <b>3% dalam sehari</b> atau setelah 2 kali SL berturut-turut. Ini melindungimu dari keputusan emosional.</p>`,
@@ -296,35 +485,14 @@ quiz:[{q:"Setelah kena SL, kamu langsung entry lagi dengan lot 2× lebih besar. 
 {q:"Kebiasaan apa yang membantu evaluasi strategi?",o:["Menulis jurnal trading","Menghapus riwayat transaksi","Mengganti strategi setiap hari"],a:0,e:"Jurnal membantu melihat pola kesalahan dan kekuatanmu."},
 {q:"Harga mendekati SL. Tindakan yang benar adalah…",o:["Menjauhkan SL","Membiarkan SL sesuai rencana","Menambah posisi"],a:1,e:"SL adalah batas rencana. Memindahkannya menjauh hanya memperbesar kerugian."}]});
 
-/* ilustrasi khusus */
-function sessionsSvg(){const X=h=>24+h*24.5,bar=(a,b,yy,c,t)=>{let s="";const seg=(p,q)=>{s+=`<rect x="${X(p)}" y="${yy}" width="${X(q)-X(p)}" height="26" rx="6" fill="${c}" fill-opacity=".85"/>`};if(b>a)seg(a,b);else{seg(a,24);seg(0,b)}
- return s+`<text x="${X(a)+8}" y="${yy+18}" fill="#0a0a0c" font-size="13" font-weight="700">${t}</text>`};
- let s=`<svg viewBox="0 0 640 190" xmlns="http://www.w3.org/2000/svg" font-family="Plus Jakarta Sans,system-ui">`;
- for(let h=0;h<=24;h+=3){s+=`<line x1="${X(h)}" x2="${X(h)}" y1="18" y2="160" stroke="#24242b"/><text x="${X(h)}" y="180" fill="${COL.mut}" font-size="12" text-anchor="middle">${String(h).padStart(2,"0")}.00</text>`}
- s+=`<rect x="${X(21)}" y="18" width="${X(24)-X(21)}" height="142" fill="${COL.gold}" fill-opacity=".10"/><rect x="${X(0)}" y="18" width="${X(1)-X(0)}" height="142" fill="${COL.gold}" fill-opacity=".10"/>`;
- s+=bar(7,16,30,COL.blue,"Asia")+bar(16,1,72,COL.purple,"London")+bar(21,6,114,COL.up,"New York");
- s+=`<text x="${X(22.5)}" y="14" fill="${COL.gold}" font-size="11.5" font-weight="700" text-anchor="middle">Overlap</text>`;
- return s+"</svg>"}
-function anatomySvg(){const c=(x,o,cl,h,l,col)=>{const t=Math.min(o,cl),b=Math.max(o,cl);return `<line x1="${x}" x2="${x}" y1="${h}" y2="${l}" stroke="${col}" stroke-width="3"/><rect x="${x-26}" y="${t}" width="52" height="${b-t}" rx="3" fill="${col}"/>`};
- const lab=(x,yy,t,col="#f2efe8",a="start")=>`<line x1="${a==="start"?x-36:x+36}" x2="${a==="start"?x-6:x+6}" y1="${yy}" y2="${yy}" stroke="#55555f" stroke-dasharray="3 3"/><text x="${x}" y="${yy+4}" fill="${col}" font-size="13.5" font-weight="600" text-anchor="${a}">${t}</text>`;
- return `<svg viewBox="0 0 640 260" xmlns="http://www.w3.org/2000/svg" font-family="Plus Jakarta Sans,system-ui">${c(190,190,80,40,225,COL.up)}${c(450,80,190,40,225,COL.dn)}
- ${lab(232,40,"High")}${lab(232,80,"Close",COL.up)}${lab(232,190,"Open",COL.up)}${lab(232,225,"Low")}${lab(132,135,"Body","#f2efe8","end")}
- ${lab(492,40,"High")}${lab(492,80,"Open",COL.dn)}${lab(492,190,"Close",COL.dn)}${lab(492,225,"Low")}${lab(392,60,"Wick","#f2efe8","end")}
- <text x="190" y="252" fill="${COL.up}" font-size="14" font-weight="700" text-anchor="middle">Bullish</text><text x="450" y="252" fill="${COL.dn}" font-size="14" font-weight="700" text-anchor="middle">Bearish</text></svg>`}
-function rrSvg(){return `<svg viewBox="0 0 640 230" xmlns="http://www.w3.org/2000/svg" font-family="Plus Jakarta Sans,system-ui">
- <rect x="150" y="30" width="300" height="135" fill="${COL.up}" fill-opacity=".16" stroke="${COL.up}" stroke-opacity=".6"/><rect x="150" y="165" width="300" height="45" fill="${COL.dn}" fill-opacity=".16" stroke="${COL.dn}" stroke-opacity=".6"/>
- <line x1="150" x2="450" y1="165" y2="165" stroke="#f2efe8" stroke-width="2"/>
- <line x1="150" x2="450" y1="120" y2="120" stroke="${COL.gold}" stroke-dasharray="5 5"/><line x1="150" x2="450" y1="75" y2="75" stroke="${COL.gold}" stroke-dasharray="5 5"/>
- <text x="462" y="35" fill="${COL.up}" font-size="13.5" font-weight="700">TP MAX (3R)</text><text x="462" y="80" fill="${COL.gold}" font-size="13">TP1 (2R)</text><text x="462" y="125" fill="${COL.gold}" font-size="13">SL+ (1R)</text>
- <text x="462" y="169" fill="#f2efe8" font-size="13.5" font-weight="700">Entry</text><text x="462" y="214" fill="${COL.dn}" font-size="13.5" font-weight="700">Stop loss (1R)</text>
- <text x="300" y="100" fill="${COL.up}" font-size="20" font-weight="700" text-anchor="middle">+3</text><text x="300" y="194" fill="${COL.dn}" font-size="18" font-weight="700" text-anchor="middle">−1</text></svg>`}
 /* ===== BAB MENENGAH ===== */
 L.push({id:"snr",lvl:"menengah",min:7,t:"Support & Resistance yang valid",d:"Cara menarik area SnR dan tanda area itu masih kuat",
 body:()=>`<p><b>Support</b> adalah area di bawah harga tempat pembeli berkali-kali menahan penurunan. <b>Resistance</b> adalah area di atas harga tempat penjual berkali-kali menahan kenaikan. Anggap sebagai <b>area (zona)</b>, bukan satu garis tipis.</p>
-${fig(chart([12,13,14.2,15,14.4,13.4,12.6,12.2,13.2,14.4,15.1,14.5,13.6,12.4,12.3,13.4,14.6,15.6,16.4],{right:110,wick:.3,zones:[{a:15.1,b:15.5,t:"Resistance",c:COL.dn},{a:11.9,b:12.3,t:"Support",c:COL.up}],labels:[{i:17,v:16.6,t:"Breakout",c:COL.gh,dy:-6}]}),"Harga memantul dua kali di support dan resistance, lalu menembus resistance.")}
+${fig(FIG.snr(),"Harga memantul beberapa kali di support dan resistance, lalu akhirnya menembus resistance.")}
 <h3>Cara menarik SnR</h3>
 <ol><li>Mulai dari timeframe besar (H4 atau H1).</li><li>Cari titik balik harga yang <b>tersentuh minimal 2 kali</b>.</li><li>Tarik zona dari ujung wick sampai badan candle di sekitar titik itu.</li><li>Prioritaskan area yang menghasilkan pergerakan kuat (pantulan tajam).</li><li>Tambahkan level psikologis: angka bulat seperti 3800, 3850, 3900.</li></ol>
 <h3>Role reversal</h3><p>Resistance yang sudah ditembus dengan kuat sering berubah menjadi <b>support</b> baru, dan sebaliknya. Ini dasar dari strategi breakout–retest.</p>
+${fig(FIG.flip(),"Role reversal: resistance yang ditembus berubah menjadi support saat harga kembali (retest).")}
 <h3>Tanda SnR melemah</h3><ul><li>Disentuh terlalu sering dalam waktu singkat.</li><li>Pantulan makin kecil setiap kali disentuh.</li><li>Harga menembus dan menutup candle jauh di luar zona.</li></ul>
 ${box("tip","Jangan entry hanya karena harga menyentuh SnR. Tunggu <b>konfirmasi</b> seperti pin bar atau engulfing di zona tersebut.")}`,
 quiz:[{q:"SnR sebaiknya dianggap sebagai…",o:["Satu garis yang presisi","Zona/area","Angka acak"],a:1,e:"Harga jarang memantul tepat di satu angka. Zona lebih realistis."},
@@ -335,7 +503,10 @@ L.push({id:"snd",lvl:"menengah",min:7,t:"Supply & Demand",d:"Zona asal pergeraka
 body:()=>`<p>Supply & Demand (SnD) melihat dari mana <b>pergerakan besar berasal</b>. Logikanya, di zona itu ada banyak order besar yang belum semua terisi, sehingga saat harga kembali ke sana, reaksi kuat bisa terjadi lagi.</p>
 <h3>Pola pembentuk zona</h3>
 ${tbl(["Pola","Zona","Arah yang dicari"],[["Drop – Base – Rally","Demand","BUY saat kembali ke base"],["Rally – Base – Rally","Demand","BUY (kelanjutan tren)"],["Rally – Base – Drop","Supply","SELL saat kembali ke base"],["Drop – Base – Drop","Supply","SELL (kelanjutan tren)"]])}
-${fig(chart(null,{raw:[[16,16.2,14.8,15],[15,15.1,13.6,13.8],[13.8,14.1,13.5,13.9],[13.9,14,13.6,13.7],[13.7,15.4,13.6,15.3],[15.3,16.9,15.2,16.7],[16.7,17,16.1,16.3],[16.3,16.4,15.2,15.4],[15.4,15.5,14.2,14.3],[14.3,14.6,13.8,14.4],[14.4,15.8,14.3,15.6],[15.6,16.6,15.5,16.4]],right:100,boxes:[{i1:2,i2:11,a:13.5,b:14.1,t:"Demand (base)",c:COL.up}],arrows:[{i:9,v:13.55,d:"up"}]}),"Drop-base-rally: harga kembali ke zona base lalu naik lagi.")}
+${fig(FIG.dbr(),"Drop–Base–Rally: harga turun, berhenti sebentar (base), lalu naik kuat. Saat kembali ke base, harga memantul lagi.")}
+${fig(FIG.rbr(),"Rally–Base–Rally: tren naik berhenti sebentar, lalu naik lagi. Base menjadi demand untuk BUY lanjutan.")}
+${fig(FIG.rbd(),"Rally–Base–Drop: harga naik, tertahan di base, lalu jatuh. Base menjadi supply untuk SELL.")}
+${fig(FIG.dbd(),"Drop–Base–Drop: tren turun berhenti sebentar, lalu turun lagi. Base menjadi supply untuk SELL lanjutan.")}
 <h3>Ciri zona yang kuat</h3>
 <ul><li>Base pendek (1–3 candle kecil).</li><li>Keluar dari base dengan candle besar dan cepat (impulsif).</li><li><b>Fresh</b>: belum pernah disentuh lagi. Setiap sentuhan mengurangi kekuatannya.</li><li>Searah tren timeframe besar.</li></ul>
 <h3>Menarik zona</h3><p>Untuk demand: dari low terendah base sampai body tertinggi base. Untuk supply: dari high tertinggi base sampai body terendah base. SL ditaruh sedikit di luar zona.</p>`,
@@ -345,7 +516,9 @@ quiz:[{q:"Drop–Base–Rally membentuk zona…",o:["Supply","Demand","Pivot"],a
 
 L.push({id:"fibo",lvl:"menengah",min:6,t:"Fibonacci retracement & extension",d:"Mengukur area koreksi 38,2–61,8% dan target lanjutan",
 body:()=>`<p>Setelah bergerak impulsif, harga biasanya <b>koreksi</b> sebagian sebelum melanjutkan tren. Fibonacci retracement membantu memperkirakan seberapa dalam koreksi itu.</p>
-${fig(chart([10,11.2,12.6,14,15.4,16.6,17.4,16.6,15.8,15,14.5,15.4,16.6,17.8,19,20],{right:96,wick:.25,lines:[{v:17.4,t:"0%",c:COL.mut,i1:6},{v:15.06,t:"38,2%",c:COL.gold,i1:6},{v:13.7,t:"50%",c:COL.gold,i1:6},{v:12.33,t:"61,8%",c:COL.gold,i1:6},{v:10,t:"100%",c:COL.mut,i1:0}],arrows:[{i:10,v:14.2,d:"up"}]}),"Tarik dari low ke high pada uptrend. Harga memantul di area 38,2–50%.")}
+${fig(FIG.fibUp(),"Fibonacci pada uptrend: tarik dari swing low ke swing high. Harga memantul di area 50–61,8%.")}
+
+${fig(FIG.fibDn(),"Fibonacci pada downtrend: tarik dari swing high ke swing low. Harga naik sebentar ke area 38,2–50% lalu turun lagi.")}
 <h3>Cara menarik</h3>
 <ul><li><b>Uptrend</b>: tarik dari swing <b>low</b> ke swing <b>high</b>.</li><li><b>Downtrend</b>: tarik dari swing <b>high</b> ke swing <b>low</b>.</li></ul>
 <h3>Level penting</h3>
@@ -359,9 +532,11 @@ L.push({id:"indikator",lvl:"menengah",min:7,t:"Indikator: EMA, RSI, MACD & ATR",
 body:()=>`<p>Indikator adalah alat bantu, bukan penentu utama. Signal Room DirmuFX menggabungkan beberapa indikator (konfluensi) dan hanya memberi sinyal saat sebagian besar searah.</p>
 <h3>EMA 20, 50 & 200</h3>
 <p>Exponential Moving Average menunjukkan rata-rata harga. Jika harga di atas EMA 50 dan EMA 200, dan EMA 20 di atas EMA 50, tren cenderung naik. EMA juga sering menjadi support/resistance dinamis.</p>
-${fig(chart([10,10.4,10.2,10.9,11.3,11,11.8,12.3,12,12.7,13.2,12.9,13.5,14.1,13.8,14.5,15,14.7,15.3,15.9],{right:80,wick:.25,ema:[{p:5,c:COL.gold,t:"EMA 20"},{p:12,c:COL.blue,t:"EMA 50"}]}),"Harga di atas EMA dan EMA cepat di atas EMA lambat: tren naik.")}
+${fig(FIG.ema(),"EMA 20 (kuning) di atas EMA 50 (biru) dan harga di atas keduanya: tren naik. Koreksi sering berhenti di sekitar EMA.")}
 <h3>RSI 14</h3><p>Mengukur kekuatan gerak. Di atas 70 = <b>overbought</b> (terlalu banyak dibeli), di bawah 30 = <b>oversold</b>. Saat tren kuat, RSI bisa bertahan lama di area ekstrem, jadi jangan otomatis melawan tren. Perhatikan <b>divergence</b>: harga membuat high baru tapi RSI tidak, tanda tenaga melemah.</p>
+${fig(FIG.rsi(),"Bearish divergence: harga membuat higher high, tapi RSI membuat puncak lebih rendah. Setelahnya harga turun.")}
 <h3>MACD</h3><p>Garis MACD memotong garis sinyal ke atas = momentum naik. Histogram yang membesar menunjukkan momentum menguat.</p>
+${fig(FIG.macd(),"MACD (biru) memotong garis sinyal (oranye) ke atas dan histogram berubah hijau saat harga mulai naik.")}
 <h3>ATR 14</h3><p>Average True Range mengukur rata-rata jarak gerak per candle. DirmuFX memakai <b>1,5 × ATR</b> untuk jarak stop loss, sehingga SL menyesuaikan kondisi pasar: lebar saat volatil, sempit saat tenang.</p>
 ${box("note","Terlalu banyak indikator justru membingungkan. Pilih 2–3 yang saling melengkapi: satu untuk tren (EMA), satu untuk momentum (RSI/MACD), satu untuk volatilitas (ATR).")}`,
 quiz:[{q:"RSI di atas 70 artinya…",o:["Oversold","Overbought","Pasar tutup"],a:1,e:"Di atas 70 = overbought, di bawah 30 = oversold."},
@@ -372,6 +547,10 @@ L.push({id:"mtf",lvl:"menengah",min:6,t:"Analisa multi-timeframe",d:"Arah dari H
 body:()=>`<p>Multi-timeframe analysis (MTF) berarti melihat beberapa timeframe secara berurutan dari besar ke kecil. Tujuannya agar entry di timeframe kecil <b>searah</b> dengan arus besar.</p>
 ${tbl(["Langkah","Timeframe","Yang dicari"],[["1. Arah (bias)","H4 / H1","Tren naik, turun, atau range"],["2. Area","H1 / M15","Zona SnR, SnD, atau Fibonacci"],["3. Entry","M5 / M1","Pola konfirmasi: pin bar, engulfing, BOS kecil"]])}
 <h3>Contoh alur BUY</h3>
+${fig(FIG.h4(),"Langkah 1, H4: struktur naik dan harga di atas EMA 50, jadi bias BUY.")}
+${fig(FIG.h1(),"Langkah 2, H1: harga koreksi ke zona demand.")}
+${fig(FIG.m5(),"Langkah 3, M5: bullish engulfing di zona demand menjadi entry BUY.")}
+
 <ol><li>H4: struktur HH-HL, harga di atas EMA 200 → <b>bias BUY</b>.</li><li>H1: harga koreksi ke demand yang berimpit dengan Fibonacci 50–61,8%.</li><li>M5: muncul bullish engulfing di zona tersebut → <b>entry BUY</b>, SL di bawah zona.</li></ol>
 ${box("tip","Panel <b>Multi-timeframe</b> di Signal Room menampilkan arah M1 sampai D1 sekaligus. Peluang terbaik muncul saat sebagian besar timeframe searah.")}
 ${box("warn","Jangan memaksa entry jika timeframe besar dan kecil bertentangan. Menunggu juga keputusan trading.")}`,
@@ -384,7 +563,7 @@ body:()=>`<p>Signal Room DirmuFX menghitung sinyal dari konfluensi indikator di 
 <h3>Arti status</h3>
 ${tbl(["Status","Artinya","Tindakan"],[["BUY / SELL","Sinyal aktif terkunci","Pertimbangkan entry di sekitar harga entry"],["TUNGGU","Belum ada sinyal","Jangan entry. Level yang tampil hanya rencana"],["Kekuatan %","Seberapa banyak indikator searah","Makin tinggi makin meyakinkan"]])}
 <h3>Manajemen posisi (RR 1:3)</h3>
-${fig(rrSvg(),"Level di kartu sinyal DirmuFX.")}
+${fig(FIG.rr(),"Level sinyal DirmuFX pada chart: Entry, Stop loss, SL+ (1:1), TP1 (1:2), dan TP MAX (1:3).")}
 <ol><li><b>Entry</b> di sekitar harga yang tertera. Kalau harga sudah lari jauh, lebih baik lewati.</li><li>Pasang <b>Stop loss</b> sesuai kartu sejak awal.</li><li>Saat harga mencapai <b>SL+ (1:1)</b>, geser SL ke harga entry. Sejak titik ini posisimu bebas risiko.</li><li>Di <b>TP1 (1:2)</b>, ambil sebagian untung (misalnya tutup 50%).</li><li>Sisanya biarkan berjalan ke <b>TP MAX (1:3)</b>.</li></ol>
 <h3>Ukuran lot</h3><p>Isi <b>Saldo</b> dan <b>Risiko %</b> di kalkulator kartu sinyal. Lot dihitung otomatis dari jarak SL. Jangan menaikkan lot di luar hitungan kalkulator.</p>
 ${box("warn","Sinyal bukan jaminan. Akan ada sinyal yang kena SL. Dengan RR 1:3 dan risiko kecil per posisi, beberapa kekalahan tetap bisa tertutup oleh satu kemenangan.")}
@@ -396,10 +575,11 @@ quiz:[{q:"Status TUNGGU berarti…",o:["Entry sekarang","Belum ada sinyal aktif,
 /* ===== BAB LANJUTAN ===== */
 L.push({id:"breakout",lvl:"lanjutan",min:6,t:"Breakout, retest & false breakout",d:"Membedakan tembusan asli dan jebakan",
 body:()=>`<p>Breakout terjadi saat harga keluar dari range, support, atau resistance. Masalahnya, banyak breakout ternyata <b>palsu</b> (false breakout) dan harga kembali masuk ke range.</p>
-${fig(chart([13,13.6,13.2,13.7,13.3,13.8,13.4,13.6,14.6,15.2,14.6,14.15,14.5,15.3,16,16.6],{right:100,wick:.22,zones:[{a:13.8,b:14.05,t:"Zona lama",c:COL.gold}],labels:[{i:8,v:15.4,t:"Breakout",c:COL.gh},{i:11,v:13.5,t:"Retest",c:COL.gh}]}),"Breakout ditutup kuat di atas resistance, lalu retest ke area lama sebelum naik.")}
+${fig(FIG.brk(),"Breakout ditutup kuat di atas resistance, lalu harga kembali menguji zona itu (retest) sebelum naik.")}
 <h3>Ciri breakout yang valid</h3><ul><li>Candle <b>close</b> jelas di luar zona, bukan hanya wick.</li><li>Candle breakout besar dan impulsif.</li><li>Searah tren timeframe besar.</li><li>Terjadi di sesi aktif (London atau New York).</li></ul>
 <h3>Strategi retest</h3><p>Daripada mengejar candle breakout, tunggu harga kembali menguji zona yang ditembus (retest). Entry saat muncul konfirmasi di zona itu. SL di sisi lain zona.</p>
-<h3>False breakout</h3><p>Harga menembus sebentar lalu menutup kembali di dalam range, sering dengan wick panjang. Ini biasanya terjadi karena harga "mengambil" stop loss trader lain (liquidity). False breakout bisa menjadi peluang ke arah sebaliknya.</p>`,
+<h3>False breakout</h3><p>Harga menembus sebentar lalu menutup kembali di dalam range, sering dengan wick panjang. Ini biasanya terjadi karena harga "mengambil" stop loss trader lain (liquidity). False breakout bisa menjadi peluang ke arah sebaliknya.</p>
+${fig(FIG.fake(),"False breakout: harga menembus resistance sebentar dengan wick panjang, lalu ditutup kembali di bawah dan turun.")}`,
 quiz:[{q:"Breakout yang lebih valid ditandai dengan…",o:["Hanya wick yang keluar zona","Candle close jelas di luar zona","Terjadi di jam sepi"],a:1,e:"Close di luar zona menunjukkan penerimaan harga baru."},
 {q:"Strategi retest berarti…",o:["Mengejar candle breakout","Menunggu harga kembali menguji zona yang ditembus","Entry di tengah range"],a:1,e:"Retest memberi entry lebih baik dengan SL lebih jelas."},
 {q:"False breakout sering ditandai dengan…",o:["Wick panjang lalu close kembali di dalam range","Tiga candle besar searah","Volume nol"],a:0,e:"Harga menembus sebentar lalu ditolak kembali."}]});
@@ -408,11 +588,12 @@ L.push({id:"smc",lvl:"lanjutan",min:8,t:"Smart Money Concepts (SMC)",d:"BOS, CHo
 body:()=>`<p>Smart Money Concepts membaca jejak pelaku besar (institusi) lewat struktur harga. Istilahnya terdengar rumit, tetapi dasarnya tetap struktur pasar yang sudah kamu pelajari.</p>
 <h3>BOS & CHoCH</h3>
 <ul><li><b>BOS (Break of Structure)</b>: harga menembus high terakhir di uptrend (atau low terakhir di downtrend). Tanda tren <b>berlanjut</b>.</li><li><b>CHoCH (Change of Character)</b>: tembusan pertama <b>berlawanan</b> arah tren. Tanda awal tren bisa berubah.</li></ul>
-${fig(chart([16,15.2,14.4,15,14,13.2,13.8,12.8,12,12.6,13.4,14.2,13.6,13.1,13.9,15,16],{right:20,wick:.22,lines:[{v:13.8,i1:6,i2:10,c:COL.gh},{v:14.2,i1:11,i2:15,c:COL.up}],labels:[{i:8,v:13.8,t:"CHoCH",c:COL.gh,dy:-8},{i:13,v:14.2,t:"BOS",c:COL.up,dy:-8}]}),"Downtrend, lalu harga menembus lower high terakhir (CHoCH) dan melanjutkan dengan BOS ke atas.")}
+${fig(FIG.choch(),"Downtrend (LH–LL), lalu harga menembus lower high terakhir (CHoCH) dan berlanjut dengan BOS ke atas.")}
 <h3>Order Block (OB)</h3><p>Candle berlawanan terakhir sebelum pergerakan impulsif yang menghasilkan BOS. Contoh bullish OB: candle merah terakhir sebelum harga naik tajam. Saat harga kembali ke OB, sering terjadi reaksi.</p>
+${fig(FIG.ob(),"Bullish order block: candle merah terakhir sebelum kenaikan impulsif. Saat harga kembali ke zona ini, harga memantul.")}
 <h3>Fair Value Gap (FVG)</h3>
 <p>Celah dalam 3 candle impulsif: area antara <b>high candle pertama</b> dan <b>low candle ketiga</b> (untuk gerak naik) yang tidak tersentuh. Harga sering kembali "mengisi" celah ini sebelum melanjutkan.</p>
-${fig(chart(null,{raw:[[12,12.5,11.7,12.3],[12.3,12.6,12.1,12.2],[12.2,14.4,12.1,14.2],[14.2,15.2,13.4,15],[15,15.5,14.6,15.3],[15.3,15.4,12.9,13.3],[13.3,15.6,13.2,15.5]],right:100,boxes:[{i1:1,i2:6,a:12.6,b:13.4,t:"FVG",c:COL.purple},{i1:1,i2:6,a:12.1,b:12.6,c:COL.up,t:""}],labels:[{i:0.6,v:11.7,t:"Bullish OB",c:COL.up,dy:18}]}),"Candle besar meninggalkan celah (FVG). Harga kembali mengisi celah lalu naik.")}
+${fig(FIG.fvg(),"Tiga candle impulsif meninggalkan celah (fair value gap). Harga kembali mengisi celah lalu naik.")}
 ${box("tip","Kombinasi favorit: bias dari BOS di H1, entry saat harga kembali ke OB atau FVG di M5/M15, SL di luar OB. Indikator DirmuFX SMC di TradingView menandai area ini otomatis.")}`,
 quiz:[{q:"CHoCH adalah…",o:["Tembusan searah tren","Tembusan pertama berlawanan arah tren","Candle doji"],a:1,e:"Change of Character menandai kemungkinan perubahan tren."},
 {q:"Bullish order block adalah…",o:["Candle merah terakhir sebelum kenaikan impulsif","Candle hijau terbesar","Area di atas resistance"],a:0,e:"OB = candle berlawanan terakhir sebelum gerak impulsif."},
@@ -422,7 +603,9 @@ L.push({id:"likuiditas",lvl:"lanjutan",min:7,t:"Likuiditas & setup scalping per 
 body:()=>`<p><b>Likuiditas</b> adalah kumpulan order, terutama stop loss trader lain, yang menumpuk di atas high dan di bawah low yang jelas. Harga sering "menyapu" area ini (liquidity sweep) sebelum bergerak ke arah sebenarnya.</p>
 <h3>Area likuiditas yang perlu ditandai setiap hari</h3>
 <ul><li><b>High & low sesi Asia</b> (± 07.00–15.00 WITA).</li><li><b>PDH & PDL</b>: high dan low hari sebelumnya.</li><li>Equal highs / equal lows: dua puncak atau lembah yang hampir sama.</li><li>Level angka bulat (3800, 3850, 3900).</li></ul>
-${fig(chart([14,14.3,14.1,14.4,14.2,14.35,14.15,14.3,14.7,14.2,13.6,13.4,13.1,12.8],{right:110,wick:.15,wk:{8:[.55,0]},lines:[{v:14.55,t:"High Asia",c:COL.gold},{v:13.95,t:"Low Asia",c:COL.gold}],labels:[{i:8,v:15.5,t:"Sweep",c:COL.gh}]}),"Awal sesi London menyapu high Asia, lalu harga berbalik turun menembus low Asia.")}
+${fig(FIG.asia(),"Awal sesi London menyapu high Asia (sweep), lalu harga berbalik turun menembus low Asia.")}
+
+${fig(FIG.pdh(),"Equal highs dan PDH (high kemarin) menjadi tumpukan stop loss. Harga menyapunya lalu turun tajam.")}
 <h3>Contoh setup scalping M5 (sesi London)</h3>
 <ol><li>Tandai high dan low Asia.</li><li>Tunggu harga menyapu salah satu sisi di awal London (16.00–18.00 WITA).</li><li>Tunggu CHoCH di M5 ke arah berlawanan dari sapuan.</li><li>Entry saat harga kembali ke OB/FVG M5, SL di atas/bawah ujung sapuan.</li><li>Target: sisi lain range Asia atau RR 1:3.</li></ol>
 ${box("warn","Scalping butuh disiplin tinggi dan spread rendah. Batasi maksimal 2–3 posisi per sesi dan hentikan setelah mencapai batas rugi harian.")}`,
@@ -438,6 +621,7 @@ ${tbl(["Faktor","Jika naik/menguat","Dampak umum ke emas"],[["Dolar AS (DXY)","D
 <h3>Berita yang paling menggerakkan emas</h3>
 <ul><li><b>FOMC</b>: keputusan suku bunga dan konferensi pers The Fed (sekitar 02.00–03.00 WITA).</li><li><b>CPI</b>: data inflasi Amerika (20.30–21.30 WITA).</li><li><b>NFP</b>: data tenaga kerja, Jumat pertama setiap bulan (20.30–21.30 WITA).</li><li>PPI, Retail Sales, PCE, klaim pengangguran mingguan.</li></ul>
 <h3>Cara membaca hasil data</h3><p>Bandingkan <b>Actual</b> dengan <b>Forecast</b>. Contoh: CPI lebih tinggi dari perkiraan → pasar menduga The Fed tetap ketat → dolar menguat → emas cenderung turun. Tab Kalender di Signal Room menampilkan forecast dan previous.</p>
+${fig(FIG.news(),"Contoh reaksi emas saat rilis CPI 21:30 WITA: satu candle M5 bisa bergerak puluhan pip dengan wick panjang di dua arah.")}
 <h3>Aturan saat berita</h3>
 <ol><li>Cek kalender setiap pagi.</li><li>Tutup atau amankan posisi (SL+) sebelum berita berdampak tinggi.</li><li>Jangan entry 15 menit sebelum sampai 15 menit setelah rilis.</li><li>Biarkan candle pertama setelah berita selesai, lalu baca arah yang dipilih pasar.</li></ol>`,
 quiz:[{q:"Jika dolar (DXY) menguat tajam, emas biasanya…",o:["Cenderung turun","Cenderung naik","Tidak terpengaruh"],a:0,e:"Emas dihargai dalam dolar. Dolar kuat membuat emas lebih mahal bagi pembeli lain."},
