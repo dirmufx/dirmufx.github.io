@@ -59,11 +59,33 @@ textarea{width:100%;min-height:110px;margin-top:8px;resize:vertical}
  <div id="panel" hidden>
   <p class="muted" id="who" style="margin:0"></p>
   <div class="stats"><div><b id="nP">0</b><span class="muted">Menunggu</span></div><div><b id="nA">0</b><span class="muted">Aktif</span></div><div><b id="nE">0</b><span class="muted">Berakhir</span></div><div><b id="nT">0</b><span class="muted">Total</span></div></div>
-  <div class="tabs"><button class="btn" data-f="pending" aria-pressed="true">Menunggu</button><button class="btn" data-f="active" aria-pressed="false">Aktif</button><button class="btn" data-f="expired" aria-pressed="false">Berakhir</button><button class="btn" data-f="inactive" aria-pressed="false">Nonaktif</button><button class="btn" data-f="all" aria-pressed="false">Semua</button><button class="btn" data-f="set" aria-pressed="false">⚙ Harga &amp; Rekening</button></div>
+  <div class="tabs"><button class="btn" data-f="pending" aria-pressed="true">Menunggu</button><button class="btn" data-f="active" aria-pressed="false">Aktif</button><button class="btn" data-f="expired" aria-pressed="false">Berakhir</button><button class="btn" data-f="inactive" aria-pressed="false">Nonaktif</button><button class="btn" data-f="all" aria-pressed="false">Semua</button><button class="btn" data-f="set" aria-pressed="false">⚙ Harga &amp; Rekening</button><button class="btn" data-f="an" aria-pressed="false">📈 Analisa harian</button></div>
   <div id="listWrap">
    <input id="q" placeholder="Cari nama, email, atau nomor MT5" style="margin-top:0">
    <p class="muted">Jalur broker: cek nomor MT5 di portal IB PU Prime (link partner, deposit minimal $30). Jalur VIP seumur hidup: cek transfer Rp1.000.000 masuk dulu.</p>
    <div id="list"></div>
+  </div>
+  <div id="anWrap" hidden>
+   <div class="box">
+    <b>Tulis analisa harian</b>
+    <p class="muted" style="margin:4px 0 8px">Ringkasan & level tampil untuk semua orang. Skenario lengkap hanya untuk member VIP aktif.</p>
+    <div class="grid4">
+     <label>Pasar<select id="aMk" style="width:100%;margin-top:4px"><option>XAUUSD</option><option>EURUSD</option><option>GBPUSD</option><option>USDJPY</option><option>AUDUSD</option><option>BTCUSD</option><option>ETHUSD</option><option>Lainnya</option></select></label>
+     <label>Bias<select id="aBias" style="width:100%;margin-top:4px"><option value="bullish">Bullish (naik)</option><option value="bearish">Bearish (turun)</option><option value="netral">Netral / sideways</option></select></label>
+     <label>Tanggal<input id="aDate" type="date"></label>
+     <label>Timeframe<input id="aTf" placeholder="H1 / H4 / D1" value="H1"></label>
+     <label>Resistance<input id="aRes" placeholder="3880 / 3895"></label>
+     <label>Support<input id="aSup" placeholder="3850 / 3832"></label>
+    </div>
+    <input id="aOther" placeholder="Nama pasar (jika Lainnya)" hidden>
+    <input id="aTitle" placeholder="Judul singkat, contoh: Emas masih kuat di atas 3850">
+    <textarea id="aSum" placeholder="Ringkasan untuk umum (2–4 kalimat): kondisi market, berita penting hari ini."></textarea>
+    <textarea id="aVip" placeholder="Khusus VIP: skenario BUY/SELL, area entry, SL, TP, catatan berita." style="min-height:150px"></textarea>
+    <button class="btn gold" id="aPub" style="width:100%;margin-top:12px;padding:12px">Terbitkan analisa</button>
+    <p class="muted" id="aMsg"></p>
+   </div>
+   <p class="muted" style="margin-top:16px">Analisa terbaru</p>
+   <div id="aList"></div>
   </div>
   <div id="setWrap" hidden>
    <div class="box">
@@ -114,7 +136,24 @@ $("list").onclick=async e=>{const b=e.target.closest("button[data-id]");if(!b)re
  b.disabled=true;
  try{await fs.updateDoc(fs.doc(D,"members",r.id),{...data,updatedAt:fs.serverTimestamp()})}catch(err){alert("Gagal: "+err.code);b.disabled=false}};
 document.querySelectorAll(".tabs button").forEach(b=>b.onclick=()=>{filt=b.dataset.f;document.querySelectorAll(".tabs button").forEach(x=>x.setAttribute("aria-pressed",x===b));
- $("setWrap").hidden=filt!=="set";$("listWrap").hidden=filt==="set";if(filt!=="set")draw()});
+ $("setWrap").hidden=filt!=="set";$("anWrap").hidden=filt!=="an";$("listWrap").hidden=filt==="set"||filt==="an";if(filt==="an")loadAn();else if(filt!=="set")draw()});
+const tz=new Date(Date.now()+8*36e5).toISOString().slice(0,10);$("aDate").value=tz;
+$("aMk").onchange=()=>{$("aOther").hidden=$("aMk").value!=="Lainnya"};
+const biasTxt={bullish:"Bullish",bearish:"Bearish",netral:"Netral"};
+async function loadAn(){try{const q=await fs.getDocs(fs.query(fs.collection(D,"analysis"),fs.orderBy("createdAt","desc"),fs.limit(15)));
+ $("aList").innerHTML=q.docs.length?q.docs.map(d=>{const a=d.data();return `<div class="m"><div style="min-width:0"><b>${esc(a.market)} · ${esc(biasTxt[a.bias]||a.bias)}</b><div class="meta">${esc(a.date)} · ${esc(a.title)}</div></div><div class="acts"><button class="btn no" data-del="${d.id}">Hapus</button></div></div>`}).join(""):'<p class="muted">Belum ada analisa.</p>'}
+ catch(e){$("aList").innerHTML='<p class="err">Gagal memuat: '+e.code+' (cek Rules Firestore)</p>'}}
+$("aList").onclick=async e=>{const b=e.target.closest("[data-del]");if(!b||!confirm("Hapus analisa ini?"))return;b.disabled=true;
+ try{await fs.deleteDoc(fs.doc(D,"analysisVip",b.dataset.del));await fs.deleteDoc(fs.doc(D,"analysis",b.dataset.del));loadAn()}catch(err){alert("Gagal: "+err.code);b.disabled=false}};
+$("aPub").onclick=async()=>{const mk=$("aMk").value==="Lainnya"?$("aOther").value.trim():$("aMk").value,t=$("aTitle").value.trim(),sm=$("aSum").value.trim();
+ if(!mk||!t||!sm){$("aMsg").textContent="Isi pasar, judul, dan ringkasan dulu.";return}
+ $("aPub").disabled=true;$("aMsg").textContent="Menerbitkan…";
+ try{const ref=fs.doc(fs.collection(D,"analysis"));
+  await fs.setDoc(ref,{market:mk,bias:$("aBias").value,date:$("aDate").value,tf:$("aTf").value.trim(),res:$("aRes").value.trim(),sup:$("aSup").value.trim(),title:t,summary:sm,hasVip:!!$("aVip").value.trim(),createdAt:fs.serverTimestamp()});
+  if($("aVip").value.trim())await fs.setDoc(fs.doc(D,"analysisVip",ref.id),{detail:$("aVip").value.trim(),createdAt:fs.serverTimestamp()});
+  $("aMsg").textContent="Terbit. Cek di dirmufx.github.io/analisa.html";["aTitle","aSum","aVip","aRes","aSup"].forEach(i=>$(i).value="");loadAn()}
+ catch(e){$("aMsg").textContent="Gagal: "+e.code+" (cek Rules Firestore sudah diperbarui)"}
+ $("aPub").disabled=false};
 $("q").oninput=draw;
 async function loadSet(){try{const s=await fs.getDoc(fs.doc(D,"settings","public"));const v=s.data()||{};const pr=v.prices||{};
  $("pLife").value=v.lifetime||1000000;$("pay").value=v.pay||""}catch(e){$("setMsg").textContent="Gagal memuat: "+e.code}}
