@@ -125,6 +125,10 @@ a{color:var(--gold)}
 .vip{margin-top:12px;border-radius:14px;padding:12px 14px;background:#121c2b;font-size:15px;white-space:pre-line;color:#dbe7ff}
 .vip.lock{display:flex;align-items:center;justify-content:space-between;gap:10px;white-space:normal;color:var(--muted);font-size:14px}
 .vip .btn{padding:9px 14px;font-size:14px;flex:none}
+.an.auto{border:1px solid #2a4670}
+.tag2{font-size:12px;font-weight:600;color:var(--gold);margin-left:auto}
+.note2{margin-top:10px!important;font-size:13px!important;color:var(--muted)!important}
+.note2 a{color:var(--gold)}
 .empty{background:var(--panel);border-radius:18px;padding:22px;text-align:center;color:var(--muted);margin-top:16px}
 </style>
 </head>
@@ -152,22 +156,68 @@ function render(){
  let h=`<section class="hero"><span class="eyb">Analisa harian</span><h1>Rencana trading hari ini</h1><p class="lead">Bias, level penting, dan catatan berita untuk emas, forex, dan crypto. Skenario entry lengkap khusus member VIP.</p></section>
  <div class="chips">${Object.keys(GROUP).map(k=>`<button type="button" data-g="${k}" aria-pressed="${filt===k}">${GROUP[k]}</button>`).join("")}</div>`;
  const L=(items||[]).filter(a=>filt==="all"||grp(a.market)===filt);
- if(!ON)h+=`<div class="empty">Analisa harian sedang disiapkan.</div>`;
- else if(items===null)h+=`<div class="empty">Memuat analisa…</div>`;
- else if(!L.length)h+=`<div class="empty">${items.length?"Belum ada analisa untuk pasar ini.":"Belum ada analisa hari ini. Cek lagi nanti atau ikuti update di grup komunitas."}</div>`;
+ const AC=typeof autoCard==="function"?autoCard():"";
+ if(!ON){if(!AC)h+=`<div class="empty">Analisa harian sedang disiapkan.</div>`}
+ else if(items===null)h+=`<div class="empty">Memuat analisa admin…</div>`;
+ else if(!L.length){if(!AC)h+=`<div class="empty">${items.length?"Belum ada analisa untuk pasar ini.":"Belum ada analisa hari ini. Cek lagi nanti atau ikuti update di grup komunitas."}</div>`}
  else{let last="";L.forEach(a=>{if(a.date!==last){h+=`<div class="day">${esc(fday(a.date))}</div>`;last=a.date}
   let v="";if(a.hasVip){if(acc==="active")v=vip[a.id]!=null?`<div class="vip"><b>Skenario VIP</b>\n${esc(vip[a.id])}</div>`:`<div class="vip">Memuat skenario VIP…</div>`;
    else v=`<div class="vip lock"><span>🔒 Skenario entry, SL & TP khusus member VIP.</span><a class="btn green" href="index.html#${acc==="guest"?"daftar":"aktivasi"}">${acc==="guest"?"Daftar":"Aktifkan"}</a></div>`}
   h+=`<article class="an"><div class="anh"><span class="mk">${esc(a.market)}</span><span class="bias ${esc(a.bias)}">${BIAS[a.bias]||esc(a.bias)}</span>${a.tf?`<span class="tf">${esc(a.tf)}</span>`:""}</div>
    <h3>${esc(a.title)}</h3><p>${esc(a.summary)}</p>
    ${a.res||a.sup?`<div class="lv2"><div class="r"><span>Resistance</span><b>${esc(a.res||"—")}</b></div><div class="s"><span>Support</span><b>${esc(a.sup||"—")}</b></div></div>`:""}${v}</article>`})}
+ if(AC)h+=`<div class="day">Analisa otomatis</div>`+AC;
  h+=`<p class="disc">⚠️ Analisa bersifat edukasi, bukan saran keuangan. Selalu pakai stop loss dan kelola risiko.</p>`;
  $("main").innerHTML=h;
  document.querySelectorAll("[data-g]").forEach(b=>b.onclick=()=>{filt=b.dataset.g;render()});
 }
 async function loadVip(){if(!fb||acc!=="active")return;for(const a of items){if(!a.hasVip||vip[a.id]!=null)continue;
  try{const s=await fb.fs.getDoc(fb.fs.doc(fb.D,"analysisVip",a.id));vip[a.id]=s.exists()?s.data().detail:""}catch(e){vip[a.id]="(Skenario tidak bisa dimuat)"}}render()}
-items=null;paintPill();render();
+
+/* ===== Analisa otomatis XAUUSD (dari data Binance PAXG, disesuaikan ke spot) ===== */
+let auto=null,autoErr="";
+const emaA=(v,p)=>{const k=2/(p+1);let e=v[0];return v.map((x,i)=>e=i?x*k+e*(1-k):x)};
+function rsiL(c,p=14){let g=0,l=0;for(let i=1;i<c.length;i++){const d=c[i]-c[i-1],G=Math.max(d,0),L=Math.max(-d,0);if(i<=p){g+=G/p;l+=L/p}else{g=(g*(p-1)+G)/p;l=(l*(p-1)+L)/p}}return l===0?100:100-100/(1+g/l)}
+function atrL(d,p=14){let a=0;for(let i=1;i<d.length;i++){const tr=Math.max(d[i].h-d[i].l,Math.abs(d[i].h-d[i-1].c),Math.abs(d[i].l-d[i-1].c));a=i<=p?a+tr/p:(a*(p-1)+tr)/p}return a}
+function swingsL(d){const res=[],sup=[],n=d.length;for(let i=Math.max(2,n-120);i<n-2;i++){const h=d[i].h,l=d[i].l;if(h>=d[i-1].h&&h>=d[i-2].h&&h>=d[i+1].h&&h>=d[i+2].h)res.push(h);if(l<=d[i-1].l&&l<=d[i-2].l&&l<=d[i+1].l&&l<=d[i+2].l)sup.push(l)}const c=d[n-1].c;return{res:res.filter(x=>x>c).sort((a,b)=>a-b),sup:sup.filter(x=>x<c).sort((a,b)=>b-a)}}
+async function kl(iv,lim){for(const h of["https://data-api.binance.vision","https://api.binance.com"]){try{const r=await fetch(`${h}/api/v3/klines?symbol=PAXGUSDT&interval=${iv}&limit=${lim}`);if(r.ok){const j=await r.json();return j.map(k=>({t:k[0],o:+k[1],h:+k[2],l:+k[3],c:+k[4]}))}}catch(e){}}throw new Error("data")}
+function trendOf(d){const c=d.map(x=>x.c),e20=emaA(c,20),e50=emaA(c,50),n=c.length-1,cl=c[n];
+ if(cl>e50[n]&&e20[n]>e50[n])return 1;if(cl<e50[n]&&e20[n]<e50[n])return -1;return 0}
+async function loadAuto(){
+ try{
+  let [h1,h4,d1]=await Promise.all([kl("1h",200),kl("4h",200),kl("1d",30)]);
+  let off=0;try{const r=await fetch("https://api.gold-api.com/price/XAU");const j=await r.json();if(j&&j.price>0)off=+j.price-h1[h1.length-1].c}catch(e){}
+  const adj=a=>a.map(x=>({t:x.t,o:x.o+off,h:x.h+off,l:x.l+off,c:x.c+off}));h1=adj(h1);h4=adj(h4);d1=adj(d1);
+  const t4=trendOf(h4),t1=trendOf(h1),price=h1[h1.length-1].c,atr1=atrL(h1),atrD=atrL(d1),r1=rsiL(h1.map(x=>x.c));
+  const y=d1[d1.length-2],P=(y.h+y.l+y.c)/3,piv={P,R1:2*P-y.l,S1:2*P-y.h,R2:P+(y.h-y.l),S2:P-(y.h-y.l)};
+  const sw=swingsL(h1);
+  const score=t4*2+t1;const bias=score>=2?"bullish":score<=-2?"bearish":"netral";
+  const pick=(arr,fb)=>arr.length?arr:[fb];
+  const gap=Math.max(atr1*.8,2),spread=arr=>{const o=[];arr.forEach(x=>{if(o.every(y=>Math.abs(y-x)>=gap))o.push(x)});return o.slice(0,2).map(x=>Math.round(x))};
+  const res=spread([...sw.res,piv.R1,piv.R2].filter(x=>x>price+atr1*.3).sort((a,b)=>a-b));
+  const sup=spread([...sw.sup,piv.S1,piv.S2].filter(x=>x<price-atr1*.3).sort((a,b)=>b-a));
+  const TT={1:"naik",0:"belum jelas (campur)",[-1]:"turun"};
+  const vol=atrD>0?Math.round(atrD/0.1):0;
+  let txt=`Harga sekitar ${price.toFixed(2)}. Tren H4 ${TT[t4]}, tren H1 ${TT[t1]}. RSI H1 ${r1.toFixed(0)}${r1>70?" (overbought, rawan koreksi)":r1<30?" (oversold, rawan pantulan)":""}. Rata-rata gerak harian (ATR D1) sekitar ${vol} pip.`;
+  if(bias==="bullish")txt+=` Selama harga bertahan di atas ${sup[0]||Math.round(piv.S1)}, fokus cari peluang BUY saat koreksi ke support.`;
+  else if(bias==="bearish")txt+=` Selama harga di bawah ${res[0]||Math.round(piv.R1)}, fokus cari peluang SELL saat harga naik ke resistance.`;
+  else txt+=` Arah H4 dan H1 belum searah, lebih aman menunggu harga di tepi support/resistance atau tunggu breakout.`;
+  auto={market:"XAUUSD",bias,tf:"H4 + H1",title:bias==="bullish"?"Emas cenderung naik":bias==="bearish"?"Emas cenderung turun":"Emas belum punya arah jelas",summary:txt,
+   res:res.length?res.map(x=>x.toLocaleString("en-US")).join(" / "):"—",sup:sup.length?sup.map(x=>x.toLocaleString("en-US")).join(" / "):"—",pivot:Math.round(P).toLocaleString("en-US"),at:Date.now()};
+  autoErr="";
+ }catch(e){autoErr="Analisa otomatis belum bisa dimuat. Cek koneksi lalu muat ulang halaman."}
+ render();
+}
+function autoCard(){
+ if(filt!=="all"&&filt!=="emas")return "";
+ if(!auto)return `<article class="an auto"><div class="anh"><span class="mk">XAUUSD</span><span class="tag2">Otomatis</span></div><p style="margin-top:8px;color:var(--muted)">${autoErr||"Menghitung analisa otomatis…"}</p></article>`;
+ const a=auto,jam=new Date(a.at).toLocaleTimeString("id-ID",{hour:"2-digit",minute:"2-digit"});
+ return `<article class="an auto"><div class="anh"><span class="mk">XAUUSD</span><span class="bias ${a.bias}">${BIAS[a.bias]}</span><span class="tf">${a.tf}</span><span class="tag2">Otomatis · ${jam} WITA</span></div>
+  <h3>${esc(a.title)}</h3><p>${esc(a.summary)}</p>
+  <div class="lv2"><div class="r"><span>Resistance</span><b>${a.res}</b></div><div class="s"><span>Support</span><b>${a.sup}</b></div></div>
+  <p class="note2">Pivot harian ${a.pivot}. Dihitung otomatis dari EMA, RSI, ATR, pivot, dan swing. Selalu cek kalender berita dan konfirmasi di chart sebelum entry. <a href="index.html#analisa">Buka Signal Room</a></p></article>`;
+}
+items=null;paintPill();render();loadAuto();setInterval(loadAuto,5*60*1000);
 if(ON)(async()=>{try{
  const u="https://www.gstatic.com/firebasejs/10.12.2/";
  const [app,auth,fs]=await Promise.all([import(u+"firebase-app.js"),import(u+"firebase-auth.js"),import(u+"firebase-firestore.js")]);
