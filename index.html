@@ -4,19 +4,20 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#0a0a0c">
-<title>DirmuFX Signal Room</title>
+<title>DirmuFX · Komunitas trading forex, emas & crypto</title>
+<meta name="description" content="Komunitas trading DirmuFX: analisa forex, emas (XAUUSD), dan crypto, sinyal, kalender berita, kalkulator risiko, dan akademi trading dari nol.">
 <link rel="icon" href="data:image/svg+xml,<svg viewBox='0 0 314 343' xmlns='http://www.w3.org/2000/svg'><path d='M15 15H140A156.5 156.5 0 0 1 140 328H15Z' fill='none' stroke='%2363d297' stroke-width='30' stroke-linejoin='round'/><g fill='%23fff'><rect x='87' y='159' width='10' height='138' rx='5'/><rect x='69' y='202' width='46' height='58' rx='5'/><rect x='147' y='114' width='10' height='160' rx='5'/><rect x='129' y='153' width='46' height='75' rx='5'/></g><g fill='%2363d297'><rect x='207' y='54' width='10' height='175' rx='5'/><rect x='189' y='89' width='46' height='99' rx='5'/></g></svg>">
 <script src="dfx-config.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
 <style>
 #landing{
   --bg:#0a0a0c; --bg2:#0f0f12; --panel:#131316; --panel2:#1b1b20; --line:#2a2a31;
-  --fg:#f2efe8; --muted:#9b978d; --gold:#e3b85c; --gold-hi:#f6e3a8; --gold-lo:#b8862b; --gold-dim:#4d3d1a;
+  --fg:#f2efe8; --muted:#9b978d; --gold:#5b9cf5; --gold-hi:#bcd6ff; --gold-lo:#3f80dc; --gold-dim:#2a4670;
   --up:#2fd39b; --up-dim:#0f3a2c; --down:#f05d6c; --down-dim:#3d1820;
-  --f-display:"Chakra Petch","Segoe UI",system-ui,sans-serif;
-  --f-body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
-  --f-mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+  --f-display:"Plus Jakarta Sans","Segoe UI",system-ui,sans-serif;
+  --f-body:"Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"Plus Jakarta Sans",ui-monospace,Menlo,monospace;
   color-scheme:dark;
 }
 *{box-sizing:border-box}
@@ -28,7 +29,7 @@ html{scroll-behavior:smooth;padding-top:env(safe-area-inset-top,0px);padding-bot
 #landing :focus-visible{outline:2px solid var(--gold);outline-offset:3px}
 #landing .wrap{max-width:1120px;margin:0 auto;padding-left:max(18px,env(safe-area-inset-left,0px));padding-right:max(18px,env(safe-area-inset-right,0px))}
 #landing .num{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
-#landing .gold{background:linear-gradient(100deg,var(--gold-hi),var(--gold) 45%,var(--gold-lo));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:var(--gold)}
+#landing .gold{background:var(--gold);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:var(--gold)}
 #landing .eyebrow{font-family:var(--f-display);font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);font-weight:600}
 #landing h1,#landing h2,#landing h3{font-family:var(--f-display);text-wrap:balance;margin:0;line-height:1.15}
 #landing h2{font-size:clamp(26px,4.4vw,38px);font-weight:700}
@@ -37,7 +38,7 @@ html{scroll-behavior:smooth;padding-top:env(safe-area-inset-top,0px);padding-bot
 #landing .sec-head{display:flex;flex-direction:column;gap:6px;margin-bottom:32px}
 #landing .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;border-radius:12px;padding:12px 20px;font-weight:600;font-size:15px;border:1px solid var(--line);background:var(--panel2);cursor:pointer;transition:transform .15s,border-color .15s,background .15s;white-space:nowrap}
 #landing .btn:hover{border-color:var(--gold-dim);transform:translateY(-1px)}
-#landing .btn.gold-btn{background:linear-gradient(100deg,var(--gold-hi),var(--gold) 50%,var(--gold-lo));color:#1a1305;border:0}
+#landing .btn.gold-btn{background:var(--gold);color:#1a1305;border:0}
 #landing .btn.ghost{background:transparent}
 #landing .btn svg{width:18px;height:18px}
 #landing .nav{position:sticky;top:0;z-index:20;background:rgba(10,10,12,.86);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
@@ -64,7 +65,7 @@ html{scroll-behavior:smooth;padding-top:env(safe-area-inset-top,0px);padding-bot
 #landing .nav .btn{padding:9px 14px;font-size:14px}}
 #landing .hero{position:relative;overflow:hidden;padding-block:64px 56px}
 #landing .hero::before{content:"";position:absolute;inset:0;background:
-  radial-gradient(60% 70% at 85% 10%,rgba(227,184,92,.16),transparent 70%),
+  radial-gradient(60% 70% at 85% 10%,rgba(91,156,245,.16),transparent 70%),
   linear-gradient(rgba(42,42,49,.35) 1px,transparent 1px) 0 0/100% 44px,
   linear-gradient(90deg,rgba(42,42,49,.35) 1px,transparent 1px) 0 0/44px 100%;
   -webkit-mask-image:linear-gradient(180deg,#000 40%,transparent);mask-image:linear-gradient(180deg,#000 40%,transparent);pointer-events:none}
@@ -82,7 +83,7 @@ html{scroll-behavior:smooth;padding-top:env(safe-area-inset-top,0px);padding-bot
 #landing .live::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--up);animation:pulse 1.6s infinite}
 @keyframes pulse{50%{opacity:.25}}
 #landing .tvq{height:96px;border-radius:10px;overflow:hidden;background:var(--panel)}
-#landing .miniStats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:12px}
+#landing .miniStats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:12px}
 #landing .miniStats div{background:var(--panel2);border-radius:10px;padding:10px}
 #landing .miniStats span{display:block;font-size:11px;color:var(--muted)}
 #landing .miniStats b{font-family:var(--f-mono);font-size:14px}
@@ -118,7 +119,7 @@ html{scroll-behavior:smooth;padding-top:env(safe-area-inset-top,0px);padding-bot
 #landing .plans{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:18px}
 @media(max-width:700px){#landing .plans{grid-template-columns:minmax(0,1fr)}}
 #landing .plan{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:20px;display:flex;flex-direction:column;gap:10px}
-#landing .plan.vip{border-color:var(--gold-dim);background:linear-gradient(160deg,#1c170c,var(--panel) 55%)}
+#landing .plan.vip{border-color:var(--gold-dim);background:linear-gradient(160deg,#121c2b,var(--panel) 55%)}
 #landing .plan .pname{font-family:var(--f-display);font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:var(--up);font-weight:600}
 #landing .plan.vip .pname{color:var(--gold)}
 #landing .plan .price{font-family:var(--f-display);font-size:26px;font-weight:700}
@@ -130,7 +131,7 @@ html{scroll-behavior:smooth;padding-top:env(safe-area-inset-top,0px);padding-bot
 #landing .feats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
 @media(max-width:700px){#landing .feats{grid-template-columns:minmax(0,1fr)}}
 #landing .feat{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:22px;display:grid;grid-template-columns:44px minmax(0,1fr);gap:16px}
-#landing .feat .ic{width:44px;height:44px;border-radius:12px;background:linear-gradient(140deg,rgba(227,184,92,.22),rgba(227,184,92,.04));border:1px solid var(--gold-dim);display:grid;place-items:center;color:var(--gold)}
+#landing .feat .ic{width:44px;height:44px;border-radius:12px;background:linear-gradient(140deg,rgba(91,156,245,.22),rgba(91,156,245,.04));border:1px solid var(--gold-dim);display:grid;place-items:center;color:var(--gold)}
 #landing .feat .ic svg{width:22px;height:22px}
 #landing .feat h3{font-size:18px;margin-bottom:6px}
 #landing .feat p{margin:0;color:var(--muted);font-size:14px}
@@ -150,7 +151,7 @@ html{scroll-behavior:smooth;padding-top:env(safe-area-inset-top,0px);padding-bot
 #landing .calc{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:0;background:var(--panel);border:1px solid var(--line);border-radius:22px;overflow:hidden}
 @media(max-width:860px){#landing .calc{grid-template-columns:minmax(0,1fr)}}
 #landing .cin{padding:24px;display:flex;flex-direction:column;gap:16px}
-#landing .cout{padding:24px;background:linear-gradient(160deg,#16130c,var(--bg2) 60%);border-left:1px solid var(--line);display:flex;flex-direction:column;gap:14px}
+#landing .cout{padding:24px;background:linear-gradient(160deg,#0f1726,var(--bg2) 60%);border-left:1px solid var(--line);display:flex;flex-direction:column;gap:14px}
 @media(max-width:860px){#landing .cout{border-left:0;border-top:1px solid var(--line)}}
 #landing .ctabs{display:flex;background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:3px;gap:3px;overflow-x:auto;scrollbar-width:none}
 #landing .ctabs button{flex:1;background:none;border:0;border-radius:9px;padding:9px 12px;font-size:13px;font-weight:600;color:var(--muted);white-space:nowrap;cursor:pointer}
@@ -166,7 +167,7 @@ html{scroll-behavior:smooth;padding-top:env(safe-area-inset-top,0px);padding-bot
 #landing .seg2 button{flex:1;padding:10px;border-radius:10px;border:1px solid var(--line);background:var(--bg);font-weight:600;font-size:14px;cursor:pointer;color:var(--muted)}
 #landing .seg2 button[aria-pressed="true"].buy{border-color:var(--up);color:var(--up);background:var(--up-dim)}
 #landing .seg2 button[aria-pressed="true"].sell{border-color:var(--down);color:var(--down);background:var(--down-dim)}
-#landing .seg2 button[aria-pressed="true"].neutral{border-color:var(--gold);color:var(--gold);background:#221b0e}
+#landing .seg2 button[aria-pressed="true"].neutral{border-color:var(--gold);color:var(--gold);background:#121c2b}
 #landing .res-main span{font-size:12px;color:var(--muted);letter-spacing:.14em;text-transform:uppercase;font-family:var(--f-display)}
 #landing .res-main b{display:block;font-family:var(--f-mono);font-size:clamp(34px,7vw,48px);line-height:1.1;margin-top:4px}
 #landing .res-main small{font-size:13px;color:var(--muted)}
@@ -194,7 +195,7 @@ html{scroll-behavior:smooth;padding-top:env(safe-area-inset-top,0px);padding-bot
 #landing .faq summary::after{content:"+";font-family:var(--f-mono);color:var(--gold);font-size:18px;line-height:1}
 #landing .faq details[open] summary::after{content:"–"}
 #landing .faq details p{margin:0 0 16px;color:var(--muted);font-size:14px;max-width:70ch}
-#landing .closing{text-align:center;background:radial-gradient(70% 120% at 50% 0%,rgba(227,184,92,.14),transparent 70%),var(--panel);border:1px solid var(--gold-dim);border-radius:22px;padding:44px 22px}
+#landing .closing{text-align:center;background:radial-gradient(70% 120% at 50% 0%,rgba(91,156,245,.14),transparent 70%),var(--panel);border:1px solid var(--gold-dim);border-radius:22px;padding:44px 22px}
 #landing .closing .cta{justify-content:center}
 #landing footer{border-top:1px solid var(--line);padding-block:36px 44px;color:var(--muted);font-size:13px}
 #landing .foot{display:grid;grid-template-columns:minmax(0,1.4fr) repeat(2,minmax(0,1fr));gap:24px}
@@ -208,11 +209,11 @@ html{scroll-behavior:auto}}
 /* ===== terminal ===== */
 #app{
   --bg:#0a0a0c; --panel:#131316; --panel2:#1b1b20; --line:#2a2a31;
-  --fg:#f2efe8; --muted:#9b978d; --violet:#e3b85c; --violet-dim:#4d3d1a;
-  --up:#2fd39b; --up-dim:#0f3a2c; --down:#f05d6c; --down-dim:#3d1820; --amber:#f08a4b; --amber-dim:#2a170c;
-  --f-display:"Chakra Petch","Segoe UI",system-ui,sans-serif;
-  --f-body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
-  --f-mono:"JetBrains Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+  --fg:#f2efe8; --muted:#9b978d; --violet:#5b9cf5; --violet-dim:#2a4670;
+  --up:#2fd39b; --up-dim:#0f3a2c; --down:#f05d6c; --down-dim:#3d1820; --amber:#5b9cf5; --amber-dim:#14233a;
+  --f-display:"Plus Jakarta Sans","Segoe UI",system-ui,sans-serif;
+  --f-body:"Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"Plus Jakarta Sans",ui-monospace,"SFMono-Regular",Menlo,monospace;
   color-scheme:dark;
 }
 #app{margin:0;background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased}
@@ -235,8 +236,8 @@ html{scroll-behavior:auto}}
 #app .dname i{font-style:normal;color:#63d297}
 #app .dtrade{font-family:"Montserrat",var(--f-body);font-weight:600;font-size:9.5px;letter-spacing:.62em;color:#a3abc2;margin-top:4px}
 #app .brand{font-family:var(--f-display);font-weight:700;letter-spacing:.14em;font-size:17px;text-transform:uppercase;white-space:nowrap}
-#app .brand b{color:#e3b85c;background:linear-gradient(100deg,#f6e3a8 0%,#e3b85c 45%,#b8862b 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;text-shadow:0 0 18px rgba(227,184,92,.18)}
-@supports not ((-webkit-background-clip:text) or (background-clip:text)){#app .brand b{-webkit-text-fill-color:#e3b85c}}
+#app .brand b{color:#5b9cf5;background:linear-gradient(100deg,#bcd6ff 0%,#5b9cf5 45%,#3f80dc 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;text-shadow:0 0 18px rgba(91,156,245,.18)}
+@supports not ((-webkit-background-clip:text) or (background-clip:text)){#app .brand b{-webkit-text-fill-color:#5b9cf5}}
 #app .brand small{display:block;font-size:10px;letter-spacing:.3em;color:var(--muted);font-weight:500}
 #app .quote{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 #app .symsel:disabled{opacity:1;-webkit-appearance:none;appearance:none;color:var(--fg)}
@@ -255,11 +256,11 @@ html{scroll-behavior:auto}}
 #app .small{font-size:12px}
 #app .srcbar{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
 #app .chip{display:inline-flex;align-items:center;gap:6px;padding:3px 9px;border-radius:999px;font-size:11px;font-family:var(--f-display);letter-spacing:.1em;text-transform:uppercase;font-weight:600;border:1px solid var(--line);white-space:nowrap}
-#app .chip.sim{color:var(--amber);border-color:#5a2f18;background:var(--amber-dim)}
+#app .chip.sim{color:var(--amber);border-color:#2a4670;background:var(--amber-dim)}
 #app .chip.live{color:var(--up);border-color:#1f5a45;background:var(--up-dim)}
 #app .chip.live::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--up);animation:pulse 1.6s infinite}
 @keyframes pulse{50%{opacity:.25}}
-#app .chip.imp{color:var(--violet);border-color:var(--violet-dim);background:#221b0e}
+#app .chip.imp{color:var(--violet);border-color:var(--violet-dim);background:#121c2b}
 #app .chip.up{color:var(--up);background:var(--up-dim);border-color:transparent}
 #app .chip.down{color:var(--down);background:var(--down-dim);border-color:transparent}
 #app .chip.flat{color:var(--muted);background:var(--panel2);border-color:transparent}
@@ -323,7 +324,7 @@ html{scroll-behavior:auto}}
 #app .lv{padding:11px 14px;border-bottom:1px solid var(--line)}
 #app .lv:nth-child(odd){border-right:1px solid var(--line)}
 #app .lv.max{grid-column:1/-1;border-right:0}
-#app .lv.be{background:#221b0e}
+#app .lv.be{background:#121c2b}
 #app .lv.be .v{color:var(--violet)}
 #app .lv .hint2{font-size:11px;color:var(--muted);margin-top:2px}
 #app .lv .k{font-size:11px;letter-spacing:.14em;color:var(--muted);font-family:var(--f-display);text-transform:uppercase}
@@ -383,13 +384,13 @@ html{scroll-behavior:auto}}
 #app .imp1{color:var(--muted)}
 #app .dots{font-size:10px;letter-spacing:2px;white-space:nowrap}
 #app .cd{font-family:var(--f-mono);font-size:11px;color:var(--up);white-space:nowrap}
-#app .nextcard{position:relative;overflow:hidden;border-radius:16px;padding:18px;border:1px solid var(--violet-dim);background:radial-gradient(120% 140% at 100% 0%,rgba(227,184,92,.14),var(--panel) 55%)}
+#app .nextcard{position:relative;overflow:hidden;border-radius:16px;padding:18px;border:1px solid var(--violet-dim);background:radial-gradient(120% 140% at 100% 0%,rgba(91,156,245,.14),var(--panel) 55%)}
 #app .nextcard .lbl{font-family:var(--f-display);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--violet)}
 #app .nextcard h3{margin:6px 0 2px;font-size:19px;line-height:1.3;text-wrap:balance}
 #app .nextcard .when{font-size:13px;color:var(--muted)}
 #app .nextcard .big{font-family:var(--f-mono);font-size:clamp(28px,9vw,40px);font-weight:700;letter-spacing:.02em;margin-top:10px;color:var(--fg);font-variant-numeric:tabular-nums}
 #app .nextcard .big small{font-size:12px;color:var(--muted);font-family:var(--f-body);font-weight:400;margin-left:6px;letter-spacing:0}
-#app .nextcard.soon{border-color:#7a3a17;background:radial-gradient(120% 140% at 100% 0%,rgba(240,138,75,.18),var(--panel) 55%)}
+#app .nextcard.soon{border-color:#2a4670;background:radial-gradient(120% 140% at 100% 0%,rgba(91,156,245,.18),var(--panel) 55%)}
 #app .nextcard.soon .big{color:var(--amber)}
 #app .nextcard .fp{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
 #app .pill{display:inline-flex;gap:6px;align-items:baseline;background:var(--panel2);border:1px solid var(--line);border-radius:999px;padding:4px 11px;font-size:12px;color:var(--muted)}
@@ -411,7 +412,7 @@ html{scroll-behavior:auto}}
 #app .crow .right{text-align:right;display:flex;flex-direction:column;align-items:flex-end;gap:4px}
 #app .flag{font-family:var(--f-mono);font-size:10px;font-weight:700;letter-spacing:.06em;padding:2px 6px;border-radius:5px;background:var(--down-dim);color:var(--down)}
 #app .crow .cdn{font-family:var(--f-mono);font-size:12px;color:var(--up);white-space:nowrap}
-#app .crow.soon{background:linear-gradient(90deg,rgba(240,138,75,.10),transparent 70%)}
+#app .crow.soon{background:linear-gradient(90deg,rgba(91,156,245,.10),transparent 70%)}
 #app .crow.soon .cdn{color:var(--amber);font-weight:700}
 #app .crow.past{opacity:.55}
 #app .crow.past .cdn{color:var(--muted)}
@@ -436,13 +437,13 @@ html{scroll-behavior:auto}}
 #app .quote .btn.cta{padding:7px 12px}
 #app .locked .lockable{filter:blur(7px);user-select:none;pointer-events:none}
 #app:not(.pro) .proonly{display:none!important}
-#app .waitnote{display:none;margin:4px 0 12px;padding:12px 14px;border-radius:12px;border:1px solid #5a4720;background:#1c170c;font-size:14px;line-height:1.5}
-#app .waitnote>b{display:block;color:#f6e3a8}
+#app .waitnote{display:none;margin:4px 0 12px;padding:12px 14px;border-radius:12px;border:1px solid #2a4670;background:#121c2b;font-size:14px;line-height:1.5}
+#app .waitnote>b{display:block;color:#bcd6ff}
 #app .waitnote span b{color:var(--fg)}
 #app .waitnote span{color:var(--muted);font-size:13px}
 #app #sigcard.waiting .waitnote{display:block}
 #app #sigcard.waiting .levels{opacity:.38;filter:grayscale(.7);transition:opacity .2s}
-#app .lockbar{display:none;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;background:#221b0e;border-top:1px solid var(--violet-dim);padding:12px 14px}
+#app .lockbar{display:none;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;background:#121c2b;border-top:1px solid var(--violet-dim);padding:12px 14px}
 #app .locked .lockbar{display:flex}
 #app .lockbar p{margin:0;font-size:13px;max-width:44ch}
 #app .lockbar b{color:var(--violet)}
@@ -484,7 +485,7 @@ html{scroll-behavior:auto}
     <div class="navlinks">
       <a href="#fitur">Fitur</a><a href="belajar.html">Belajar</a><a href="#cara-gabung">Cara Gabung</a><a href="#terminal">Signal Room</a><a href="#kalkulator">Kalkulator</a><a href="#materi">Materi</a><a href="#faq">FAQ</a>
     </div>
-    <div class="navcta"><a class="btn ghost" href="#masuk" id="navMasuk">Masuk</a><a class="btn gold-btn" href="#daftar">GABUNG</a></div>
+    <div class="navcta"><a class="btn ghost" href="#masuk" id="navMasuk">Masuk</a><a class="btn gold-btn" href="#daftar">Gabung</a></div>
   </div>
 </nav>
 
@@ -492,9 +493,9 @@ html{scroll-behavior:auto}
   <div class="wrap">
     <div>
       <div class="hero-logo"><svg class="dmark" viewBox="0 0 314 343" aria-hidden="true"><path d="M15 15H140A156.5 156.5 0 0 1 140 328H15Z" fill="none" stroke="#63d297" stroke-width="30" stroke-linejoin="round"/><g fill="#fff"><rect x="87" y="159" width="10" height="138" rx="5"/><rect x="69" y="202" width="46" height="58" rx="5"/><rect x="147" y="114" width="10" height="160" rx="5"/><rect x="129" y="153" width="46" height="75" rx="5"/></g><g fill="#63d297"><rect x="207" y="54" width="10" height="175" rx="5"/><rect x="189" y="89" width="46" height="99" rx="5"/></g></svg><span class="dword"><span class="dname">Dirmu<i>FX</i></span><span class="dtrade">TRADE</span></span></div>
-      <span class="eyebrow">Komunitas trading XAUUSD</span>
-      <h1>Trading emas lebih <span class="gold">terarah</span>, bukan asal tebak.</h1>
-      <p class="lead">DirmuFX membantu kamu membaca pasar XAUUSD dengan sinyal konfluensi, kalender berita, analisa fundamental, dan manajemen risiko yang jelas. Fokus pada gaya scalping dan intraday.</p>
+      <span class="eyebrow">Komunitas trading forex, emas &amp; crypto</span>
+      <h1>Trading lebih terarah, bukan asal tebak.</h1>
+      <p class="lead">Forex, emas (XAUUSD), sampai Bitcoin dan altcoin. DirmuFX membantu kamu membaca pasar dengan analisa, sinyal, kalender berita, dan manajemen risiko yang jelas, bukan ikut-ikutan FOMO.</p>
       <div class="cta">
         <a class="btn gold-btn" href="#analisa">Masuk Signal Room
           <svg viewBox="0 0 20 20" fill="none"><path d="M5 10h10M11 6l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
@@ -502,8 +503,8 @@ html{scroll-behavior:auto}
         <a class="btn ghost" href="https://chat.whatsapp.com/E4zPvDufMNqAaLdo9BLSmg" target="_blank" rel="noopener">Gabung Grup WA</a>
       </div>
       <div class="chips">
-        <span class="chip"><b>XAUUSD</b> fokus utama</span>
-        <span class="chip"><b>M5 &amp; M15</b> scalping · intraday</span>
+        <span class="chip"><b>Forex</b> pair mayor</span><span class="chip"><b>Emas</b> XAUUSD</span><span class="chip"><b>Crypto</b> BTC, ETH &amp; altcoin</span>
+        <span class="chip"><b>Scalping</b>, intraday &amp; swing</span>
         <span class="chip"><b>24 jam</b> bot sinyal Telegram</span>
       </div>
     </div>
@@ -511,8 +512,7 @@ html{scroll-behavior:auto}
       <div class="qhead"><span class="eyebrow" style="letter-spacing:.16em">XAUUSD · Gold Spot</span><span class="live">Live</span></div>
       <div class="tvq" id="tvQuote"></div>
       <div class="miniStats">
-        <div><span>SL scalping</span><b>30 pips</b></div>
-        <div><span>SL intraday</span><b>50 pips</b></div>
+        <div><span>Risiko per posisi</span><b>1–2%</b></div>
         <div><span>Risk/Reward</span><b>1 : 3</b></div>
       </div>
       <div class="qfoot"><span>Hitung lot sebelum entry.</span><a class="btn" style="padding:8px 14px;font-size:13px" href="#kalkulator">Ke kalkulator</a></div>
@@ -553,9 +553,9 @@ html{scroll-behavior:auto}
       <div class="feat"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2" stroke-linecap="round"/></svg></span>
         <div><h3>Kalender berita USD</h3><p>Jadwal rilis berdampak tinggi seperti NFP, CPI, dan FOMC, lengkap dengan hitung mundur supaya kamu tidak entry tepat saat berita keluar.</p></div></div>
       <div class="feat"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></span>
-        <div><h3>Fundamental emas</h3><p>Ringkasan penggerak harga XAUUSD: kebijakan Fed, dolar AS, yield, minyak, geopolitik, dan sentimen pasar.</p></div></div>
+        <div><h3>Fundamental &amp; narasi pasar</h3><p>Penggerak harga forex dan emas (Fed, dolar, yield, geopolitik) serta crypto (arus dana ETF, narasi, dan sentimen), dirangkum supaya kamu tahu kenapa harga bergerak.</p></div></div>
       <div class="feat"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7l8-4Z"/><path d="M9 12l2 2 4-4" stroke-linecap="round"/></svg></span>
-        <div><h3>Risiko terukur</h3><p>Stop loss tetap per timeframe dan kalkulator lot otomatis, supaya kerugian per posisi selalu sesuai batas yang kamu tentukan.</p></div></div>
+        <div><h3>Risiko terukur</h3><p>Stop loss disesuaikan dengan kondisi market dan kalkulator lot otomatis, supaya kerugian per posisi selalu sesuai batas yang kamu tentukan.</p></div></div>
     </div>
   </div>
 </section>
@@ -566,10 +566,10 @@ html{scroll-behavior:auto}
       <div>
         <span class="eyebrow">Signal Room DirmuFX</span>
         <h2 style="margin-top:8px">Chart, sinyal, berita, dan fundamental di satu layar</h2>
-        <p class="lead">Buka dari HP tanpa install aplikasi. Data harga live dari TradingView, dan sinyal diperbarui otomatis setiap menit.</p>
+        <p class="lead">Buka dari HP tanpa install aplikasi. Chart live dari TradingView, sinyal otomatis XAUUSD diperbarui setiap menit. Analisa forex dan crypto dibagikan di grup komunitas.</p>
         <div class="tabsprev" style="margin-top:22px">
           <div class="tp"><b>Analisa</b><p>Chart candle, EMA 20/50/200, sinyal entry, SL &amp; TP.</p></div>
-          <div class="tp"><b>Berita</b><p>Kabar forex dan emas terbaru.</p></div>
+          <div class="tp"><b>Berita</b><p>Kabar forex, emas, dan crypto terbaru.</p></div>
           <div class="tp"><b>Kalender</b><p>Berita USD berdampak tinggi + hitung mundur.</p></div>
           <div class="tp"><b>Fundamental</b><p>Bias dan faktor penggerak per pair.</p></div>
         </div>
@@ -615,7 +615,7 @@ html{scroll-behavior:auto}
         <ul><li>Semua fitur Member Free</li><li>Bayar transfer, aktif setelah dicek admin</li><li>Grup VIP, modul PDF &amp; analisa fundamental mendalam</li></ul>
         <a class="btn" href="#daftar">Ambil VIP seumur hidup</a></div>
     </div>
-    <p class="warn"><span aria-hidden="true">⚠️</span><span>Trading emas dengan leverage berisiko tinggi dan bisa menghabiskan seluruh modal. Sinyal DirmuFX adalah alat bantu edukasi, bukan jaminan profit. DirmuFX mendapat komisi dari broker atas aktivitas trading member.</span></p>
+    <p class="warn"><span aria-hidden="true">⚠️</span><span>Trading forex, emas, dan crypto berisiko tinggi dan bisa menghabiskan seluruh modal. Sinyal DirmuFX adalah alat bantu edukasi, bukan jaminan profit. DirmuFX mendapat komisi dari broker atas aktivitas trading member.</span></p>
   </div>
 </section>
 
@@ -638,7 +638,7 @@ html{scroll-behavior:auto}
         <div data-p="lot" class="grid2">
           <div class="fld"><label for="cBal">Saldo <span class="accU">$</span></label><input id="cBal" inputmode="decimal" value="1000"></div>
           <div class="fld"><label for="cRisk">Risiko per posisi (%)</label><input id="cRisk" inputmode="decimal" value="1"></div>
-          <div class="fld"><label for="cSL">Stop loss (pips)</label><input id="cSL" inputmode="decimal" value="30"><span class="hint">Scalping 30 · Intraday 50</span></div>
+          <div class="fld"><label for="cSL">Stop loss (pips)</label><input id="cSL" inputmode="decimal" value="30"><span class="hint">Sesuaikan dengan kondisi market</span></div>
           <div class="fld"><label for="cRR">Target (RR)</label><select id="cRR"><option value="1">1 : 1</option><option value="1.5">1 : 1.5</option><option value="2">1 : 2</option><option value="3" selected>1 : 3</option></select></div>
         </div>
 
@@ -674,7 +674,7 @@ html{scroll-behavior:auto}
 
 <section id="materi" style="padding-top:0">
   <div class="wrap">
-    <div class="sec-head"><span class="eyebrow">Akademi DirmuFX</span><h2>Belajar trading emas dari nol</h2><p class="lead">20 bab bertahap khusus XAUUSD, lengkap dengan gambar dan kuis. Bab Dasar gratis untuk semua, Menengah &amp; Lanjutan untuk member VIP.</p></div>
+    <div class="sec-head"><span class="eyebrow">Akademi DirmuFX</span><h2>Belajar trading emas dari nol</h2><p class="lead">20 bab bertahap dengan contoh dari pasar emas, lengkap dengan gambar dan kuis. Dasar chart, candle, tren, dan manajemen risiko berlaku juga untuk forex dan crypto. Bab Dasar gratis untuk semua, Menengah &amp; Lanjutan untuk member VIP.</p></div>
     <div class="topics">
       <a class="topic" href="belajar.html#b/istilah" style="text-decoration:none;color:inherit"><span class="lvl b">Dasar · Gratis</span><h3>Dasar Trading XAUUSD</h3><p>Cara kerja emas, pip, lot, spread, leverage, sesi pasar WITA, dan jenis order di MT5.</p></a>
       <a class="topic" href="belajar.html#b/candle" style="text-decoration:none;color:inherit"><span class="lvl b">Dasar · Gratis</span><h3>Candlestick, Tren &amp; Risiko</h3><p>Membaca candle, pola penting, struktur tren, rumus lot, dan psikologi trading.</p></a>
@@ -691,9 +691,10 @@ html{scroll-behavior:auto}
   <div class="wrap">
     <div class="sec-head"><span class="eyebrow">FAQ</span><h2>Pertanyaan yang sering muncul</h2></div>
     <div class="faq">
-      <details><summary>Apa itu DirmuFX?</summary><p>DirmuFX adalah komunitas edukasi trading yang fokus ke XAUUSD (emas), dengan Signal Room, kalender berita, fundamental, dan diskusi di Telegram.</p></details>
+      <details><summary>Apa itu DirmuFX?</summary><p>DirmuFX adalah komunitas edukasi trading untuk forex, emas (XAUUSD), dan crypto, dengan Signal Room, Akademi, kalender berita, fundamental, dan diskusi di Telegram serta WhatsApp.</p></details>
       <details><summary>Apakah cocok untuk pemula?</summary><p>Cocok. Mulai dari materi dasar dan kalkulator lot di halaman ini, lalu pelajari cara membaca sinyal di Signal Room sebelum memakai akun real.</p></details>
-      <details><summary>Apakah ada jaminan profit?</summary><p>Tidak ada. Trading forex dan emas berisiko tinggi. Sinyal dan analisa adalah alat bantu, bukan jaminan. Selalu pakai stop loss dan jangan memakai dana yang tidak siap hilang.</p></details>
+      <details><summary>Apakah DirmuFX membahas forex dan crypto?</summary><p>Ya. Analisa pair forex mayor, Bitcoin, dan altcoin dibagikan di grup komunitas. Sinyal otomatis di Signal Room saat ini khusus XAUUSD.</p></details>
+      <details><summary>Apakah ada jaminan profit?</summary><p>Tidak ada. Trading forex, emas, dan crypto berisiko tinggi. Sinyal dan analisa adalah alat bantu, bukan jaminan. Selalu pakai stop loss dan jangan memakai dana yang tidak siap hilang.</p></details>
       <details><summary>Dari mana sinyal DirmuFX dihitung?</summary><p>Dari gabungan delapan indikator teknikal (EMA, MACD, RSI, Stochastic, Bollinger, pivot, ADX) yang disaring dengan arah tren timeframe lebih besar. Hanya dihitung dari candle yang sudah tutup.</p></details>
       <details><summary>Bagaimana cara memakai kalkulator lot?</summary><p>Isi saldo, persentase risiko, dan jarak stop loss dalam pips. Kalkulator menampilkan lot yang aman beserta nilai rugi dan target dalam dolar dan rupiah. Untuk akun cent, pilih "Cent (USC)".</p></details>
       <details><summary>Bagaimana cara bergabung dengan komunitas?</summary><p>Buka akun PU Prime lewat link partner DirmuFX, deposit minimal $30, lalu kirim nomor akun MT5 ke admin via WhatsApp. Langkah lengkapnya ada di bagian <a href="#cara-gabung" style="color:var(--gold)">Cara Gabung</a>. Info market juga ada di Telegram <b>t.me/dirmufxofficial</b>.</p></details>
@@ -706,7 +707,7 @@ html{scroll-behavior:auto}
     <div class="closing">
       <span class="eyebrow">Mulai sekarang</span>
       <h2 style="margin-top:8px">Cek sinyal hari ini di Signal Room DirmuFX</h2>
-      <p class="lead" style="margin-inline:auto">Gratis dibuka dari HP. Pantau XAUUSD, kalender berita, dan fundamental di satu tempat.</p>
+      <p class="lead" style="margin-inline:auto">Gratis dibuka dari HP. Pantau forex, emas, dan crypto, kalender berita, dan fundamental di satu tempat.</p>
       <div class="cta"><a class="btn gold-btn" href="#analisa">Buka Signal Room</a><a class="btn ghost" href="https://t.me/dirmufxofficial" target="_blank" rel="noopener">Gabung Telegram</a><a class="btn ghost" href="https://chat.whatsapp.com/E4zPvDufMNqAaLdo9BLSmg" target="_blank" rel="noopener">Gabung Grup WA</a></div>
     </div>
   </div>
@@ -715,7 +716,7 @@ html{scroll-behavior:auto}
 <footer>
   <div class="wrap">
     <div class="foot">
-      <div><a class="logo" href="#top" style="display:inline-flex"><svg class="dmark" viewBox="0 0 314 343" aria-hidden="true"><path d="M15 15H140A156.5 156.5 0 0 1 140 328H15Z" fill="none" stroke="#63d297" stroke-width="30" stroke-linejoin="round"/><g fill="#fff"><rect x="87" y="159" width="10" height="138" rx="5"/><rect x="69" y="202" width="46" height="58" rx="5"/><rect x="147" y="114" width="10" height="160" rx="5"/><rect x="129" y="153" width="46" height="75" rx="5"/></g><g fill="#63d297"><rect x="207" y="54" width="10" height="175" rx="5"/><rect x="189" y="89" width="46" height="99" rx="5"/></g></svg><span class="dword"><span class="dname">Dirmu<i>FX</i></span><span class="dtrade">TRADE</span></span></a><p style="margin:10px 0 0;max-width:42ch">Komunitas edukasi trading XAUUSD untuk trader Indonesia.</p></div>
+      <div><a class="logo" href="#top" style="display:inline-flex"><svg class="dmark" viewBox="0 0 314 343" aria-hidden="true"><path d="M15 15H140A156.5 156.5 0 0 1 140 328H15Z" fill="none" stroke="#63d297" stroke-width="30" stroke-linejoin="round"/><g fill="#fff"><rect x="87" y="159" width="10" height="138" rx="5"/><rect x="69" y="202" width="46" height="58" rx="5"/><rect x="147" y="114" width="10" height="160" rx="5"/><rect x="129" y="153" width="46" height="75" rx="5"/></g><g fill="#63d297"><rect x="207" y="54" width="10" height="175" rx="5"/><rect x="189" y="89" width="46" height="99" rx="5"/></g></svg><span class="dword"><span class="dname">Dirmu<i>FX</i></span><span class="dtrade">TRADE</span></span></a><p style="margin:10px 0 0;max-width:42ch">Komunitas edukasi trading forex, emas &amp; crypto untuk trader Indonesia.</p></div>
       <div><h4>Halaman</h4><a href="#cara-gabung">Cara Gabung</a><a href="#analisa">Signal Room</a><a href="#kalkulator">Kalkulator</a><a href="#materi">Materi</a><a href="#faq">FAQ</a></div>
       <div><h4>Channel</h4><a href="https://t.me/dirmufxofficial" target="_blank" rel="noopener">Telegram</a><a href="https://chat.whatsapp.com/E4zPvDufMNqAaLdo9BLSmg" target="_blank" rel="noopener">Grup WhatsApp</a><a href="https://www.tiktok.com/@dirmufxofficial" target="_blank" rel="noopener">TikTok</a><a href="https://www.instagram.com/mudirr_/" target="_blank" rel="noopener">Instagram</a><a href="https://wa.me/6285823444392" target="_blank" rel="noopener">WhatsApp</a></div>
     </div>
@@ -727,9 +728,9 @@ html{scroll-behavior:auto}
 
 </div>
 <style>
-#auth{--bg:#0a0a0c;--bg2:#0f0f12;--panel:#131316;--panel2:#1b1b20;--line:#2a2a31;--fg:#f2efe8;--muted:#9b978d;--gold:#e3b85c;--gold-hi:#f6e3a8;--gold-lo:#b8862b;--up:#2fd39b;--up-dim:#0f3a2c;--down:#f05d6c;
-  --f-display:"Chakra Petch","Segoe UI",system-ui,sans-serif;--f-body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;--f-mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
-  min-height:100vh;min-height:100dvh;background:radial-gradient(900px 500px at 50% -10%,rgba(227,184,92,.12),transparent 60%),radial-gradient(700px 400px at 50% 110%,rgba(47,211,155,.07),transparent 60%),var(--bg);color:var(--fg);font-family:var(--f-body);font-size:15px;line-height:1.55;color-scheme:dark}
+#auth{--bg:#0a0a0c;--bg2:#0f0f12;--panel:#131316;--panel2:#1b1b20;--line:#2a2a31;--fg:#f2efe8;--muted:#9b978d;--gold:#5b9cf5;--gold-hi:#bcd6ff;--gold-lo:#3f80dc;--up:#2fd39b;--up-dim:#0f3a2c;--down:#f05d6c;
+  --f-display:"Plus Jakarta Sans","Segoe UI",system-ui,sans-serif;--f-body:"Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",sans-serif;--f-mono:"Plus Jakarta Sans",ui-monospace,Menlo,monospace;
+  min-height:100vh;min-height:100dvh;background:radial-gradient(900px 500px at 50% -10%,rgba(91,156,245,.12),transparent 60%),radial-gradient(700px 400px at 50% 110%,rgba(47,211,155,.07),transparent 60%),var(--bg);color:var(--fg);font-family:var(--f-body);font-size:15px;line-height:1.55;color-scheme:dark}
 #auth *{box-sizing:border-box}
 #auth a{color:inherit}
 #auth .aw{max-width:440px;margin:0 auto;padding:36px max(20px,env(safe-area-inset-left,0px)) 40px}
@@ -750,7 +751,7 @@ html{scroll-behavior:auto}
 #auth .eye{position:absolute;right:6px;top:50%;transform:translateY(-50%);width:38px;height:38px;border:0;background:none;color:var(--muted);cursor:pointer;display:grid;place-items:center}
 #auth .eye svg{width:20px;height:20px}
 #auth .abtn{display:flex;width:100%;align-items:center;justify-content:center;gap:8px;font:inherit;font-weight:700;font-size:15px;border-radius:14px;padding:14px;cursor:pointer;border:1px solid var(--line);background:var(--panel2);color:var(--fg);text-decoration:none;text-align:center}
-#auth .abtn.gold{background:linear-gradient(100deg,var(--gold-hi),var(--gold) 50%,var(--gold-lo));color:#1a1305;border:0;box-shadow:0 8px 30px -12px rgba(227,184,92,.55)}
+#auth .abtn.gold{background:var(--gold);color:#1a1305;border:0;box-shadow:0 8px 30px -12px rgba(91,156,245,.55)}
 #auth .abtn.green{background:var(--up);color:#06261b;border:0}
 #auth .abtn.ghost{background:transparent}
 #auth .abtn.sm{width:auto;padding:10px 16px;font-size:14px;border-radius:12px}
@@ -767,7 +768,7 @@ html{scroll-behavior:auto}
 #auth .msg{margin-top:10px;font-size:13.5px;min-height:1em}
 #auth .msg.err{color:var(--down)}#auth .msg.ok{color:var(--up)}
 #auth .disc{margin-top:26px;font-size:12px;color:var(--muted);text-align:center}
-#auth .notice{background:#1c170c;border:1px solid #4d3d1a;color:var(--gold-hi);border-radius:12px;padding:12px 14px;font-size:13px;margin-bottom:16px}
+#auth .notice{background:#121c2b;border:1px solid #2a4670;color:var(--gold-hi);border-radius:12px;padding:12px 14px;font-size:13px;margin-bottom:16px}
 #auth .muted{color:var(--muted);font-size:13.5px}
 
 /* ---------- app shell ---------- */
@@ -778,12 +779,12 @@ html{scroll-behavior:auto}
 #aApp .hdname{font-family:var(--f-display);font-weight:700;font-size:16px;letter-spacing:.04em;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 #aApp .hdmail{font-size:13px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 #aApp .pill{display:inline-flex;align-items:center;gap:4px;font-family:var(--f-display);font-size:11px;font-weight:700;letter-spacing:.08em;border-radius:999px;padding:3px 10px;text-decoration:none;border:1px solid}
-#aApp .pill.wait{color:var(--gold);border-color:#5a4720;background:#1c170c}
+#aApp .pill.wait{color:var(--gold);border-color:#2a4670;background:#121c2b}
 #aApp .pill.ok{color:var(--up);border-color:#1d5c46;background:var(--up-dim)}
 #aApp .pill.off{color:var(--down);border-color:#5a2530;background:#2a1418}
 #aApp .hdbtn{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;color:var(--muted);text-decoration:none;flex:none}
 #aApp .hdbtn svg{width:22px;height:22px}
-#aApp .vipc{border-radius:20px;padding:20px;border:1px solid #5a4720;background:linear-gradient(160deg,#211a0b,#131316 70%)}
+#aApp .vipc{border-radius:20px;padding:20px;border:1px solid #2a4670;background:linear-gradient(160deg,#0f1a2a,#131316 70%)}
 #aApp .vipc.ok{border-color:#1d5c46;background:linear-gradient(160deg,#0d2a20,#131316 70%)}
 #aApp .kick{font-family:var(--f-display);font-size:12px;font-weight:700;letter-spacing:.14em;color:var(--gold)}
 #aApp .vipc.ok .kick{color:var(--up)}
@@ -792,7 +793,7 @@ html{scroll-behavior:auto}
 #aApp .prog{margin:16px 0 14px}
 #aApp .prog .pl{font-size:13px;font-weight:600;color:#c9c3b6;margin-bottom:8px}
 #aApp .bar{height:6px;border-radius:99px;background:#2a2a31;overflow:hidden}
-#aApp .bar span{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--gold-hi),var(--gold))}
+#aApp .bar span{display:block;height:100%;border-radius:99px;background:var(--gold)}
 #aApp .vipc .sub{text-align:center;font-size:12.5px;color:var(--muted);margin-top:10px}
 #aApp .sec{font-family:var(--f-display);font-size:17px;font-weight:700;margin:26px 0 12px}
 #aApp .lockg{display:grid;grid-template-columns:1fr 1fr;gap:10px}
@@ -825,7 +826,7 @@ html{scroll-behavior:auto}
 #aApp .row2{display:flex;gap:8px;margin-top:10px}
 #aApp .row2 input{flex:1;min-width:0}
 /* sticky VIP bar + bottom nav */
-#aApp .vipbar{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(70px + env(safe-area-inset-bottom,0px));width:min(500px,calc(100% - 24px));display:flex;align-items:center;justify-content:space-between;gap:10px;background:rgba(28,23,12,.96);border:1px solid #5a4720;border-radius:16px;padding:10px 10px 10px 16px;z-index:40;backdrop-filter:blur(10px)}
+#aApp .vipbar{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(70px + env(safe-area-inset-bottom,0px));width:min(500px,calc(100% - 24px));display:flex;align-items:center;justify-content:space-between;gap:10px;background:rgba(18,28,43,.96);border:1px solid #2a4670;border-radius:16px;padding:10px 10px 10px 16px;z-index:40;backdrop-filter:blur(10px)}
 #aApp .vipbar b{font-size:14px}
 #aApp .bnav{position:fixed;left:0;right:0;bottom:0;z-index:41;background:rgba(10,10,12,.96);border-top:1px solid var(--line);backdrop-filter:blur(12px);padding-bottom:env(safe-area-inset-bottom,0px)}
 #aApp .bnav div{max-width:520px;margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr)}
@@ -874,7 +875,7 @@ html{scroll-behavior:auto}
 #aApp .plan .badge{font-family:var(--f-display);font-size:10.5px;font-weight:700;letter-spacing:.08em;border-radius:99px;padding:3px 9px;background:var(--panel2);color:var(--muted)}
 #aApp .plan .pr{font-family:var(--f-display);font-size:26px;font-weight:700;margin-top:6px}
 #aApp .plan .pm{font-size:13px;color:var(--up);font-weight:600}
-#aApp .payb{margin-top:14px;border:1px dashed #5a4720;background:#1c170c;border-radius:14px;padding:14px;font-size:13.5px;white-space:pre-wrap;word-break:break-word}
+#aApp .payb{margin-top:14px;border:1px dashed #2a4670;background:#121c2b;border-radius:14px;padding:14px;font-size:13.5px;white-space:pre-wrap;word-break:break-word}
 #aApp .payb b{color:var(--gold-hi)}
 #aApp .okc{text-align:center;padding:10px 0}
 #aApp .okc .big{width:64px;height:64px;border-radius:50%;margin:0 auto 12px;display:grid;place-items:center;background:var(--up-dim);color:var(--up)}
@@ -888,20 +889,20 @@ html{scroll-behavior:auto}
  <div class="aw" id="aLogin">
   <div class="ahead">
    <svg viewBox="0 0 314 343" aria-hidden="true"><path d="M15 15H140A156.5 156.5 0 0 1 140 328H15Z" fill="none" stroke="#63d297" stroke-width="30" stroke-linejoin="round"/><g fill="#fff"><rect x="87" y="159" width="10" height="138" rx="5"/><rect x="69" y="202" width="46" height="58" rx="5"/><rect x="147" y="114" width="10" height="160" rx="5"/><rect x="129" y="153" width="46" height="75" rx="5"/></g><g fill="#63d297"><rect x="207" y="54" width="10" height="175" rx="5"/><rect x="189" y="89" width="46" height="99" rx="5"/></g></svg>
-   <span class="eyb">AKSES MEMBER</span>
+   <span class="eyb">Akses member</span>
    <div class="atitle">Dirmu<i>FX</i> TRADE</div>
-   <div class="asub">KOMUNITAS XAUUSD</div>
+   <div class="asub">Komunitas trading forex, emas &amp; crypto</div>
   </div>
   <div class="notice" id="aOff" hidden>Login member sedang disiapkan admin. Sementara itu, hubungi admin lewat <a href="https://wa.me/6285823444392" target="_blank" rel="noopener" style="color:var(--gold)">WhatsApp</a>.</div>
   <nav class="seg"><a href="#masuk" id="tMasuk">Masuk</a><a href="#daftar" id="tDaftar">Daftar Gratis</a></nav>
   <form id="fAuth" novalidate>
-   <div id="nameWrap" hidden><label for="aName">NAMA</label><input id="aName" autocomplete="name" placeholder="Nama kamu"></div>
-   <label for="aEmail">EMAIL</label><input id="aEmail" type="email" inputmode="email" autocomplete="email" placeholder="nama@email.com">
-   <div id="pwBlock"><label for="aPass">PASSWORD</label>
+   <div id="nameWrap" hidden><label for="aName">Nama</label><input id="aName" autocomplete="name" placeholder="Nama kamu"></div>
+   <label for="aEmail">Email</label><input id="aEmail" type="email" inputmode="email" autocomplete="email" placeholder="nama@email.com">
+   <div id="pwBlock"><label for="aPass">Password</label>
     <div class="pw"><input id="aPass" type="password" autocomplete="current-password" placeholder="Minimal 6 karakter"><button type="button" class="eye" id="aEye" aria-label="Tampilkan password"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg></button></div></div>
    <button class="abtn gold" id="aSubmit" type="submit">Masuk →</button>
   </form>
-  <div id="gBlock"><div class="or">ATAU</div>
+  <div id="gBlock"><div class="or">atau</div>
    <button class="abtn gbtn" id="aGoogle" type="button"><span class="g"><svg viewBox="0 0 48 48"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.4-.4-3.5z"/><path fill="#FF3D00" d="m6.3 14.7 6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-7.9l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.4-.4-3.5z"/></svg></span>Login dengan Google</button></div>
   <p class="msg" id="aMsg" role="status"></p>
   <div class="alinks" id="forgotLine"><a href="#lupa">Lupa password?</a> Reset lewat email dalam 1 menit.</div>
@@ -916,7 +917,7 @@ html{scroll-behavior:auto}
    <section id="vHome">
     <div class="hd">
      <div class="av" id="hAv">DF</div>
-     <div class="hdtxt"><div class="hdname"><span id="hName">Halo</span><a class="pill wait" id="hPill" href="#aktivasi">PILIH AKSES ›</a></div><div class="hdmail" id="hMail"></div></div>
+     <div class="hdtxt"><div class="hdname"><span id="hName">Halo</span><a class="pill wait" id="hPill" href="#aktivasi">Pilih akses ›</a></div><div class="hdmail" id="hMail"></div></div>
      <a class="hdbtn" id="hWa" target="_blank" rel="noopener" aria-label="Hubungi admin"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 13v-1a8 8 0 0 1 16 0v1"/><rect x="3" y="13" width="4" height="6" rx="1.5"/><rect x="17" y="13" width="4" height="6" rx="1.5"/><path d="M19 19c0 1.5-2 2.5-5 2.5"/></svg></a>
     </div>
     <div class="vipc" id="hVip"></div>
@@ -931,7 +932,7 @@ html{scroll-behavior:auto}
 
     <div class="paths" id="hPaths">
      <div class="pcols">
-      <div class="pcol hi"><span class="tag">TANPA BIAYA</span><h4>Gratis via Broker</h4><dl style="margin:0"><dt>Biaya</dt><dd>Rp0 selamanya</dd><dt>Syarat</dt><dd>Deposit min $30 di PU Prime</dd><dt>Aktif</dt><dd>Dicek admin</dd></dl></div>
+      <div class="pcol hi"><span class="tag">Tanpa biaya</span><h4>Gratis via Broker</h4><dl style="margin:0"><dt>Biaya</dt><dd>Rp0 selamanya</dd><dt>Syarat</dt><dd>Deposit min $30 di PU Prime</dd><dt>Aktif</dt><dd>Dicek admin</dd></dl></div>
       <div class="pcol"><h4 style="margin-top:2px">VIP Seumur Hidup</h4><dl style="margin:0"><dt>Biaya</dt><dd>Rp1.000.000 sekali bayar</dd><dt>Syarat</dt><dd>Tidak perlu akun broker</dd><dt>Aktif</dt><dd>Setelah transfer dikonfirmasi</dd></dl></div>
      </div>
      <a class="abtn gold" href="#aktivasi" data-go="2">Bandingkan &amp; pilih jalur</a>
@@ -1433,7 +1434,15 @@ function analyse(d,tf){
   const dir=norm>=SIG_MIN?"BUY":norm<=-SIG_MIN?"SELL":"WAIT";
   return{v,votes,dir,strength:Math.round(Math.min(1,Math.abs(norm))*100*adxF),norm,series:{e20,e50,R,B}};
 }
-/* SL tetap (pips) per timeframe, TP = SL x RR. Emas: 1 pip = 0.10 */
+/* SL mengikuti kondisi market: pengali x ATR(14), diperlebar ke balik swing terdekat bila perlu. TP = SL x RR. Emas: 1 pip = 0.10 */
+function slRisk(v,e,dir){
+  const m=+((document.getElementById("slm")||{}).value)||1.5,atr=v.atr,pip=PIP[S.sym]||0.1;
+  let r=m*atr;
+  if(dir==="BUY"){const sp=v.sw.sup.find(x=>x<e-.5*atr&&x>e-2.6*atr);if(sp)r=Math.max(r,e-(sp-.25*atr))}
+  else{const rs=v.sw.res.find(x=>x>e+.5*atr&&x<e+2.6*atr);if(rs)r=Math.max(r,(rs+.25*atr)-e)}
+  r=Math.max(r,10*pip);
+  return Math.round(r/pip)*pip;
+}
 const SL_CAP={1:30,5:30,15:50,30:50,60:100,240:100,1440:100};
 const SL_PAIR={BTCUSD:{1:200,5:250,15:400,30:400,60:800,240:800,1440:1500}}; // BTC: dalam dolar
 const PIP={XAUUSD:0.1,XAGUSD:0.01,EURUSD:0.0001,GBPUSD:0.0001,USDJPY:0.01,BTCUSD:1};
@@ -1479,7 +1488,7 @@ function activeSignal(d,tf){
   const dir=dirs[st],sgn=dir==="BUY"?1:-1,t=closed[st].t;
   const key="dfx-sig-"+S.sym+"-"+tf+"-"+t;let entry=closed[st].c;
   try{const c=store.get(key);if(c)entry=+c;else store.set(key,String(entry))}catch(e){}
-  const pip=PIP[S.sym]||0.1,risk=(((SL_PAIR[S.sym]||SL_CAP)[tf])||50)*pip;
+  const pip=PIP[S.sym]||0.1,risk=slRisk(analyse(closed.slice(0,st+1),tf).v,entry,dir);
   const L={entry,sl:entry-sgn*risk,be:entry+sgn*risk,tp1:entry+sgn*risk*2,tp2:entry+sgn*risk*3,risk,slPips:risk/pip};
   let be=false,tp1=false,res=null,resT=null;
   const after=d.slice(st+1);
@@ -1494,13 +1503,9 @@ function activeSignal(d,tf){
   return{dir,t,L,be,tp1,res,resT,age:n-1-st};
 }
 function plan(a,rr,slm){
-  const v=a.v,atrv=v.atr,e=a.live??v.close,dir=a.dir==="WAIT"?(a.norm>=0?"BUY":"SELL"):a.dir;
-  let sl=dir==="BUY"?e-slm*atrv:e+slm*atrv;
-  if(dir==="BUY"){const s=v.sw.sup.find(x=>x<e-.5*atrv&&x>e-2.6*atrv);if(s)sl=Math.min(sl,s-.25*atrv)}
-  else{const r=v.sw.res.find(x=>x>e+.5*atrv&&x<e+2.6*atrv);if(r)sl=Math.max(sl,r+.25*atrv)}
-  const s=dir==="BUY"?1:-1,pip=PIP[S.sym]||0.1,cap=(((SL_PAIR[S.sym]||SL_CAP)[currentTf()])||50)*pip;
-  let risk=cap;sl=e-s*risk;
-  return{lean:dir,entry:e,sl,be:e+s*risk,tp1:e+s*risk*2,tp2:e+s*risk*3,risk,slPips:risk/pip,capped:Math.abs(e-sl)>=cap-1e-9};
+  const v=a.v,e=a.live??v.close,dir=a.dir==="WAIT"?(a.norm>=0?"BUY":"SELL"):a.dir;
+  const s=dir==="BUY"?1:-1,pip=PIP[S.sym]||0.1,risk=slRisk(v,e,dir);
+  return{lean:dir,entry:e,sl:e-s*risk,be:e+s*risk,tp1:e+s*risk*2,tp2:e+s*risk*3,risk,slPips:risk/pip};
 }
 
 /* ================= UI build ================= */
@@ -1540,7 +1545,7 @@ function render(){
   $("sigstr").textContent=a.strength+"%";$("sigbar").style.width=a.strength+"%";
   $("lvE").textContent=fx(p.entry);$("lvSL").textContent=fx(p.sl);$("lvBE").textContent=fx(p.be);$("lvTP1").textContent=fx(p.tp1);$("lvTP2").textContent=fx(p.tp2);
   $("tp2k").textContent="TP MAX (1:3)";
-  const U=S.sym==="BTCUSD"?(n=>"$"+Math.round(n).toLocaleString("en-US")):(n=>n.toFixed(0)+" pips");const why=[`SL ${U(p.slPips)} · TP MAX ${U(p.slPips*3)} (SL tetap ${tfName(tf)})`,`ATR ${fx(a.v.atr)}`,`ADX ${isNaN(a.v.adx)?"—":a.v.adx.toFixed(0)}${a.v.adx<20?" (sideways)":a.v.adx>25?" (tren kuat)":""}`];
+  const U=S.sym==="BTCUSD"?(n=>"$"+Math.round(n).toLocaleString("en-US")):(n=>n.toFixed(0)+" pips");const why=[`SL ${U(p.slPips)} · TP MAX ${U(p.slPips*3)} (SL ${(+$("slm").value||1.5).toString().replace(".",",")}× ATR, menyesuaikan volatilitas)`,`ATR ${fx(a.v.atr)}`,`ADX ${isNaN(a.v.adx)?"—":a.v.adx.toFixed(0)}${a.v.adx<20?" (sideways)":a.v.adx>25?" (tren kuat)":""}`];
   const PX=v=>S.sym==="BTCUSD"?"$"+Math.round(v).toLocaleString("en-US"):(v/(PIP[S.sym]||.1)).toFixed(0)+" pips";
   if(on){const sg=act.dir==="BUY"?1:-1,mv=(a.live-act.L.entry)*sg;
     const stt=act.tp1?"TP1 tercapai ✓ — sisakan posisi ke TP MAX":act.be?"SL+ tercapai — geser SL ke entry":(mv<0?"belum bergerak, harga di bawah entry":"menuju SL+");
@@ -1599,7 +1604,7 @@ function draw(msg){
   const B=a.series.B;ctx.beginPath();let first=true;
   for(let i=0;i<vis;i++){const v=B.up[start+i];if(isNaN(v))continue;first?ctx.moveTo(x(i),y(v)):ctx.lineTo(x(i),y(v));first=false}
   for(let i=vis-1;i>=0;i--){const v=B.lo[start+i];if(isNaN(v))continue;ctx.lineTo(x(i),y(v))}
-  ctx.closePath();ctx.fillStyle="rgba(227,184,92,.06)";ctx.fill();
+  ctx.closePath();ctx.fillStyle="rgba(91,156,245,.06)";ctx.fill();
   const bw=Math.max(1,cw*.62);
   sl.forEach((c,i)=>{ctx.strokeStyle=ctx.fillStyle=c.c>=c.o?C.up:C.down;const xx=Math.round(x(i))+.5;
     ctx.beginPath();ctx.moveTo(xx,y(c.h));ctx.lineTo(xx,y(c.l));ctx.stroke();
@@ -1613,7 +1618,7 @@ function draw(msg){
   hline(a.v.close,C.fg,null,[1,3]);
   ctx.strokeStyle=C.line;ctx.beginPath();ctx.moveTo(0,rsiTop-6.5);ctx.lineTo(W,rsiTop-6.5);ctx.stroke();
   const ry=v=>rsiTop+(100-v)/100*rsiH;
-  ctx.fillStyle="rgba(227,184,92,.07)";ctx.fillRect(0,ry(70),plotW,ry(30)-ry(70));
+  ctx.fillStyle="rgba(91,156,245,.07)";ctx.fillRect(0,ry(70),plotW,ry(30)-ry(70));
   ctx.fillStyle=C.muted;[70,30].forEach(v=>ctx.fillText(v,plotW+6,ry(v)));
   ctx.strokeStyle=C.violet;ctx.lineWidth=1.3;ctx.beginPath();for(let i=0;i<vis;i++){const v=a.series.R[start+i];i?ctx.lineTo(x(i),ry(v)):ctx.moveTo(x(i),ry(v))}ctx.stroke();
   let h=S.hover;if(h!=null&&h>=0&&h<vis){ctx.strokeStyle=C.muted;ctx.setLineDash([3,3]);ctx.beginPath();ctx.moveTo(Math.round(x(h))+.5,0);ctx.lineTo(Math.round(x(h))+.5,H);ctx.stroke();ctx.setLineDash([])}else h=vis-1;
@@ -2011,24 +2016,24 @@ window.DFX_authRoute=h=>{
 /* ---------- beranda ---------- */
 function renderHome(){
  const p=P(),act=isActive(),st=stage();
- $("hAv").textContent=initials();$("hName").textContent="Halo, "+firstName().split(" ")[0].toUpperCase();
+ $("hAv").textContent=initials();$("hName").textContent="Halo, "+firstName().split(" ")[0];
  $("hMail").textContent=maskMail(user.email);$("hWa").href=wa("Halo admin DirmuFX, saya butuh bantuan. Email: "+(user.email||"-"));
  const pill=$("hPill");
- if(act){pill.className="pill ok";pill.textContent="VIP AKTIF"}
- else if(expired()){pill.className="pill off";pill.textContent="BERAKHIR ›"}
- else if(p.status==="inactive"){pill.className="pill off";pill.textContent="NONAKTIF ›"}
- else if(p.path){pill.className="pill wait";pill.textContent="MENUNGGU ›"}
- else{pill.className="pill wait";pill.textContent="PILIH AKSES ›"}
+ if(act){pill.className="pill ok";pill.textContent="VIP aktif"}
+ else if(expired()){pill.className="pill off";pill.textContent="Berakhir ›"}
+ else if(p.status==="inactive"){pill.className="pill off";pill.textContent="Nonaktif ›"}
+ else if(p.path){pill.className="pill wait";pill.textContent="Menunggu ›"}
+ else{pill.className="pill wait";pill.textContent="Pilih akses ›"}
  const v=$("hVip");
  if(act){
   v.className="vipc ok";
-  v.innerHTML=`<div class="kick">VIP AKTIF</div><h2>Semua fitur sudah terbuka</h2><p>${p.until?"Berlaku sampai <b style=\"color:var(--fg)\">"+fdate(p.until)+"</b>":"Jalur broker · aktif selama akun memenuhi syarat"}</p><a class="abtn green" href="#analisa" style="margin-top:16px">Buka Signal Room →</a>`;
+  v.innerHTML=`<div class="kick">VIP aktif</div><h2>Semua fitur sudah terbuka</h2><p>${p.until?"Berlaku sampai <b style=\"color:var(--fg)\">"+fdate(p.until)+"</b>":"Jalur broker · aktif selama akun memenuhi syarat"}</p><a class="abtn green" href="#analisa" style="margin-top:16px">Buka Signal Room →</a>`;
  }else{
   v.className="vipc";
-  let kick="AKSES VIP BELUM AKTIF",h="Buka sinyal live &amp; semua fitur",t="Gratis lewat broker partner, atau VIP seumur hidup sekali bayar. Memilih jalurnya sekitar 5 menit.";
-  if(expired()){kick="LANGGANAN BERAKHIR";h="Perpanjang untuk membuka lagi";t="Masa aktif berakhir "+fdate(p.until)+". Pilih paket baru atau pindah ke jalur broker."}
-  else if(p.status==="inactive"){kick="AKSES DINONAKTIFKAN";h="Hubungi admin DirmuFX";t="Akunmu sedang tidak aktif. Cek syarat jalurmu atau tanya admin lewat WhatsApp."}
-  else if(p.path){kick="MENUNGGU VERIFIKASI";h="Selesaikan langkah aktivasi";t=p.path==="broker"?"Pastikan nomor MT5 sudah diisi dan admin sudah dikabari.":"Setelah transfer Rp1.000.000, kirim bukti ke admin via WhatsApp."}
+  let kick="Akses VIP belum aktif",h="Buka sinyal live &amp; semua fitur",t="Gratis lewat broker partner, atau VIP seumur hidup sekali bayar. Memilih jalurnya sekitar 5 menit.";
+  if(expired()){kick="Akses berakhir";h="Perpanjang untuk membuka lagi";t="Masa aktif berakhir "+fdate(p.until)+". Pilih paket baru atau pindah ke jalur broker."}
+  else if(p.status==="inactive"){kick="Akses dinonaktifkan";h="Hubungi admin DirmuFX";t="Akunmu sedang tidak aktif. Cek syarat jalurmu atau tanya admin lewat WhatsApp."}
+  else if(p.path){kick="Menunggu verifikasi";h="Selesaikan langkah aktivasi";t=p.path==="broker"?"Pastikan nomor MT5 sudah diisi dan admin sudah dikabari.":"Setelah transfer Rp1.000.000, kirim bukti ke admin via WhatsApp."}
   v.innerHTML=`<div class="kick">${kick}</div><h2>${h}</h2><p>${esc(t).replace(/&amp;/g,"&")}</p>
    <div class="prog"><div class="pl">Tahap ${st} dari 4 · ${STAGE_LBL[st]}</div><div class="bar"><span style="width:${st*25}%"></span></div></div>
    <a class="abtn gold" href="#aktivasi">${st===1?"Mulai aktivasi VIP":"Lanjutkan aktivasi"}</a>
@@ -2054,15 +2059,15 @@ function renderWiz(){
  if(st===1){
   b.innerHTML=`<div class="wcard"><h2>Selamat datang di DirmuFX, ${esc(firstName().split(" ")[0])}</h2>
    <p>Akun kamu sudah jadi. Fitur intinya terbuka setelah VIP aktif. Memilih jalurnya cuma sekitar 5 menit.</p>
-   <div class="lbl">YANG KAMU DAPAT</div>
+   <div class="lbl">Yang kamu dapat</div>
    <ul class="get"><li>${ICON.sig}Sinyal XAUUSD lengkap: Entry, SL, SL+, TP1 &amp; TP MAX</li><li>${ICON.calc}Kalkulator lot otomatis &amp; multi-timeframe</li><li>${ICON.chat}Grup VIP, analisa &amp; fundamental mendalam</li><li>${ICON.book}Modul trading PDF &amp; indikator DirmuFX</li></ul>
-   <div class="lbl">PROSESNYA TIGA LANGKAH</div>
+   <div class="lbl">Prosesnya tiga langkah</div>
    <ol class="num"><li>Pilih jalur: gratis lewat broker, atau VIP seumur hidup</li><li>Ikuti langkah yang muncul di layar</li><li>Admin memverifikasi, VIP terbuka</li></ol>
    <button class="abtn gold" id="wStart" type="button">Mulai aktivasi VIP</button>
    <a class="linkb" href="#akun">Nanti dulu, lihat-lihat</a></div>`;
   $("wStart").onclick=()=>{ls.set("dfx-started-"+user.uid,"1");wizOverride=2;renderWiz();scrollTo(0,0)};
  }else if(st===2){
-  b.innerHTML=`<div class="opt hi"><span class="tag" style="background:var(--up);color:#06261b;font-family:var(--f-display);font-size:11px;font-weight:700;border-radius:99px;padding:3px 10px">TANPA BIAYA BULANAN</span>
+  b.innerHTML=`<div class="opt hi"><span class="tag" style="background:var(--up);color:#06261b;font-family:var(--f-display);font-size:11px;font-weight:700;border-radius:99px;padding:3px 10px">Tanpa biaya bulanan</span>
    <h3>Gratis lewat Broker</h3><p>Buka akun PU Prime lewat link partner DirmuFX, lalu deposit minimal $30. Tidak ada biaya ke DirmuFX, dana tetap milikmu di akun trading sendiri.</p>
    <button class="abtn green" type="button" data-path="broker">Pilih PU Prime</button></div>
    <div class="opt"><h3 style="margin-top:0">VIP Seumur Hidup</h3><p>Sekali bayar <b style="color:var(--fg)">Rp1.000.000</b>, akses selamanya. Tidak perlu akun broker. Aktif setelah transfer dikonfirmasi admin.</p>
@@ -2073,7 +2078,7 @@ function renderWiz(){
   $("wBack1").onclick=()=>{wizOverride=1;renderWiz()};
  }else if(st===3&&p.path==="broker"){
   const has=!!p.mt5;
-  b.innerHTML=`<div class="wcard"><span class="pill wait" style="font-family:var(--f-display);font-size:11px;font-weight:700;border:1px solid #1d5c46;color:var(--up);background:var(--up-dim);border-radius:99px;padding:3px 10px">PU PRIME</span>
+  b.innerHTML=`<div class="wcard"><span class="pill wait" style="font-family:var(--f-display);font-size:11px;font-weight:700;border:1px solid #1d5c46;color:var(--up);background:var(--up-dim);border-radius:99px;padding:3px 10px">PU Prime</span>
    <h2 style="margin-top:10px">Ikuti 4 langkah ini</h2>${statusNote()}
    <ol class="tasks">
     <li><span class="tn">1</span><div style="flex:1"><h4>Buka akun lewat link partner</h4><p>Wajib lewat link ini. Akun PU Prime lama yang dibuat di luar link tidak bisa diverifikasi.</p><a class="abtn sm" href="${IBLINK}" target="_blank" rel="noopener">Buka akun PU Prime ↗</a></div></li>
@@ -2085,10 +2090,10 @@ function renderWiz(){
   $("wMt5Save").onclick=()=>saveMt5($("wMt5").value,"wMsg");$("wChange").onclick=()=>setPath("");
  }else if(st===3){
   const price=Number(settings.lifetime)||1000000;
-  b.innerHTML=`<div class="wcard"><span class="pill wait" style="font-family:var(--f-display);font-size:11px;font-weight:700;border:1px solid #5a4720;color:var(--gold);background:#1c170c;border-radius:99px;padding:3px 10px">VIP SEUMUR HIDUP</span>
+  b.innerHTML=`<div class="wcard"><span class="pill wait" style="font-family:var(--f-display);font-size:11px;font-weight:700;border:1px solid #2a4670;color:var(--gold);background:#121c2b;border-radius:99px;padding:3px 10px">VIP seumur hidup</span>
    <h2 style="margin-top:10px">Sekali bayar, akses selamanya</h2><p>Transfer, lalu kirim bukti ke admin. Akses aktif setelah pembayaran dicek.</p>${statusNote()}
-   <div class="plan" aria-pressed="true" style="cursor:default"><div class="pt"><b>VIP Seumur Hidup</b><span class="badge">SEKALI BAYAR</span></div><div class="pr">${rp(price)}</div><div class="pm">Tanpa biaya bulanan · tanpa akun broker</div></div>
-   <div class="lbl">CARA BAYAR</div><div class="payb">Total: <b>${rp(price)}</b>\n\n${esc(settings.pay||"Info rekening belum diatur. Tanya admin via WhatsApp.")}</div>
+   <div class="plan" aria-pressed="true" style="cursor:default"><div class="pt"><b>VIP Seumur Hidup</b><span class="badge">Sekali bayar</span></div><div class="pr">${rp(price)}</div><div class="pm">Tanpa biaya bulanan · tanpa akun broker</div></div>
+   <div class="lbl">Cara bayar</div><div class="payb">Total: <b>${rp(price)}</b>\n\n${esc(settings.pay||"Info rekening belum diatur. Tanya admin via WhatsApp.")}</div>
    <a class="abtn green" href="${wa(`Halo admin DirmuFX, saya sudah transfer ${rp(price)} untuk VIP Seumur Hidup.\nEmail akun: ${user.email}\nBerikut bukti transfernya:`)}" target="_blank" rel="noopener">Kirim bukti transfer via WhatsApp</a>
    <p class="muted" style="margin-top:10px;text-align:center">Sudah bayar? Status di sini berubah otomatis setelah admin mengaktifkan.</p>
    <p class="msg" id="wMsg"></p>
@@ -2178,5 +2183,29 @@ paint();
 if(ON)load().catch(e=>{console.warn(e);setMsg("Gagal memuat sistem login. Cek koneksi lalu muat ulang.","err")});
 </script>
 
+<style>
+/* ===== Tema natural DirmuFX ===== */
+#landing,#app,#auth{--bg:#141714;--bg2:#181c18;--panel:#1c201c;--panel2:#242924;--line:#2c322c;--fg:#eef0e8;--muted:#a6ad9f;--gold:#5b9cf5;--gold-hi:#8dbbff;--gold-lo:#3f80dc;--gold-dim:#1b2c47;--up:#66cf92;--up-dim:#163a27;--down:#e86a64;--down-dim:#3a1c1b;--violet:#5b9cf5;--violet-dim:#1b2c47;--amber:#5b9cf5;--amber-dim:#14233a;
+ --f-display:"Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",sans-serif;--f-body:"Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",sans-serif;--f-mono:"Plus Jakarta Sans",system-ui,-apple-system,sans-serif}
+#landing,#app,#auth{background-color:var(--bg);font-feature-settings:"tnum" 1}
+#landing :where(:not(.dtrade):not(.dname)),#app :where(:not(.dtrade):not(.dname)),#auth :where(*){letter-spacing:normal!important;text-transform:none!important}
+#landing h1,#landing h2,#app h1,#auth h1,#auth h2,#auth .atitle,#auth .hdname{letter-spacing:-.02em!important}
+#landing .hero::before{background:radial-gradient(70% 60% at 90% 0%,rgba(91,156,245,.13),transparent 70%),radial-gradient(60% 50% at 0% 100%,rgba(102,207,146,.08),transparent 70%)!important;-webkit-mask-image:none!important;mask-image:none!important}
+#landing .hero-logo{display:none}
+#landing .hero h1{font-weight:800;font-size:clamp(38px,9.5vw,66px);line-height:1.04;max-width:13ch}
+#landing h2{font-weight:800}
+#landing .eyebrow,#app .eyebrow{font-size:14px;font-weight:600;color:var(--up)}
+#landing .btn,#app .btn,#auth .abtn{border-radius:999px}
+#landing .navlinks a{border:0!important;background:var(--panel);color:var(--muted)}
+#landing .chip,#app .chip{border-color:transparent;background:var(--panel)}
+#app .sigword{font-weight:800}
+#app h2,#app .h2{font-weight:700}
+#auth .kick,#auth .lbl{font-size:14px;font-weight:700}
+#auth .pill{font-size:12px}
+#auth .abtn.gold{box-shadow:none}
+/* tombol utama hijau, aksen biru, jual/rugi merah */
+#landing .btn.gold-btn,#auth .abtn.gold,#app .btn.primary{background:var(--up)!important;border-color:var(--up)!important;color:#06261b!important}
+#app #sigcard[data-dir="WAIT"] .sigword{color:#5b9cf5}
+</style>
 </body>
 </html>

@@ -7,13 +7,13 @@
 <meta name="description" content="Belajar trading XAUUSD dari dasar: istilah, candlestick, tren, manajemen risiko, sampai SMC dan fundamental. Lengkap dengan kuis.">
 <script src="dfx-config.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
 <style>
-:root{--bg:#0a0a0c;--bg2:#0f0f12;--panel:#131316;--panel2:#1b1b20;--line:#2a2a31;--fg:#f2efe8;--muted:#9b978d;--gold:#e3b85c;--gold-hi:#f6e3a8;--gold-lo:#b8862b;--up:#2fd39b;--up-dim:#0f3a2c;--down:#f05d6c;
- --f-display:"Chakra Petch","Segoe UI",system-ui,sans-serif;--f-body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;--f-mono:"JetBrains Mono",ui-monospace,Menlo,monospace;color-scheme:dark}
+:root{--bg:#141714;--bg2:#181c18;--panel:#1c201c;--panel2:#242924;--line:#2c322c;--fg:#eef0e8;--muted:#a6ad9f;--gold:#5b9cf5;--gold-hi:#8dbbff;--gold-lo:#3f80dc;--up:#66cf92;--up-dim:#163a27;--down:#e86a64;
+ --f-display:"Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",sans-serif;--f-body:"Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",sans-serif;--f-mono:"Plus Jakarta Sans",system-ui,sans-serif;color-scheme:dark}
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
-body{margin:0;background:radial-gradient(900px 500px at 50% -10%,rgba(227,184,92,.10),transparent 60%),var(--bg);color:var(--fg);font-family:var(--f-body);font-size:16px;line-height:1.65;min-height:100vh}
+body{margin:0;background:radial-gradient(900px 500px at 90% -10%,rgba(91,156,245,.10),transparent 60%),var(--bg);font-feature-settings:"tnum" 1;color:var(--fg);font-family:var(--f-body);font-size:16px;line-height:1.65;min-height:100vh}
 a{color:var(--gold)}
 .top{position:sticky;top:0;z-index:20;background:rgba(10,10,12,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
 .top .in{max-width:760px;margin:0 auto;display:flex;align-items:center;gap:10px;padding:10px max(16px,env(safe-area-inset-left,0px))}
@@ -23,7 +23,7 @@ a{color:var(--gold)}
 .brand b{font-family:var(--f-display);font-size:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 @media(max-width:430px){.back span{display:none}.back{padding:7px 9px}}
 .brand b i{font-style:normal;color:#63d297}
-.pill{font-family:var(--f-display);font-size:11px;font-weight:700;letter-spacing:.06em;border-radius:99px;padding:4px 10px;border:1px solid #5a4720;color:var(--gold);background:#1c170c;text-decoration:none;white-space:nowrap}
+.pill{font-family:var(--f-display);font-size:11px;font-weight:700;letter-spacing:.06em;border-radius:99px;padding:4px 10px;border:1px solid #2a4670;color:var(--gold);background:#121c2b;text-decoration:none;white-space:nowrap}
 .pill.ok{border-color:#1d5c46;color:var(--up);background:var(--up-dim)}
 .wrap{max-width:760px;margin:0 auto;padding:22px max(16px,env(safe-area-inset-left,0px)) 80px}
 .hero h1{font-family:var(--f-display);font-size:30px;line-height:1.15;margin:6px 0 10px}
@@ -36,7 +36,7 @@ a{color:var(--gold)}
 .lvh{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:10px}
 .lvh h2{font-family:var(--f-display);font-size:20px;margin:0}
 .lvh .tag{font-family:var(--f-display);font-size:11px;font-weight:700;letter-spacing:.08em;border-radius:99px;padding:3px 10px}
-.tag.free{background:var(--up);color:#06261b}.tag.vip{background:linear-gradient(100deg,var(--gold-hi),var(--gold));color:#1a1305}
+.tag.free{background:var(--up);color:#06261b}.tag.vip{background:var(--gold);color:#fff}
 .lvh p{margin:0;color:var(--muted);font-size:13.5px}
 .card{display:flex;gap:14px;align-items:center;text-decoration:none;color:var(--fg);background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:14px;margin-top:8px}
 .card:active{background:var(--panel2)}
@@ -57,14 +57,14 @@ a{color:var(--gold)}
 .body ul,.body ol{margin:0 0 14px;padding-left:22px;color:#dcd7cc}
 .body li{margin:4px 0}
 .body b{color:var(--fg)}
-.body .k{font-family:var(--f-mono);font-size:14px;color:var(--gold-hi);background:#1c170c;border-radius:6px;padding:1px 6px}
+.body .k{font-family:var(--f-mono);font-size:14px;color:var(--gold-hi);background:#121c2b;border-radius:6px;padding:1px 6px}
 .fig{margin:16px 0 18px;background:var(--bg2);border:1px solid var(--line);border-radius:16px;padding:10px;overflow:hidden}
 .fig svg{display:block;width:100%;height:auto}
 .fig figcaption{font-size:12.5px;color:var(--muted);padding:8px 4px 2px;line-height:1.45}
 .box{border-radius:14px;padding:12px 14px;margin:14px 0;font-size:14.5px;line-height:1.55}
 .box.tip{background:var(--up-dim);border:1px solid #1d5c46;color:#cdeee0}
 .box.warn{background:#2a1418;border:1px solid #5a2530;color:#f3c9cf}
-.box.note{background:#1c170c;border:1px solid #5a4720;color:#f1e3bd}
+.box.note{background:#121c2b;border:1px solid #2a4670;color:#cfe0ff}
 .box b{color:inherit}
 .tbl{width:100%;border-collapse:collapse;margin:8px 0 16px;font-size:14px}
 .tblw{overflow-x:auto;-webkit-overflow-scrolling:touch}
@@ -84,7 +84,7 @@ a{color:var(--gold)}
 .exp.bad{color:#f3c9cf}
 .score{margin-top:16px;font-weight:700;font-family:var(--f-display)}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;font:inherit;font-weight:700;font-size:15px;border-radius:14px;padding:12px 16px;cursor:pointer;border:1px solid var(--line);background:var(--panel2);color:var(--fg);text-decoration:none}
-.btn.gold{background:linear-gradient(100deg,var(--gold-hi),var(--gold) 50%,var(--gold-lo));color:#1a1305;border:0}
+.btn.gold{background:var(--up);color:#06261b;border:0}
 .btn.green{background:var(--up);color:#06261b;border:0}
 .nav2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:22px}
 .nav2 a{display:block;text-decoration:none;color:var(--fg);background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:12px;font-size:13px}
@@ -92,12 +92,18 @@ a{color:var(--gold)}
 .nav2 a.r{text-align:right}
 .lockc{position:relative;margin-top:6px}
 .lockc .fade{max-height:170px;overflow:hidden;-webkit-mask-image:linear-gradient(#000 30%,transparent);mask-image:linear-gradient(#000 30%,transparent)}
-.lockcard{background:linear-gradient(160deg,#211a0b,#131316 70%);border:1px solid #5a4720;border-radius:18px;padding:20px;text-align:center}
+.lockcard{background:linear-gradient(160deg,#0f1a2a,#131316 70%);border:1px solid #2a4670;border-radius:18px;padding:20px;text-align:center}
 .lockcard svg{width:36px;height:36px;color:var(--gold)}
 .lockcard h3{font-family:var(--f-display);font-size:19px;margin:8px 0 6px}
 .lockcard p{color:var(--muted);margin:0 0 14px;font-size:14px}
 .lockcard .row{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
 .disc{font-size:12px;color:var(--muted);text-align:center;margin-top:30px}
+*{letter-spacing:normal!important;text-transform:none!important}
+.hero h1,.lt,.lvh h2{letter-spacing:-.02em!important;font-weight:800}
+.eyb{font-size:14px;font-weight:600}
+.btn,.back{border-radius:999px}
+.card{border-color:transparent}
+.pill{font-size:12px}
 </style>
 </head>
 <body>
@@ -109,7 +115,7 @@ a{color:var(--gold)}
 <main class="wrap" id="main"></main>
 <script>
 /* ===== Pembuat ilustrasi chart (SVG) ===== */
-const COL={up:"#2fd39b",dn:"#f05d6c",gold:"#e3b85c",gh:"#f6e3a8",mut:"#9b978d",fg:"#f2efe8",line:"#2a2a31",blue:"#6aa9ff",purple:"#b58cff"};
+const COL={up:"#2fd39b",dn:"#f05d6c",gold:"#5b9cf5",gh:"#bcd6ff",mut:"#9b978d",fg:"#f2efe8",line:"#2a2a31",blue:"#6aa9ff",purple:"#b58cff"};
 function chart(cl,o={}){
  const W=o.w||640,H=o.h||260,P=14,R=o.right==null?96:o.right,T=o.top||14;
  const cs=o.raw||cl.map((c,i)=>{const op=i?cl[i-1]:c-(cl[1]-c||1);const body=Math.abs(c-op);
@@ -119,7 +125,7 @@ function chart(cl,o={}){
  (o.lines||[]).forEach(l=>vals.push(l.v));(o.zones||[]).forEach(z=>vals.push(z.a,z.b));(o.boxes||[]).forEach(z=>vals.push(z.a,z.b));(o.labels||[]).forEach(z=>vals.push(z.v));
  let mn=Math.min(...vals),mx=Math.max(...vals);const pd=(mx-mn)*.08||1;mn-=pd;mx+=pd;
  const y=v=>T+(mx-v)/(mx-mn)*(H-T-P),n=cs.length,step=(W-P-R)/n,x=i=>P+step*(i+.5),bw=Math.max(3,Math.min(18,step*.62));
- let s=`<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" font-family="IBM Plex Sans,system-ui,sans-serif">`;
+ let s=`<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" font-family="Plus Jakarta Sans,system-ui,sans-serif">`;
  for(let k=1;k<4;k++){const yy=T+(H-T-P)*k/4;s+=`<line x1="${P}" x2="${W-P}" y1="${yy}" y2="${yy}" stroke="#1f1f25" stroke-width="1"/>`}
  (o.zones||[]).forEach(z=>{const c=z.c||COL.gold;s+=`<rect x="${z.x1!=null?x(z.x1)-step/2:P}" y="${y(Math.max(z.a,z.b))}" width="${(z.x1!=null?W-R-(x(z.x1)-step/2):W-P-R)}" height="${Math.abs(y(z.a)-y(z.b))}" fill="${c}" fill-opacity=".14" stroke="${c}" stroke-opacity=".5" stroke-dasharray="4 4"/>`;
    if(z.t)s+=`<text x="${W-R+6}" y="${(y(z.a)+y(z.b))/2+4}" fill="${c}" font-size="13" font-weight="600">${z.t}</text>`});
@@ -293,7 +299,7 @@ quiz:[{q:"Setelah kena SL, kamu langsung entry lagi dengan lot 2× lebih besar. 
 /* ilustrasi khusus */
 function sessionsSvg(){const X=h=>24+h*24.5,bar=(a,b,yy,c,t)=>{let s="";const seg=(p,q)=>{s+=`<rect x="${X(p)}" y="${yy}" width="${X(q)-X(p)}" height="26" rx="6" fill="${c}" fill-opacity=".85"/>`};if(b>a)seg(a,b);else{seg(a,24);seg(0,b)}
  return s+`<text x="${X(a)+8}" y="${yy+18}" fill="#0a0a0c" font-size="13" font-weight="700">${t}</text>`};
- let s=`<svg viewBox="0 0 640 190" xmlns="http://www.w3.org/2000/svg" font-family="IBM Plex Sans,system-ui">`;
+ let s=`<svg viewBox="0 0 640 190" xmlns="http://www.w3.org/2000/svg" font-family="Plus Jakarta Sans,system-ui">`;
  for(let h=0;h<=24;h+=3){s+=`<line x1="${X(h)}" x2="${X(h)}" y1="18" y2="160" stroke="#24242b"/><text x="${X(h)}" y="180" fill="${COL.mut}" font-size="12" text-anchor="middle">${String(h).padStart(2,"0")}.00</text>`}
  s+=`<rect x="${X(21)}" y="18" width="${X(24)-X(21)}" height="142" fill="${COL.gold}" fill-opacity=".10"/><rect x="${X(0)}" y="18" width="${X(1)-X(0)}" height="142" fill="${COL.gold}" fill-opacity=".10"/>`;
  s+=bar(7,16,30,COL.blue,"Asia")+bar(16,1,72,COL.purple,"London")+bar(21,6,114,COL.up,"New York");
@@ -301,11 +307,11 @@ function sessionsSvg(){const X=h=>24+h*24.5,bar=(a,b,yy,c,t)=>{let s="";const se
  return s+"</svg>"}
 function anatomySvg(){const c=(x,o,cl,h,l,col)=>{const t=Math.min(o,cl),b=Math.max(o,cl);return `<line x1="${x}" x2="${x}" y1="${h}" y2="${l}" stroke="${col}" stroke-width="3"/><rect x="${x-26}" y="${t}" width="52" height="${b-t}" rx="3" fill="${col}"/>`};
  const lab=(x,yy,t,col="#f2efe8",a="start")=>`<line x1="${a==="start"?x-36:x+36}" x2="${a==="start"?x-6:x+6}" y1="${yy}" y2="${yy}" stroke="#55555f" stroke-dasharray="3 3"/><text x="${x}" y="${yy+4}" fill="${col}" font-size="13.5" font-weight="600" text-anchor="${a}">${t}</text>`;
- return `<svg viewBox="0 0 640 260" xmlns="http://www.w3.org/2000/svg" font-family="IBM Plex Sans,system-ui">${c(190,190,80,40,225,COL.up)}${c(450,80,190,40,225,COL.dn)}
+ return `<svg viewBox="0 0 640 260" xmlns="http://www.w3.org/2000/svg" font-family="Plus Jakarta Sans,system-ui">${c(190,190,80,40,225,COL.up)}${c(450,80,190,40,225,COL.dn)}
  ${lab(232,40,"High")}${lab(232,80,"Close",COL.up)}${lab(232,190,"Open",COL.up)}${lab(232,225,"Low")}${lab(132,135,"Body","#f2efe8","end")}
  ${lab(492,40,"High")}${lab(492,80,"Open",COL.dn)}${lab(492,190,"Close",COL.dn)}${lab(492,225,"Low")}${lab(392,60,"Wick","#f2efe8","end")}
  <text x="190" y="252" fill="${COL.up}" font-size="14" font-weight="700" text-anchor="middle">Bullish</text><text x="450" y="252" fill="${COL.dn}" font-size="14" font-weight="700" text-anchor="middle">Bearish</text></svg>`}
-function rrSvg(){return `<svg viewBox="0 0 640 230" xmlns="http://www.w3.org/2000/svg" font-family="IBM Plex Sans,system-ui">
+function rrSvg(){return `<svg viewBox="0 0 640 230" xmlns="http://www.w3.org/2000/svg" font-family="Plus Jakarta Sans,system-ui">
  <rect x="150" y="30" width="300" height="135" fill="${COL.up}" fill-opacity=".16" stroke="${COL.up}" stroke-opacity=".6"/><rect x="150" y="165" width="300" height="45" fill="${COL.dn}" fill-opacity=".16" stroke="${COL.dn}" stroke-opacity=".6"/>
  <line x1="150" x2="450" y1="165" y2="165" stroke="#f2efe8" stroke-width="2"/>
  <line x1="150" x2="450" y1="120" y2="120" stroke="${COL.gold}" stroke-dasharray="5 5"/><line x1="150" x2="450" y1="75" y2="75" stroke="${COL.gold}" stroke-dasharray="5 5"/>
@@ -465,11 +471,11 @@ const ARR='<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"
 
 function list(){
  const d=done(),n=L.length,nd=L.filter(l=>d[l.id]).length;
- let h=`<section class="hero"><span class="eyb">AKADEMI DIRMUFX</span><h1>Belajar trading emas <em>dari nol</em></h1>
+ let h=`<section class="hero"><span class="eyb">Akademi DirmuFX</span><h1>Belajar trading emas dari nol</h1>
  <p class="lead">Kurikulum bertahap khusus XAUUSD: mulai dari istilah dasar, candlestick, dan manajemen risiko, sampai Smart Money Concepts dan fundamental. Setiap bab ada gambar dan kuis singkat.</p>
  <div class="stats"><span>${n} bab</span><span>${n} kuis</span><span>${nd} selesai</span><span>Bab Dasar gratis</span></div></section>`;
  for(const k in LV){const ls=L.filter(l=>l.lvl===k);
-  h+=`<section class="lvl"><div class="lvh"><div><h2>${LV[k].n}</h2><p>${LV[k].d}</p></div><span class="tag ${LV[k].free?"free":"vip"}">${LV[k].free?"GRATIS":"VIP"}</span></div>`;
+  h+=`<section class="lvl"><div class="lvh"><div><h2>${LV[k].n}</h2><p>${LV[k].d}</p></div><span class="tag ${LV[k].free?"free":"vip"}">${LV[k].free?"Gratis":"VIP"}</span></div>`;
   ls.forEach(l=>{const i=L.indexOf(l)+1;h+=`<a class="card ${d[l.id]?"done":""}" href="#b/${l.id}"><span class="num">${d[l.id]?"✓":i}</span><span class="mt"><h3>${l.t}</h3><p>${l.d} · ${l.min} menit</p></span>${canRead(l)?ARR:LOCK}</a>`});
   h+=`</section>`}
  h+=`<p class="disc">⚠️ Trading emas/forex dengan leverage berisiko tinggi dan bisa menghabiskan modal. Materi ini untuk edukasi, bukan ajakan atau jaminan profit.</p>`;
@@ -479,7 +485,7 @@ function lesson(id){
  const l=L.find(x=>x.id===id);if(!l){location.hash="";return}
  const i=L.indexOf(l),pv=L[i-1],nx=L[i+1],lv=LV[l.lvl];
  let h=`<div class="crumb"><a href="#">Akademi</a><span>›</span><span>${lv.n}</span></div>
- <h1 class="lt">${l.t}</h1><div class="meta"><span class="pill ${lv.free?"ok":""}">${lv.free?"GRATIS":"VIP"}</span><span>Bab ${i+1} dari ${L.length}</span><span>· ${l.min} menit baca</span></div>`;
+ <h1 class="lt">${l.t}</h1><div class="meta"><span class="pill ${lv.free?"ok":""}">${lv.free?"Gratis":"VIP"}</span><span>Bab ${i+1} dari ${L.length}</span><span>· ${l.min} menit baca</span></div>`;
  const body=l.body();
  if(canRead(l)){
   h+=`<article class="body">${body}</article>`+quiz(l);
@@ -514,8 +520,8 @@ function route(){const h=decodeURIComponent(location.hash.slice(1));if(h.startsW
 let lastHash=null;
 window.addEventListener("hashchange",()=>{route();window.scrollTo(0,0)});
 function paintPill(){const p=$("accPill");
- if(acc==="active"){p.className="pill ok";p.textContent="VIP AKTIF";p.href="index.html#akun"}
- else if(acc==="pending"){p.className="pill";p.textContent="AKTIFKAN VIP";p.href="index.html#aktivasi"}
+ if(acc==="active"){p.className="pill ok";p.textContent="VIP aktif";p.href="index.html#akun"}
+ else if(acc==="pending"){p.className="pill";p.textContent="Aktifkan VIP";p.href="index.html#aktivasi"}
  else if(acc==="loading"){p.className="pill";p.textContent="…";p.href="index.html#masuk"}
  else{p.className="pill";p.textContent="Masuk";p.href="index.html#masuk"}}
 function setAcc(a){if(a===acc)return;acc=a;paintPill();route()}
