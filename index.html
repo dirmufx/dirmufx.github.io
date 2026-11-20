@@ -240,7 +240,7 @@ html{scroll-behavior:auto}}
 @supports not ((-webkit-background-clip:text) or (background-clip:text)){#app .brand b{-webkit-text-fill-color:#5b9cf5}}
 #app .brand small{display:block;font-size:10px;letter-spacing:.3em;color:var(--muted);font-weight:500}
 #app .quote{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-#app .symsel:disabled{opacity:1;-webkit-appearance:none;appearance:none;color:var(--fg)}
+#app .symsel{-webkit-appearance:none;appearance:none;color:var(--fg);padding-right:34px!important;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23a6ad9f' stroke-width='2' fill='none'/%3E%3C/svg%3E")!important;background-repeat:no-repeat!important;background-position:right 12px center!important;cursor:pointer}
 #app .symsel{background:var(--panel);border:1px solid var(--violet-dim);border-radius:10px;padding:7px 10px;font-family:var(--f-display);font-weight:600;letter-spacing:.06em}
 #app .lastpx{font-family:var(--f-mono);font-size:18px;font-weight:700;text-align:right;line-height:1.2}
 #app .lastpx small{display:block;font-size:11px;font-weight:500}
@@ -991,7 +991,7 @@ html{scroll-behavior:auto}
     <div class="brandrow">
       <div class="brandleft"><a class="backbtn" href="#top" aria-label="Kembali ke beranda"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M12 5l-5 5 5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Beranda</a><div class="tlogo"><svg class="dmark" viewBox="0 0 314 343" aria-hidden="true"><path d="M15 15H140A156.5 156.5 0 0 1 140 328H15Z" fill="none" stroke="#63d297" stroke-width="30" stroke-linejoin="round"/><g fill="#fff"><rect x="87" y="159" width="10" height="138" rx="5"/><rect x="69" y="202" width="46" height="58" rx="5"/><rect x="147" y="114" width="10" height="160" rx="5"/><rect x="129" y="153" width="46" height="75" rx="5"/></g><g fill="#63d297"><rect x="207" y="54" width="10" height="175" rx="5"/><rect x="189" y="89" width="46" height="99" rx="5"/></g></svg><span class="dword"><span class="dname">Dirmu<i>FX</i></span><span class="dtrade">TRADE</span></span></div></div>
       <div class="quote">
-        <select class="symsel" id="sym" aria-label="Pair" disabled></select>
+        <select class="symsel" id="sym" aria-label="Pilih pasar"></select>
         <div class="lastpx" id="lastpx" hidden>—</div>
         <a class="btn cta ibLink" target="_blank" rel="noopener">Buka Akun</a>
       </div>
@@ -1323,7 +1323,16 @@ if(DFX_AUTH_ON)IB.gate=true;
 "use strict";
 /* ================= config ================= */
 const SYMS={
-  XAUUSD:{name:"Gold",bn:"PAXGUSDT",spot:"XAU",api:"XAU/USD",d:2,vol:.016,cs:100,anchor:3909.11,quoteUSD:true}
+  XAUUSD:{name:"Gold",grp:"Emas",bn:"PAXGUSDT",spot:"XAU",api:"XAU/USD",d:2,vol:.016,cs:100,anchor:3909.11,quoteUSD:true},
+  EURUSD:{name:"Euro",grp:"Forex",bn:"EURUSDT",d:5,vol:.004,cs:100000,anchor:1.08,quoteUSD:true},
+  GBPUSD:{name:"Pound",grp:"Forex",d:5,vol:.005,cs:100000,anchor:1.28,quoteUSD:true},
+  USDJPY:{name:"Yen",grp:"Forex",d:3,vol:.005,cs:100000,anchor:150,quoteUSD:false},
+  AUDUSD:{name:"Aussie",grp:"Forex",d:5,vol:.005,cs:100000,anchor:.66,quoteUSD:true},
+  BTCUSD:{name:"Bitcoin",grp:"Crypto",bn:"BTCUSDT",crypto:true,d:1,vol:.03,cs:1,anchor:95000,quoteUSD:true},
+  ETHUSD:{name:"Ethereum",grp:"Crypto",bn:"ETHUSDT",crypto:true,d:2,vol:.04,cs:1,anchor:3200,quoteUSD:true},
+  SOLUSD:{name:"Solana",grp:"Crypto",bn:"SOLUSDT",crypto:true,d:2,vol:.05,cs:1,anchor:180,quoteUSD:true},
+  BNBUSD:{name:"BNB",grp:"Crypto",bn:"BNBUSDT",crypto:true,d:2,vol:.04,cs:1,anchor:650,quoteUSD:true},
+  XRPUSD:{name:"XRP",grp:"Crypto",bn:"XRPUSDT",crypto:true,d:4,vol:.05,cs:1,anchor:2.2,quoteUSD:true}
 
 };
 const TFS=[["M1",1,"1min"],["M5",5,"5min"],["M15",15,"15min"],["M30",30,"30min"],["H1",60,"1h"],["H4",240,"4h"],["D1",1440,"1day"]];
@@ -1445,7 +1454,7 @@ function slRisk(v,e,dir){
 }
 const SL_CAP={1:30,5:30,15:50,30:50,60:100,240:100,1440:100};
 const SL_PAIR={BTCUSD:{1:200,5:250,15:400,30:400,60:800,240:800,1440:1500}}; // BTC: dalam dolar
-const PIP={XAUUSD:0.1,XAGUSD:0.01,EURUSD:0.0001,GBPUSD:0.0001,USDJPY:0.01,BTCUSD:1};
+const PIP={XAUUSD:0.1,XAGUSD:0.01,EURUSD:0.0001,GBPUSD:0.0001,USDJPY:0.01,AUDUSD:0.0001,BTCUSD:1,ETHUSD:0.1,SOLUSD:0.01,BNBUSD:0.01,XRPUSD:0.0001};
 /* Filter sinyal: makin tinggi makin jarang tapi lebih kuat */
 const SIG_MIN=0.5;       // ambang konfluensi (sebelumnya 0.30)
 const ADX_MIN=20;        // pasar harus sedang trending
@@ -1510,7 +1519,7 @@ function plan(a,rr,slm){
 
 /* ================= UI build ================= */
 const symSel=$("sym");
-Object.entries(SYMS).forEach(([k,c])=>{const o=document.createElement("option");o.value=k;o.textContent=k+" · "+c.name;symSel.appendChild(o)});
+{const gs={};Object.entries(SYMS).forEach(([k,c])=>{const g=c.grp||"Lainnya";if(!gs[g]){gs[g]=document.createElement("optgroup");gs[g].label=g;symSel.appendChild(gs[g])}const o=document.createElement("option");o.value=k;o.textContent=k+" · "+c.name;gs[g].appendChild(o)})}
 symSel.value=S.sym;
 const tfrow=$("tfrow"),impTf=$("impTf");
 TFS.forEach(([n,m])=>{const b=document.createElement("button");b.className="tf";b.textContent=n;b.dataset.m=m;tfrow.appendChild(b);
@@ -1532,7 +1541,7 @@ function render(){
     :`Sinyal DirmuFX belum tersedia untuk ${S.sym}. Chart dan meteran TradingView tetap live. `;
   $("mtfBtn").hidden=m!=="live"||isLocked();
   const d=currentData(),tf=currentTf();
-  if(!d){clearAll(S.loading?"Memuat data…":(S.err||"Belum ada data"));$("sigwhy").textContent=m==="nosig"?"Sinyal hanya tersedia untuk XAUUSD.":(S.loading?"Memuat data…":(S.err||""));return}
+  if(!d){clearAll(S.loading?"Memuat data…":(S.err||"Belum ada data"));$("sigwhy").textContent=m==="nosig"?"Sinyal otomatis belum tersedia untuk pair ini (belum ada sumber data gratis). Chart, analisa teknikal TradingView, dan kalkulator tetap bisa dipakai.":(S.loading?"Memuat data…":(S.err||""));return}
   const a=filterSignal(analyse(d.slice(0,-1),tf),tf);a.live=d[d.length-1].c;const rr=+$("rr").value;
   const act=activeSignal(d,tf),on=act&&!act.res;
   let p=plan(a,rr,+$("slm").value);
@@ -1545,8 +1554,8 @@ function render(){
   $("sigstr").textContent=a.strength+"%";$("sigbar").style.width=a.strength+"%";
   $("lvE").textContent=fx(p.entry);$("lvSL").textContent=fx(p.sl);$("lvBE").textContent=fx(p.be);$("lvTP1").textContent=fx(p.tp1);$("lvTP2").textContent=fx(p.tp2);
   $("tp2k").textContent="TP MAX (1:3)";
-  const U=S.sym==="BTCUSD"?(n=>"$"+Math.round(n).toLocaleString("en-US")):(n=>n.toFixed(0)+" pips");const why=[`SL ${U(p.slPips)} · TP MAX ${U(p.slPips*3)} (SL ${(+$("slm").value||1.5).toString().replace(".",",")}× ATR, menyesuaikan volatilitas)`,`ATR ${fx(a.v.atr)}`,`ADX ${isNaN(a.v.adx)?"—":a.v.adx.toFixed(0)}${a.v.adx<20?" (sideways)":a.v.adx>25?" (tren kuat)":""}`];
-  const PX=v=>S.sym==="BTCUSD"?"$"+Math.round(v).toLocaleString("en-US"):(v/(PIP[S.sym]||.1)).toFixed(0)+" pips";
+  const U=SYMS[S.sym].crypto?(n=>"$"+(n*(PIP[S.sym]||1)).toLocaleString("en-US",{maximumFractionDigits:SYMS[S.sym].d})):(n=>n.toFixed(0)+" pips");const why=[`SL ${U(p.slPips)} · TP MAX ${U(p.slPips*3)} (SL ${(+$("slm").value||1.5).toString().replace(".",",")}× ATR, menyesuaikan volatilitas)`,`ATR ${fx(a.v.atr)}`,`ADX ${isNaN(a.v.adx)?"—":a.v.adx.toFixed(0)}${a.v.adx<20?" (sideways)":a.v.adx>25?" (tren kuat)":""}`];
+  const PX=v=>SYMS[S.sym].crypto?"$"+v.toLocaleString("en-US",{maximumFractionDigits:SYMS[S.sym].d}):(v/(PIP[S.sym]||.1)).toFixed(0)+" pips";
   if(on){const sg=act.dir==="BUY"?1:-1,mv=(a.live-act.L.entry)*sg;
     const stt=act.tp1?"TP1 tercapai ✓ — sisakan posisi ke TP MAX":act.be?"SL+ tercapai — geser SL ke entry":(mv<0?"belum bergerak, harga di bawah entry":"menuju SL+");
     why.unshift(`🔒 Sinyal ${act.dir} terkunci sejak ${hm(act.t)} · entry ${fx(act.L.entry)} · harga sekarang ${fx(a.live)} (${mv>=0?"+":"−"}${PX(Math.abs(mv))}) · ${stt}`);
@@ -1692,7 +1701,7 @@ document.querySelector(".tabs").addEventListener("click",e=>{const t=e.target.cl
 function segInit(id,attr,cb){$(id).addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;[...$(id).children].forEach(x=>x.setAttribute("aria-pressed",x===b));cb(b.dataset[attr])})}
 
 /* ================= TradingView widgets (gratis, tanpa kredit) ================= */
-const TVSYM={XAUUSD:"OANDA:XAUUSD",XAGUSD:"OANDA:XAGUSD",EURUSD:"FX:EURUSD",GBPUSD:"FX:GBPUSD",USDJPY:"FX:USDJPY",BTCUSD:"BITSTAMP:BTCUSD"};
+const TVSYM={XAUUSD:"OANDA:XAUUSD",XAGUSD:"OANDA:XAGUSD",EURUSD:"FX:EURUSD",GBPUSD:"FX:GBPUSD",USDJPY:"FX:USDJPY",BTCUSD:"BITSTAMP:BTCUSD",AUDUSD:"FX:AUDUSD",ETHUSD:"BITSTAMP:ETHUSD",SOLUSD:"BINANCE:SOLUSDT",BNBUSD:"BINANCE:BNBUSDT",XRPUSD:"BITSTAMP:XRPUSD"};
 const TVIV={1:"1",5:"5",15:"15",30:"30",60:"60",240:"240",1440:"D"};
 const TVTA={1:"1m",5:"5m",15:"15m",30:"30m",60:"1h",240:"4h",1440:"1D"};
 const TZ=(()=>{try{return Intl.DateTimeFormat().resolvedOptions().timeZone||"Etc/UTC"}catch(e){return"Etc/UTC"}})();
@@ -1724,7 +1733,7 @@ function mountChart(tf){
   }).catch(()=>{box.innerHTML='<p class="note" style="padding:16px">Chart TradingView gagal dimuat. Cek koneksi lalu refresh halaman.</p>'});
 }
 function mountAnalisa(){
-  mountTV("tvTape","ticker-tape",{symbols:[{proName:"OANDA:XAUUSD",title:"XAUUSD"},{proName:"CAPITALCOM:DXY",title:"DXY"},{proName:"FRED:DGS10",title:"Yield US 10Y"},{proName:"TVC:UKOIL",title:"Brent"},{proName:"OANDA:XAGUSD",title:"Perak"}],showSymbolLogo:false,isTransparent:false,backgroundColor:"#131316",displayMode:"compact",colorTheme:"dark",theme:"dark",locale:"id"});
+  mountTV("tvTape","ticker-tape",{symbols:[{proName:"OANDA:XAUUSD",title:"XAUUSD"},{proName:"CAPITALCOM:DXY",title:"DXY"},{proName:"FRED:DGS10",title:"Yield US 10Y"},{proName:"TVC:UKOIL",title:"Brent"},{proName:"FX:EURUSD",title:"EURUSD"},{proName:"FX:GBPUSD",title:"GBPUSD"},{proName:"FX:USDJPY",title:"USDJPY"},{proName:"BITSTAMP:BTCUSD",title:"BTC"},{proName:"BITSTAMP:ETHUSD",title:"ETH"},{proName:"OANDA:XAGUSD",title:"Perak"}],showSymbolLogo:false,isTransparent:false,backgroundColor:"#131316",displayMode:"compact",colorTheme:"dark",theme:"dark",locale:"id"});
   const tf=currentTf();
   mountChart(tf);
   mountTV("tvTA","technical-analysis",{interval:TVTA[tf]||"5m",width:"100%",isTransparent:false,backgroundColor:"#131316",height:420,symbol:TVSYM[S.sym],showIntervalTabs:true,displayMode:"single",locale:"id",colorTheme:"dark",theme:"dark"});
@@ -1745,11 +1754,26 @@ const FUND={
    ["Minyak & inflasi","flat","Campuran","Brent 117.64 menjaga emas sebagai lindung nilai, tapi juga mendorong Fed lebih hawkish."],
    ["Pemilu sela AS & NFP","flat","Volatilitas","Hasil pemilu dan NFP Jumat malam bisa memicu pergerakan besar dua arah. Kurangi lot menjelang rilis."]],
   lv:[["Resistance 1","3971 – 3982"],["Support 1","3885 – 3904"],["Resistance 2","4074 – 4083"],["Support 2","3829 – 3849"],["Resistance 3","4104 – 4115"],["Support 3","3780 – 3800"]],
-  src:"Sumber: Mitrade, 2 Nov 2026. Low tahunan 3879.90."}
+  src:"Sumber: Mitrade, 2 Nov 2026. Low tahunan 3879.90."},
+ _forex:{name:"forex (pair USD)",bias:"Ikuti arah dolar AS",col:"flat",
+  sum:"Pair mayor bergerak terutama karena perbedaan suku bunga dan data ekonomi antara Amerika dan negara pasangannya. Cek DXY dan kalender berita sebelum entry.",
+  drv:[["Dolar AS (DXY)","flat","Utama","DXY menguat biasanya menekan EURUSD, GBPUSD, AUDUSD dan mendorong USDJPY naik."],
+   ["Suku bunga bank sentral","flat","Utama","Fed, ECB, BoE, BoJ, dan RBA. Bank sentral yang lebih hawkish cenderung menguatkan mata uangnya."],
+   ["Data ekonomi","flat","Volatilitas","CPI, NFP, PMI, dan GDP. Bandingkan actual dengan forecast di tab Kalender."],
+   ["Sentimen risiko","flat","Campuran","Saat pasar takut, USD dan JPY cenderung menguat. Saat pasar optimis, AUD menguat."]],
+  lv:[],src:"Ringkasan umum. Untuk level harian, lihat halaman Analisa Harian."},
+ _crypto:{name:"crypto",bias:"Ikuti sentimen & likuiditas",col:"flat",
+  sum:"Crypto buka 24 jam, 7 hari. Harga dipengaruhi arus dana (termasuk ETF Bitcoin/Ethereum), likuiditas dolar, suku bunga, dan sentimen pasar. Altcoin biasanya mengikuti arah Bitcoin dengan gerakan lebih besar.",
+  drv:[["Arah Bitcoin","flat","Utama","BTC jadi patokan. Saat BTC turun tajam, altcoin biasanya turun lebih dalam."],
+   ["Arus dana ETF","flat","Utama","Aliran dana masuk ke ETF spot cenderung mendukung harga, aliran keluar menekan."],
+   ["Suku bunga & dolar","flat","Campuran","Kebijakan Fed yang longgar umumnya positif untuk crypto. Dolar kuat biasanya menekan."],
+   ["Likuidasi futures","flat","Volatilitas","Leverage tinggi di pasar futures bisa memicu lonjakan atau jatuh tiba-tiba. Selalu pakai stop loss."]],
+  lv:[],src:"Ringkasan umum. Untuk level harian, lihat halaman Analisa Harian."}
 
 };
 function renderFund(){
-  const f=FUND[S.sym]||FUND.XAUUSD;
+  const g=(SYMS[S.sym]||{}).grp;
+  const f=FUND[S.sym]||(g==="Crypto"?FUND._crypto:g==="Forex"?FUND._forex:FUND.XAUUSD);
   $("fTitle").textContent="Bias fundamental "+f.name;
   $("fBias").textContent=f.bias;$("fBias").style.color=f.col==="up"?"var(--up)":f.col==="down"?"var(--down)":"var(--amber)";
   $("fSum").textContent=f.sum;
