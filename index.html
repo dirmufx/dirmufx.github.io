@@ -437,6 +437,14 @@ html{scroll-behavior:auto}}
 #app .quote .btn.cta{padding:7px 12px}
 #app .locked .lockable{filter:blur(7px);user-select:none;pointer-events:none}
 #app:not(.pro) .proonly{display:none!important}
+#app .indtg{display:flex;gap:6px}
+#app .itg{font:inherit;font-size:13px;font-weight:600;border-radius:999px;padding:6px 12px;border:1px solid var(--line);background:var(--panel2);color:var(--muted);cursor:pointer}
+#app .itg[aria-pressed="true"]{background:var(--up-dim);color:var(--up);border-color:#1d5c46}
+#app .indbox{position:relative;height:430px;border-radius:12px;overflow:hidden;background:#141714}
+#app .indbox canvas{display:block;width:100%;height:100%}
+#app .indbox.locked canvas{filter:blur(6px);opacity:.55}
+#app .indlock{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;text-align:center;padding:20px}
+#app .indlock span{color:var(--muted);font-size:14px}
 #app .waitnote{display:none;margin:4px 0 12px;padding:12px 14px;border-radius:12px;border:1px solid #2a4670;background:#121c2b;font-size:14px;line-height:1.5}
 #app .waitnote>b{display:block;color:#bcd6ff}
 #app .waitnote span b{color:var(--fg)}
@@ -483,7 +491,7 @@ html{scroll-behavior:auto}
       <svg class="dmark" viewBox="0 0 314 343" aria-hidden="true"><path d="M15 15H140A156.5 156.5 0 0 1 140 328H15Z" fill="none" stroke="#63d297" stroke-width="30" stroke-linejoin="round"/><g fill="#fff"><rect x="87" y="159" width="10" height="138" rx="5"/><rect x="69" y="202" width="46" height="58" rx="5"/><rect x="147" y="114" width="10" height="160" rx="5"/><rect x="129" y="153" width="46" height="75" rx="5"/></g><g fill="#63d297"><rect x="207" y="54" width="10" height="175" rx="5"/><rect x="189" y="89" width="46" height="99" rx="5"/></g></svg><span class="dword"><span class="dname">Dirmu<i>FX</i></span><span class="dtrade">TRADE</span></span>
     </a>
     <div class="navlinks">
-      <a href="analisa.html">Analisa Harian</a><a href="belajar.html">Belajar</a><a href="#fitur">Fitur</a><a href="#cara-gabung">Cara Gabung</a><a href="#terminal">Signal Room</a><a href="#kalkulator">Kalkulator</a><a href="#materi">Materi</a><a href="#faq">FAQ</a>
+      <a href="analisa.html">Analisa Harian</a><a href="belajar.html">Belajar</a><a href="indikator.html">Indikator</a><a href="#fitur">Fitur</a><a href="#cara-gabung">Cara Gabung</a><a href="#terminal">Signal Room</a><a href="#kalkulator">Kalkulator</a><a href="#materi">Materi</a><a href="#faq">FAQ</a>
     </div>
     <div class="navcta"><a class="btn ghost" href="#masuk" id="navMasuk">Masuk</a><a class="btn gold-btn" href="#daftar">Gabung</a></div>
   </div>
@@ -717,7 +725,7 @@ html{scroll-behavior:auto}
   <div class="wrap">
     <div class="foot">
       <div><a class="logo" href="#top" style="display:inline-flex"><svg class="dmark" viewBox="0 0 314 343" aria-hidden="true"><path d="M15 15H140A156.5 156.5 0 0 1 140 328H15Z" fill="none" stroke="#63d297" stroke-width="30" stroke-linejoin="round"/><g fill="#fff"><rect x="87" y="159" width="10" height="138" rx="5"/><rect x="69" y="202" width="46" height="58" rx="5"/><rect x="147" y="114" width="10" height="160" rx="5"/><rect x="129" y="153" width="46" height="75" rx="5"/></g><g fill="#63d297"><rect x="207" y="54" width="10" height="175" rx="5"/><rect x="189" y="89" width="46" height="99" rx="5"/></g></svg><span class="dword"><span class="dname">Dirmu<i>FX</i></span><span class="dtrade">TRADE</span></span></a><p style="margin:10px 0 0;max-width:42ch">Komunitas edukasi trading forex, emas &amp; crypto untuk trader Indonesia.</p></div>
-      <div><h4>Halaman</h4><a href="analisa.html">Analisa Harian</a><a href="belajar.html">Akademi</a><a href="#cara-gabung">Cara Gabung</a><a href="#analisa">Signal Room</a><a href="#kalkulator">Kalkulator</a><a href="#materi">Materi</a><a href="#faq">FAQ</a></div>
+      <div><h4>Halaman</h4><a href="analisa.html">Analisa Harian</a><a href="belajar.html">Akademi</a><a href="indikator.html">Indikator DirmuFX</a><a href="#cara-gabung">Cara Gabung</a><a href="#analisa">Signal Room</a><a href="#kalkulator">Kalkulator</a><a href="#materi">Materi</a><a href="#faq">FAQ</a></div>
       <div><h4>Channel</h4><a href="https://t.me/dirmufxofficial" target="_blank" rel="noopener">Telegram</a><a href="https://chat.whatsapp.com/E4zPvDufMNqAaLdo9BLSmg" target="_blank" rel="noopener">Grup WhatsApp</a><a href="https://www.tiktok.com/@dirmufxofficial" target="_blank" rel="noopener">TikTok</a><a href="https://www.instagram.com/mudirr_/" target="_blank" rel="noopener">Instagram</a><a href="https://wa.me/6285823444392" target="_blank" rel="noopener">WhatsApp</a></div>
     </div>
     <p class="risk"><b style="color:var(--fg)">Peringatan risiko:</b> Trading forex, emas, dan kripto dengan leverage memiliki risiko tinggi dan bisa menyebabkan kehilangan seluruh modal. Semua konten DirmuFX bersifat edukasi, bukan saran keuangan. Hasil masa lalu tidak menjamin hasil di masa depan.<br>© 2026 DirmuFX Trade.</p>
@@ -1055,6 +1063,13 @@ html{scroll-behavior:auto}
           <div class="tvbox" id="tvChart"></div>
           <div class="canvasbox" hidden><canvas id="chart"></canvas></div>
         </div>
+        <div class="card" id="indCard">
+          <div class="row" style="justify-content:space-between;gap:8px;margin-bottom:10px;flex-wrap:wrap"><h2 style="margin:0">Indikator DirmuFX</h2>
+            <div class="indtg"><button type="button" class="itg" data-k="smc" aria-pressed="true">SMC Pro</button><button type="button" class="itg" data-k="sess" aria-pressed="true">Session Pro</button></div></div>
+          <div class="indbox"><canvas id="indCv"></canvas>
+            <div class="indlock" id="indLock" hidden><b>🔒 Indikator SMC Pro + Session Pro</b><span>Gratis untuk member VIP, atau beli sekali Rp1.000.000.</span><a class="btn primary" href="indikator.html">Lihat & aktifkan</a></div></div>
+          <p class="note" style="margin:8px 0 0">Mengikuti timeframe yang dipilih di atas. Kotak sesi tampil di M1–H1, jam WITA. Data dari sumber yang sama dengan sinyal, bisa sedikit berbeda dari broker.</p>
+        </div>
         <div class="card signal" id="sigcard" data-dir="WAIT">
           <div class="sighead">
             <div>
@@ -1099,12 +1114,12 @@ html{scroll-behavior:auto}
           <p>Eksekusi sinyal ini di <b class="brokerName"></b>, broker partner resmi DirmuFX.</p>
           <a class="btn cta ibLink" target="_blank" rel="noopener">Buka akun</a>
         </div>
-        <div class="card">
+        <div class="card proonly">
           <h2>Meteran sinyal TradingView</h2>
           <div class="tvwide" id="tvTA"></div>
         </div>
         <div class="card">
-          <h2>Konfluensi indikator</h2>
+          <h2>Ringkasan indikator</h2>
           <div class="scroll-x"><table class="tbl" id="indTbl"></table></div>
         </div>
         <div class="card">
@@ -1124,7 +1139,7 @@ html{scroll-behavior:auto}
           <div class="row" style="margin-bottom:10px"><button class="btn primary" id="aiBtn">Minta analisa AI</button><span class="small muted" id="aiState"></span></div>
           <div class="ai-out" id="aiOut"></div>
         </div>
-        <p class="disc">Sinyal dihitung otomatis dari indikator teknikal (EMA, RSI, MACD, Stochastic, ADX, Bollinger, pivot). Ini alat bantu analisa, bukan saran keuangan dan bukan jaminan profit. Harga dari penyedia data bisa sedikit berbeda dengan broker kamu. Selalu pakai stop loss.</p>
+        <p class="disc">Sinyal dihitung otomatis dari gabungan beberapa indikator teknikal. Ini alat bantu analisa, bukan saran keuangan dan bukan jaminan profit. Harga dari penyedia data bisa sedikit berbeda dengan broker kamu. Selalu pakai stop loss.</p>
       </div>
     </div>
   </section>
@@ -1568,11 +1583,20 @@ function render(){
   if(mode()==="live"&&S.lastAt)why.unshift("Update "+hm(S.lastAt));$("sigwhy").textContent=why.join(" · ");
   lotCalc();
   notifyCheck({...a,dir:a.shown},tf,p);
-  $("indTbl").innerHTML="<tr><th>Indikator</th><th class='r'>Nilai</th><th class='r'>Status</th></tr>"+a.votes.map(x=>`<tr><td>${x.name}</td><td class="r num">${x.val}</td><td class="r"><span class="chip ${x.score>0?"up":x.score<0?"down":"flat"}">${x.txt}</span></td></tr>`).join("")
-    +`<tr><td>ADX 14</td><td class="r num">${isNaN(a.v.adx)?"—":a.v.adx.toFixed(1)}</td><td class="r"><span class="chip flat">${a.v.adx<20?"Lemah":a.v.adx<25?"Sedang":"Kuat"}${a.v.pdi>a.v.mdi?" · +DI":" · −DI"}</span></td></tr>`;
+  const PRO=$("app").classList.contains("pro");
+  if(PRO){$("indTbl").innerHTML="<tr><th>Indikator</th><th class='r'>Nilai</th><th class='r'>Status</th></tr>"+a.votes.map(x=>`<tr><td>${x.name}</td><td class="r num">${x.val}</td><td class="r"><span class="chip ${x.score>0?"up":x.score<0?"down":"flat"}">${x.txt}</span></td></tr>`).join("")
+    +`<tr><td>ADX 14</td><td class="r num">${isNaN(a.v.adx)?"—":a.v.adx.toFixed(1)}</td><td class="r"><span class="chip flat">${a.v.adx<20?"Lemah":a.v.adx<25?"Sedang":"Kuat"}${a.v.pdi>a.v.mdi?" · +DI":" · −DI"}</span></td></tr>`;}
+  else{const chip=(sc,t)=>`<span class="chip ${sc>0?"up":sc<0?"down":"flat"}">${t}</span>`,V=n=>a.votes.find(x=>x.name===n)||{score:0,txt:"—"};
+   const e=V("EMA 20/50"),r=V("RSI 14"),m=a.votes.find(x=>/^MACD/.test(x.name))||{score:0,txt:"—"},adx=a.v.adx;
+   const rows=[["Arah tren",chip(e.score,e.score>0?"Naik":e.score<0?"Turun":"Belum jelas")],["Momentum (MACD)",chip(m.score,m.txt)],["RSI",chip(r.score,(isNaN(a.v.rsi)?"":a.v.rsi.toFixed(0)+" · ")+r.txt)],["Kekuatan tren (ADX)",chip(0,isNaN(adx)?"—":adx<20?"Lemah / sideways":adx<25?"Sedang":"Kuat")]];
+   $("indTbl").innerHTML=rows.map(x=>`<tr><td>${x[0]}</td><td class="r">${x[1]}</td></tr>`).join("")}
   const pv=a.v.pv,sw=a.v.sw;
   const rows=[["Swing resistance 2",sw.res[1]],["Swing resistance 1",sw.res[0]],["Pivot R2",pv.R2],["Pivot R1",pv.R1],["Pivot P",pv.P],["Pivot S1",pv.S1],["Pivot S2",pv.S2],["Swing support 1",sw.sup[0]],["Swing support 2",sw.sup[1]]].filter(r=>r[1]!=null).sort((x,y)=>y[1]-x[1]);
-  $("lvlTbl").innerHTML=rows.map(r=>`<tr><td>${r[0]}</td><td class="r num" style="color:${r[1]>a.v.close?"var(--down)":"var(--up)"}">${fx(r[1])}</td><td class="r small muted num">${((r[1]-a.v.close)/a.v.atr).toFixed(1)} ATR</td></tr>`).join("");
+  if(PRO)$("lvlTbl").innerHTML=rows.map(r=>`<tr><td>${r[0]}</td><td class="r num" style="color:${r[1]>a.v.close?"var(--down)":"var(--up)"}">${fx(r[1])}</td><td class="r small muted num">${((r[1]-a.v.close)/a.v.atr).toFixed(1)} ATR</td></tr>`).join("");
+  else{const g=a.v.atr*.6,pick=arr=>{const o=[];arr.forEach(x=>{if(o.every(y=>Math.abs(y-x)>=g))o.push(x)});return o.slice(0,2)};
+   const all=rows.map(r=>r[1]),res=pick(all.filter(x=>x>a.v.close+a.v.atr*.2).sort((x,y)=>x-y)),sup=pick(all.filter(x=>x<a.v.close-a.v.atr*.2).sort((x,y)=>y-x));
+   const L=[...res.map((v,k)=>["Resistance "+(k+1),v]).reverse(),...sup.map((v,k)=>["Support "+(k+1),v])];
+   $("lvlTbl").innerHTML=L.map(r=>`<tr><td>${r[0]}</td><td class="r num" style="color:${r[1]>a.v.close?"var(--down)":"var(--up)"}">${fx(r[1])}</td></tr>`).join("")||"<tr><td class='muted'>Belum ada level.</td></tr>"}
   renderMTF();
   draw();
 }
@@ -1593,9 +1617,271 @@ function lotCalc(){
 }
 
 /* ================= chart ================= */
+/* ===== DirmuFX SMC Pro & Session Pro v2 — port dari Pine Script DirmuFX ===== */
+const DFXI=(()=>{
+const COL={bull:"#2fd39b",bear:"#f05d6c",iobB:"rgba(49,121,245,.20)",iobS:"rgba(247,124,128,.20)",fvgB:"rgba(0,255,104,.25)",fvgS:"rgba(255,0,8,.25)",
+ ifvB:"rgba(33,150,243,.30)",ifvS:"rgba(255,152,0,.30)",gray:"#9b978d",asia:"#63d297",ldn:"#f05d6c",ny:"#e3b85c",pd:"#9598A1"};
+function rma(src,p){const o=new Array(src.length);let a=NaN,s=0;for(let i=0;i<src.length;i++){if(i<p){s+=src[i];o[i]=i===p-1?(a=s/p):NaN}else{a=(a*(p-1)+src[i])/p;o[i]=a}}return o}
+function trArr(d){return d.map((c,i)=>i?Math.max(c.h-c.l,Math.abs(c.h-d[i-1].c),Math.abs(c.l-d[i-1].c)):c.h-c.l)}
+function atrN(d,p){const t=trArr(d),r=rma(t,p);return r.map((v,i)=>isNaN(v)?t.slice(0,i+1).reduce((a,b)=>a+b,0)/(i+1):v)}
+function emaA(v,p){const k=2/(p+1);let e=v[0];return v.map((x,i)=>e=i?x*k+e*(1-k):x)}
+
+/* ---------------- SMC ---------------- */
+function smc(d,o){
+ const n=d.length,H=d.map(c=>c.h),L=d.map(c=>c.l),C=d.map(c=>c.c),O=d.map(c=>c.o);
+ const a200=atrN(d,200),a14=atrN(d,14),pip=o.pip,tfm=o.tf;
+ const minPip=tfm<=5?30:tfm<=30?50:100;
+ const pH=[],pL=[];for(let i=0;i<n;i++){const big=(H[i]-L[i])>=2*a200[i];pH[i]=big?L[i]:H[i];pL[i]=big?H[i]:L[i]}
+ const legs=len=>{const out=new Array(n).fill(0);let leg=0;for(let i=0;i<n;i++){if(i>=len){let up=-Infinity,dn=Infinity;for(let k=i-len+1;k<=i;k++){if(H[k]>up)up=H[k];if(L[k]<dn)dn=L[k]}
+   if(H[i-len]>up)leg=0;else if(L[i-len]<dn)leg=1}out[i]=leg}return out};
+ const legSw=legs(50),legIn=legs(5),legEq=legs(3);
+ const SW={hi:{cur:NaN,last:NaN,crossed:true,x:0},lo:{cur:NaN,last:NaN,crossed:true,x:0},trend:0};
+ const IN={hi:{cur:NaN,last:NaN,crossed:true,x:0},lo:{cur:NaN,last:NaN,crossed:true,x:0},trend:0};
+ let trTop=NaN,trBot=NaN,trTopX=0,trBotX=0,eqHiPrev=NaN,eqHiX=0,eqLoPrev=NaN,eqLoX=0;
+ const R={struct:[],eq:[],iobs:[],sweeps:[],signals:[],flips:[],fvgs:[],ifvgs:[],liqA:[],sw:null};
+ let liqs=[],sSelX=null,sSelHi=0,sSelLC=0,sSelLb=null,sBuyX=null,sBuyLo=0,sBuyHC=0,sBuyLb=null;
+ let cum=0;
+ const lqLen=10;
+ for(let i=0;i<n;i++){
+  const chg=(arr,len)=>i>0&&arr[i]!==arr[i-1];
+  const newSw=chg(legSw),newIn=chg(legIn),newEq=chg(legEq);
+  if(newSw&&legSw[i]===0){const x=i-50;SW.hi.last=SW.hi.cur;SW.hi.cur=H[x];SW.hi.crossed=false;SW.hi.x=x;trTop=H[x];trTopX=x}
+  if(newSw&&legSw[i]===1){const x=i-50;SW.lo.last=SW.lo.cur;SW.lo.cur=L[x];SW.lo.crossed=false;SW.lo.x=x;trBot=L[x];trBotX=x}
+  if(newIn&&legIn[i]===0){const x=i-5;IN.hi.last=IN.hi.cur;IN.hi.cur=H[x];IN.hi.crossed=false;IN.hi.x=x}
+  if(newIn&&legIn[i]===1){const x=i-5;IN.lo.last=IN.lo.cur;IN.lo.cur=L[x];IN.lo.crossed=false;IN.lo.x=x}
+  if(!isNaN(trTop)&&H[i]>trTop){trTop=H[i];trTopX=i}
+  if(!isNaN(trBot)&&L[i]<trBot){trBot=L[i];trBotX=i}
+  // equal high / low
+  if(newEq&&legEq[i]===0){const x=i-3,p=H[x];if(!isNaN(eqHiPrev)&&Math.abs(p-eqHiPrev)<.1*a200[i])R.eq.push({x1:eqHiX,y1:eqHiPrev,x2:x,y2:p,hi:true});eqHiPrev=p;eqHiX=x}
+  if(newEq&&legEq[i]===1){const x=i-3,p=L[x];if(!isNaN(eqLoPrev)&&Math.abs(p-eqLoPrev)<.1*a200[i])R.eq.push({x1:eqLoX,y1:eqLoPrev,x2:x,y2:p,hi:false});eqLoPrev=p;eqLoX=x}
+  // mitigasi OB (High/Low)
+  R.iobs=R.iobs.filter(b=>b.bull?!(L[i]<b.bot):!(H[i]>b.top));
+  const addOB=(fromX,bull)=>{const j0=Math.max(fromX+1,0),last=i-1;let idx=last,ext=bull?pL[last]:pH[last];
+   for(let j=last;j>=j0;j--){const v=bull?pL[j]:pH[j];if(bull?v<ext:v>ext){ext=v;idx=j}}
+   R.iobs.push({x:idx,top:pH[idx],bot:pL[idx],bull});if(R.iobs.length>5)R.iobs.shift()};
+  // struktur internal
+  if(!isNaN(IN.hi.cur)&&!IN.hi.crossed&&C[i]>IN.hi.cur&&(isNaN(SW.hi.cur)||IN.hi.cur!==SW.hi.cur)){
+   const tag=IN.trend===-1?"MSS":"BOS";IN.hi.crossed=true;IN.trend=1;R.struct.push({x1:IN.hi.x,x2:i,y:IN.hi.cur,tag,bull:true,int:true});addOB(IN.hi.x,true);IN.ev={i,bull:true}}
+  if(!isNaN(IN.lo.cur)&&!IN.lo.crossed&&C[i]<IN.lo.cur&&(isNaN(SW.lo.cur)||IN.lo.cur!==SW.lo.cur)){
+   const tag=IN.trend===1?"MSS":"BOS";IN.lo.crossed=true;IN.trend=-1;R.struct.push({x1:IN.lo.x,x2:i,y:IN.lo.cur,tag,bull:false,int:true});addOB(IN.lo.x,false);IN.ev={i,bull:false}}
+  // struktur swing
+  if(!isNaN(SW.hi.cur)&&!SW.hi.crossed&&C[i]>SW.hi.cur){const tag=SW.trend===-1?"CHoCH":"BOS";SW.hi.crossed=true;SW.trend=1;R.struct.push({x1:SW.hi.x,x2:i,y:SW.hi.cur,tag,bull:true,int:false})}
+  if(!isNaN(SW.lo.cur)&&!SW.lo.crossed&&C[i]<SW.lo.cur){const tag=SW.trend===1?"CHoCH":"BOS";SW.lo.crossed=true;SW.trend=-1;R.struct.push({x1:SW.lo.x,x2:i,y:SW.lo.cur,tag,bull:false,int:false})}
+  // pivot likuiditas
+  if(i>=2*lqLen){const c=i-lqLen;let isH=true,isL=true;for(let k=c-lqLen;k<=c+lqLen;k++){if(k===c)continue;if(k<c?H[k]>=H[c]:H[k]>H[c])isH=false;if(k<c?L[k]<=L[c]:L[k]<L[c])isL=false}
+   const zh=(a,b)=>{const h=Math.abs(a-b),r=a200[i]||h;return Math.min(Math.max(h,.1*r),r)};
+   if(isH){const bt=Math.max(O[c],C[c]);liqs.push({lvl:H[c],x:c,hi:true,zt:H[c],zb:H[c]-zh(H[c],bt)})}
+   if(isL){const bb=Math.min(O[c],C[c]);liqs.push({lvl:L[c],x:c,hi:false,zt:L[c]+zh(bb,L[c]),zb:L[c]})}}
+  while(liqs.length>40)liqs.shift();
+  let swpBuy=false,swpSell=false;
+  for(let k=liqs.length-1;k>=0;k--){const q=liqs[k];
+   if(i-q.x>300){liqs.splice(k,1);continue}
+   if(q.hi&&H[i]>q.lvl){
+    if(C[i]<q.lvl&&!swpSell){if(sSelLb)sSelLb.st="x";sSelLb={x:i,q,tip:H[i],sell:true,st:"wait"};R.sweeps.push(sSelLb);swpSell=true}
+    else if(C[i]>q.lvl){R.flips.push({x:q.x,top:q.zt,bot:q.zb,rbs:true,born:i,done:false,right:i+10});if(R.flips.length>4)R.flips.shift()}
+    liqs.splice(k,1)}
+   else if(!q.hi&&L[i]<q.lvl){
+    if(C[i]>q.lvl&&!swpBuy){if(sBuyLb)sBuyLb.st="x";sBuyLb={x:i,q,tip:L[i],sell:false,st:"wait"};R.sweeps.push(sBuyLb);swpBuy=true}
+    else if(C[i]<q.lvl){R.flips.push({x:q.x,top:q.zt,bot:q.zb,rbs:false,born:i,done:false,right:i+10});if(R.flips.length>4)R.flips.shift()}
+    liqs.splice(k,1)}}
+  if(R.sweeps.length>8)R.sweeps.splice(0,R.sweeps.length-8);
+  if(swpSell){sSelX=i;sSelHi=H[i];sSelLC=L[i]}
+  if(swpBuy){sBuyX=i;sBuyLo=L[i];sBuyHC=H[i]}
+  // konfirmasi cepat (maks 3 candle)
+  if(sSelX!=null&&i>sSelX&&i-sSelX<=3&&C[i]<sSelLC){sSelLb.st="ok";const sl=Math.max(sSelHi+.5*a14[i],C[i]+minPip*pip);R.signals.push({x:i,y:H[i],sell:true,sl,pips:Math.round((sl-C[i])/pip)});sSelX=null}
+  if(sBuyX!=null&&i>sBuyX&&i-sBuyX<=3&&C[i]>sBuyHC){sBuyLb.st="ok";const sl=Math.min(sBuyLo-.5*a14[i],C[i]-minPip*pip);R.signals.push({x:i,y:L[i],sell:false,sl,pips:Math.round((C[i]-sl)/pip)});sBuyX=null}
+  if(sSelX!=null&&i-sSelX>3){sSelLb.st="x";sSelX=null}
+  if(sBuyX!=null&&i-sBuyX>3){sBuyLb.st="x";sBuyX=null}
+  // RBS / SBR
+  for(let k=R.flips.length-1;k>=0;k--){const f=R.flips[k];
+   if(f.rbs&&C[i]<f.bot||!f.rbs&&C[i]>f.top){R.flips.splice(k,1);continue}
+   f.right=i+10;
+   if(!f.done&&i>f.born){if(f.rbs&&L[i]<=f.top&&C[i]>f.top){f.done=true;f.rx=i;f.ry=L[i]}else if(!f.rbs&&H[i]>=f.bot&&C[i]<f.bot){f.done=true;f.rx=i;f.ry=H[i]}}}
+  // FVG & iFVG
+  const bd=i>0?Math.abs(C[i-1]-O[i-1])/O[i-1]*100:0;cum+=bd;const thr=cum/(i+1)*2;
+  if(i>=2){
+   if(L[i]>H[i-2]&&C[i-1]>H[i-2]&&bd>thr)R.fvgs.push({x:i-1,right:i+1,top:L[i],bot:H[i-2],bull:true,filled:false});
+   if(H[i]<L[i-2]&&C[i-1]<L[i-2]&&bd>thr)R.fvgs.push({x:i-1,right:i+1,top:L[i-2],bot:H[i],bull:false,filled:false});
+  }
+  for(let k=R.fvgs.length-1;k>=0;k--){const f=R.fvgs[k],inv=f.bull?C[i]<f.bot:C[i]>f.top,wick=f.bull?L[i]<f.bot:H[i]>f.top;
+   if(inv){R.ifvgs.push({x:f.x,top:f.top,bot:f.bot,bull:!f.bull,right:i+10});R.fvgs.splice(k,1);if(R.ifvgs.length>5)R.ifvgs.shift()}
+   else if(wick&&!f.filled)f.filled=true}
+  while(R.fvgs.length>40)R.fvgs.shift();
+  for(let k=R.ifvgs.length-1;k>=0;k--){const g=R.ifvgs[k];if(g.bull?C[i]<g.bot:C[i]>g.top)R.ifvgs.splice(k,1);else g.right=i+10}
+ }
+ // BSL / SSL belum disapu (3 terdekat)
+ let nh=0,nl=0;for(let k=liqs.length-1;k>=0;k--){const q=liqs[k];if(q.hi?nh<3:nl<3){R.liqA.push(q);q.hi?nh++:nl++}}
+ if(!isNaN(trTop)&&!isNaN(trBot))R.sw={top:trTop,topX:trTopX,bot:trBot,botX:trBotX,trend:SW.trend};
+ R.trendIn=IN.trend;return R;
+}
+
+/* ---------------- Session Pro ---------------- */
+function sess(d,o){
+ const n=d.length,TZ=8*36e5,pip=o.pip,out={boxes:[],brk:[],levels:[],sweeps:[],proj:null,info:null,ema:null};
+ const hrW=t=>{const z=new Date(t+TZ);return z.getUTCHours()+z.getUTCMinutes()/60};
+ const dayW=t=>Math.floor((t+TZ)/864e5);
+ const inS=(t,a,b)=>{const h=hrW(t);return a<b?h>=a&&h<b:h>=a||h<b};
+ const C=d.map(c=>c.c),e=emaA(C,50);
+ out.ema=e.map((v,i)=>({v,col:i&&v>e[i-1]&&C[i]>v?COL.bull:i&&v<e[i-1]&&C[i]<v?COL.bear:COL.gray}));
+ const tl=n?d[n-1]:null;if(!tl)return out;
+ const up=e[n-1]>e[n-2]&&C[n-1]>e[n-1],dn=e[n-1]<e[n-2]&&C[n-1]<e[n-1];
+ const intraOk=o.tf<=60;
+ const SES=[["ASIA",7,15,COL.asia],["LONDON",15,24,COL.ldn],["NY",20,5,COL.ny]];
+ const today=dayW(tl.t);
+ const cur={};
+ const rangeHist={ASIA:[],LONDON:[],NY:[]},trk={};
+ let asiaHi=NaN,asiaLo=NaN,upDone=false,dnDone=false;
+ // sweep levels
+ let levels=[],pend={sell:null,buy:null};
+ const rng={A:{h:NaN,l:NaN,x:0,on:false},L:{h:NaN,l:NaN,x:0,on:false}};
+ const dayKey=t=>Math.floor((t+(o.crypto?0:2*36e5))/864e5); // hari broker: 22:00 UTC (forex/emas), 00:00 UTC (crypto)
+ let pdh=NaN,pdl=NaN,dH=-Infinity,dL=Infinity,dk=null;
+ for(let i=0;i<n;i++){const c=d[i],pv=i?d[i-1]:null;
+  // hari broker & PDH/PDL
+  const k=dayKey(c.t),newDay=dk!==null&&k!==dk;
+  if(newDay){pdh=dH;pdl=dL;dH=-Infinity;dL=Infinity}
+  dk=k;dH=Math.max(dH,c.h);dL=Math.min(dL,c.l);
+  // sesi (kotak)
+  SES.forEach(([nm,a,b,col])=>{const on=intraOk&&inS(c.t,a,b),was=pv&&intraOk&&inS(pv.t,a,b);
+   if(on&&!was){const keep=dayW(c.t)>=today-1;cur[nm]=keep?{nm,col,x1:i,x2:i,hi:c.h,lo:c.l,open:c.o}:null;if(cur[nm])out.boxes.push(cur[nm]);
+    if(nm==="ASIA"){upDone=false;dnDone=false}}
+   else if(on&&cur[nm]){const s=cur[nm];s.x2=i;s.hi=Math.max(s.hi,c.h);s.lo=Math.min(s.lo,c.l)}
+   if(!on)cur[nm]=null;
+   // riwayat range untuk proyeksi
+   const t=trk[nm]||(trk[nm]={h:NaN,l:NaN});
+   if(on&&!was){if(!isNaN(t.h)){rangeHist[nm].push(t.h-t.l);if(rangeHist[nm].length>10)rangeHist[nm].shift()}t.h=c.h;t.l=c.l}else if(on){t.h=Math.max(t.h,c.h);t.l=Math.min(t.l,c.l)}
+   t.on=on});
+  if(cur.ASIA){asiaHi=cur.ASIA.hi;asiaLo=cur.ASIA.lo}
+  // breakout range Asia
+  const inA=intraOk&&inS(c.t,7,15),inL=intraOk&&inS(c.t,15,24),inN=intraOk&&inS(c.t,20,5);
+  if(!inA&&!isNaN(asiaHi)&&(inL||inN)){
+   if(!upDone&&c.c>asiaHi){upDone=true;out.brk.push({x:i,up:true})}
+   if(!dnDone&&c.c<asiaLo){dnDone=true;out.brk.push({x:i,up:false})}}
+  if(!intraOk)continue;
+  // ganti hari: bersihkan level
+  if(newDay){levels.forEach(l=>{if(l.active){l.active=false;l.x2=i}});levels=levels.filter(l=>l.swept);}
+  // cek level
+  let sellSig=false,buySig=false;
+  levels.forEach(l=>{if(!l.active)return;l.x2=i;let res=0;
+   if(l.hi){if(c.h>l.p)res=c.c<l.p?1:2}else{if(c.l<l.p)res=c.c>l.p?1:2}
+   if(res){l.active=false;l.faded=true;l.swept=true;if(res===2)l.dotted=true}
+   if(res===1){const lb={x:i,y:l.hi?c.h:c.l,t:"Sweep "+l.nm+(l.hi?" ▼":" ▲"),hi:l.hi,ok:false,col:l.col};out.sweeps.push(lb);
+    pend[l.hi?"sell":"buy"]={ref:l.hi?c.l:c.h,ext:l.hi?c.h:c.l,bar:i,lb}}});
+  ["sell","buy"].forEach(s=>{const p=pend[s];if(!p||i<=p.bar)return;
+   if(s==="sell"?c.c<p.ref:c.c>p.ref){p.lb.ok=true;p.lb.t+=" ✓";pend[s]=null}
+   else if((s==="sell"?c.c>p.ext:c.c<p.ext)||i-p.bar>=3)pend[s]=null});
+  // range Asia & London (15–20) untuk level sweep
+  const mk=(p,x,hi,nm,col)=>({p,x1:x,x2:i,hi,nm,col,active:true});
+  [["A",7,15,"Asia",COL.asia],["L",15,20,"London",COL.ldn]].forEach(([key,a,b,nm,col])=>{const r=rng[key],on=inS(c.t,a,b),was=pv&&inS(pv.t,a,b);
+   if(on&&!was){levels.forEach(l=>{if(l.src===key&&l.active){l.active=false}});r.h=c.h;r.l=c.l;r.x=i}
+   else if(on){r.h=Math.max(r.h,c.h);r.l=Math.min(r.l,c.l)}
+   if(!on&&was&&!isNaN(r.h)){const H1=mk(r.h,r.x,true,nm+" H",col),L1=mk(r.l,r.x,false,nm+" L",col);H1.src=L1.src=key;levels.push(H1,L1)}});
+  if(newDay&&isFinite(pdh)){const H1=mk(pdh,i,true,"PDH",COL.pd),L1=mk(pdl,i,false,"PDL",COL.pd);H1.src=L1.src="D";levels=levels.filter(l=>l.src!=="D"||l.swept);levels.push(H1,L1)}
+ }
+ out.levels=levels;
+ // proyeksi range sesi aktif
+ const c=tl,nmNow=intraOk&&inS(c.t,20,5)?"NY":intraOk&&inS(c.t,15,24)?"LONDON":intraOk&&inS(c.t,7,15)?"ASIA":"";
+ if(nmNow&&rangeHist[nmNow].length){const avg=rangeHist[nmNow].reduce((a,b)=>a+b,0)/rangeHist[nmNow].length,t=trk[nmNow];
+  out.proj={tH:t.l+avg,tL:t.h-avg,pips:Math.round(avg/pip)}}
+ const inA=inS(c.t,7,15),inL=inS(c.t,15,24),inN=inS(c.t,20,5);
+ out.info={ses:!intraOk?"TF > H1":inL&&inN?"London+NY":inN?"New York":inL?"London":inA?"Asia":"Tutup",tr:up?"▲ Naik":dn?"▼ Turun":"◆ Sideways",col:up?COL.bull:dn?COL.bear:COL.gray};
+ return out;
+}
+
+/* ---------------- Gambar ---------------- */
+function draw(cv,d,o){
+ const box=cv.parentElement,W=box.clientWidth,H=box.clientHeight,dpr=window.devicePixelRatio||1;if(!W||!H)return;
+ cv.width=W*dpr;cv.height=H*dpr;const g=cv.getContext("2d");g.setTransform(dpr,0,0,dpr,0,0);g.clearRect(0,0,W,H);
+ g.fillStyle="#141714";g.fillRect(0,0,W,H);
+ if(!d||d.length<60){g.fillStyle="#a6ad9f";g.font="13px Plus Jakarta Sans,system-ui";g.textAlign="center";g.fillText("Memuat data chart…",W/2,H/2);return}
+ const n=d.length,vis=Math.min(n,o.vis||Math.max(50,Math.min(130,Math.floor(W/5)))),RM=24,start=n-vis;
+ const axisW=62,plotW=W-axisW,top=26,bot=H-20,cw=plotW/(vis+RM);
+ const S=o.smc?smc(d,o):null,Ss=o.sess?sess(d,o):null;
+ const slc=d.slice(start);let hi=Math.max(...slc.map(c=>c.h)),lo=Math.min(...slc.map(c=>c.l));const pad=(hi-lo)*.08;hi+=pad;lo-=pad;
+ const X=i=>(i-start)*cw+cw/2,Y=v=>top+(hi-v)/(hi-lo)*(bot-top);
+ const fx=v=>v.toFixed(o.dec);
+ g.font="11px Plus Jakarta Sans,system-ui";g.textBaseline="middle";
+ // grid
+ g.strokeStyle="#20262c";g.lineWidth=1;g.fillStyle="#7d858f";g.textAlign="left";
+ for(let k=0;k<=5;k++){const v=lo+(hi-lo)*k/5,y=Math.round(Y(v))+.5;g.beginPath();g.moveTo(0,y);g.lineTo(plotW,y);g.stroke();g.fillText(fx(v),plotW+5,y)}
+ const every=Math.max(1,Math.round(vis/5));g.textAlign="center";
+ for(let i=start;i<n;i+=every){const t=new Date(d[i].t+8*36e5);g.fillText(String(t.getUTCHours()).padStart(2,"0")+":"+String(t.getUTCMinutes()).padStart(2,"0"),X(i),H-9)}
+ g.save();g.beginPath();g.rect(0,0,plotW,bot+2);g.clip();
+ const rect=(x1,x2,a,b,fill,stroke)=>{const L=Math.max(X(x1)-cw/2,-5),R=Math.min(X(x2)+cw/2,plotW+5);if(R<0||L>plotW)return null;const t=Y(Math.max(a,b)),h=Math.max(1,Math.abs(Y(a)-Y(b)));g.fillStyle=fill;g.fillRect(L,t,R-L,h);if(stroke){g.strokeStyle=stroke;g.strokeRect(L+.5,t+.5,R-L-1,h-1)}return{L,R,t,h}};
+ const hl=(x1,x2,v,col,dash,w)=>{const L=Math.max(X(x1),0),R=Math.min(X(x2),plotW);if(R<0||L>plotW)return;g.setLineDash(dash||[]);g.strokeStyle=col;g.lineWidth=w||1;g.beginPath();g.moveTo(L,Math.round(Y(v))+.5);g.lineTo(R,Math.round(Y(v))+.5);g.stroke();g.setLineDash([])};
+ const txt=(x,y,t,col,al,sz,bold)=>{g.font=`${bold?700:600} ${sz||10.5}px Plus Jakarta Sans,system-ui`;g.textAlign=al||"center";g.lineWidth=3;g.strokeStyle="#141714";g.strokeText(t,x,y);g.fillStyle=col;g.fillText(t,x,y)};
+ // ---- Session Pro: kotak sesi ----
+ if(Ss){Ss.boxes.forEach(b=>{const r=rect(b.x1,b.x2,b.hi,b.lo,hexA(b.col,.06),hexA(b.col,.3));if(!r)return;
+   hl(b.x1,b.x2,b.open,hexA(b.col,.5),[2,3]);txt(Math.max(r.L+2,2),b.nm==="NY"?r.t+9:r.t-7,b.nm+" · "+Math.round((b.hi-b.lo)/o.pip)+"p",b.col,"left",10)})}
+ // ---- SMC zona ----
+ if(S){
+  S.iobs.forEach(b=>rect(b.x,n-1+RM,b.top,b.bot,b.bull?COL.iobB:COL.iobS));
+  S.fvgs.filter(f=>!f.filled).forEach(f=>rect(f.x,f.right,f.top,f.bot,f.bull?COL.fvgB:COL.fvgS));
+  S.ifvgs.forEach(f=>{const r=rect(f.x,f.right,f.top,f.bot,f.bull?COL.ifvB:COL.ifvS);if(r)txt(r.R-4,r.t+r.h/2,"ifvg",f.bull?"#2196f3":"#ff9800","right",10)});
+  S.flips.forEach(f=>{const c=f.rbs?COL.bull:COL.bear,r=rect(f.x,f.right,f.top,f.bot,hexA(c,.18));if(r)txt(r.R-4,r.t+r.h/2,(f.rbs?"rbs":"sbr")+(f.done?" ✅":""),c,"right",10);
+   if(f.done&&f.rx>=start)txt(X(f.rx),Y(f.ry)+(f.rbs?14:-14),"✅ retest",c,"center",10)});
+ }
+ // candle
+ const bw=Math.max(1,cw*.64);
+ for(let i=start;i<n;i++){const c=d[i],up=c.c>=c.o,col=up?"#26a69a":"#ef5350",xx=Math.round(X(i))+.5;g.strokeStyle=g.fillStyle=col;g.lineWidth=1;
+  g.beginPath();g.moveTo(xx,Y(c.h));g.lineTo(xx,Y(c.l));g.stroke();const t=Y(Math.max(c.o,c.c)),b=Y(Math.min(c.o,c.c));g.fillRect(xx-bw/2,t,bw,Math.max(1,b-t))}
+ // EMA tren Session Pro
+ if(Ss){g.lineWidth=2;for(let i=Math.max(start,1);i<n;i++){g.strokeStyle=Ss.ema[i].col;g.beginPath();g.moveTo(X(i-1),Y(Ss.ema[i-1].v));g.lineTo(X(i),Y(Ss.ema[i].v));g.stroke()}}
+ // ---- SMC garis & label ----
+ if(S){
+  S.struct.forEach(s=>{if(s.x2<start)return;const c=s.bull?COL.bull:COL.bear;hl(s.x1,s.x2,s.y,c,s.int?[4,3]:[],1);
+   const mx=X((Math.max(s.x1,start)+s.x2)/2);txt(mx,Y(s.y)+(s.bull?-8:9),s.tag==="MSS"?"mss":s.tag==="CHoCH"?"choch":"bos",c,"center",s.int?9.5:11,!s.int)});
+  S.eq.forEach(q=>{if(q.x2<start)return;const c=q.hi?COL.bear:COL.bull;g.setLineDash([2,3]);g.strokeStyle=c;g.beginPath();g.moveTo(X(q.x1),Y(q.y1));g.lineTo(X(q.x2),Y(q.y2));g.stroke();g.setLineDash([]);
+   txt(X((q.x1+q.x2)/2),Y(q.y2)+(q.hi?-8:9),q.hi?"eqh":"eql",c,"center",9.5)});
+  S.liqA.forEach(q=>{const c=q.hi?COL.bear:COL.bull;hl(q.x,n-1+10,q.lvl,hexA(c,.45),[2,3]);txt(X(n-1+10)+2,Y(q.lvl),q.hi?"bsl":"ssl",hexA(c,.75),"left",10)});
+  S.sweeps.forEach(w=>{if(w.x<start)return;const c=w.sell?COL.bear:COL.bull;hl(w.q.x,w.x,w.q.lvl,hexA(c,.8),[2,3]);
+   rect(w.x,w.x+8,Math.max(w.tip,w.q.lvl),Math.min(w.tip,w.q.lvl),hexA(c,.2),hexA(c,.4));
+   const t=(w.sell?"bsl":"ssl")+" sweep "+(w.st==="ok"?"✅":w.st==="x"?"✕":"⏳");txt(X(w.x),Y(w.tip)+(w.sell?-10:11),t,w.st==="x"?COL.gray:c,"center",10)});
+  S.signals.forEach(s=>{if(s.x<start)return;const c=s.sell?COL.bear:COL.bull,y=Y(s.y)+(s.sell?-24:24);
+   txt(X(s.x),y,(s.sell?"✅ SELL":"✅ BUY"),c,"center",11,true);txt(X(s.x),y+(s.sell?-12:12),"SL "+fx(s.sl)+" ("+s.pips+" pips)",c,"center",9.5)});
+  if(S.sw){const s=S.sw;hl(Math.max(s.topX,start),n-1+RM,s.top,COL.bear,[],1);hl(Math.max(s.botX,start),n-1+RM,s.bot,COL.bull,[],1);
+   txt(X(n-1+RM)-2,Y(s.top)-8,s.trend===-1?"high valid":"weak high",COL.bear,"right",10);txt(X(n-1+RM)-2,Y(s.bot)+9,s.trend===1?"low valid":"weak low",COL.bull,"right",10)}
+ }
+ // ---- Session Pro: level sweep, breakout, proyeksi ----
+ if(Ss){
+  Ss.levels.forEach(l=>{if(l.x2<start)return;const c=l.faded?hexA(l.col,.4):l.col;hl(l.x1,l.x2,l.p,c,l.dotted?[2,3]:[],1);txt(X(l.x2)+3,Y(l.p),l.nm,c,"left",9.5)});
+  Ss.sweeps.forEach(s=>{if(s.x<start)return;txt(X(s.x),Y(s.y)+(s.hi?-10:11),s.t,s.ok?"#f2efe8":hexA("#f2efe8",.45),"center",10,s.ok)});
+  Ss.brk.forEach(b=>{if(b.x<start)return;const c=b.up?COL.bull:COL.bear,y=b.up?Y(d[b.x].l)+12:Y(d[b.x].h)-12;g.fillStyle=c;g.beginPath();
+   if(b.up){g.moveTo(X(b.x),y-5);g.lineTo(X(b.x)-5,y+4);g.lineTo(X(b.x)+5,y+4)}else{g.moveTo(X(b.x),y+5);g.lineTo(X(b.x)-5,y-4);g.lineTo(X(b.x)+5,y-4)}g.fill()});
+  if(Ss.proj){const p=Ss.proj;hl(n-6,n-1+RM,p.tH,hexA(COL.bull,.7),[2,3]);hl(n-6,n-1+RM,p.tL,hexA(COL.bear,.7),[2,3]);
+   txt(X(n-1+RM)-2,Y(p.tH)-8,"▲ target "+p.pips+"p",COL.bull,"right",10);txt(X(n-1+RM)-2,Y(p.tL)+9,"▼ target "+p.pips+"p",COL.bear,"right",10)}
+ }
+ g.restore();
+ // harga terakhir
+ const lc=d[n-1],col=lc.c>=lc.o?"#26a69a":"#ef5350",yy=Math.round(Y(lc.c))+.5;
+ g.setLineDash([1,3]);g.strokeStyle=col;g.beginPath();g.moveTo(0,yy);g.lineTo(plotW,yy);g.stroke();g.setLineDash([]);
+ g.fillStyle=col;g.fillRect(plotW+1,yy-9,axisW-2,18);g.fillStyle="#fff";g.textAlign="left";g.font="700 11px Plus Jakarta Sans,system-ui";g.fillText(fx(lc.c),plotW+5,yy);
+ // info Session Pro
+ if(Ss&&Ss.info){const t="DirmuFX · "+Ss.info.ses+" · "+Ss.info.tr;g.font="700 11px Plus Jakarta Sans,system-ui";const w=g.measureText(t).width+14;
+  g.fillStyle="rgba(19,19,22,.9)";g.fillRect(plotW-w-4,4,w,18);g.strokeStyle="#2a4670";g.strokeRect(plotW-w-3.5,4.5,w-1,17);g.fillStyle=Ss.info.col;g.textAlign="left";g.fillText(t,plotW-w+3,13)}
+ return {smc:S,sess:Ss};
+}
+function hexA(h,a){if(h.startsWith("rgba"))return h;const v=parseInt(h.slice(1),16);return `rgba(${v>>16&255},${v>>8&255},${v&255},${a})`}
+return {smc,sess,draw};
+})();
+
+/* ===== hubungkan indikator ke Signal Room ===== */
+const IND={on:(()=>{try{return JSON.parse(store.get("dfx-ind-on")||'{"smc":true,"sess":true}')}catch(e){return{smc:true,sess:true}}})(),access:store.get("dfx-ind")==="1"};
+document.querySelectorAll("#indCard .itg").forEach(b=>{b.setAttribute("aria-pressed",!!IND.on[b.dataset.k]);b.onclick=()=>{IND.on[b.dataset.k]=!IND.on[b.dataset.k];b.setAttribute("aria-pressed",IND.on[b.dataset.k]);store.set("dfx-ind-on",JSON.stringify(IND.on));drawInd()}});
+window.DFXI=DFXI;window.DFX_lastData=()=>last;window.DFX_setInd=on=>{IND.access=!!on;store.set("dfx-ind",on?"1":"0");drawInd()};
+function drawInd(){
+  const cv=$("indCv");if(!cv||S.view!=="analisa")return;
+  const ok=IND.access||$("app").classList.contains("pro");
+  $("indLock").hidden=ok;cv.parentElement.classList.toggle("locked",!ok);
+  const d=last&&last.d,tf=last?last.tf:S.tf,cfg=SYMS[S.sym];
+  if(!ok){DFXI.draw(cv,d,{smc:false,sess:false,tf,pip:PIP[S.sym]||.1,dec:cfg.d});return}
+  DFXI.draw(cv,d,{smc:IND.on.smc,sess:IND.on.sess,tf,pip:PIP[S.sym]||.1,dec:cfg.d,crypto:!!cfg.crypto});
+}
+window.addEventListener("resize",()=>{try{drawInd()}catch(e){}});
 const cv=$("chart"),ctx=cv.getContext("2d");
 const css=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
 function draw(msg){
+  try{drawInd()}catch(e){console.warn(e)}
   const box=cv.parentElement,W=box.clientWidth,H=box.clientHeight,dpr=window.devicePixelRatio||1;
   if(!W||!H)return;
   cv.width=W*dpr;cv.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,W,H);
@@ -2172,13 +2458,13 @@ async function load(){
  auth.onAuthStateChanged(A,async u2=>{
   user=u2;profile=null;authReady=true;if(unsub){unsub();unsub=null}
   const nav=$("navMasuk");if(nav){nav.textContent=u2?"Akun":"Masuk";nav.href=u2?"#akun":"#masuk"}
-  if(!u2){window.DFX_setMember&&window.DFX_setMember(false);paint();return}
+  if(!u2){window.DFX_setMember&&window.DFX_setMember(false);window.DFX_setInd&&window.DFX_setInd(false);paint();return}
   const ref=fs.doc(D,"members",u2.uid);
   try{const snap=await fs.getDoc(ref);
    if(!snap.exists())await fs.setDoc(ref,{name:(pendingName||u2.displayName||"").slice(0,60),email:u2.email||"",mt5:"",path:"",plan:0,status:"pending",createdAt:fs.serverTimestamp(),updatedAt:fs.serverTimestamp()});
   }catch(e){console.warn(e)}
   pendingName="";
-  unsub=fs.onSnapshot(ref,s=>{profile=s.data()||{};window.DFX_setMember&&window.DFX_setMember(isActive());paint()},e=>{console.warn(e);paint()});
+  unsub=fs.onSnapshot(ref,s=>{profile=s.data()||{};window.DFX_setMember&&window.DFX_setMember(isActive());window.DFX_setInd&&window.DFX_setInd(isActive()||!!profile.ind);paint()},e=>{console.warn(e);paint()});
   if(LOGIN_ROUTES.includes(route)&&route!=="lupa")location.replace("#akun");else paint();
  });
 }

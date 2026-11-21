@@ -91,6 +91,8 @@ textarea{width:100%;min-height:110px;margin-top:8px;resize:vertical}
    <div class="box">
     <b>Harga VIP seumur hidup (Rupiah)</b>
     <input id="pLife" inputmode="numeric" placeholder="1000000">
+    <b style="display:block;margin-top:14px">Harga indikator SMC + Session Pro (Rupiah)</b>
+    <input id="pInd" inputmode="numeric" placeholder="1000000">
     <b style="display:block;margin-top:16px">Info pembayaran</b>
     <p class="muted" style="margin:4px 0 0">Ditampilkan ke member setelah memilih paket. Tulis rekening/e-wallet, satu per baris.</p>
     <textarea id="pay" placeholder="BCA 1234567890 a.n. Nama&#10;DANA 08xxxxxxxxxx a.n. Nama"></textarea>
@@ -125,12 +127,15 @@ function draw(){
   return `<div class="m"><div style="min-width:0"><b>${esc(r.name)||"(tanpa nama)"}</b><span class="st ${st}">${label[st]}</span>
    <div class="meta">${esc(r.email)}${d?" · daftar "+d:""}</div>
    <div class="meta">Jalur: <b style="color:var(--fg);font-size:13px">${path}</b>${r.until?" · berlaku s/d "+fd(r.until):""}</div>
-   <div class="mt5">MT5: ${esc(r.mt5)||"<span class='muted'>belum diisi</span>"}</div></div>
-   <div class="acts">${actBtn}${st!=="inactive"?`<button class="btn no" data-id="${r.id}" data-a="off">Nonaktifkan</button>`:""}</div></div>`}).join(""):'<p class="muted" style="margin-top:14px">Tidak ada member di daftar ini.</p>';
+   <div class="mt5">MT5: ${esc(r.mt5)||"<span class='muted'>belum diisi</span>"}</div>
+   <div class="meta">Indikator: ${r.ind?"<b style='color:var(--up)'>sudah dibeli</b>":r.indReq?"<b style='color:var(--gold)'>minta beli</b>":st==="active"?"gratis (VIP)":"belum"}</div></div>
+   <div class="acts">${actBtn}<button class="btn ${r.ind?"no":"ok"}" data-id="${r.id}" data-a="${r.ind?"indoff":"indon"}">${r.ind?"Cabut indikator":"Aktifkan indikator"}</button>${st!=="inactive"?`<button class="btn no" data-id="${r.id}" data-a="off">Nonaktifkan</button>`:""}</div></div>`}).join(""):'<p class="muted" style="margin-top:14px">Tidak ada member di daftar ini.</p>';
 }
 $("list").onclick=async e=>{const b=e.target.closest("button[data-id]");if(!b)return;const r=rows.find(x=>x.id===b.dataset.id);if(!r)return;
  let data;
  if(b.dataset.a==="off")data={status:"inactive"};
+ else if(b.dataset.a==="indon"){if(!confirm(`Aktifkan indikator untuk ${r.email}?\nPastikan transfer Rp sudah masuk.`))return;data={ind:true,indReq:false}}
+ else if(b.dataset.a==="indoff")data={ind:false};
  else if(b.dataset.a==="broker")data={status:"active",until:null};
  else{if(!confirm(`Aktifkan VIP seumur hidup untuk ${r.email}?\nPastikan transfer sudah masuk.`))return;data={status:"active",until:null}}
  b.disabled=true;
@@ -156,9 +161,9 @@ $("aPub").onclick=async()=>{const mk=$("aMk").value==="Lainnya"?$("aOther").valu
  $("aPub").disabled=false};
 $("q").oninput=draw;
 async function loadSet(){try{const s=await fs.getDoc(fs.doc(D,"settings","public"));const v=s.data()||{};const pr=v.prices||{};
- $("pLife").value=v.lifetime||1000000;$("pay").value=v.pay||""}catch(e){$("setMsg").textContent="Gagal memuat: "+e.code}}
+ $("pLife").value=v.lifetime||1000000;$("pInd").value=v.indPrice||1000000;$("pay").value=v.pay||""}catch(e){$("setMsg").textContent="Gagal memuat: "+e.code}}
 $("saveSet").onclick=async()=>{const lifetime=Number(String($("pLife").value).replace(/\D/g,""))||1000000;
- try{await fs.setDoc(fs.doc(D,"settings","public"),{lifetime,pay:$("pay").value.trim(),updatedAt:fs.serverTimestamp()},{merge:true});$("setMsg").textContent="Tersimpan. Member langsung melihat harga terbaru."}
+ try{await fs.setDoc(fs.doc(D,"settings","public"),{lifetime,indPrice:Number(String($("pInd").value).replace(/\D/g,""))||1000000,pay:$("pay").value.trim(),updatedAt:fs.serverTimestamp()},{merge:true});$("setMsg").textContent="Tersimpan. Member langsung melihat harga terbaru."}
  catch(e){$("setMsg").textContent="Gagal menyimpan: "+e.code+" (cek Rules Firestore sudah diperbarui)"}};
 $("g").onclick=async()=>{try{await auth.signInWithPopup(A,new auth.GoogleAuthProvider())}catch(e){$("lmsg").textContent="Gagal: "+e.code}};
 $("go").onclick=async()=>{try{await auth.signInWithEmailAndPassword(A,$("em").value.trim(),$("pw").value)}catch(e){$("lmsg").textContent="Gagal: "+e.code}};
