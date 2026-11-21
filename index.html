@@ -479,6 +479,20 @@ body{margin:0;background:#0a0a0c;color:#f2efe8}
 html{scroll-behavior:auto}
 #landing,#app{min-height:100vh}
 
+
+/* Pemilih pasar */
+#app .quote .symsel{display:none}
+#app .mkpick{margin:4px 0 14px}
+#app .mkgrp{display:flex;gap:6px;background:var(--panel);border:1px solid var(--line,#2a2f2a);border-radius:12px;padding:4px;margin-bottom:10px}
+#app .mkgrp button{flex:1;border:0;background:transparent;color:var(--mut,#a6ad9f);font:600 15px/1 var(--f-display,inherit);padding:11px 6px;border-radius:9px;cursor:pointer}
+#app .mkgrp button[aria-selected="true"]{background:#2f6fd0;color:#fff}
+#app .mkpairs{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px;-webkit-overflow-scrolling:touch}
+#app .mkpairs::-webkit-scrollbar{display:none}
+#app .mkpairs button{flex:0 0 auto;min-width:92px;text-align:left;border:1px solid var(--line,#2a2f2a);background:var(--panel);color:var(--fg);border-radius:12px;padding:9px 12px;cursor:pointer}
+#app .mkpairs button b{display:block;font:700 15px/1.2 var(--f-display,inherit)}
+#app .mkpairs button span{display:block;font-size:12.5px;color:var(--mut,#a6ad9f);margin-top:2px}
+#app .mkpairs button[aria-pressed="true"]{border-color:#3fb37a;background:rgba(63,179,122,.14)}
+#app .mkpairs button[aria-pressed="true"] span{color:#7fd6a6}
 </style>
 </head>
 <body>
@@ -1017,6 +1031,10 @@ html{scroll-behavior:auto}
 <main class="wrap">
   <!-- ANALISA -->
   <section class="view" id="v-analisa">
+    <div class="mkpick" id="mkpick">
+      <div class="mkgrp" id="mkgrp" role="tablist" aria-label="Jenis pasar"></div>
+      <div class="mkpairs" id="mkpairs"></div>
+    </div>
     <div class="tvtape" id="tvTape"></div>
     <div class="card">
       <div class="srcbar">
@@ -1536,6 +1554,21 @@ function plan(a,rr,slm){
 const symSel=$("sym");
 {const gs={};Object.entries(SYMS).forEach(([k,c])=>{const g=c.grp||"Lainnya";if(!gs[g]){gs[g]=document.createElement("optgroup");gs[g].label=g;symSel.appendChild(gs[g])}const o=document.createElement("option");o.value=k;o.textContent=k+" · "+c.name;gs[g].appendChild(o)})}
 symSel.value=S.sym;
+
+/* pemilih pasar visual */
+const mkGrp=$("mkgrp"),mkPairs=$("mkpairs");
+const MKG=[...new Set(Object.values(SYMS).map(c=>c.grp||"Lainnya"))];
+let mkCur=(SYMS[S.sym]&&SYMS[S.sym].grp)||MKG[0];
+function mkRender(){
+  mkGrp.innerHTML=MKG.map(g=>`<button role="tab" data-g="${g}" aria-selected="${g===mkCur}">${g}</button>`).join("");
+  mkPairs.innerHTML=Object.entries(SYMS).filter(([k,c])=>(c.grp||"Lainnya")===mkCur).map(([k,c])=>`<button data-k="${k}" aria-pressed="${k===symSel.value}"><b>${k}</b><span>${c.name}</span></button>`).join("");
+}
+mkGrp.addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;mkCur=b.dataset.g;mkRender();
+  const first=Object.entries(SYMS).find(([k,c])=>(c.grp||"Lainnya")===mkCur);
+  if(first&&(SYMS[symSel.value].grp||"Lainnya")!==mkCur){symSel.value=first[0];symSel.dispatchEvent(new Event("change"))}});
+mkPairs.addEventListener("click",e=>{const b=e.target.closest("button");if(!b||b.dataset.k===symSel.value)return;symSel.value=b.dataset.k;symSel.dispatchEvent(new Event("change"))});
+symSel.addEventListener("change",()=>{mkCur=SYMS[symSel.value].grp||"Lainnya";mkRender()});
+mkRender();
 const tfrow=$("tfrow"),impTf=$("impTf");
 TFS.forEach(([n,m])=>{const b=document.createElement("button");b.className="tf";b.textContent=n;b.dataset.m=m;tfrow.appendChild(b);
   const o=document.createElement("option");o.value=m;o.textContent=n;impTf.appendChild(o)});
