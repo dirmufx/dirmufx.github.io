@@ -6,12 +6,5 @@ jobs:
   t:
     runs-on: ubuntu-latest
     steps:
-      - run: |
-          curl -s -m 20 -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/120 Safari/537.36" "https://www.forexfactory.com/calendar?week=last" -o ff.html
-          python3 - <<'PY'
-          import re
-          s=open('ff.html',encoding='utf-8',errors='ignore').read()
-          i=s.find('"actual":"0.7%"')
-          print(s[max(0,i-1500):i+600])
-          j=s.find('calendarComponentStates');print('CCS at',j);print(s[j:j+300])
-          PY
+      - uses: actions/checkout@v4
+      - run: python3 .github/scripts/ff_calendar.py && python3 -c "import json;d=json.load(open('data/ff_thisweek.json'));print(d[:2]);print([x for x in d if x.get('actual')][:3])"
