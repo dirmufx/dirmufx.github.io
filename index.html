@@ -562,6 +562,32 @@ html{scroll-behavior:auto}
 #app .fnews .m{font-size:12px;color:var(--muted)}#app .fnews .m b{color:#5b9cf5;font-weight:600;margin-left:6px}
 #app .fnews h3{margin:3px 0 2px;font-size:14.5px;line-height:1.4}
 #app .fnews p{margin:0;font-size:13px;color:var(--muted);line-height:1.5}
+#app .ffpast{display:block;width:100%;padding:11px 12px;border:0;border-bottom:1px solid var(--line);background:var(--panel2);color:#5b9cf5;font:600 13.5px/1.2 inherit;text-align:left;cursor:pointer}
+
+#app .tmx{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}
+#app .tmx>div{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:9px 4px;text-align:center}
+#app .tmx>div.cur{border-color:#2f6fd0}
+#app .tmx .t{font-size:12px;color:var(--muted);font-weight:600}
+#app .tmx .a{font-size:20px;line-height:1.2;margin:3px 0 1px;font-weight:800}
+#app .tmx .w{font-size:11.5px;font-weight:600}
+#app .tmx .up{color:var(--up)}#app .tmx .down{color:var(--down)}#app .tmx .flat{color:#e3b85c}#app .tmx .na{color:var(--muted)}
+#app #trendSum b{color:var(--fg)}
+#app .newsalert{border-radius:14px;padding:12px 14px;margin:0 0 14px;border:1px solid #6b2b2e;background:#2a1517;font-size:14px;line-height:1.5}
+#app .newsalert.soonish{border-color:#5c4a1f;background:#241f12}
+#app .newsalert b{display:block;font-size:15px;margin-bottom:2px}
+#app .newsalert .cd{font-variant-numeric:tabular-nums;font-weight:700;color:#ffb4b4}
+#app .hstat{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin-bottom:10px}
+#app .hstat div{background:var(--panel2);border-radius:10px;padding:9px 6px;text-align:center}
+#app .hstat .k{font-size:11.5px;color:var(--muted)}#app .hstat .v{font-size:18px;font-weight:800;font-variant-numeric:tabular-nums;margin-top:2px}
+#app .hlist{display:grid}
+#app .hrow{display:grid;grid-template-columns:auto 52px minmax(0,1fr) auto;gap:10px;align-items:center;padding:9px 0;border-top:1px solid var(--line);font-size:13.5px}
+#app .hrow .d{font-weight:800;font-size:12.5px;padding:3px 8px;border-radius:6px}
+#app .hrow .d.BUY{background:rgba(63,191,127,.15);color:var(--up)}#app .hrow .d.SELL{background:rgba(229,72,77,.15);color:var(--down)}
+#app .hrow .tm{color:var(--muted);font-size:12.5px;font-variant-numeric:tabular-nums}
+#app .hrow .px{font-variant-numeric:tabular-nums;white-space:nowrap;font-size:13px}
+#app .hrow .r{font-weight:700;text-align:right;white-space:nowrap}
+#app .hrow .r.win{color:var(--up)}#app .hrow .r.loss{color:var(--down)}#app .hrow .r.be{color:var(--amber)}#app .hrow .r.run{color:#5b9cf5}
+@media(max-width:420px){#app .tmx .a{font-size:17px}#app .hstat .v{font-size:16px}}
 </style>
 </head>
 <body>
@@ -1156,6 +1182,12 @@ html{scroll-behavior:auto}
             <div class="indlock" id="indLock" hidden><b>🔒 Indikator SMC Pro + Session Pro</b><span>Gratis untuk member VIP, atau beli sekali Rp1.000.000.</span><a class="btn primary" href="indikator.html">Lihat & aktifkan</a></div></div>
           <p class="note" style="margin:8px 0 0">Mengikuti timeframe yang dipilih di atas. Kotak sesi tampil di M5–H1, jam WITA. Data dari sumber yang sama dengan sinyal, bisa sedikit berbeda dari broker.</p>
         </div>
+        <div class="card" id="trendCard">
+          <div class="row" style="justify-content:space-between;margin-bottom:10px;gap:8px"><h2 style="margin:0">Matriks tren</h2><span class="small muted" id="trendSum"></span></div>
+          <div class="tmx" id="mtf"></div>
+          <p class="note" id="mtfnote" style="margin:8px 0 0">Entry paling aman saat TF besar (H4 & D1) searah dengan TF entry. <button class="btn" id="mtfBtn" hidden>Muat ulang</button></p>
+        </div>
+        <div class="newsalert" id="newsAlert" hidden></div>
         <div class="card signal" id="sigcard" data-dir="WAIT">
           <div class="sighead">
             <div>
@@ -1182,7 +1214,7 @@ html{scroll-behavior:auto}
           </div>
           <div class="sigfoot">
             <div class="small muted" id="sigwhy"></div>
-            <div class="row notifrow"><button class="btn" id="notifBtn">Aktifkan notifikasi sinyal</button><span class="small muted" id="notifState">Bunyi + pop-up saat sinyal muncul (selama tool terbuka)</span></div>
+            <div class="row notifrow"><button class="btn primary" id="shareBtn" hidden>📤 Bagikan sinyal</button><button class="btn" id="notifBtn">Aktifkan notifikasi sinyal</button><span class="small muted" id="notifState">Bunyi + pop-up saat sinyal muncul (selama tool terbuka)</span></div>
             <div class="grid2">
               <div class="field proonly"><label for="rr">Rasio RR</label><select id="rr"><option value="3" selected>1 : 3</option></select></div>
               <div class="field proonly"><label for="slm">SL</label><select id="slm"><option value="1">1.0 × ATR</option><option value="1.5" selected>1.5 × ATR</option><option value="2">2.0 × ATR</option></select></div>
@@ -1196,6 +1228,12 @@ html{scroll-behavior:auto}
             </div>
           </div>
         </div>
+        <div class="card" id="histCard">
+          <div class="row" style="justify-content:space-between;margin-bottom:10px;gap:8px"><h2 style="margin:0">Riwayat & statistik sinyal</h2><span class="small muted" id="histTf"></span></div>
+          <div class="hstat" id="histStat"></div>
+          <div class="hlist" id="histList"></div>
+          <p class="note" id="histNote" style="margin:8px 0 0"></p>
+        </div>
         <div class="ibstrip ibonly">
           <p>Eksekusi sinyal ini di <b class="brokerName"></b>, broker partner resmi DirmuFX.</p>
           <a class="btn cta ibLink" target="_blank" rel="noopener">Buka akun</a>
@@ -1203,11 +1241,6 @@ html{scroll-behavior:auto}
         <div class="card">
           <h2>Ringkasan indikator</h2>
           <div class="scroll-x"><table class="tbl" id="indTbl"></table></div>
-        </div>
-        <div class="card">
-          <div class="row" style="justify-content:space-between;margin-bottom:10px"><h2 style="margin:0">Multi-timeframe</h2><button class="btn" id="mtfBtn" hidden>Muat semua TF</button></div>
-          <div class="mtf lockable" id="mtf"></div>
-          <p class="note" id="mtfnote" style="margin:8px 0 0">Sinyal paling kuat saat TF besar (H1–D1) searah dengan TF entry.</p>
         </div>
       </div>
 
@@ -1453,11 +1486,11 @@ async function goldSpot(){
   try{const r=await fetch("https://api.gold-api.com/price/XAU");const j=await r.json();if(j&&j.price>0){spot.price=+j.price;spot.at=Date.now()}}catch(e){}
   return spot.price;
 }
-async function fetchCandles(sym,tf){
+async function fetchCandles(sym,tf,lim){
   const cfg=SYMS[sym];if(!cfg.bn)throw new Error("Sinyal belum tersedia untuk pair ini.");
   let j=null;
   for(const host of["https://data-api.binance.vision","https://api.binance.com"]){
-    try{const r=await fetch(`${host}/api/v3/klines?symbol=${cfg.bn}&interval=${BNIV[tf]}&limit=300`);if(r.ok){j=await r.json();break}}catch(e){}
+    try{const r=await fetch(`${host}/api/v3/klines?symbol=${cfg.bn}&interval=${BNIV[tf]}&limit=${lim||300}`);if(r.ok){j=await r.json();break}}catch(e){}
   }
   if(!Array.isArray(j)||j.length<60)throw new Error("Gagal memuat data harga. Cek koneksi internet lalu tekan Refresh.");
   let out=j.map(k=>({t:k[0],o:+k[1],h:+k[2],l:+k[3],c:+k[4]}));
@@ -1639,7 +1672,8 @@ function render(){
   const a=filterSignal(analyse(d.slice(0,-1),tf),tf);a.live=d[d.length-1].c;const rr=+$("rr").value;
   const act=activeSignal(d,tf),on=act&&!act.res;
   let p=plan(a,rr,+$("slm").value);
-  if(on){p={lean:act.dir,...act.L};a.shown=act.dir}else a.shown=mode()==="live"?"WAIT":a.dir;
+  if(on){p={lean:act.dir,...act.L};a.shown=act.dir;a.shownT=act.t}else a.shown=mode()==="live"?"WAIT":a.dir;
+  const nb=mode()==="live"?newsBlock():null;if(nb&&nb.block&&!on){a.shown="WAIT";a.newsHold=true}
   last={d,a,p,tf};
   const prevC=d[d.length-2].c,chg=a.live-prevC;
   $("lastpx").innerHTML=`${fx(a.live)}<small style="color:${chg>=0?"var(--up)":"var(--down)"}">${chg>=0?"+":""}${fx(chg)}</small>`;
@@ -1660,6 +1694,9 @@ function render(){
   }
   if(SYMS[S.sym].spot&&mode()==="live"){const n=new Date(),dy=n.getUTCDay(),hr=n.getUTCHours();if((dy===5&&hr>=21)||dy===6||(dy===0&&hr<22))why.unshift("Pasar emas sedang tutup (weekend). Jangan pakai sinyal ini untuk entry.")}
   if(mode()==="live"&&S.lastAt)why.unshift("Update "+hm(S.lastAt));$("sigwhy").textContent=why.join(" · ");
+  if(a.newsHold)why.unshift("⚠️ Sinyal dijeda karena berita merah. Tunggu 30 menit setelah rilis.");
+  $("sigwhy").textContent=why.join(" · ");
+  $("shareBtn").hidden=!(on&&!isLocked());
   lotCalc();
   notifyCheck({...a,dir:a.shown},tf,p);
   const PRO=$("app").classList.contains("pro");
@@ -1677,15 +1714,112 @@ function render(){
    const L=[...res.map((v,k)=>["Resistance "+(k+1),v]).reverse(),...sup.map((v,k)=>["Support "+(k+1),v])];
    $("lvlTbl").innerHTML=L.map(r=>`<tr><td>${r[0]}</td><td class="r num" style="color:${r[1]>a.v.close?"var(--down)":"var(--up)"}">${fx(r[1])}</td></tr>`).join("")||"<tr><td class='muted'>Belum ada level.</td></tr>"}
   renderMTF();
+  try{renderHist()}catch(e){console.warn(e)}
   draw();
 }
+const MTX=[[15,"M15"],[60,"H1"],[240,"H4"],[1440,"D1"],[10080,"W1"]];
+function trendOf(d){if(!d||d.length<60)return null;const c=d.map(x=>x.c),n=c.length-1,e20=ema(c,20)[n],e50=ema(c,50)[n],e200=ema(c,200)[n],cl=c[n];
+  const sc=(cl>e50?1:-1)+(e20>e50?1:-1)+(cl>e200?1:-1)+(e50>ema(c,50)[n-5]?1:-1);return sc>=3?"up":sc<=-3?"down":"flat"}
 function renderMTF(){
   const m=mode(),tf=currentTf();
-  if(m==="imp"){$("mtf").innerHTML=`<div style="grid-column:1/-1" class="small muted">Multi-timeframe tidak tersedia untuk data impor.</div>`;$("mtfnote").hidden=true;return}
-  $("mtfnote").hidden=false;
-  $("mtf").innerHTML=TFS.map(([n,mm])=>{let d=m==="demo"?simData(S.sym,mm):(S.live[S.sym+"|"+mm]||{}).data;
-    if(!d)return`<div class="${mm===tf?"cur":""}"><div class="t">${n}</div><div class="s NA">—</div><div class="t">&nbsp;</div></div>`;
-    const r=analyse(d,mm);return`<div class="${mm===tf?"cur":""}"><div class="t">${n}</div><div class="s ${r.dir}">${r.dir}</div><div class="t">${r.strength}%</div></div>`}).join("");
+  if(m!=="live"){$("mtf").innerHTML=`<div style="grid-column:1/-1" class="small muted">Matriks tren tersedia untuk pair dengan data live.</div>`;$("trendSum").textContent="";$("mtfnote").hidden=true;return}
+  $("mtfnote").hidden=false;let up=0,dn=0,tot=0;
+  $("mtf").innerHTML=MTX.map(([mm,n])=>{const c=S.live[S.sym+"|"+mm],t=c?trendOf(c.data.slice(0,-1)):null;if(t){tot++;if(t==="up")up++;if(t==="down")dn++}
+    return`<div class="${mm===tf?"cur":""}"><div class="t">${n}</div><div class="a ${t||"na"}">${t==="up"?"▲":t==="down"?"▼":t==="flat"?"◆":"…"}</div><div class="w ${t||"na"}">${t==="up"?"Naik":t==="down"?"Turun":t==="flat"?"Sideways":"memuat"}</div></div>`}).join("");
+  $("trendSum").innerHTML=tot?(up>=tot-1&&up>=3?`<b style="color:var(--up)">${up}/${tot} naik</b> · utamakan BUY`:dn>=tot-1&&dn>=3?`<b style="color:var(--down)">${dn}/${tot} turun</b> · utamakan SELL`:`${up} naik · ${dn} turun · campur`):"";
+}
+async function loadMTX(force){if(mode()!=="live")return;const sym=S.sym;
+  for(const [mm] of MTX){if(sym!==S.sym)return;const c=S.live[sym+"|"+mm];if(!force&&c&&Date.now()-c.at<(mm>=240?15*60e3:5*60e3))continue;
+    try{await loadLive(sym,mm,true)}catch(e){}renderMTF();await new Promise(r=>setTimeout(r,200))}}
+
+/* ===== riwayat & statistik sinyal (aturan sama dengan sinyal live) ===== */
+const HIST={key:"",res:null,busy:false,data:{}};
+function dirAtW(closed,i,tf,hc){const sub=closed.slice(Math.max(0,i-299),i+1);if(sub.length<60)return"WAIT";
+  const a=analyse(sub,tf);if(a.dir==="WAIT"||isNaN(a.v.adx)||a.v.adx<ADX_MIN)return"WAIT";
+  const h=HTF[tf];if(h){if(!hc)return"WAIT";const end=closed[i].t+tf*60000;let k=hc.length;while(k>0&&hc[k-1].t+h*60000>end)k--;const hs=hc.slice(Math.max(0,k-300),k);if(hs.length<60)return"WAIT";
+    const ha=analyse(hs,h),ht=ha.norm>=.15?"BUY":ha.norm<=-.15?"SELL":"WAIT";if(ht!==a.dir)return"WAIT"}
+  return a.dir}
+function signalHistory(d,tf,hc){
+  const closed=d.slice(0,-1),n=closed.length,from=200,dirs=[];
+  for(let i=from;i<n;i++)dirs[i]=dirAtW(closed,i,tf,hc);
+  const out=[];let busyUntil=-1;
+  for(let i=from+1;i<n;i++){const dir=dirs[i];if(dir==="WAIT"||dirs[i-1]===dir||i<=busyUntil)continue;
+    const sg=dir==="BUY"?1:-1,entry=closed[i].c,risk=slRisk(analyse(closed.slice(Math.max(0,i-299),i+1),tf).v,entry,dir);
+    const sl=entry-sg*risk,be1=entry+sg*risk,tp1=entry+sg*risk*2,tp2=entry+sg*risk*3;
+    let be=false,t1=false,res="run",end=n;
+    for(let j=i+1;j<d.length;j++){const c=d[j],hi=sg>0?c.h:-c.l,lo=sg>0?c.l:-c.h;
+      if(lo<=(be?sg*entry:sg*sl)){res=t1?"tp1":be?"be":"sl";end=j;break}
+      if(hi>=sg*be1)be=true;if(hi>=sg*tp1)t1=true;if(hi>=sg*tp2){res="tp";end=j;break}}
+    if(res==="run"&&t1)res="tp1run";
+    out.push({t:closed[i].t,dir,entry,risk,res});busyUntil=end}
+  return{list:out,bars:d.length,from:closed[from]?closed[from].t:d[0].t}}
+async function histData(sym,tf){const k=sym+"|"+tf,c=HIST.data[k];if(c&&Date.now()-c.at<5*60e3)return c.d;const d=await fetchCandles(sym,tf,1000);HIST.data[k]={d,at:Date.now()};return d}
+function renderHist(){
+  const tf=currentTf(),card=$("histCard");
+  if(mode()!=="live"){card.hidden=true;return}card.hidden=false;
+  const key=S.sym+"|"+tf+"|"+Math.floor(Date.now()/3e5)+"|"+(+$("slm").value||1.5);
+  if(HIST.key!==key){if(HIST.busy)return;HIST.busy=true;if(!HIST.res||HIST.resKey!==S.sym+"|"+tf){$("histStat").innerHTML="";$("histList").innerHTML='<div class="small muted">Menghitung riwayat sinyal…</div>';$("histNote").textContent=""}
+    const sym=S.sym,h=HTF[tf];
+    Promise.all([histData(sym,tf),h?histData(sym,h):null]).then(([d,hd])=>new Promise(ok=>setTimeout(()=>ok(signalHistory(d,tf,hd?hd.slice(0,-1):null)),30)))
+      .then(r=>{HIST.busy=false;if(sym!==S.sym||tf!==currentTf())return;HIST.key=key;HIST.res=r;HIST.resKey=sym+"|"+tf;paintHist()})
+      .catch(()=>{HIST.busy=false;$("histList").innerHTML='<div class="small muted">Gagal memuat riwayat. Coba Refresh.</div>'});
+    if(!HIST.res||HIST.resKey!==S.sym+"|"+tf)return}
+  paintHist()}
+function paintHist(){const tf=currentTf(),R0=HIST.res;if(!R0)return;const r=R0.list;
+  const done=r.filter(x=>!/run/.test(x.res)),win=done.filter(x=>x.res==="tp"||x.res==="tp1").length,sl=done.filter(x=>x.res==="sl").length;
+  const wr=done.length?Math.round(win/done.length*100):0,R=done.reduce((a,x)=>a+(x.res==="tp"?3:x.res==="tp1"?2:x.res==="sl"?-1:0),0);
+  $("histTf").textContent=S.sym+" · "+tfName(tf);
+  $("histStat").innerHTML=`<div><div class="k">Sinyal</div><div class="v">${r.length}</div></div><div><div class="k">Win rate</div><div class="v" style="color:${wr>=50?"var(--up)":"var(--down)"}">${done.length?wr+"%":"–"}</div></div><div><div class="k">TP / SL</div><div class="v">${win}/${sl}</div></div><div><div class="k">Hasil (R)</div><div class="v" style="color:${R>=0?"var(--up)":"var(--down)"}">${R>0?"+":""}${R}R</div></div>`;
+  const lab={tp:["TP MAX ✓ +3R","win"],tp1:["TP1 ✓ lalu BE +2R","win"],be:["Break even 0R","be"],sl:["Kena SL −1R","loss"],run:["Berjalan","run"],tp1run:["TP1 ✓ berjalan","run"]};
+  const dd=t=>new Date(t).toLocaleDateString("id-ID",{day:"numeric",month:"short"});
+  $("histList").innerHTML=r.length?r.slice(-10).reverse().map(x=>`<div class="hrow"><span class="d ${x.dir}">${x.dir}</span><span class="tm">${dd(x.t)}<br>${hm(x.t)}</span><span class="px lockable">Entry ${fx(x.entry)}</span><span class="r ${lab[x.res][1]}">${lab[x.res][0]}</span></div>`).join(""):'<div class="small muted">Belum ada sinyal di periode ini. Filter sinyal DirmuFX ketat: hanya saat tren kuat dan searah TF besar.</div>';
+  const days=Math.max(1,Math.round((Date.now()-R0.from)/864e5));
+  $("histNote").textContent=`Dihitung ulang dari data ${tfName(tf)} ± ${days} hari terakhir memakai aturan sinyal yang sama dengan sinyal live. Menang = TP1 (1:2) tercapai. 10 sinyal terakhir ditampilkan. Hasil masa lalu tidak menjamin hasil berikutnya.`}
+
+/* ===== peringatan berita merah ===== */
+const NEWS_CUR={XAUUSD:["USD"],EURUSD:["EUR","USD"],GBPUSD:["GBP","USD"],USDJPY:["USD","JPY"],AUDUSD:["AUD","USD"]};
+let NEWS_ITEMS=null;
+async function loadNews(){try{const r=await fetch("data/ff_thisweek.json?h="+Math.floor(Date.now()/6e5),{cache:"no-store"});if(!r.ok)throw 0;NEWS_ITEMS=ffMap(await r.json())}catch(e){NEWS_ITEMS=NEWS_ITEMS||[]}newsTick()}
+function newsBlock(){if(!NEWS_ITEMS)return null;const cur=NEWS_CUR[S.sym]||["USD"],now=Date.now();
+  const hi=NEWS_ITEMS.filter(x=>x.imp==="High"&&cur.includes(x.cur)&&x.ts+30*60e3>now).sort((a,b)=>a.ts-b.ts);if(!hi.length)return null;
+  const n=hi[0],same=hi.filter(x=>x.ts===n.ts),ms=n.ts-now;return{n,same,ms,block:ms<=30*60e3}}
+let newsWasBlock=null;
+function newsTick(){const el=$("newsAlert");if(!el)return;const b=S.view==="analisa"?newsBlock():null;
+  if(!b||b.ms>6*36e5){el.hidden=true;if(newsWasBlock){newsWasBlock=false;render()}return}
+  el.hidden=false;el.className="newsalert"+(b.block?"":" soonish");
+  const names=b.same.map(x=>x.title+" ("+x.cur+")").join(", ");
+  el.innerHTML=b.block?`<b>⚠️ Berita merah ${b.ms>0?"sebentar lagi":"baru rilis"} — jangan entry dulu</b>${esc(names)} · ${hm(b.n.ts)} · <span class="cd">${b.ms>0?cdLong(b.ms)+" lagi":"rilis "+agoTxt(-b.ms)}</span><br><span class="small muted">Sinyal dijeda dari 30 menit sebelum sampai 30 menit sesudah rilis karena harga bisa bergerak liar.</span>`
+    :`<b>📅 Berita merah berikutnya</b>${esc(names)} · ${hm(b.n.ts)} · <span class="cd">${cdLong(b.ms)} lagi</span><br><span class="small muted">Siapkan posisi: geser SL ke entry atau kurangi lot sebelum rilis.</span>`;
+  if(newsWasBlock!==b.block){newsWasBlock=b.block;render()}}
+setInterval(newsTick,1000);setInterval(loadNews,10*60e3);
+
+/* ===== bagikan sinyal sebagai gambar ===== */
+async function shareSignal(){
+  if(!last||!last.p)return;const {p,a,tf}=last,dir=a.shown==="WAIT"?null:a.shown;if(!dir)return;
+  const W=1080,H=1350,cv=document.createElement("canvas");cv.width=W;cv.height=H;const g=cv.getContext("2d");
+  try{await document.fonts.load("800 60px 'Plus Jakarta Sans'")}catch(e){}
+  const F=(w,sz)=>`${w} ${sz}px 'Plus Jakarta Sans',system-ui,sans-serif`,col=dir==="BUY"?"#3fbf7f":"#e5484d";
+  g.fillStyle="#121512";g.fillRect(0,0,W,H);
+  const gr=g.createRadialGradient(W,0,50,W,0,900);gr.addColorStop(0,dir==="BUY"?"rgba(63,191,127,.25)":"rgba(229,72,77,.25)");gr.addColorStop(1,"rgba(0,0,0,0)");g.fillStyle=gr;g.fillRect(0,0,W,H);
+  // logo
+  g.save();g.translate(70,70);g.scale(.32,.32);g.lineWidth=30;g.strokeStyle="#63d297";g.lineJoin="round";g.stroke(new Path2D("M15 15H140A156.5 156.5 0 0 1 140 328H15Z"));
+  g.fillStyle="#fff";[[87,159,10,138],[69,202,46,58],[147,114,10,160],[129,153,46,75]].forEach(r=>g.fillRect(...r));g.fillStyle="#63d297";[[207,54,10,175],[189,89,46,99]].forEach(r=>g.fillRect(...r));g.restore();
+  g.fillStyle="#fff";g.font=F(800,52);g.textBaseline="alphabetic";g.fillText("Dirmu",190,128);const wD=g.measureText("Dirmu").width;g.fillStyle="#63d297";g.fillText("FX",190+wD,128);
+  g.fillStyle="#9aa39a";g.font=F(600,24);g.fillText("TRADE · SIGNAL ROOM",192,165);
+  // pair & arah
+  g.fillStyle="#9aa39a";g.font=F(600,34);g.fillText(SYMS[S.sym].name+" · "+tfName(tf),70,300);
+  g.fillStyle="#fff";g.font=F(800,96);g.fillText(S.sym,70,400);
+  g.font=F(800,64);const bw=g.measureText(dir).width+64;g.fillStyle=col;g.beginPath();g.roundRect(70,440,bw,96,20);g.fill();g.fillStyle="#0b0e0b";g.fillText(dir,102,511);
+  g.fillStyle="#9aa39a";g.font=F(600,30);const when=new Date(a.shownT||Date.now());g.fillText(when.toLocaleDateString("id-ID",{weekday:"long",day:"numeric",month:"long"})+" · "+hm(when.getTime())+" "+tzName,70,600);
+  // level
+  const rows=[["Entry",p.entry,"#ffffff"],["Stop loss",p.sl,"#e5484d"],["SL+ (1:1)",p.be,"#e3b85c"],["TP 1 (1:2)",p.tp1,"#3fbf7f"],["TP MAX (1:3)",p.tp2,"#3fbf7f"]];
+  rows.forEach((r,k)=>{const y=650+k*106;g.fillStyle="#1b201b";g.beginPath();g.roundRect(70,y,W-140,92,18);g.fill();g.fillStyle="#9aa39a";g.font=F(600,32);g.fillText(r[0],105,y+58);g.fillStyle=r[2];g.font=F(800,44);g.textAlign="right";g.fillText(fx(r[1]),W-105,y+61);g.textAlign="left"});
+  g.fillStyle="#7d857d";g.font=F(500,24);g.fillText("Bukan saran keuangan. Selalu pakai stop loss & kelola risiko.",70,H-110);
+  g.fillStyle="#63d297";g.font=F(700,32);g.fillText("dirmufx.github.io",70,H-62);
+  const blob=await new Promise(r=>cv.toBlob(r,"image/png")),file=new File([blob],`DirmuFX-${S.sym}-${dir}.png`,{type:"image/png"});
+  const txt=`${dir==="BUY"?"🟢":"🔴"} ${dir} ${S.sym} · ${tfName(tf)}\nEntry ${fx(p.entry)} · SL ${fx(p.sl)} · TP1 ${fx(p.tp1)} · TP MAX ${fx(p.tp2)}\nSignal Room DirmuFX: https://dirmufx.github.io`;
+  try{if(navigator.canShare&&navigator.canShare({files:[file]})){await navigator.share({files:[file],text:txt});return}}catch(e){if(e&&e.name==="AbortError")return}
+  const url=URL.createObjectURL(blob),el=document.createElement("a");el.href=url;el.download=file.name;document.body.appendChild(el);el.click();el.remove();setTimeout(()=>URL.revokeObjectURL(url),4000);
 }
 function clearAll(msg){last=null;["lvE","lvSL","lvBE","lvTP1","lvTP2","lot","riskusd","rewusd"].forEach(i=>$(i).textContent="—");$("sigword").textContent="—";$("sigstr").textContent="0%";$("sigbar").style.width=0;$("indTbl").innerHTML="";$("lvlTbl").innerHTML="";$("sigwhy").textContent="";$("lastpx").textContent="—";renderMTF();draw(msg)}
 function lotCalc(){
@@ -2048,19 +2182,14 @@ async function refresh(force){
   if(!currentData())render();
   try{await loadLive(S.sym,S.tf,force);if(HTF[S.tf])await loadLive(S.sym,HTF[S.tf],force).catch(()=>{});S.lastAt=Date.now();setStatus("Update "+hm(S.lastAt))}
   catch(e){S.err=e.message||"Gagal memuat data. Cek koneksi internet.";setStatus(S.err,true)}
-  S.loading=false;render();
+  S.loading=false;render();loadMTX(force).then(()=>{try{renderHist()}catch(e){}});
 }
 let timer=null;
 function schedule(){clearInterval(timer);if(S.every>0)timer=setInterval(()=>{if(document.visibilityState==="visible")refresh(true)},S.every*60000)}
 document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible"&&mode()==="live"&&S.lastAt&&Date.now()-S.lastAt>S.every*60000&&S.every>0)refresh(true)});
 
-$("mtfBtn").addEventListener("click",async()=>{
-  const b=$("mtfBtn");b.disabled=true;const todo=TFS.map(t=>t[1]).filter(m=>{const c=S.live[S.sym+"|"+m];return!c||Date.now()-c.at>300000});
-  for(let i=0;i<todo.length;i++){b.textContent=`Memuat ${tfName(todo[i])} (${i+1}/${todo.length})…`;
-    try{await loadLive(S.sym,todo[i],true)}catch(e){setStatus(e.message,true);break}
-    renderMTF();if(i<todo.length-1)await new Promise(r=>setTimeout(r,250))}
-  b.textContent="Muat semua TF";b.disabled=false;
-});
+$("mtfBtn").addEventListener("click",()=>loadMTX(true));
+$("shareBtn").addEventListener("click",()=>shareSignal().catch(e=>alert("Gagal membuat gambar: "+e.message)));
 
 setInterval(()=>{const tf=currentTf()*60,now=Date.now()/1000+(tf===604800?259200:0),r=Math.ceil(tf-(now%tf)),dd=Math.floor(r/86400),h=Math.floor(r%86400/3600),m=Math.floor(r%3600/60),s=r%60;
   $("cdown").textContent=(dd?dd+" hari ":"")+(h||dd?h+":":"")+String(m).padStart(2,"0")+":"+String(s).padStart(2,"0");
@@ -2340,7 +2469,7 @@ function notifyCheck(a,tf,p){
 
 /* ================= kalender ekonomi (gaya Forex Factory) ================= */
 const FF_CUR=["USD","EUR","GBP","JPY","AUD","CAD","CHF","NZD","CNY"],FF_IMP=[["High","Tinggi"],["Medium","Sedang"],["Low","Rendah"]];
-const CAL={items:null,src:"",f:(()=>{try{const v=JSON.parse(store.get("dfx-calf")||"null");if(v&&v.imp&&v.cur)return v}catch(e){}return{imp:["High","Medium"],cur:FF_CUR.slice()}})()};
+const CAL={items:null,src:"",showPast:false,f:(()=>{try{const v=JSON.parse(store.get("dfx-calf")||"null");if(v&&v.imp&&v.cur)return v}catch(e){}return{imp:["High","Medium"],cur:FF_CUR.slice()}})()};
 const ffMap=j=>j.map(x=>({ts:Date.parse(x.date),title:x.title,cur:x.country,imp:x.impact,forecast:x.forecast||"",previous:x.previous||"",actual:x.actual||"",bw:x.bw||0,allDay:!!x.allDay})).filter(x=>!isNaN(x.ts));
 async function ffGet(url){const r=await fetch(url,{cache:"no-store"});if(!r.ok)throw 0;const j=await r.json();if(!Array.isArray(j)||!j.length)throw 0;return ffMap(j)}
 async function loadCal(){
@@ -2385,16 +2514,19 @@ function renderCalList(){
       <div class="when">${dayLabel(n.ts)[0]}, ${hm(n.ts)} ${tzName}</div>
       <div class="big" data-nts="${n.ts}">${live?"RILIS":cdLong(ms)}<small>${live?"volatilitas tinggi":"lagi"}</small></div>
       ${n.forecast||n.previous?`<div class="fp">${n.forecast?`<span class="pill">Prakiraan <b>${esc(n.forecast)}</b></span>`:""}${n.previous?`<span class="pill">Sebelumnya <b>${esc(n.previous)}</b></span>`:""}</div>`:""}`}
-  if(!rows.length){list.innerHTML='<div class="calempty">Tidak ada berita untuk filter ini minggu ini.</div>';return}
-  let html="",lastDay="",nowDone=false;
-  rows.forEach(x=>{const [d1,d2]=dayLabel(x.ts);if(d1!==lastDay){html+=`<div class="ffday">${d1}${d2?`<span>${d2}</span>`:""}</div>`;lastDay=d1}
-    if(!nowDone&&x.ts+LIVE>now){nowDone=true;if(rows[0]!==x)html+=`<div class="ffnow">Sekarang ${hm(now)}</div>`}
+  const t0=new Date();t0.setHours(0,0,0,0);
+  const old=rows.filter(x=>x.ts<t0.getTime()),view=CAL.showPast?rows:rows.filter(x=>x.ts>=t0.getTime());
+  let html=old.length?`<button type="button" class="ffpast" id="ffPastBtn">${CAL.showPast?"Sembunyikan berita hari sebelumnya":"Lihat berita yang sudah lewat ("+old.length+")"}</button>`:"";
+  if(!view.length){list.innerHTML=html+'<div class="calempty">Belum ada jadwal berita untuk filter ini. Jadwal minggu depan biasanya muncul akhir pekan.</div>';const b0=$("ffPastBtn");if(b0)b0.onclick=()=>{CAL.showPast=!CAL.showPast;renderCalList()};return}
+  let lastDay="",nowDone=false;
+  view.forEach(x=>{const [d1,d2]=dayLabel(x.ts);if(d1!==lastDay){html+=`<div class="ffday">${d1}${d2?`<span>${d2}</span>`:""}</div>`;lastDay=d1}
+    if(!nowDone&&x.ts+LIVE>now){nowDone=true;if(view[0]!==x)html+=`<div class="ffnow">Sekarang ${hm(now)}</div>`}
     const ms=x.ts-now,cls=x.ts+LIVE<=now?" past":ms<SOON?" soon":"";
     const allDay=x.allDay||x.imp==="Holiday";
     html+=`<div class="ffr${cls}"><span class="tm">${allDay?"Semua":hm(x.ts)}</span><span class="cu"><i class="imp ${x.imp}" title="${x.imp}"></i>${x.cur}</span>
       <span class="fev">${esc(x.title)}${cls===" soon"?`<small data-ts="${x.ts}">${ms<=0?"sedang rilis":cdLong(ms)+" lagi"}</small>`:""}</span>
       <span class="r num act${x.bw===1?" better":x.bw===2?" worse":""}">${esc(x.actual)||"–"}</span><span class="r num">${esc(x.forecast)||"–"}</span><span class="r num">${esc(x.previous)||"–"}</span></div>`});
-  list.innerHTML=html;
+  list.innerHTML=html;const pb=$("ffPastBtn");if(pb)pb.onclick=()=>{CAL.showPast=!CAL.showPast;renderCalList()};
 }
 function tickCalNew(){
   if(S.view!=="kalender"||!CAL.items||CAL.src==="tv")return;
@@ -2405,6 +2537,7 @@ function tickCalNew(){
 setInterval(tickCalNew,1000);
 
 /* ================= boot ================= */
+setTimeout(loadNews,600);
 let booted=false;window.DFX_openApp=v=>{if(!booted){booted=true;schedule();refresh(false)}show(v)};
 })();
 

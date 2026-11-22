@@ -25,8 +25,8 @@ def grab_array(s, start):
             if depth == 0: return s[i:j + 1]
     raise ValueError("array tidak tertutup")
 
-def from_html():
-    s = get("https://www.forexfactory.com/calendar?week=this")
+def from_html(week="this"):
+    s = get("https://www.forexfactory.com/calendar?week=" + week)
     k = s.index("days:", s.index("calendarComponentStates[1]"))
     days = json.loads(grab_array(s, k))
     out = []
@@ -51,7 +51,15 @@ def from_json():
     return d
 
 try:
-    data = from_html(); src = "html"
+    data = from_html("this"); src = "html"
+    try:
+        nxt = from_html("next")
+        seen = {(x["title"], x["country"], x["date"]) for x in data}
+        data += [x for x in nxt if (x["title"], x["country"], x["date"]) not in seen]
+        src += "+next"
+    except Exception as ex2:
+        print("Minggu depan gagal:", ex2, file=sys.stderr)
+    data.sort(key=lambda x: x["date"])
 except Exception as ex:
     print("HTML gagal:", ex, file=sys.stderr)
     data = from_json(); src = "json"
