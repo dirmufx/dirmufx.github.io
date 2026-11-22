@@ -503,6 +503,62 @@ html{scroll-behavior:auto}
 #app .smcset input[type=checkbox]{width:20px;height:20px;accent-color:#2f6fd0;flex:0 0 auto}
 #app .smcset input[type=number]{width:84px;padding:7px 9px;border-radius:9px;border:1px solid var(--line);background:var(--panel);color:var(--fg);font:inherit;font-size:14.5px}
 #app .smcset .acts{display:flex;justify-content:space-between;gap:8px;margin-top:14px}
+
+#app .ffbar{padding:12px 12px 6px;border-bottom:1px solid var(--line);display:grid;grid-template-columns:minmax(0,1fr);gap:8px}
+#app .ffrow{display:flex;align-items:center;gap:10px;min-width:0}
+#app .fflbl{font-size:12px;color:var(--muted);width:66px;flex:0 0 auto}
+#app .ffchips{display:flex;gap:6px;min-width:0;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}#app .ffchips::-webkit-scrollbar{display:none}
+#app .ffscroll{overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
+#app .ffscroll::-webkit-scrollbar{display:none}
+#app .ffchips button{flex:0 0 auto;display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:var(--panel2);color:var(--muted);border-radius:8px;padding:6px 10px;font:600 13px/1 inherit;cursor:pointer}
+#app .ffchips button[aria-pressed="true"]{background:#1d2a3d;border-color:#2f6fd0;color:#fff}
+#app .imp{display:inline-block;width:13px;height:15px;border-radius:2px;position:relative;flex:0 0 auto}
+#app .imp::before{content:"";position:absolute;left:0;top:-3px;width:7px;height:4px;border-radius:2px 2px 0 0;background:inherit}
+#app .imp.High{background:#e5484d}#app .imp.Medium{background:#f08c2e}#app .imp.Low{background:#e8c547}#app .imp.Holiday,#app .imp.Non-Economic{background:#8b8f96}
+#app .ffhead{display:grid;grid-template-columns:50px 58px minmax(0,1fr) 72px 76px;gap:8px;padding:8px 12px;font-size:11.5px;color:var(--muted);background:var(--panel2);border-bottom:1px solid var(--line)}
+#app .ffhead .r,#app .ffr .r{text-align:right}
+#app .ffday{padding:9px 12px;font-size:13px;font-weight:700;background:#1a1f1a;border-bottom:1px solid var(--line);color:var(--fg)}
+#app .ffday span{font-weight:500;color:var(--muted);margin-left:6px}
+#app .ffr{display:grid;grid-template-columns:50px 58px minmax(0,1fr) 72px 76px;gap:8px;align-items:center;padding:10px 12px;border-bottom:1px solid var(--line);font-size:13.5px}
+#app .ffr .tm{font-variant-numeric:tabular-nums;font-weight:600}
+#app .ffr .cu{display:flex;align-items:center;gap:6px;font-weight:700;font-size:12.5px}
+#app .ffr .fev{font-weight:600;line-height:1.3;min-width:0}
+#app .ffr .fev small{display:block;font-weight:500;font-size:11.5px;color:var(--amber);margin-top:2px}
+#app .ffr .num{font-variant-numeric:tabular-nums}
+#app .ffr.past{opacity:.5}
+#app .ffr.soon{background:rgba(229,72,77,.08)}
+#app .ffnow{display:flex;align-items:center;gap:8px;padding:4px 12px;font-size:11px;font-weight:700;color:#e5484d}
+#app .ffnow::after{content:"";flex:1;height:1px;background:#e5484d}
+#app .calcard .calsrc{padding:10px 12px;font-size:11.5px;color:var(--muted)}
+@media(max-width:560px){#app .ffhead{grid-template-columns:46px 58px minmax(0,1fr);gap:8px}#app .ffhead span:nth-child(4),#app .ffhead span:nth-child(5){display:none}
+#app .ffr{grid-template-columns:46px 58px minmax(0,1fr) auto;grid-template-areas:"tm cu ev ev" ". . fp pv";row-gap:3px;column-gap:8px}
+#app .ffr .tm{grid-area:tm}#app .ffr .cu{grid-area:cu}#app .ffr .fev{grid-area:ev}
+#app .ffr .num{font-size:12px;color:var(--muted)}#app .ffr .num:nth-of-type(4){grid-area:fp;text-align:left}#app .ffr .num:nth-of-type(5){grid-area:pv}
+#app .ffr .num:nth-of-type(4)::before{content:"Prakiraan ";opacity:.75}#app .ffr .num:nth-of-type(5)::before{content:"Sebelumnya ";opacity:.75}}
+
+#app .fsum{margin:10px 0 0;font-size:15px;line-height:1.6;max-width:70ch}
+#app .fnow{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+#app .fnow span{background:var(--panel2);border:1px solid var(--line);border-radius:9px;padding:6px 10px;font-size:12.5px;color:var(--muted)}
+#app .fnow b{color:var(--fg);font-variant-numeric:tabular-nums}
+#app .fplan{display:grid;gap:10px}
+#app .fplan div{border-left:3px solid var(--line);padding:4px 0 4px 12px}
+#app .fplan div.up{border-color:var(--up)}#app .fplan div.down{border-color:var(--down)}#app .fplan div.flat{border-color:#5b9cf5}
+#app .fplan h3{margin:0 0 3px;font-size:14.5px}
+#app .fplan p{margin:0;font-size:14px;line-height:1.55;color:var(--muted)}
+#app .fagenda{display:grid}
+#app .fagenda div{display:grid;grid-template-columns:96px minmax(0,1fr);gap:10px;padding:10px 0;border-bottom:1px solid var(--line)}
+#app .fagenda div:last-child{border-bottom:0}
+#app .fagenda .d{font-weight:700;font-size:13px;font-variant-numeric:tabular-nums}
+#app .fagenda .d small{display:block;font-weight:500;color:var(--muted)}
+#app .fagenda b{font-size:14px}
+#app .fagenda p{margin:2px 0 0;font-size:13px;color:var(--muted);line-height:1.5}
+#app #fMacro td.num{white-space:nowrap}
+#app .fnews{display:grid}
+#app .fnews a{display:block;padding:11px 0;border-bottom:1px solid var(--line);color:inherit;text-decoration:none}
+#app .fnews a:last-child{border-bottom:0}
+#app .fnews .m{font-size:12px;color:var(--muted)}#app .fnews .m b{color:#5b9cf5;font-weight:600;margin-left:6px}
+#app .fnews h3{margin:3px 0 2px;font-size:14.5px;line-height:1.4}
+#app .fnews p{margin:0;font-size:13px;color:var(--muted);line-height:1.5}
 </style>
 </head>
 <body>
@@ -1030,7 +1086,6 @@ html{scroll-behavior:auto}
     </div>
     <nav class="tabs" role="tablist">
       <button class="tab" role="tab" data-v="analisa" aria-selected="true">Analisa</button>
-      <button class="tab" role="tab" data-v="berita" aria-selected="false">Berita</button>
       <button class="tab" role="tab" data-v="kalender" aria-selected="false">Kalender</button>
       <button class="tab" role="tab" data-v="fundamental" aria-selected="false">Fundamental</button>
       <button class="tab" role="tab" data-v="member" aria-selected="false" style="color:var(--up)">Gabung Member</button>
@@ -1063,7 +1118,7 @@ html{scroll-behavior:auto}
           <button class="btn primary" id="saveSet">Simpan</button>
           <span class="small muted" id="setMsg"></span>
         </div>
-        <p class="note" style="margin:0">Semua data gratis tanpa API key. Chart, berita, dan kalender dari TradingView. Sinyal DirmuFX dihitung dari data Binance (emas memakai PAXG yang disesuaikan ke harga emas spot). Fokus hanya XAUUSD.</p>
+        <p class="note" style="margin:0">Semua data gratis tanpa API key. Chart dan kalender dari TradingView. Sinyal DirmuFX dihitung dari data Binance (emas memakai PAXG yang disesuaikan ke harga emas spot). Fokus hanya XAUUSD.</p>
       </div>
 
       <div class="importbox proonly" id="importbox" hidden style="margin-top:12px">
@@ -1168,75 +1223,57 @@ html{scroll-behavior:auto}
     </div>
   </section>
 
-  <!-- BERITA -->
-  <section class="view" id="v-berita" hidden>
-    <div class="card">
-      <h2>Berita live</h2>
-      <div class="tvwide" id="tvNews"></div>
-    </div>
-    <div class="ibstrip ibonly">
-      <p>Ada berita besar? Siapkan akun di <b class="brokerName"></b> sebelum volatilitas datang.</p>
-      <a class="btn cta ibLink" target="_blank" rel="noopener">Buka akun</a>
-    </div>
-    <div class="card">
-      <h2>Sumber lain</h2>
-      <div class="links">
-        <a href="https://www.forexfactory.com/news" target="_blank" rel="noopener">Forex Factory<span>Berita &amp; kalender</span></a>
-        <a href="https://www.fxstreet.com/markets/commodities/metals/gold" target="_blank" rel="noopener">FXStreet<span>Berita emas</span></a>
-        <a href="https://www.kitco.com/news/" target="_blank" rel="noopener">Kitco<span>Logam mulia</span></a>
-        <a href="https://www.investing.com/commodities/gold-news" target="_blank" rel="noopener">Investing.com<span>Berita emas</span></a>
-        <a href="https://www.tradingview.com/symbols/XAUUSD/" target="_blank" rel="noopener">TradingView<span>Chart XAUUSD</span></a>
-        <a href="https://www.cmegroup.com/markets/interest-rates/cme-fedwatch-tool.html" target="_blank" rel="noopener">CME FedWatch<span>Peluang suku bunga Fed</span></a>
-      </div>
-    </div>
-  </section>
-
   <!-- KALENDER -->
   <section class="view" id="v-kalender" hidden>
     <div class="nextcard" id="calNext"></div>
     <div class="card calcard">
-      <div class="calhead">
-        <div class="calseg" role="tablist">
-          <button role="tab" id="calUp" aria-selected="true">Akan datang <span id="calUpN" class="cnt">0</span></button>
-          <button role="tab" id="calPast" aria-selected="false">Sudah lewat <span id="calPastN" class="cnt">0</span></button>
-        </div>
-        <span class="calsrc" id="calSrc"></span>
+      <div class="ffbar">
+        <div class="ffrow"><span class="fflbl">Dampak</span><div class="ffchips" id="ffImp"></div></div>
+        <div class="ffrow"><span class="fflbl">Mata uang</span><div class="ffchips ffscroll" id="ffCur"></div></div>
       </div>
+      <div class="ffhead"><span>Jam</span><span>Mata uang</span><span>Berita</span><span class="r">Prakiraan</span><span class="r">Sebelumnya</span></div>
       <div id="calList"></div>
       <div class="tvwide" id="tvCal" hidden></div>
+      <div class="calsrc" id="calSrc"></div>
     </div>
-    <p class="note" style="margin:0 4px">Hanya berita Amerika (USD) berdampak tinggi. Jam mengikuti zona waktu HP kamu. Hindari entry 30 menit sebelum dan sesudah rilis.</p>
+    <p class="note" style="margin:0 4px">Jam mengikuti zona waktu HP kamu. Merah = dampak tinggi, oranye = sedang, kuning = rendah. Hindari entry 30 menit sebelum dan sesudah berita merah.</p>
   </section>
 
   <!-- FUNDAMENTAL -->
   <section class="view" id="v-fundamental" hidden>
     <div class="card">
       <h2 id="fTitle">Bias fundamental</h2>
-      <div class="bias"><span class="biasword" id="fBias"></span><span class="chip warn">Snapshot 2 Nov 2026</span></div>
-      <p class="note" id="fSum" style="margin:8px 0 0;max-width:70ch"></p>
+      <div class="bias"><span class="biasword" id="fBias"></span><span class="chip warn" id="fDate"></span></div>
+      <p class="fsum" id="fSum"></p>
+      <div class="fnow" id="fNow"></div>
+    </div>
+    <div class="card" id="fNewsCard" hidden>
+      <h2>Berita terbaru</h2>
+      <div class="fnews" id="fNews"></div>
+    </div>
+    <div class="card">
+      <h2>Artinya untuk trading</h2>
+      <div class="fplan" id="fPlan"></div>
     </div>
     <div class="card">
       <h2>Faktor penggerak</h2>
+      <p class="note" style="margin:0 0 4px">Hijau mendorong harga naik, merah menekan harga turun.</p>
       <div class="drivers" id="drvList"></div>
     </div>
-    <div class="card">
+    <div class="card" id="fLvCard">
       <h2>Zona harga penting</h2>
       <div class="lvlgrid" id="fLv"></div>
       <p class="note" id="fSrc" style="margin:10px 0 0"></p>
     </div>
     <div class="card">
-      <h2>Data makro AS (2 Nov 2026)</h2>
-      <table class="tbl">
-        <tr><th>Indikator</th><th class="r">Nilai</th></tr>
-        <tr><td>Fed Funds Rate</td><td class="r num">3.75–4.00%</td></tr>
-        <tr><td>Core PCE</td><td class="r num">3.1%</td></tr>
-        <tr><td>GDP AS Q3</td><td class="r num">3.4%</td></tr>
-        <tr><td>Yield US 10 tahun</td><td class="r num">4.93%</td></tr>
-        <tr><td>Yield US 2 tahun</td><td class="r num">4.58%</td></tr>
-        <tr><td>Brent</td><td class="r num">$117.64</td></tr>
-        <tr><td>Pengangguran AS</td><td class="r num">4.2%</td></tr>
-      </table>
-      <p class="note" style="margin:10px 0 0">Data AS menggerakkan semua pair yang ada USD-nya. Jadwal rilis berikutnya ada di tab Kalender.</p>
+      <h2>Agenda yang bisa menggerakkan harga</h2>
+      <div class="fagenda" id="fAgenda"></div>
+      <p class="note" style="margin:10px 0 0">Jam dalam WITA. Jadwal lengkap ada di tab Kalender.</p>
+    </div>
+    <div class="card">
+      <h2>Data makro AS terbaru</h2>
+      <table class="tbl" id="fMacro"></table>
+      <p class="note" style="margin:10px 0 0">Data AS menggerakkan emas, semua pair USD, dan crypto. Fundamental menentukan arah besar, sedangkan entry tetap pakai chart dan sinyal di tab Analisa.</p>
     </div>
   </section>
 
@@ -2055,7 +2092,7 @@ function parseCSV(txt){
 }
 
 /* ================= tabs ================= */
-const VIEWS=["analisa","berita","kalender","fundamental","member"];
+const VIEWS=["analisa","kalender","fundamental","member"];
 function show(v){if(!VIEWS.includes(v))v="analisa";S.view=v;VIEWS.forEach(x=>$("v-"+x).hidden=x!==v);document.querySelectorAll(".tab").forEach(t=>t.setAttribute("aria-selected",t.dataset.v===v));
   mountView(v)}
 document.querySelector(".tabs").addEventListener("click",e=>{const t=e.target.closest(".tab");if(!t)return;if(location.hash!=="#"+t.dataset.v)location.hash=t.dataset.v;else show(t.dataset.v);window.scrollTo({top:0})});
@@ -2099,49 +2136,122 @@ function mountAnalisa(){
 }
 function mountView(v){
   if(v==="analisa"){mountAnalisa();draw()}
-  if(v==="berita")mountTV("tvNews","timeline",{feedMode:"market",market:"forex",isTransparent:false,backgroundColor:"#131316",displayMode:"regular",width:"100%",height:640,colorTheme:"dark",theme:"dark",locale:"id"});
   if(v==="kalender")loadCal();
+  if(v==="fundamental")loadFund();
 }
 
 /* ================= fundamentals (manual snapshot) ================= */
-const FUND={
- XAUUSD:{name:"Emas (XAUUSD)",bias:"Bearish–Netral",col:"down",
-  sum:"Tekanan utama: ekspektasi kenaikan suku bunga Fed dan aksi jual paksa (margin call). Penahan: geopolitik Selat Hormuz, yield yang turun, dan RSI H4 yang sangat oversold.",
-  drv:[["Kebijakan Fed","down","Bearish","Fed menahan 3.75–4.00%, dua pejabat minta kenaikan. Pasar memperkirakan kenaikan Desember. Suku bunga tinggi membuat emas kurang menarik."],
-   ["Likuidasi & margin call","down","Bearish jk. pendek","Penurunan saham teknologi memaksa investor menjual emas dan perak untuk dana tunai."],
-   ["Geopolitik Selat Hormuz","up","Bullish","Serangan kapal tanker menaikkan risiko pasokan minyak dan permintaan aset aman."],
-   ["Minyak & inflasi","flat","Campuran","Brent 117.64 menjaga emas sebagai lindung nilai, tapi juga mendorong Fed lebih hawkish."],
-   ["Pemilu sela AS & NFP","flat","Volatilitas","Hasil pemilu dan NFP Jumat malam bisa memicu pergerakan besar dua arah. Kurangi lot menjelang rilis."]],
-  lv:[["Resistance 1","3971 – 3982"],["Support 1","3885 – 3904"],["Resistance 2","4074 – 4083"],["Support 2","3829 – 3849"],["Resistance 3","4104 – 4115"],["Support 3","3780 – 3800"]],
-  src:"Sumber: Mitrade, 2 Nov 2026. Low tahunan 3879.90."},
- _forex:{name:"forex (pair USD)",bias:"Ikuti arah dolar AS",col:"flat",
-  sum:"Pair mayor bergerak terutama karena perbedaan suku bunga dan data ekonomi antara Amerika dan negara pasangannya. Cek DXY dan kalender berita sebelum entry.",
-  drv:[["Dolar AS (DXY)","flat","Utama","DXY menguat biasanya menekan EURUSD, GBPUSD, AUDUSD dan mendorong USDJPY naik."],
-   ["Suku bunga bank sentral","flat","Utama","Fed, ECB, BoE, BoJ, dan RBA. Bank sentral yang lebih hawkish cenderung menguatkan mata uangnya."],
-   ["Data ekonomi","flat","Volatilitas","CPI, NFP, PMI, dan GDP. Bandingkan actual dengan forecast di tab Kalender."],
-   ["Sentimen risiko","flat","Campuran","Saat pasar takut, USD dan JPY cenderung menguat. Saat pasar optimis, AUD menguat."]],
-  lv:[],src:"Ringkasan umum. Untuk level harian, lihat halaman Analisa Harian."},
- _crypto:{name:"crypto",bias:"Ikuti sentimen & likuiditas",col:"flat",
-  sum:"Crypto buka 24 jam, 7 hari. Harga dipengaruhi arus dana (termasuk ETF Bitcoin/Ethereum), likuiditas dolar, suku bunga, dan sentimen pasar. Altcoin biasanya mengikuti arah Bitcoin dengan gerakan lebih besar.",
-  drv:[["Arah Bitcoin","flat","Utama","BTC jadi patokan. Saat BTC turun tajam, altcoin biasanya turun lebih dalam."],
-   ["Arus dana ETF","flat","Utama","Aliran dana masuk ke ETF spot cenderung mendukung harga, aliran keluar menekan."],
-   ["Suku bunga & dolar","flat","Campuran","Kebijakan Fed yang longgar umumnya positif untuk crypto. Dolar kuat biasanya menekan."],
-   ["Likuidasi futures","flat","Volatilitas","Leverage tinggi di pasar futures bisa memicu lonjakan atau jatuh tiba-tiba. Selalu pakai stop loss."]],
-  lv:[],src:"Ringkasan umum. Untuk level harian, lihat halaman Analisa Harian."}
-
+let FUND_DATE="Diperbarui 22 Nov 2026",FUND_NEWS=[];
+let FUND_MACRO=[["Suku bunga Fed","3,75–4,00%","Naik 25 bp di September, ditahan di Oktober"],["Peluang Fed naik 9 Des","± 91–95%","Menurut harga pasar berjangka"],["Inflasi PCE","3,6%","Masih jauh di atas target 2%"],["CPI Oktober","+0,4% m/m","Inti +0,3%"],["Tenaga kerja (NFP) Okt","+165 ribu","Lebih kuat dari perkiraan"],["Yield obligasi AS 10 th","± 5,0%","Tertinggi dalam beberapa tahun"],["Indeks dolar (DXY)","± 103,5","Tertinggi 19 bulan"],["Minyak Brent","± $92","Turun dari ± $117 awal November"]];
+let AG_USD=[["25 Nov","21:30","PCE & GDP AS","Data inflasi favorit Fed. Angka tinggi menguatkan dolar dan menekan emas serta crypto."],["26–27 Nov","","Libur Thanksgiving AS","Pasar AS tutup lalu buka setengah hari. Volume tipis, harga bisa bergerak liar."],["4 Des","21:30","NFP November","Data tenaga kerja. Kuat berarti Fed makin yakin naikkan bunga."],["10 Des","03:00","Keputusan Fed","Pasar sudah memperkirakan naik 25 bp. Kejutan ada di naik 50 bp atau batal naik."],["10 Des","21:30","CPI November","Inflasi bulanan. Jadi patokan arah bunga tahun depan."]];
+let FUND={
+ XAUUSD:{name:"Emas (XAUUSD)",bias:"Bearish",col:"down",
+  sum:"Emas sedang tertekan kuat. Pekan lalu turun hampir 9%, terburuk sejak Maret, dan sempat jatuh ke sekitar $3.525. Penyebab utamanya: Fed hampir pasti menaikkan suku bunga 9 Desember, dolar dan yield AS naik tinggi, serta investor menjual emas untuk menutup rugi di saham teknologi (AI).",
+  now:[["Harga terakhir","± $3.525–3.540"],["Rekor tertinggi","$5.594 (29 Jan 2026)"],["Turun dari puncak","± 36%"]],
+  plan:[["down","Arah utama: cari peluang SELL","Selama di bawah $3.625–3.650, setiap kenaikan lebih aman dianggap koreksi untuk jual lagi, bukan awal tren naik."],
+   ["up","Kapan boleh BUY","Hanya scalping pantulan di support kuat ($3.500 atau $3.450) dengan konfirmasi sweep/MSS di chart. RSI sudah sangat jenuh jual, jadi pantulan tajam bisa terjadi kapan saja."],
+   ["flat","Manajemen risiko","Volatilitas sangat tinggi. Pakai lot lebih kecil dari biasa, SL wajib, dan hindari entry menjelang PCE 25 Nov dan keputusan Fed 10 Des."]],
+  drv:[["Suku bunga Fed naik","down","Bearish","Fed sudah naik di September dan notulen rapat Oktober menunjukkan hampir semua pejabat ingin naik lagi. Bunga tinggi membuat emas, yang tidak memberi bunga, kurang menarik."],
+   ["Dolar & yield AS kuat","down","Bearish","DXY di level tertinggi 19 bulan dan yield 10 tahun sekitar 5%. Emas dihargai dalam dolar, jadi dolar kuat biasanya menekan emas."],
+   ["Aksi jual paksa","down","Bearish jk. pendek","Saham teknologi/AI anjlok, investor menjual emas untuk menutup kerugian (margin call). Tekanan ini bisa reda cepat begitu pasar saham tenang."],
+   ["Pembelian bank sentral","up","Bullish jk. panjang","Bank sentral membeli 321 ton di kuartal 3 dan China terus menambah cadangan. Ini menahan penurunan dalam jangka panjang."],
+   ["Target bank besar","up","Penahan","Semua bank besar masih memasang target akhir 2026 di atas harga sekarang (Goldman $4.150, BofA $4.000). Banyak yang melihat ini koreksi besar, bukan akhir tren."],
+   ["Minyak turun","flat","Campuran","Brent turun dari ± $117 ke ± $92. Inflasi bisa mereda dan Fed jadi sedikit lebih lunak, tapi minat emas sebagai lindung nilai juga berkurang."]],
+  lv:[["Resistance 1","3.600"],["Support 1","3.500"],["Resistance 2","3.625 – 3.650"],["Support 2","3.450"],["Resistance 3","3.750"],["Support 3","3.300"]],
+  src:"Level dari ringkasan analis pasar per 20 Nov 2026. Selalu cocokkan dengan chart terbaru.",ag:AG_USD},
+ EURUSD:{name:"EURUSD",bias:"Bearish",col:"down",
+  sum:"Euro tertekan karena dolar AS sangat kuat. Fed bersiap menaikkan bunga, sementara ekonomi zona euro melambat (GDP kuartal 3 hanya +0,4%). Selisih bunga yang melebar membuat dana lebih memilih dolar.",
+  now:[["Harga terakhir","± 1,0970"],["Level kunci","1,1000"]],
+  plan:[["down","Arah utama: cari peluang SELL","Selama di bawah 1,1000–1,1130, kenaikan lebih aman dipakai untuk mencari posisi jual."],
+   ["up","Kapan boleh BUY","Jika data AS (PCE, NFP) jauh lebih lemah dari perkiraan dan dolar berbalik turun. Tunggu harga kembali di atas 1,1000."],
+   ["flat","Manajemen risiko","Volatilitas naik saat jam rilis data AS (21:30 WITA) dan pidato ECB."]],
+  drv:[["Fed vs ECB","down","Bearish","Fed condong naikkan bunga, ECB lebih hati-hati. Selisih bunga menguntungkan dolar."],
+   ["Dolar AS (DXY)","down","Bearish","DXY di tertinggi 19 bulan. EURUSD bergerak hampir berlawanan dengan DXY."],
+   ["Ekonomi zona euro","down","Lemah","Pertumbuhan melambat dan lapangan kerja stagnan."],
+   ["Sentimen risiko","flat","Campuran","Saat pasar panik, dana lari ke dolar sehingga EURUSD ikut tertekan."]],
+  lv:[["Resistance 1","1,1000"],["Support 1","1,0950"],["Resistance 2","1,1130"],["Support 2","1,0900"]],
+  src:"Perkiraan zona dari harga penutupan 20 Nov 2026. Cocokkan dengan chart terbaru.",ag:AG_USD},
+ GBPUSD:{name:"GBPUSD",bias:"Bearish–Netral",col:"down",
+  sum:"Pound ikut melemah terhadap dolar yang sedang kuat, turun dari sekitar 1,3350 ke 1,3080 dalam dua minggu. Arah ke depan banyak ditentukan data AS dan keputusan Bank of England 17 Desember.",
+  now:[["Harga terakhir","± 1,3080"]],
+  plan:[["down","Arah utama: condong SELL","Selama di bawah 1,3150–1,3220, tekanan turun masih dominan."],
+   ["up","Kapan boleh BUY","Jika dolar melemah setelah data AS atau BoE memberi sinyal tidak akan memangkas bunga."],
+   ["flat","Manajemen risiko","Waspadai rilis data Inggris (CPI, GDP) dan data AS di jam yang sama."]],
+  drv:[["Dolar AS kuat","down","Bearish","Penguatan dolar menekan hampir semua mata uang, termasuk pound."],
+   ["Bank of England","flat","Menunggu","Keputusan 17 Desember. Nada hawkish bisa menahan pound."],
+   ["Sentimen risiko","flat","Campuran","Pound cenderung melemah saat pasar global panik."]],
+  lv:[["Resistance 1","1,3150"],["Support 1","1,3050"],["Resistance 2","1,3220"],["Support 2","1,3000"]],
+  src:"Perkiraan zona dari harga penutupan 20 Nov 2026. Cocokkan dengan chart terbaru.",ag:AG_USD.concat([["17 Des","","Keputusan BoE","Arah bunga Inggris."]])},
+ USDJPY:{name:"USDJPY",bias:"Netral (rawan turun)",col:"flat",
+  sum:"USDJPY tinggi di sekitar 158–160 karena bunga AS jauh di atas Jepang. Tapi inflasi produsen Jepang 7,1% membuat Bank of Japan mungkin naikkan bunga Desember, dan di dekat 160 Jepang pernah turun tangan menguatkan yen.",
+  now:[["Harga terakhir","± 158,5"],["Tertinggi 52 minggu","164,00"]],
+  plan:[["flat","Arah utama: hati-hati di atas 159","Ruang naik terbatas karena risiko intervensi Jepang. Lebih aman menunggu konfirmasi di chart."],
+   ["down","Peluang SELL","Jika BoJ memberi sinyal naik bunga atau ada kabar intervensi, penurunan bisa cepat dan dalam."],
+   ["up","Peluang BUY","Jika data AS kuat dan Fed naik 50 bp, dolar bisa mendorong USDJPY kembali ke 160."]],
+  drv:[["Selisih bunga AS–Jepang","up","Bullish","Bunga AS jauh lebih tinggi, jadi dana masih memilih dolar."],
+   ["Bank of Japan","down","Bearish","Keputusan 18 Desember. Kenaikan bunga BoJ menguatkan yen."],
+   ["Risiko intervensi","down","Waspada","Di sekitar 160, Kementerian Keuangan Jepang pernah membeli yen untuk menahan pelemahan."]],
+  lv:[["Resistance 1","159,85"],["Support 1","158,00"],["Resistance 2","160,00"],["Support 2","157,00"]],
+  src:"Perkiraan zona dari harga penutupan 20 Nov 2026. Cocokkan dengan chart terbaru.",ag:AG_USD.concat([["18 Des","","Keputusan BoJ","Kemungkinan naik bunga, bisa menguatkan yen."]])},
+ _forex:{name:"forex (pair USD)",bias:"Dolar AS kuat",col:"down",
+  sum:"Saat ini dolar AS sedang menguat luas: DXY di tertinggi 19 bulan karena Fed hampir pasti menaikkan bunga 9 Desember. Pair seperti AUDUSD cenderung tertekan, apalagi saat pasar saham sedang jatuh.",
+  now:[["DXY","± 103,5"]],
+  plan:[["down","Arah utama","Pair xxxUSD (AUDUSD, EURUSD, GBPUSD) condong turun selama dolar kuat."],
+   ["up","Kapan berbalik","Jika data AS mulai lemah atau Fed memberi sinyal berhenti menaikkan bunga."],
+   ["flat","Manajemen risiko","Kurangi lot saat rilis data AS 21:30 WITA."]],
+  drv:[["Dolar AS (DXY)","down","Utama","DXY menguat biasanya menekan EURUSD, GBPUSD, AUDUSD dan mendorong USDJPY naik."],
+   ["Suku bunga bank sentral","flat","Utama","Bank sentral yang lebih hawkish cenderung menguatkan mata uangnya."],
+   ["Sentimen risiko","down","Campuran","Saat pasar takut, USD dan JPY menguat, AUD dan NZD melemah."]],
+  lv:[],src:"",ag:AG_USD},
+ BTCUSD:{name:"Bitcoin (BTCUSD)",bias:"Bearish",col:"down",
+  sum:"Bitcoin turun lebih dari 20% di bulan November dan sempat jatuh ke sekitar $55.150, terendah sejak September 2024, sebelum memantul ke sekitar $60.000. Penyebabnya: dana keluar besar dari ETF Bitcoin, saham teknologi anjlok, dan Fed bersiap menaikkan bunga.",
+  now:[["Harga terakhir","± $60.000"],["Terendah pekan ini","± $55.150"],["ETF November","−$3,5 miliar"]],
+  plan:[["down","Arah utama: hati-hati, condong SELL","Selama di bawah $62.000–65.000, kenaikan lebih aman dianggap pantulan."],
+   ["up","Kapan boleh BUY","Pantulan dari $55.000–58.700 dengan konfirmasi di chart, atau saat arus ETF kembali masuk beberapa hari berturut-turut."],
+   ["flat","Manajemen risiko","Likuidasi futures lebih dari $1 miliar per hari. Harga bisa naik-turun 5–10% sangat cepat. SL wajib."]],
+  drv:[["Arus dana ETF","down","Bearish","ETF Bitcoin AS kehilangan ± $3,5 miliar di November, termasuk rekor keluar harian IBIT $541 juta."],
+   ["Suku bunga Fed naik","down","Bearish","Bunga tinggi membuat aset tanpa imbal hasil seperti Bitcoin kurang menarik."],
+   ["Saham teknologi/AI","down","Bearish","Bitcoin bergerak searah Nasdaq. Saham teknologi jatuh, crypto ikut tertekan."],
+   ["Likuidasi futures","flat","Volatilitas","Posisi leverage yang dipaksa tutup mempercepat penurunan dan juga pantulan."]],
+  lv:[["Resistance 1","62.000"],["Support 1","58.700"],["Resistance 2","65.000"],["Support 2","55.150"]],
+  src:"Level dari berita pasar 20–21 Nov 2026. Cocokkan dengan chart terbaru.",ag:AG_USD},
+ _crypto:{name:"crypto",bias:"Bearish (ikut Bitcoin)",col:"down",
+  sum:"Seluruh pasar crypto sedang tertekan mengikuti Bitcoin yang turun lebih dari 20% di November. ETF Bitcoin dan Ether sama-sama mencatat dana keluar besar. Altcoin biasanya turun lebih dalam dari Bitcoin saat pasar panik.",
+  now:[["Bitcoin","± $60.000"],["ETF BTC+ETH pekan ini","−$1,47 miliar"]],
+  plan:[["down","Arah utama","Selama Bitcoin di bawah $62.000, altcoin lebih rawan turun."],
+   ["up","Kapan boleh BUY","Tunggu Bitcoin stabil dulu. Altcoin biasanya baru naik setelah Bitcoin berhenti turun."],
+   ["flat","Manajemen risiko","Gerakan altcoin bisa 2–3 kali lebih besar dari Bitcoin. Pakai lot kecil."]],
+  drv:[["Arah Bitcoin","down","Utama","BTC jadi patokan. Saat BTC turun tajam, altcoin biasanya turun lebih dalam."],
+   ["Arus dana ETF","down","Bearish","Dana keluar dari ETF Bitcoin dan Ether menekan harga."],
+   ["Suku bunga & dolar","down","Bearish","Fed yang menaikkan bunga dan dolar kuat biasanya menekan crypto."],
+   ["Likuidasi futures","flat","Volatilitas","Leverage tinggi bisa memicu lonjakan atau jatuh tiba-tiba."]],
+  lv:[],src:"",ag:AG_USD}
 };
 function renderFund(){
   const g=(SYMS[S.sym]||{}).grp;
   const f=FUND[S.sym]||(g==="Crypto"?FUND._crypto:g==="Forex"?FUND._forex:FUND.XAUUSD);
-  $("fTitle").textContent="Bias fundamental "+f.name;
+  $("fTitle").textContent="Bias fundamental "+f.name;$("fDate").textContent=FUND_DATE;
   $("fBias").textContent=f.bias;$("fBias").style.color=f.col==="up"?"var(--up)":f.col==="down"?"var(--down)":"var(--amber)";
   $("fSum").textContent=f.sum;
+  $("fNow").innerHTML=(f.now||[]).map(x=>`<span>${x[0]} <b>${x[1]}</b></span>`).join("");
+  $("fPlan").innerHTML=(f.plan||[]).map(x=>`<div class="${x[0]}"><h3>${x[1]}</h3><p>${x[2]}</p></div>`).join("");
   $("drvList").innerHTML=f.drv.map(d=>`<div class="drv"><h3>${d[0]}</h3><span class="chip ${d[1]}">${d[2]}</span><p>${d[3]}</p></div>`).join("");
-  const lv=f.lv.filter(x=>x[0]);$("fLv").hidden=!lv.length;
+  const lv=f.lv.filter(x=>x[0]);$("fLvCard").hidden=!lv.length;
   $("fLv").innerHTML=lv.map(x=>`<div><div class="k">${x[0]}</div><div class="num">${x[1]}</div></div>`).join("");
   $("fSrc").textContent=f.src;
+  $("fAgenda").innerHTML=(f.ag||AG_USD).map(a=>`<div><span class="d">${a[0]}${a[1]?`<small>${a[1]} WITA</small>`:""}</span><span><b>${a[2]}</b><p>${a[3]}</p></span></div>`).join("");
+  $("fNewsCard").hidden=!FUND_NEWS.length;
+  $("fNews").innerHTML=FUND_NEWS.map(n=>`<a href="${esc(n[4]||"#")}" target="_blank" rel="noopener"><div class="m">${esc(n[0])}<b>${esc(n[2])}</b></div><h3>${esc(n[1])}</h3><p>${esc(n[3])}</p></a>`).join("");
+  $("fMacro").innerHTML='<tr><th>Indikator</th><th class="r">Nilai</th></tr>'+FUND_MACRO.map(m=>`<tr><td>${m[0]}<div class="note" style="margin:2px 0 0;font-size:12px">${m[2]}</div></td><td class="r num">${m[1]}</td></tr>`).join("");
 }
 renderFund();
+let fundLoaded=0;
+async function loadFund(){if(Date.now()-fundLoaded<30*60e3)return;fundLoaded=Date.now();
+  try{const r=await fetch("data/fundamental.json?h="+Math.floor(Date.now()/9e5),{cache:"no-store"});if(!r.ok)throw 0;const d=await r.json();
+    if(!d||!d.markets||!d.markets.XAUUSD)throw 0;
+    FUND_DATE="Diperbarui "+d.date;FUND_MACRO=d.macro||FUND_MACRO;AG_USD=d.agenda||AG_USD;FUND_NEWS=d.news||[];
+    const M={};for(const k in d.markets){const f=d.markets[k];f.ag=AG_USD.concat(f.agExtra||[]);f.lv=f.lv||[];f.drv=f.drv||[];M[k]=f}
+    FUND=Object.assign(FUND,M);renderFund()}catch(e){fundLoaded=0}}
 
 /* ================= AI (only when opened inside Claude) ================= */
 let sample=null,aiCtl=null;
@@ -2225,77 +2335,71 @@ function notifyCheck(a,tf,p){
   }
 }
 
-/* ================= kalender USD high impact ================= */
-const CAL_SNAP=[ // cadangan minggu 2–6 Nov 2026 (UTC)
- ["2026-11-02T15:00:00Z","ISM Manufacturing PMI","54.7","54.5"],
- ["2026-11-03T15:00:00Z","JOLTS Job Openings","7.12M","7.08M"],
- ["2026-11-04T13:15:00Z","ADP Non-Farm Employment","65K","90K"],
- ["2026-11-04T15:00:00Z","ISM Services PMI","54.8","54.9"],
- ["2026-11-05T13:30:00Z","Initial Jobless Claims","195K","194K"],
- ["2026-11-06T13:30:00Z","Non-Farm Payrolls","55K","29K"],
- ["2026-11-06T13:30:00Z","Unemployment Rate","4.2%","4.2%"],
- ["2026-11-06T13:30:00Z","Average Hourly Earnings m/m","0.3%","0.1%"],
- ["2026-11-06T15:00:00Z","UoM Consumer Sentiment (Prelim)","",""]
-].map(r=>({ts:Date.parse(r[0]),title:r[1],forecast:r[2],previous:r[3]}));
-const CAL={items:null,src:"",tab:"up"};
+/* ================= kalender ekonomi (gaya Forex Factory) ================= */
+const FF_CUR=["USD","EUR","GBP","JPY","AUD","CAD","CHF","NZD","CNY"],FF_IMP=[["High","Tinggi"],["Medium","Sedang"],["Low","Rendah"]];
+const CAL={items:null,src:"",f:(()=>{try{const v=JSON.parse(store.get("dfx-calf")||"null");if(v&&v.imp&&v.cur)return v}catch(e){}return{imp:["High","Medium"],cur:FF_CUR.slice()}})()};
+const ffMap=j=>j.map(x=>({ts:Date.parse(x.date),title:x.title,cur:x.country,imp:x.impact,forecast:x.forecast||"",previous:x.previous||""})).filter(x=>!isNaN(x.ts));
+async function ffGet(url){const r=await fetch(url,{cache:"no-store"});if(!r.ok)throw 0;const j=await r.json();if(!Array.isArray(j)||!j.length)throw 0;return ffMap(j)}
 async function loadCal(){
-  if(!CAL.items){
-    try{const c=JSON.parse(store.get("dfx-ffcal")||"null");if(c&&Date.now()-c.at<3*3600e3){CAL.items=c.items;CAL.src="Forex Factory"}}catch(e){}
-  }
+  if(!CAL.items){try{const c=JSON.parse(store.get("dfx-ffcal2")||"null");if(c&&Date.now()-c.at<2*3600e3){CAL.items=c.items;CAL.src="Forex Factory"}}catch(e){}}
   if(!CAL.items){
     renderCalList();
-    try{const r=await fetch("https://nfs.faireconomy.media/ff_calendar_thisweek.json",{cache:"no-store"});if(!r.ok)throw 0;const j=await r.json();
-      const items=j.filter(x=>x.country==="USD"&&x.impact==="High").map(x=>({ts:Date.parse(x.date),title:x.title,forecast:x.forecast||"",previous:x.previous||""})).filter(x=>!isNaN(x.ts));
-      if(!items.length)throw 0;CAL.items=items;CAL.src="Forex Factory";store.set("dfx-ffcal",JSON.stringify({at:Date.now(),items}))}
-    catch(e){
-      const weekEnd=Date.parse("2026-11-07T23:59:00Z");
-      if(Date.now()<=weekEnd){CAL.items=CAL_SNAP;CAL.src="jadwal tersimpan"}
-      else{CAL.items=[];CAL.src="tv"}
-    }
+    const hr=Math.floor(Date.now()/36e5);
+    for(const u of["data/ff_thisweek.json?h="+hr,"https://nfs.faireconomy.media/ff_calendar_thisweek.json"]){
+      try{CAL.items=await ffGet(u);CAL.src="Forex Factory";store.set("dfx-ffcal2",JSON.stringify({at:Date.now(),items:CAL.items}));break}catch(e){}}
+    if(!CAL.items){CAL.items=[];CAL.src="tv"}
   }
   renderCalList();
 }
+function ffChips(){
+  $("ffImp").innerHTML=FF_IMP.map(([k,l])=>`<button type="button" data-imp="${k}" aria-pressed="${CAL.f.imp.includes(k)}"><i class="imp ${k}"></i>${l}</button>`).join("");
+  $("ffCur").innerHTML=`<button type="button" data-cur="ALL" aria-pressed="${CAL.f.cur.length===FF_CUR.length}">Semua</button>`+FF_CUR.map(c=>`<button type="button" data-cur="${c}" aria-pressed="${CAL.f.cur.length!==FF_CUR.length&&CAL.f.cur.includes(c)}">${c}</button>`).join("");
+}
+function ffToggle(e){const b=e.target.closest("button");if(!b)return;const f=CAL.f;
+  if(b.dataset.imp){const k=b.dataset.imp;f.imp=f.imp.includes(k)?f.imp.filter(x=>x!==k):[...f.imp,k];if(!f.imp.length)f.imp=[k]}
+  if(b.dataset.cur){const c=b.dataset.cur;if(c==="ALL")f.cur=FF_CUR.slice();else if(f.cur.length===FF_CUR.length)f.cur=[c];else{f.cur=f.cur.includes(c)?f.cur.filter(x=>x!==c):[...f.cur,c];if(!f.cur.length)f.cur=FF_CUR.slice()}}
+  store.set("dfx-calf",JSON.stringify(f));renderCalList()}
+$("ffImp").addEventListener("click",ffToggle);$("ffCur").addEventListener("click",ffToggle);
 function dayLabel(ts){const d=new Date(ts),t=new Date();const k=x=>new Date(x.getFullYear(),x.getMonth(),x.getDate()).getTime();const diff=Math.round((k(d)-k(t))/864e5);
   const base=d.toLocaleDateString("id-ID",{weekday:"long",day:"numeric",month:"short"});return diff===0?["Hari ini",base]:diff===1?["Besok",base]:diff===-1?["Kemarin",base]:[base,""]}
 function cdLong(ms){const s=Math.max(0,Math.floor(ms/1000)),d=Math.floor(s/86400),h=Math.floor(s%86400/3600),m=Math.floor(s%3600/60),x=s%60;
   return d?`${d} hari ${h}j`:h?`${h}j ${String(m).padStart(2,"0")}m ${String(x).padStart(2,"0")}d`:`${String(m).padStart(2,"0")}:${String(x).padStart(2,"0")}`}
 function agoTxt(ms){const m=Math.floor(ms/60000);return m<60?`${m} mnt lalu`:m<1440?`${Math.floor(m/60)} jam lalu`:`${Math.floor(m/1440)} hari lalu`}
 function renderCalList(){
-  const list=$("calList"),next=$("calNext");
-  if(CAL.src==="tv"){list.innerHTML="";$("tvCal").hidden=false;next.hidden=true;document.querySelector(".calseg").hidden=true;$("calSrc").textContent="TradingView";
-    mountTV("tvCal","events",{colorTheme:"dark",theme:"dark",isTransparent:false,backgroundColor:"#131316",width:"100%",height:640,locale:"id",importanceFilter:"1",countryFilter:"us"});return}
+  const list=$("calList"),next=$("calNext");ffChips();
+  if(CAL.src==="tv"){list.innerHTML="";$("tvCal").hidden=false;next.hidden=true;document.querySelector(".ffhead").hidden=true;document.querySelector(".ffbar").hidden=true;$("calSrc").textContent="Sumber: TradingView";
+    mountTV("tvCal","events",{colorTheme:"dark",theme:"dark",isTransparent:false,backgroundColor:"#131316",width:"100%",height:640,locale:"id",importanceFilter:"0,1",countryFilter:"us,eu,gb,jp,au,ca,ch,nz,cn"});return}
   if(!CAL.items){list.innerHTML='<div class="calempty">Memuat kalender…</div>';next.hidden=true;return}
   const now=Date.now(),SOON=30*60e3,LIVE=15*60e3;
-  const up=CAL.items.filter(x=>x.ts+LIVE>now).sort((a,b)=>a.ts-b.ts);
-  const past=CAL.items.filter(x=>x.ts+LIVE<=now).sort((a,b)=>b.ts-a.ts);
-  $("calUpN").textContent=up.length;$("calPastN").textContent=past.length;
-  $("calSrc").textContent="Sumber: "+CAL.src;
-  // kartu "berikutnya"
-  const n=up[0];next.hidden=!n;
-  if(n){const same=up.filter(x=>x.ts===n.ts),ms=n.ts-now,live=ms<=0;
+  const all=CAL.items.slice().sort((a,b)=>a.ts-b.ts);
+  const rows=all.filter(x=>CAL.f.cur.includes(x.cur)&&(CAL.f.imp.includes(x.imp)||(x.imp==="Holiday"&&CAL.f.imp.includes("Low"))));
+  $("calSrc").textContent="Sumber: "+CAL.src+" · diperbarui otomatis tiap jam";
+  // kartu berita merah berikutnya
+  const hi=all.filter(x=>x.imp==="High"&&x.ts+LIVE>now&&CAL.f.cur.includes(x.cur)),n=hi[0];next.hidden=!n;
+  if(n){const same=hi.filter(x=>x.ts===n.ts),ms=n.ts-now,live=ms<=0;
     next.className="nextcard"+(ms<SOON?" soon":"");
-    next.innerHTML=`<div class="lbl">${live?"Sedang rilis":"Berita berikutnya"} · USD</div><h3>${esc(same.map(x=>x.title).join(" + "))}</h3>
+    next.innerHTML=`<div class="lbl">${live?"Sedang rilis":"Berita merah berikutnya"} · ${esc([...new Set(same.map(x=>x.cur))].join(", "))}</div><h3>${esc(same.map(x=>x.title).join(" + "))}</h3>
       <div class="when">${dayLabel(n.ts)[0]}, ${hm(n.ts)} ${tzName}</div>
       <div class="big" data-nts="${n.ts}">${live?"RILIS":cdLong(ms)}<small>${live?"volatilitas tinggi":"lagi"}</small></div>
       ${n.forecast||n.previous?`<div class="fp">${n.forecast?`<span class="pill">Prakiraan <b>${esc(n.forecast)}</b></span>`:""}${n.previous?`<span class="pill">Sebelumnya <b>${esc(n.previous)}</b></span>`:""}</div>`:""}`}
-  const rows=CAL.tab==="up"?up:past;
-  if(!rows.length){list.innerHTML=`<div class="calempty">${CAL.tab==="up"?"Tidak ada berita USD berdampak tinggi yang tersisa minggu ini.":"Belum ada berita yang lewat minggu ini."}</div>`;return}
-  let html="",lastDay="";
-  rows.forEach(x=>{const [d1,d2]=dayLabel(x.ts);if(d1!==lastDay){html+=`<div class="cday">${d1}<span>${d2}</span></div>`;lastDay=d1}
-    const ms=x.ts-now,cls=CAL.tab==="past"?" past":ms<SOON?" soon":"";
-    const vals=[x.forecast&&`<span>Prakiraan <b>${esc(x.forecast)}</b></span>`,x.previous&&`<span>Sebelumnya <b>${esc(x.previous)}</b></span>`].filter(Boolean).join("");
-    html+=`<div class="crow${cls}"><div class="t">${hm(x.ts)}</div><div><div class="nm">${esc(x.title)}</div>${vals?`<div class="vals">${vals}</div>`:""}</div>
-      <div class="right"><span class="flag">USD</span><span class="cdn" data-ts="${x.ts}">${CAL.tab==="past"?agoTxt(-ms):ms<=0?"rilis":cdLong(ms)}</span></div></div>`});
+  if(!rows.length){list.innerHTML='<div class="calempty">Tidak ada berita untuk filter ini minggu ini.</div>';return}
+  let html="",lastDay="",nowDone=false;
+  rows.forEach(x=>{const [d1,d2]=dayLabel(x.ts);if(d1!==lastDay){html+=`<div class="ffday">${d1}${d2?`<span>${d2}</span>`:""}</div>`;lastDay=d1}
+    if(!nowDone&&x.ts+LIVE>now){nowDone=true;if(rows[0]!==x)html+=`<div class="ffnow">Sekarang ${hm(now)}</div>`}
+    const ms=x.ts-now,cls=x.ts+LIVE<=now?" past":ms<SOON?" soon":"";
+    const allDay=x.imp==="Holiday"||(new Date(x.ts).getMinutes()===0&&new Date(x.ts).getHours()===0&&!x.forecast&&!x.previous);
+    html+=`<div class="ffr${cls}"><span class="tm">${allDay?"Semua":hm(x.ts)}</span><span class="cu"><i class="imp ${x.imp}" title="${x.imp}"></i>${x.cur}</span>
+      <span class="fev">${esc(x.title)}${cls===" soon"?`<small data-ts="${x.ts}">${ms<=0?"sedang rilis":cdLong(ms)+" lagi"}</small>`:""}</span>
+      <span class="r num">${esc(x.forecast)||"–"}</span><span class="r num">${esc(x.previous)||"–"}</span></div>`});
   list.innerHTML=html;
 }
 function tickCalNew(){
   if(S.view!=="kalender"||!CAL.items||CAL.src==="tv")return;
   const now=Date.now(),b=document.querySelector("#calNext .big[data-nts]");
   if(b){const ms=+b.dataset.nts-now;if(ms<=-15*60e3){renderCalList();return}b.firstChild.textContent=ms<=0?"RILIS":cdLong(ms);if(ms<30*60e3&&!$("calNext").classList.contains("soon"))renderCalList()}
-  if(CAL.tab==="up")document.querySelectorAll("#calList .cdn[data-ts]").forEach(el=>{const ms=+el.dataset.ts-now;el.textContent=ms<=0?"rilis":cdLong(ms)});
+  document.querySelectorAll("#calList small[data-ts]").forEach(el=>{const ms=+el.dataset.ts-now;el.textContent=ms<=0?"sedang rilis":cdLong(ms)+" lagi"});
 }
 setInterval(tickCalNew,1000);
-[["calUp","up"],["calPast","past"]].forEach(([id,t])=>$(id).addEventListener("click",()=>{CAL.tab=t;$("calUp").setAttribute("aria-selected",t==="up");$("calPast").setAttribute("aria-selected",t==="past");renderCalList()}));
 
 /* ================= boot ================= */
 let booted=false;window.DFX_openApp=v=>{if(!booted){booted=true;schedule();refresh(false)}show(v)};
@@ -2306,7 +2410,7 @@ let booted=false;window.DFX_openApp=v=>{if(!booted){booted=true;schedule();refre
 
 /* ===== router: halaman depan <-> terminal (satu file) ===== */
 (()=>{
-  const VIEWS=["analisa","berita","kalender","fundamental","member"];
+  const VIEWS=["analisa","kalender","fundamental","member"];
   const L=document.getElementById("landing"),A=document.getElementById("app");
   let mode=null;
   function route(){
