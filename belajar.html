@@ -642,8 +642,8 @@ quiz:[{q:"Apa fungsi utama trading plan?",o:["Mengurangi keputusan emosional den
 {q:"Kenapa hasil sebaiknya diukur dalam R?",o:["Bisa dibandingkan walau ukuran akun berubah","Agar terlihat lebih besar","Karena broker memintanya"],a:0,e:"R mengukur hasil relatif terhadap risiko."}]});
 /* ===== Aplikasi Akademi ===== */
 const LV={dasar:{n:"Dasar",d:"Fondasi wajib sebelum entry pertama. Gratis untuk semua.",free:true},
- menengah:{n:"Menengah",d:"Menentukan area entry & konfirmasi yang valid.",free:false},
- lanjutan:{n:"Lanjutan",d:"Scalping, Smart Money Concepts & fundamental emas.",free:false}};
+ menengah:{n:"Menengah",d:"Menentukan area entry & konfirmasi yang valid.",free:true},
+ lanjutan:{n:"Lanjutan",d:"Scalping, Smart Money Concepts & fundamental emas.",free:true}};
 const $=id=>document.getElementById(id);
 const CFG=window.DFX_FIREBASE||{},ON=!!CFG.apiKey;
 let acc=ON?"loading":"guest";
@@ -657,7 +657,7 @@ function list(){
  const d=done(),n=L.length,nd=L.filter(l=>d[l.id]).length;
  let h=`<section class="hero"><span class="eyb">Akademi DirmuFX</span><h1>Belajar trading emas dari nol</h1>
  <p class="lead">Kurikulum bertahap khusus XAUUSD: mulai dari istilah dasar, candlestick, dan manajemen risiko, sampai Smart Money Concepts dan fundamental. Setiap bab ada gambar dan kuis singkat.</p>
- <div class="stats"><span>${n} bab</span><span>${n} kuis</span><span>${nd} selesai</span><span>Bab Dasar gratis</span></div></section>`;
+ <div class="stats"><span>${n} bab</span><span>${n} kuis</span><span>${nd} selesai</span><span>Semua bab gratis</span></div></section>`;
  for(const k in LV){const ls=L.filter(l=>l.lvl===k);
   h+=`<section class="lvl"><div class="lvh"><div><h2>${LV[k].n}</h2><p>${LV[k].d}</p></div><span class="tag ${LV[k].free?"free":"vip"}">${LV[k].free?"Gratis":"VIP"}</span></div>`;
   ls.forEach(l=>{const i=L.indexOf(l)+1;h+=`<a class="card ${d[l.id]?"done":""}" href="#b/${l.id}"><span class="num">${d[l.id]?"✓":i}</span><span class="mt"><h3>${l.t}</h3><p>${l.d} · ${l.min} menit</p></span>${canRead(l)?ARR:LOCK}</a>`});

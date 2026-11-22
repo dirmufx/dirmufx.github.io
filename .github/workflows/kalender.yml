@@ -2,11 +2,11 @@ name: Perbarui kalender ekonomi
 
 on:
   schedule:
-    - cron: "17 * * * *"
+    - cron: "*/10 * * * *"
   workflow_dispatch:
   push:
     branches: [main]
-    paths: [".github/workflows/kalender.yml"]
+    paths: [".github/workflows/kalender.yml", ".github/scripts/ff_calendar.py"]
 
 permissions:
   contents: write
@@ -20,18 +20,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Ambil kalender Forex Factory
-        run: |
-          mkdir -p data
-          curl -fsSL -A "Mozilla/5.0 (DirmuFX calendar bot)" \
-            https://nfs.faireconomy.media/ff_calendar_thisweek.json -o /tmp/ff.json
-          python3 - <<'PY'
-          import json
-          d = json.load(open("/tmp/ff.json"))
-          assert isinstance(d, list) and len(d) > 0, "kalender kosong"
-          json.dump(d, open("data/ff_thisweek.json", "w"), ensure_ascii=False, separators=(",", ":"))
-          print(len(d), "berita")
-          PY
+      - name: Ambil kalender Forex Factory (dengan actual)
+        run: python3 .github/scripts/ff_calendar.py
       - name: Simpan jika berubah
         run: |
           git config user.name "dirmufx-bot"
@@ -39,4 +29,5 @@ jobs:
           git add data/ff_thisweek.json
           if git diff --cached --quiet; then echo "tidak ada perubahan"; exit 0; fi
           git commit -m "Perbarui kalender ekonomi"
+          git pull --rebase -q origin main || true
           git push
