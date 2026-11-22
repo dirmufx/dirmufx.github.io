@@ -1,6 +1,6 @@
 {
  "date": "22 Nov 2026",
- "updated": "2026-11-22T08:00:00+08:00",
+ "updated": "2026-11-22T18:40:00+08:00",
  "macro": [
   [
    "Suku bunga Fed",
@@ -9,8 +9,8 @@
   ],
   [
    "Peluang Fed naik 9 Des",
-   "± 91–95%",
-   "Menurut harga pasar berjangka"
+   "± 99%",
+   "CME FedWatch per Jumat 20 Nov"
   ],
   [
    "Inflasi PCE",
@@ -20,7 +20,7 @@
   [
    "CPI Oktober",
    "+0,4% m/m",
-   "Inti +0,3%"
+   "Lebih panas dari harapan, inti +0,3%"
   ],
   [
    "Tenaga kerja (NFP) Okt",
@@ -29,18 +29,23 @@
   ],
   [
    "Yield obligasi AS 10 th",
-   "± 5,0%",
-   "Tertinggi dalam beberapa tahun"
+   "± 4,94%",
+   "Dekat level tertinggi beberapa tahun"
   ],
   [
    "Indeks dolar (DXY)",
-   "± 103,5",
-   "Tertinggi 19 bulan"
+   "± 103,8",
+   "Tertinggi sejak April 2025"
   ],
   [
    "Minyak Brent",
-   "± $92",
-   "Turun dari ± $117 awal November"
+   "± $92,6",
+   "Turun 3 pekan beruntun, −15% sebulan"
+  ],
+  [
+   "Indeks takut crypto",
+   "12",
+   "\"Ketakutan ekstrem\""
   ]
  ],
  "agenda": [
@@ -57,6 +62,12 @@
    "Pasar AS tutup lalu buka setengah hari. Volume tipis, harga bisa bergerak liar."
   ],
   [
+   "30 Nov",
+   "",
+   "MSCI keluarkan Strategy (MSTR)",
+   "Strategy dikeluarkan dari indeks MSCI. Bisa memicu jual saham MSTR dan menekan sentimen Bitcoin."
+  ],
+  [
    "4 Des",
    "21:30",
    "NFP November",
@@ -66,7 +77,7 @@
    "10 Des",
    "03:00",
    "Keputusan Fed",
-   "Pasar sudah memperkirakan naik 25 bp. Kejutan ada di naik 50 bp atau batal naik."
+   "Pasar hampir 100% memperkirakan naik 25 bp. Kejutan ada di naik 50 bp atau batal naik."
   ],
   [
    "10 Des",
@@ -80,11 +91,11 @@
    "name": "Emas (XAUUSD)",
    "bias": "Bearish",
    "col": "down",
-   "sum": "Emas sedang tertekan kuat. Pekan lalu turun hampir 9%, terburuk sejak Maret, dan sempat jatuh ke sekitar $3.525. Penyebab utamanya: Fed hampir pasti menaikkan suku bunga 9 Desember, dolar dan yield AS naik tinggi, serta investor menjual emas untuk menutup rugi di saham teknologi (AI).",
+   "sum": "Emas masih tertekan kuat. Pekan lalu turun sekitar 9% dan ditutup di sekitar $3.535, terendah 14 bulan. Penyebabnya: pasar hampir 100% yakin Fed naikkan bunga 9 Desember, dolar dan yield AS tinggi, serta aksi jual besar di saham teknologi.",
    "now": [
     [
      "Harga terakhir",
-     "± $3.525–3.540"
+     "± $3.535"
     ],
     [
      "Rekor tertinggi",
@@ -92,7 +103,7 @@
     ],
     [
      "Turun dari puncak",
-     "± 36%"
+     "± 37%"
     ]
    ],
    "plan": [
@@ -117,19 +128,19 @@
      "Suku bunga Fed naik",
      "down",
      "Bearish",
-     "Fed sudah naik di September dan notulen rapat Oktober menunjukkan hampir semua pejabat ingin naik lagi. Bunga tinggi membuat emas, yang tidak memberi bunga, kurang menarik."
+     "Peluang Fed naik 25 bp pada 9 Desember sekitar 99% (CME FedWatch). Bunga tinggi membuat emas, yang tidak memberi bunga, kurang menarik."
     ],
     [
      "Dolar & yield AS kuat",
      "down",
      "Bearish",
-     "DXY di level tertinggi 19 bulan dan yield 10 tahun sekitar 5%. Emas dihargai dalam dolar, jadi dolar kuat biasanya menekan emas."
+     "DXY sekitar 103,8 dan yield 10 tahun sekitar 4,94%. Emas dihargai dalam dolar, jadi dolar kuat biasanya menekan emas."
     ],
     [
      "Aksi jual paksa",
      "down",
      "Bearish jk. pendek",
-     "Saham teknologi/AI anjlok, investor menjual emas untuk menutup kerugian (margin call). Tekanan ini bisa reda cepat begitu pasar saham tenang."
+     "S&P 500 turun 3,7% hari Jumat dan Nasdaq sekitar 10% sepekan. Investor menjual emas untuk menutup kerugian. Tekanan ini bisa reda cepat begitu saham tenang."
     ],
     [
      "Pembelian bank sentral",
@@ -147,7 +158,7 @@
      "Minyak turun",
      "flat",
      "Campuran",
-     "Brent turun dari ± $117 ke ± $92. Inflasi bisa mereda dan Fed jadi sedikit lebih lunak, tapi minat emas sebagai lindung nilai juga berkurang."
+     "Brent sekitar $92,6, turun 3 pekan beruntun. Inflasi bisa mereda dan Fed sedikit lebih lunak, tapi minat emas sebagai lindung nilai juga berkurang."
     ]
    ],
    "lv": [
@@ -176,7 +187,7 @@
      "3.300"
     ]
    ],
-   "src": "Level dari ringkasan analis pasar per 20 Nov 2026. Selalu cocokkan dengan chart terbaru."
+   "src": "Level dari ringkasan analis pasar per 20–21 Nov 2026. Selalu cocokkan dengan chart terbaru."
   },
   "EURUSD": {
    "name": "EURUSD",
@@ -186,7 +197,7 @@
    "now": [
     [
      "Harga terakhir",
-     "± 1,0970"
+     "± 1,0967"
     ],
     [
      "Level kunci",
@@ -221,7 +232,7 @@
      "Dolar AS (DXY)",
      "down",
      "Bearish",
-     "DXY di tertinggi 19 bulan. EURUSD bergerak hampir berlawanan dengan DXY."
+     "DXY sekitar 103,8, tertinggi sejak April 2025. EURUSD bergerak hampir berlawanan dengan DXY."
     ],
     [
      "Ekonomi zona euro",
@@ -340,7 +351,7 @@
    "now": [
     [
      "Harga terakhir",
-     "± 158,5"
+     "± 158,55"
     ],
     [
      "Tertinggi 52 minggu",
@@ -381,7 +392,7 @@
      "Risiko intervensi",
      "down",
      "Waspada",
-     "Di sekitar 160, Kementerian Keuangan Jepang pernah membeli yen untuk menahan pelemahan."
+     "Jepang membeli yen senilai ¥15,4 triliun pada Juli–Agustus 2026. Di sekitar 160 risiko intervensi lagi tinggi."
     ]
    ],
    "lv": [
@@ -416,11 +427,15 @@
    "name": "forex (pair USD)",
    "bias": "Dolar AS kuat",
    "col": "down",
-   "sum": "Saat ini dolar AS sedang menguat luas: DXY di tertinggi 19 bulan karena Fed hampir pasti menaikkan bunga 9 Desember. Pair seperti AUDUSD cenderung tertekan, apalagi saat pasar saham sedang jatuh.",
+   "sum": "Dolar AS sedang menguat luas: DXY sekitar 103,8, tertinggi sejak April 2025, karena Fed hampir pasti menaikkan bunga 9 Desember. Pair xxxUSD seperti EURUSD dan AUDUSD cenderung tertekan, apalagi saat saham jatuh.",
    "now": [
     [
      "DXY",
-     "± 103,5"
+     "± 103,8"
+    ],
+    [
+     "Yield AS 10 th",
+     "± 4,94%"
     ]
    ],
    "plan": [
@@ -467,11 +482,11 @@
    "name": "Bitcoin (BTCUSD)",
    "bias": "Bearish",
    "col": "down",
-   "sum": "Bitcoin turun lebih dari 20% di bulan November dan sempat jatuh ke sekitar $55.150, terendah sejak September 2024, sebelum memantul ke sekitar $60.000. Penyebabnya: dana keluar besar dari ETF Bitcoin, saham teknologi anjlok, dan Fed bersiap menaikkan bunga.",
+   "sum": "Bitcoin turun sekitar 12% sepekan dan lebih dari 20% di November. Sabtu dini hari sempat jatuh ke sekitar $55.150, terendah sejak September 2024, lalu memantul ke sekitar $60.000. Dana masih keluar dari ETF dan indeks takut-serakah di 12, artinya pasar sangat takut.",
    "now": [
     [
      "Harga terakhir",
-     "± $60.000"
+     "± $60.100–60.800"
     ],
     [
      "Terendah pekan ini",
@@ -479,7 +494,11 @@
     ],
     [
      "ETF November",
-     "−$3,5 miliar"
+     "−$3,59 miliar"
+    ],
+    [
+     "Indeks takut-serakah",
+     "12"
     ]
    ],
    "plan": [
@@ -504,7 +523,7 @@
      "Arus dana ETF",
      "down",
      "Bearish",
-     "ETF Bitcoin AS kehilangan ± $3,5 miliar di November, termasuk rekor keluar harian IBIT $541 juta."
+     "ETF Bitcoin AS kehilangan ± $1,25 miliar sepekan dan ± $3,59 miliar di November. IBIT mencatat rekor keluar harian $541 juta pada 19 Nov."
     ],
     [
      "Suku bunga Fed naik",
@@ -522,7 +541,13 @@
      "Likuidasi futures",
      "flat",
      "Volatilitas",
-     "Posisi leverage yang dipaksa tutup mempercepat penurunan dan juga pantulan."
+     "Sekitar $1,8–2 miliar posisi leverage dipaksa tutup dalam 24 jam. Ini mempercepat penurunan, tapi juga bisa memicu pantulan tajam."
+    ],
+    [
+     "Permintaan pembeli AS",
+     "down",
+     "Lemah",
+     "Coinbase Premium negatif (± −0,23%), tanda pembeli AS belum kembali. Wintermute menilai BTC bisa ke kisaran $50.000-an tanpa arus ETF masuk."
     ]
    ],
    "lv": [
@@ -543,21 +568,25 @@
      "55.150"
     ]
    ],
-   "src": "Level dari berita pasar 20–21 Nov 2026. Cocokkan dengan chart terbaru."
+   "src": "Level dari berita pasar 21–22 Nov 2026. Cocokkan dengan chart terbaru."
   },
   "_crypto": {
    "name": "crypto",
    "bias": "Bearish (ikut Bitcoin)",
    "col": "down",
-   "sum": "Seluruh pasar crypto sedang tertekan mengikuti Bitcoin yang turun lebih dari 20% di November. ETF Bitcoin dan Ether sama-sama mencatat dana keluar besar. Altcoin biasanya turun lebih dalam dari Bitcoin saat pasar panik.",
+   "sum": "Seluruh pasar crypto tertekan mengikuti Bitcoin. Ether turun sekitar 13% sepekan ke ± $1.680, dan saham terkait crypto seperti Strategy anjlok sekitar 30%. Altcoin biasanya turun lebih dalam dari Bitcoin saat pasar panik.",
    "now": [
     [
      "Bitcoin",
      "± $60.000"
     ],
     [
-     "ETF BTC+ETH pekan ini",
-     "−$1,47 miliar"
+     "Ether",
+     "± $1.680"
+    ],
+    [
+     "Kapitalisasi pasar",
+     "± $2,08 triliun"
     ]
    ],
    "plan": [
@@ -588,7 +617,7 @@
      "Arus dana ETF",
      "down",
      "Bearish",
-     "Dana keluar dari ETF Bitcoin dan Ether menekan harga."
+     "ETF Bitcoin kehilangan ± $1,25 miliar dan ETF Ether ± $222 juta sepekan. Dana keluar menekan harga."
     ],
     [
      "Suku bunga & dolar",
@@ -609,32 +638,39 @@
  },
  "news": [
   [
-   "21 Nov",
-   "Bitcoin sempat jatuh ke ± $55.150, lalu memantul ke ± $60.000",
+   "22 Nov",
+   "Bitcoin coba kembali ke $60.000 setelah likuidasi ± $1,9 miliar",
    "Crypto",
-   "Likuidasi futures lebih dari $1 miliar. ETF Bitcoin mencatat dana keluar ± $1,25 miliar sepekan.",
-   "https://www.cryptotimes.io/2026/11/21/bitcoin-reclaims-60k-after-plunging-to-55k-as-liquidations-top-1b/"
+   "BTC sempat turun ke kisaran $55.000-an, terendah 26 bulan. Gelombang likuidasi futures menghapus ± $1,9 miliar posisi leverage dalam sehari.",
+   "https://en.coinotag.com/bitcoin-btc-nears-60000-after-1-9b-weekend-liquidation-wave"
   ],
   [
-   "20 Nov",
-   "Emas tembus di bawah $3.600, pekan terburuk sejak Maret",
+   "21 Nov",
+   "Pekan crypto: BTC −12%, rekor dana keluar IBIT, saham Strategy −30%",
+   "Crypto",
+   "BTC ditutup Sabtu ± $60.121. ETF Bitcoin −$1,25 miliar sepekan, Ether ± $1.683. Indeks takut-serakah di 12 (ketakutan ekstrem).",
+   "https://ceoeconomy.com/article/crypto-week-in-review-nov-21-2026"
+  ],
+  [
+   "21 Nov",
+   "Emas, perak, platinum kompak anjlok sepekan",
    "Emas",
-   "Turun hampir 9% sepekan dan ditutup sekitar $3.525. Pemicunya: peluang Fed naik bunga, dolar kuat, dan aksi jual saham AI.",
-   "https://www.fxleaders.com/news/2026/11/20/gold-price-forecast-xau-usd-breaks-below-3600-worst-week-since-march/"
+   "Emas ± $3.535 (−9% sepekan), perak ± $41 (−13%). Peluang Fed naik 9 Des ± 99% dan DXY ± 103,8 menekan logam mulia.",
+   "https://ceoeconomy.com/article/precious-metals-week-nov-21-2026-platinum-palladium-gold-silver"
+  ],
+  [
+   "21 Nov",
+   "Bitcoin pulih ke $60.000, tapi permintaan masih lemah",
+   "Crypto",
+   "Pembeli AS belum kembali (Coinbase Premium negatif). Biaya rata-rata pemegang ETF diperkirakan di kisaran $70.000-an, jadi banyak yang sedang rugi.",
+   "https://finance.biggo.com/news/7bbd35de-7567-4677-8d62-f1129865d65a"
   ],
   [
    "20 Nov",
-   "USDJPY turun ke ± 158,5 dari dekat 159,8",
-   "Forex",
-   "Yen sedikit menguat karena pasar mulai menghitung peluang Bank of Japan naik bunga di Desember.",
-   "https://tradingeconomics.com/japan/currency"
-  ],
-  [
-   "18 Nov",
-   "Notulen Fed: hampir semua pejabat ingin bunga naik lagi",
+   "Brent ± $92,6, turun tiga pekan beruntun",
    "Semua",
-   "Dua pejabat bahkan membuka peluang kenaikan lebih dari 25 bp. Peluang naik 9 Desember sekitar 91%.",
-   "https://www.cnbc.com/2026/11/18/fed-minutes-october-2026.html"
+   "Minyak turun ± 15% sebulan karena perkiraan pasokan berlebih. Yield AS 10 th ± 4,94% dan DXY ± 103,8.",
+   "https://tradingeconomics.com/commodity/brent-crude-oil"
   ]
  ]
 }
