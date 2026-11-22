@@ -55,5 +55,6 @@ try:
 except Exception as ex:
     print("HTML gagal:", ex, file=sys.stderr)
     data = from_json(); src = "json"
+import os; os.makedirs("data", exist_ok=True)
 json.dump(data, open(OUT, "w"), ensure_ascii=False, separators=(",", ":"))
 print(src, len(data), "berita;", sum(1 for x in data if x.get("actual")), "punya actual")
