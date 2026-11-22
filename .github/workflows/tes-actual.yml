@@ -7,4 +7,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: python3 .github/scripts/ff_calendar.py && python3 -c "import json;d=json.load(open('data/ff_thisweek.json'));print(d[:2]);print([x for x in d if x.get('actual')][:3])"
+      - run: python3 .github/scripts/ff_calendar.py && python3 -c "import json;d=json.load(open('data/ff_thisweek.json'));print(d[0]["date"],d[-1]["date"])"
