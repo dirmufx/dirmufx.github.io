@@ -7,8 +7,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: |
-          F=$(date -u -d '-6 day' +%Y-%m-%dT00:00:00.000Z); T=$(date -u -d '+7 day' +%Y-%m-%dT00:00:00.000Z)
-          echo "== TV"; curl -s -m 20 -H "Origin: https://www.tradingview.com" -H "Referer: https://www.tradingview.com/" -A "Mozilla/5.0" "https://economic-calendar.tradingview.com/events?from=$F&to=$T&countries=US,EU,GB,JP" | head -c 1500; echo
-          echo "== FF html"; curl -s -m 20 -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/120 Safari/537.36" "https://www.forexfactory.com/calendar?week=last" -o ff.html -w "%{http_code}\n"; grep -o '"actual":"[^"]*"' ff.html | head -5; wc -c ff.html
-          echo "== FF xml"; curl -s -m 20 https://nfs.faireconomy.media/ff_calendar_thisweek.xml | head -c 600; echo
-          echo "== myfxbook"; curl -s -m 20 -A "Mozilla/5.0" https://www.myfxbook.com/rss/forex-economic-calendar-events | head -c 1200; echo
+          curl -s -m 20 -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/120 Safari/537.36" "https://www.forexfactory.com/calendar?week=last" -o ff.html
+          python3 - <<'PY'
+          import re
+          s=open('ff.html',encoding='utf-8',errors='ignore').read()
+          i=s.find('"actual":"0.7%"')
+          print(s[max(0,i-1500):i+600])
+          j=s.find('calendarComponentStates');print('CCS at',j);print(s[j:j+300])
+          PY
