@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Jurnal Trading DirmuFX · Catat, evaluasi, disiplin</title>
+<meta name="description" content="Jurnal trading gratis dari DirmuFX: catat setiap entry, lihat win rate, profit, drawdown, dan kebiasaan yang bikin rugi. Tersimpan di HP kamu.">
+<meta property="og:title" content="Jurnal Trading DirmuFX (gratis)">
+<meta property="og:description" content="Catat trade, lihat win rate & kebiasaan yang bikin rugi. Gratis, langsung dari HP.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+<style>
+:root{--bg:#141714;--panel:#1c201c;--panel2:#242924;--line:#2c322c;--fg:#eef0e8;--muted:#a6ad9f;--blue:#5b9cf5;--up:#3fbf7f;--down:#e5484d;--amber:#e3b85c;--brand:#63d297;
+ --f:"Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",sans-serif;color-scheme:dark}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:radial-gradient(900px 500px at 90% -10%,rgba(91,156,245,.09),transparent 60%),var(--bg);color:var(--fg);font-family:var(--f);font-size:15.5px;line-height:1.6;font-feature-settings:"tnum" 1;min-height:100vh}
+a{color:var(--blue)}
+button,input,select,textarea{font:inherit;color:inherit}
+.top{position:sticky;top:0;z-index:20;background:rgba(12,14,12,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.top .in{max-width:760px;margin:0 auto;display:flex;align-items:center;gap:10px;padding:10px 16px}
+.back{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border:1px solid var(--line);border-radius:12px;background:var(--panel);color:var(--fg);text-decoration:none}
+.brand{display:flex;align-items:center;gap:8px;flex:1;min-width:0;text-decoration:none;color:var(--fg);font-weight:800;font-size:16.5px;white-space:nowrap}
+.brand svg{width:26px;height:auto;flex:none}.brand i{font-style:normal;color:var(--brand)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:1px solid var(--line);background:var(--panel2);border-radius:12px;padding:10px 14px;font-weight:700;font-size:14.5px;cursor:pointer;text-decoration:none;color:var(--fg);white-space:nowrap}
+.btn.pri{background:var(--brand);border-color:var(--brand);color:#06261b}
+.btn.blue{background:#2f6fd0;border-color:#2f6fd0;color:#fff}
+.btn.sm{padding:7px 11px;font-size:13px;border-radius:10px}
+.wrap{max-width:760px;margin:0 auto;padding:18px 16px 110px}
+h1{font-size:27px;line-height:1.2;margin:4px 0 6px;letter-spacing:-.01em}
+.lead{color:var(--muted);margin:0 0 14px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:16px;margin:0 0 14px}
+.card h2{font-size:15px;color:var(--blue);margin:0 0 10px;font-weight:700}
+.seg{display:flex;gap:4px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:4px;margin:0 0 14px}
+.seg button{flex:1;border:0;background:none;border-radius:9px;padding:9px 4px;font-weight:600;color:var(--muted);cursor:pointer;font-size:14px}
+.seg button[aria-pressed="true"]{background:#2f6fd0;color:#fff}
+.kpi{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.kpi>div{background:var(--panel2);border-radius:12px;padding:10px 12px;line-height:1.3}
+.kpi .k{font-size:12.5px;color:var(--muted)}.kpi .v{font-size:21px;font-weight:800;margin-top:3px}
+.kpi .big{grid-column:1/-1;display:flex;justify-content:space-between;align-items:flex-end}
+.kpi .big .v{font-size:30px}
+@media(min-width:560px){.kpi{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.up{color:var(--up)}.down{color:var(--down)}.amb{color:var(--amber)}.mut{color:var(--muted)}
+canvas{display:block;width:100%}
+.guard{border-radius:14px;padding:12px 14px;margin:0 0 14px;font-size:14.5px;line-height:1.5;border:1px solid var(--line);background:var(--panel)}
+.guard b{display:block;font-size:15px}
+.guard.ok{border-color:#1f4d36;background:#14251b}.guard.warn{border-color:#5c4a1f;background:#241f12}.guard.stop{border-color:#6b2b2e;background:#2a1517}
+.bars{display:grid;gap:9px}
+.bar .l{display:flex;justify-content:space-between;font-size:13.5px;gap:8px}
+.bar .t{height:7px;border-radius:99px;background:var(--panel2);overflow:hidden;margin-top:4px}
+.bar .t span{display:block;height:100%;border-radius:99px}
+.ins{margin:10px 0 0;padding:0;list-style:none;display:grid;gap:6px}
+.ins li{font-size:14px;background:var(--panel2);border-radius:10px;padding:9px 11px;line-height:1.45}
+.day{font-weight:700;font-size:13.5px;color:var(--muted);margin:14px 2px 6px;display:flex;justify-content:space-between}
+.tr{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:10px;align-items:center;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:11px 12px;margin-bottom:7px;cursor:pointer}
+.tr .d{font-weight:800;font-size:12px;padding:4px 8px;border-radius:7px}
+.tr .d.BUY{background:rgba(63,191,127,.15);color:var(--up)}.tr .d.SELL{background:rgba(229,72,77,.15);color:var(--down)}
+.tr .m b{font-size:15px}.tr .m small{display:block;color:var(--muted);font-size:12.5px;line-height:1.35}
+.tr .p{text-align:right;font-weight:800;font-size:15.5px;white-space:nowrap}
+.tr .p small{display:block;font-weight:500;font-size:12px;color:var(--muted)}
+.empty{text-align:center;color:var(--muted);padding:26px 10px;font-size:14.5px}
+.promo{display:grid;gap:10px}
+.promo a{display:flex;gap:12px;align-items:center;text-decoration:none;color:var(--fg);background:var(--panel2);border:1px solid var(--line);border-radius:14px;padding:12px}
+.promo .ic{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;font-size:21px;flex:none;background:#1d2a3d}
+.promo b{display:block;font-size:15px}.promo span{color:var(--muted);font-size:13px;line-height:1.4}
+.fab{position:fixed;left:50%;transform:translateX(-50%);bottom:max(18px,env(safe-area-inset-bottom));z-index:30;box-shadow:0 10px 30px rgba(0,0,0,.45);padding:14px 22px;font-size:16px;border-radius:99px}
+.sheet{position:fixed;inset:0;z-index:50;display:none}
+.sheet.on{display:block}
+.sheet .bg{position:absolute;inset:0;background:rgba(0,0,0,.6)}
+.sheet .box{position:absolute;left:0;right:0;bottom:0;max-height:92vh;overflow:auto;background:var(--panel);border-top-left-radius:20px;border-top-right-radius:20px;border-top:1px solid var(--line);padding:16px 16px max(18px,env(safe-area-inset-bottom));max-width:760px;margin:0 auto}
+.sheet h3{margin:0 0 12px;font-size:18px;display:flex;justify-content:space-between;align-items:center}
+.x{border:0;background:var(--panel2);width:34px;height:34px;border-radius:10px;font-size:18px;cursor:pointer}
+.fg{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;align-items:start}
+.f{display:grid;gap:4px;min-width:0}.f.full{grid-column:1/-1}
+.f label{font-size:12.5px;color:var(--muted);font-weight:600}
+.f input,.f select,.f textarea{width:100%;min-width:0;max-width:100%;-webkit-appearance:none;appearance:none;background:var(--bg);border:1px solid var(--line);border-radius:11px;padding:10px 11px;font-size:16px}
+.f textarea{min-height:70px;resize:vertical}
+.f select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23a6ad9f' stroke-width='2' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:30px}
+.dirsel{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.dirsel button{border:1px solid var(--line);background:var(--bg);border-radius:11px;padding:10px;font-weight:800;cursor:pointer}
+.dirsel button[aria-pressed="true"][data-v="BUY"]{background:var(--up);border-color:var(--up);color:#06261b}
+.dirsel button[aria-pressed="true"][data-v="SELL"]{background:var(--down);border-color:var(--down);color:#fff}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips button{border:1px solid var(--line);background:var(--bg);border-radius:99px;padding:6px 11px;font-size:13.5px;font-weight:600;cursor:pointer;color:var(--muted)}
+.chips button[aria-pressed="true"]{background:#1d2a3d;border-color:#2f6fd0;color:#fff}
+.hint{font-size:12.5px;color:var(--muted);margin:2px 0 0}
+.acts{display:flex;gap:8px;margin-top:14px}.acts .btn{flex:1}
+.row{display:flex;gap:8px;flex-wrap:wrap}
+.foot{color:var(--muted);font-size:12.5px;text-align:center;margin-top:22px;line-height:1.6}
+</style>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="back" href="index.html" aria-label="Kembali ke DirmuFX"><svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M12 5l-5 5 5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+  <a class="brand" href="index.html"><svg viewBox="0 0 314 343" aria-hidden="true"><path d="M15 15H140A156.5 156.5 0 0 1 140 328H15Z" fill="none" stroke="#63d297" stroke-width="30" stroke-linejoin="round"/><g fill="#fff"><rect x="87" y="159" width="10" height="138" rx="5"/><rect x="69" y="202" width="46" height="58" rx="5"/><rect x="147" y="114" width="10" height="160" rx="5"/><rect x="129" y="153" width="46" height="75" rx="5"/></g><g fill="#63d297"><rect x="207" y="54" width="10" height="175" rx="5"/><rect x="189" y="89" width="46" height="99" rx="5"/></g></svg><span>Jurnal Dirmu<i>FX</i></span></a>
+  <button class="btn sm" id="setBtn" type="button">⚙ Atur</button>
+</div></header>
+
+<main class="wrap">
+  <h1>Jurnal trading kamu</h1>
+  <p class="lead">Catat setiap entry, lalu lihat apa yang bikin profit dan apa yang bikin rugi. Gratis, tersimpan di HP kamu.</p>
+
+  <div class="seg" id="period" role="tablist">
+    <button data-p="week" aria-pressed="false">Minggu ini</button><button data-p="month" aria-pressed="true">Bulan ini</button><button data-p="all" aria-pressed="false">Semua</button>
+  </div>
+
+  <div class="guard" id="guard" hidden></div>
+
+  <section class="card">
+    <h2>Ringkasan</h2>
+    <div class="kpi" id="kpi"></div>
+    <canvas id="eq" height="170" style="margin-top:12px"></canvas>
+    <div class="row" style="margin-top:12px"><button class="btn blue" id="shareBtn" type="button">📤 Bagikan rekap</button></div>
+  </section>
+
+  <section class="card" id="anaCard">
+    <h2>Apa yang berhasil, apa yang tidak</h2>
+    <div class="bars" id="bySetup"></div>
+    <ul class="ins" id="insight"></ul>
+  </section>
+
+  <section>
+    <div class="day" style="margin-top:4px"><span>Riwayat trade</span><span id="cnt"></span></div>
+    <div id="list"></div>
+  </section>
+
+  <section class="card" style="margin-top:14px">
+    <h2>Trading lebih terarah bareng DirmuFX</h2>
+    <div class="promo">
+      <a href="index.html#analisa"><span class="ic">📈</span><div><b>Signal Room DirmuFX</b><span>Sinyal emas, forex & crypto lengkap dengan entry, SL, TP, matriks tren, dan peringatan berita merah.</span></div></a>
+      <a href="index.html#fundamental"><span class="ic">🌐</span><div><b>Fundamental harian</b><span>Tahu penyebab market naik atau jatuh sebelum entry. Diperbarui tiap hari.</span></div></a>
+      <a href="belajar.html"><span class="ic">🎓</span><div><b>Akademi gratis 20 bab</b><span>Dari dasar candle sampai Smart Money Concepts.</span></div></a>
+      <a href="https://puvip.co/la-partners/id/ztmYc1S9" target="_blank" rel="noopener"><span class="ic">🏦</span><div><b>Buka akun PU Prime (min. $30)</b><span>Daftar lewat link DirmuFX untuk akses VIP Signal Room.</span></div></a>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Simpan & pindahkan data</h2>
+    <p class="hint" style="margin:0 0 10px">Data hanya ada di browser HP ini. Unduh cadangan secara berkala supaya tidak hilang saat ganti HP atau hapus riwayat browser.</p>
+    <div class="row"><button class="btn sm" id="expCsv" type="button">⬇ Unduh Excel (CSV)</button><button class="btn sm" id="expJson" type="button">⬇ Cadangan</button><label class="btn sm" style="cursor:pointer">⬆ Pulihkan<input type="file" id="impJson" accept=".json,application/json" hidden></label></div>
+  </section>
+
+  <p class="foot">Jurnal Trading DirmuFX · <a href="index.html">dirmufx.github.io</a><br>Bukan saran keuangan. Trading berisiko tinggi, pakai stop loss dan kelola risiko.</p>
+</main>
+
+<button class="btn pri fab" id="addBtn" type="button">＋ Catat trade</button>
+
+<div class="sheet" id="sheet" aria-hidden="true"><div class="bg" data-close></div><div class="box" role="dialog" aria-modal="true" aria-labelledby="shT">
+  <h3><span id="shT">Catat trade</span><button class="x" type="button" data-close aria-label="Tutup">×</button></h3>
+  <form id="frm" autocomplete="off">
+    <div class="fg">
+      <div class="f full"><label>Arah</label><div class="dirsel" id="fDir"><button type="button" data-v="BUY">BUY</button><button type="button" data-v="SELL">SELL</button></div></div>
+      <div class="f"><label for="fPair">Pair</label><select id="fPair"></select></div>
+      <div class="f"><label for="fTime">Waktu entry</label><input id="fTime" type="datetime-local" required></div>
+      <div class="f"><label for="fLot">Lot</label><input id="fLot" inputmode="decimal" placeholder="0.01" required></div>
+      <div class="f"><label for="fEntry">Harga entry</label><input id="fEntry" inputmode="decimal" placeholder="3525.40"></div>
+      <div class="f"><label for="fSL">Stop loss</label><input id="fSL" inputmode="decimal" placeholder="opsional"></div>
+      <div class="f"><label for="fTP">Take profit</label><input id="fTP" inputmode="decimal" placeholder="opsional"></div>
+      <div class="f"><label for="fExit">Harga keluar</label><input id="fExit" inputmode="decimal" placeholder="kosong = masih jalan"></div>
+      <div class="f"><label for="fPL">Profit / rugi ($)</label><input id="fPL" inputmode="decimal" placeholder="otomatis"><p class="hint" id="plHint"></p></div>
+      <div class="f full"><label>Alasan entry (setup)</label><div class="chips" id="fSetup"></div></div>
+      <div class="f full"><label>Perasaan saat entry</label><div class="chips" id="fMood"></div></div>
+      <div class="f full"><label>Sesuai rencana?</label><div class="chips" id="fPlan"><button type="button" data-v="1">Ya, sesuai rencana</button><button type="button" data-v="0">Tidak / impulsif</button></div></div>
+      <div class="f full"><label for="fNote">Catatan</label><textarea id="fNote" placeholder="Apa yang kamu lihat di chart? Apa pelajarannya?"></textarea></div>
+    </div>
+    <div class="acts"><button class="btn" type="button" id="delBtn" hidden style="color:var(--down)">Hapus</button><button class="btn pri" type="submit">Simpan</button></div>
+  </form>
+</div></div>
+
+<div class="sheet" id="setSheet" aria-hidden="true"><div class="bg" data-close></div><div class="box" role="dialog" aria-modal="true" aria-labelledby="setT">
+  <h3><span id="setT">Pengaturan jurnal</span><button class="x" type="button" data-close aria-label="Tutup">×</button></h3>
+  <div class="fg">
+    <div class="f"><label for="sBal">Modal awal ($)</label><input id="sBal" inputmode="decimal"></div>
+    <div class="f"><label for="sDay">Batas rugi harian (%)</label><input id="sDay" inputmode="decimal"></div>
+    <div class="f full"><label for="sName">Nama (tampil di gambar rekap)</label><input id="sName" maxlength="30" placeholder="opsional"></div>
+  </div>
+  <p class="hint">Batas rugi harian membantu kamu berhenti sebelum rugi membesar. Umumnya 2–5% dari modal.</p>
+  <div class="acts"><button class="btn pri" type="button" id="setSave">Simpan</button></div>
+</div></div>
+
+<script>
+(()=>{
+const $=id=>document.getElementById(id);
+const LS={get:k=>{try{return localStorage.getItem(k)}catch(e){return null}},set:(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}}};
+const PAIRS=["XAUUSD","EURUSD","GBPUSD","USDJPY","AUDUSD","BTCUSD","ETHUSD","SOLUSD","BNBUSD","XRPUSD","Lainnya"];
+const SETUPS=["Sinyal DirmuFX","SMC / Order Block","Liquidity Sweep","Breakout","Support & Resistance","Supply & Demand","Fundamental / berita","Lainnya"];
+const MOODS=["Tenang","Yakin","Ragu","FOMO","Takut","Balas dendam","Serakah"];
+let T=[];try{T=JSON.parse(LS.get("dfx-jurnal")||"[]")}catch(e){T=[]}
+let CFG={bal:1000,day:3,name:""};try{Object.assign(CFG,JSON.parse(LS.get("dfx-jurnal-cfg")||"{}"))}catch(e){}
+let P="month",editId=null,F={dir:"BUY",setup:"",mood:"",plan:""};
+const save=()=>LS.set("dfx-jurnal",JSON.stringify(T));
+const usd=v=>(v<0?"−$":"$")+Math.abs(v).toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2});
+const sgn=v=>(v>0?"+":"")+usd(v).replace("−","−");
+const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const num=v=>{const x=parseFloat(String(v).replace(",","."));return isFinite(x)?x:null};
+const dayKey=t=>{const d=new Date(t);return d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate()};
+
+function inPeriod(t){const d=new Date(t),n=new Date();if(P==="all")return true;
+  if(P==="month")return d.getFullYear()===n.getFullYear()&&d.getMonth()===n.getMonth();
+  const s=new Date(n);s.setHours(0,0,0,0);s.setDate(s.getDate()-((s.getDay()+6)%7));return d>=s}
+function stats(arr){const c=arr.filter(x=>x.pl!=null);const w=c.filter(x=>x.pl>0),l=c.filter(x=>x.pl<0);
+  const gp=w.reduce((a,x)=>a+x.pl,0),gl=-l.reduce((a,x)=>a+x.pl,0),net=gp-gl;
+  let eq=0,pk=0,dd=0,ser=[0];c.slice().sort((a,b)=>a.t-b.t).forEach(x=>{eq+=x.pl;ser.push(eq);pk=Math.max(pk,eq);dd=Math.max(dd,pk-eq)});
+  let st=0,best=0;c.slice().sort((a,b)=>a.t-b.t).forEach(x=>{st=x.pl<0?st+1:0;best=Math.max(best,st)});
+  const rr=c.filter(x=>x.rr!=null);
+  return{n:c.length,open:arr.length-c.length,w:w.length,l:l.length,wr:c.length?w.length/c.length*100:0,net,pf:gl?gp/gl:(gp?Infinity:0),avgW:w.length?gp/w.length:0,avgL:l.length?gl/l.length:0,dd,ser,lossStreak:best,avgRR:rr.length?rr.reduce((a,x)=>a+x.rr,0)/rr.length:null}}
+
+function render(){
+  document.querySelectorAll("#period button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.p===P));
+  const arr=T.filter(x=>inPeriod(x.t)).sort((a,b)=>b.t-a.t),s=stats(arr);
+  const pct=CFG.bal?s.net/CFG.bal*100:0;
+  $("kpi").innerHTML=`<div class="big"><div><div class="k">Profit bersih</div><div class="v ${s.net>0?"up":s.net<0?"down":""}">${s.n?sgn(s.net):"$0.00"}</div></div><div style="text-align:right"><div class="k">dari modal</div><div class="v ${pct>0?"up":pct<0?"down":""}" style="font-size:19px">${s.n?(pct>0?"+":"")+pct.toFixed(1)+"%":"–"}</div></div></div>
+   <div><div class="k">Win rate</div><div class="v ${s.wr>=50?"up":s.n?"down":""}">${s.n?Math.round(s.wr)+"%":"–"}</div></div>
+   <div><div class="k">Trade (menang/kalah)</div><div class="v">${s.n} <span class="mut" style="font-size:14px;font-weight:600">${s.w}/${s.l}</span></div></div>
+   <div><div class="k">Profit factor</div><div class="v ${s.pf>=1?"up":s.n?"down":""}">${!s.n?"–":s.pf===Infinity?"∞":s.pf.toFixed(2)}</div></div>
+   <div><div class="k">Drawdown terbesar</div><div class="v down">${s.dd?usd(s.dd):"–"}</div></div>
+   <div><div class="k">Rata-rata menang</div><div class="v up">${s.w?usd(s.avgW):"–"}</div></div>
+   <div><div class="k">Rata-rata kalah</div><div class="v down">${s.l?usd(s.avgL):"–"}</div></div>
+   <div><div class="k">Rata-rata R:R</div><div class="v">${s.avgRR!=null?"1:"+s.avgRR.toFixed(1):"–"}</div></div>
+   <div><div class="k">Kalah beruntun terbanyak</div><div class="v ${s.lossStreak>=3?"down":""}">${s.n?s.lossStreak+"×":"–"}</div></div>`;
+  drawEq(s.ser);guard();analysis(arr);list(arr);
+}
+function drawEq(ser){const cv=$("eq"),W=cv.clientWidth||600,H=170,dpr=window.devicePixelRatio||1;cv.width=W*dpr;cv.height=H*dpr;const g=cv.getContext("2d");g.setTransform(dpr,0,0,dpr,0,0);g.clearRect(0,0,W,H);
+  if(ser.length<2){g.fillStyle="#a6ad9f";g.font="14px Plus Jakarta Sans,system-ui";g.textAlign="center";g.fillText("Grafik saldo muncul setelah ada trade yang selesai",W/2,H/2);return}
+  const lo=Math.min(0,...ser),hi=Math.max(0,...ser),pad=(hi-lo)*.12||1,Y=v=>8+(hi+pad-v)/((hi+pad)-(lo-pad))*(H-16),X=i=>4+i/(ser.length-1)*(W-8);
+  g.strokeStyle="#2c322c";g.setLineDash([4,4]);g.beginPath();g.moveTo(0,Y(0));g.lineTo(W,Y(0));g.stroke();g.setLineDash([]);
+  const end=ser[ser.length-1],col=end>=0?"#3fbf7f":"#e5484d",gr=g.createLinearGradient(0,0,0,H);gr.addColorStop(0,end>=0?"rgba(63,191,127,.28)":"rgba(229,72,77,.28)");gr.addColorStop(1,"rgba(0,0,0,0)");
+  g.beginPath();ser.forEach((v,i)=>i?g.lineTo(X(i),Y(v)):g.moveTo(X(i),Y(v)));g.lineTo(X(ser.length-1),Y(lo-pad));g.lineTo(X(0),Y(lo-pad));g.closePath();g.fillStyle=gr;g.fill();
+  g.beginPath();ser.forEach((v,i)=>i?g.lineTo(X(i),Y(v)):g.moveTo(X(i),Y(v)));g.strokeStyle=col;g.lineWidth=2.5;g.stroke()}
+function guard(){const el=$("guard"),today=T.filter(x=>x.pl!=null&&dayKey(x.t)===dayKey(Date.now())).sort((a,b)=>a.t-b.t);
+  if(!today.length){el.hidden=true;return}el.hidden=false;
+  const pl=today.reduce((a,x)=>a+x.pl,0),lim=CFG.bal*CFG.day/100;let st=0;for(let i=today.length-1;i>=0&&today[i].pl<0;i--)st++;
+  if(lim&&-pl>=lim){el.className="guard stop";el.innerHTML=`<b>🛑 Batas rugi harian tercapai (${usd(pl)})</b>Berhenti trading hari ini. Tutup chart, evaluasi jurnal, lanjut besok dengan kepala dingin.`}
+  else if(st>=2){el.className="guard warn";el.innerHTML=`<b>⚠️ ${st}× kalah berturut-turut hari ini</b>Istirahat dulu. Cek <a href="index.html#fundamental">fundamental</a> dan <a href="index.html#kalender">kalender berita</a>, mungkin ada yang belum kamu lihat.`}
+  else{el.className="guard ok";el.innerHTML=`<b>Hari ini: ${sgn(pl)} dari ${today.length} trade</b>Sisa batas rugi harian: ${usd(Math.max(0,lim+Math.min(0,pl)))}.`}}
+function analysis(arr){const c=arr.filter(x=>x.pl!=null);if(c.length<3){$("anaCard").hidden=!c.length;$("bySetup").innerHTML=c.length?'<p class="hint" style="margin:0">Catat minimal 3 trade selesai untuk melihat analisa.</p>':"";$("insight").innerHTML="";return}
+  $("anaCard").hidden=false;
+  const grp=(key)=>{const m={};c.forEach(x=>{const k=x[key]||"Tidak diisi";(m[k]=m[k]||[]).push(x)});return Object.entries(m).map(([k,v])=>({k,n:v.length,wr:v.filter(x=>x.pl>0).length/v.length*100,pl:v.reduce((a,x)=>a+x.pl,0)})).sort((a,b)=>b.n-a.n)};
+  const su=grp("setup");
+  $("bySetup").innerHTML=su.slice(0,6).map(r=>`<div class="bar"><div class="l"><span>${esc(r.k)} <span class="mut">· ${r.n} trade</span></span><b class="${r.pl>=0?"up":"down"}">${Math.round(r.wr)}% · ${sgn(r.pl)}</b></div><div class="t"><span style="width:${Math.max(4,r.wr)}%;background:${r.wr>=50?"var(--up)":"var(--down)"}"></span></div></div>`).join("");
+  const ins=[],mo=grp("mood"),pa=grp("pair"),pl=grp("plan");
+  const worstM=mo.filter(r=>r.n>=2&&!["Tidak diisi","Tenang","Yakin"].includes(r.k)).sort((a,b)=>a.pl-b.pl)[0];if(worstM&&worstM.pl<0)ins.push(`😬 Saat merasa <b>${esc(worstM.k)}</b>, kamu rugi ${usd(worstM.pl)} (win rate ${Math.round(worstM.wr)}%). Kalau perasaan ini muncul, jangan entry.`);
+  const bestS=su.filter(r=>r.n>=2&&r.k!=="Tidak diisi").sort((a,b)=>b.pl-a.pl)[0];if(bestS&&bestS.pl>0)ins.push(`✅ Setup terbaikmu: <b>${esc(bestS.k)}</b> (${Math.round(bestS.wr)}% menang, ${sgn(bestS.pl)}). Fokus di setup ini.`);
+  const imp=pl.find(r=>r.k==="0"),okp=pl.find(r=>r.k==="1");if(imp&&imp.n>=2)ins.push(`🎯 Trade impulsif: ${imp.n}× dengan hasil ${sgn(imp.pl)}${okp?`, sedangkan trade sesuai rencana ${sgn(okp.pl)}`:""}.`);
+  const worstP=pa.filter(r=>r.n>=2).sort((a,b)=>a.pl-b.pl)[0];if(worstP&&worstP.pl<0)ins.push(`📉 Pair paling merugikan: <b>${esc(worstP.k)}</b> (${sgn(worstP.pl)}). Pertimbangkan kurangi lot atau berhenti trading pair ini sementara.`);
+  const s=stats(c);if(s.avgL>s.avgW&&s.l)ins.push(`⚖️ Rata-rata kalahmu (${usd(s.avgL)}) lebih besar dari rata-rata menang (${usd(s.avgW)}). Biarkan profit berjalan sampai TP, jangan geser SL menjauh.`);
+  const sig=su.find(r=>r.k==="Sinyal DirmuFX");if(sig&&sig.n>=2)ins.push(`📈 Trade dari <b>Sinyal DirmuFX</b>: ${sig.n}× · win rate ${Math.round(sig.wr)}% · ${sgn(sig.pl)}. <a href="index.html#analisa">Buka Signal Room</a>`);
+  $("insight").innerHTML=ins.map(x=>`<li>${x}</li>`).join("")}
+function list(arr){$("cnt").textContent=arr.length?arr.length+" trade":"";
+  if(!arr.length){$("list").innerHTML=`<div class="empty">Belum ada trade di periode ini.<br>Ketuk <b>＋ Catat trade</b> untuk mulai.</div>`;return}
+  let h="",ld="";arr.forEach(x=>{const d=new Date(x.t).toLocaleDateString("id-ID",{weekday:"long",day:"numeric",month:"short"});
+    if(d!==ld){const dp=arr.filter(y=>new Date(y.t).toLocaleDateString("id-ID",{weekday:"long",day:"numeric",month:"short"})===d&&y.pl!=null).reduce((a,y)=>a+y.pl,0);h+=`<div class="day"><span>${d}</span><span class="${dp>0?"up":dp<0?"down":""}">${dp?sgn(dp):""}</span></div>`;ld=d}
+    const tm=new Date(x.t).toLocaleTimeString("id-ID",{hour:"2-digit",minute:"2-digit"});
+    h+=`<div class="tr" data-id="${x.id}"><span class="d ${x.dir}">${x.dir}</span><div class="m"><b>${esc(x.pair)}</b> <span class="mut" style="font-size:13px">${x.lot} lot</span><small>${tm}${x.setup?" · "+esc(x.setup):""}${x.mood?" · "+esc(x.mood):""}</small></div><div class="p ${x.pl>0?"up":x.pl<0?"down":"amb"}">${x.pl==null?"Berjalan":sgn(x.pl)}<small>${x.rr!=null&&x.pl!=null?(x.pl>0?"+":"−")+Math.abs(x.rr).toFixed(1)+"R":""}</small></div></div>`});
+  $("list").innerHTML=h}
+
+/* ---- form ---- */
+$("fPair").innerHTML=PAIRS.map(p=>`<option>${p}</option>`).join("");
+const chipSet=(id,vals,key)=>{$(id).innerHTML=vals.map(v=>`<button type="button" data-v="${esc(v)}">${esc(v)}</button>`).join("");};
+chipSet("fSetup",SETUPS);chipSet("fMood",MOODS);
+const syncChips=()=>{[["fSetup","setup"],["fMood","mood"],["fPlan","plan"]].forEach(([id,k])=>$(id).querySelectorAll("button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.v===String(F[k]))));
+  $("fDir").querySelectorAll("button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.v===F.dir))};
+[["fSetup","setup"],["fMood","mood"],["fPlan","plan"]].forEach(([id,k])=>$(id).addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;F[k]=F[k]===b.dataset.v?"":b.dataset.v;syncChips()}));
+$("fDir").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;F.dir=b.dataset.v;syncChips();calcPL()});
+function contract(pair){return pair==="XAUUSD"?100:/^(EUR|GBP|AUD|NZD)USD$/.test(pair)?1e5:pair==="USDJPY"?1e5:/USD$/.test(pair)&&pair!=="XAUUSD"?1:null}
+function autoPL(){const pair=$("fPair").value,lot=num($("fLot").value),e=num($("fEntry").value),x=num($("fExit").value),cs=contract(pair);
+  if(lot==null||e==null||x==null||!cs)return null;let v=(x-e)*(F.dir==="BUY"?1:-1)*lot*cs;if(pair==="USDJPY")v/=x;return Math.round(v*100)/100}
+let plTouched=false;
+function calcPL(){const a=autoPL();$("plHint").textContent=a!=null?"Perkiraan: "+sgn(a)+(plTouched?" (ketik ulang jika beda dengan broker)":""):"Isi lot, entry & harga keluar untuk hitung otomatis";if(!plTouched&&a!=null)$("fPL").value=a}
+["fPair","fLot","fEntry","fExit"].forEach(id=>$(id).addEventListener("input",calcPL));
+$("fPL").addEventListener("input",()=>{plTouched=$("fPL").value!==""});
+const toLocal=t=>{const d=new Date(t);d.setMinutes(d.getMinutes()-d.getTimezoneOffset());return d.toISOString().slice(0,16)};
+function openSheet(id,pre){editId=id||null;plTouched=false;const x=id?T.find(y=>y.id===id):null;
+  F={dir:x?x.dir:(pre&&pre.dir)||"BUY",setup:x?x.setup||"":(pre&&pre.setup)||"",mood:x?x.mood||"":"",plan:x&&x.plan!=null?String(x.plan):""};
+  $("fPair").value=x?(PAIRS.includes(x.pair)?x.pair:"Lainnya"):(pre&&PAIRS.includes(pre.pair)?pre.pair:"XAUUSD");
+  $("fTime").value=toLocal(x?x.t:Date.now());$("fLot").value=x?x.lot:(LS.get("dfx-jurnal-lot")||"");
+  $("fEntry").value=x?x.entry??"":(pre&&pre.entry)||"";$("fSL").value=x?x.sl??"":(pre&&pre.sl)||"";$("fTP").value=x?x.tp??"":(pre&&pre.tp)||"";
+  $("fExit").value=x?x.exit??"":"";$("fPL").value=x&&x.pl!=null?x.pl:"";plTouched=!!(x&&x.pl!=null);$("fNote").value=x?x.note||"":"";
+  $("shT").textContent=x?"Ubah trade":"Catat trade";$("delBtn").hidden=!x;syncChips();calcPL();
+  $("sheet").classList.add("on");$("sheet").setAttribute("aria-hidden","false")}
+function closeSheets(){document.querySelectorAll(".sheet").forEach(s=>{s.classList.remove("on");s.setAttribute("aria-hidden","true")})}
+document.querySelectorAll("[data-close]").forEach(el=>el.addEventListener("click",closeSheets));
+$("addBtn").onclick=()=>openSheet();
+$("list").addEventListener("click",e=>{const r=e.target.closest(".tr");if(r)openSheet(r.dataset.id)});
+$("frm").addEventListener("submit",e=>{e.preventDefault();
+  const lot=num($("fLot").value);if(lot==null||lot<=0){alert("Isi lot dulu.");return}
+  const entry=num($("fEntry").value),sl=num($("fSL").value),tp=num($("fTP").value),exit=num($("fExit").value);
+  let pl=num($("fPL").value);if(pl==null&&exit!=null)pl=autoPL();
+  let rr=null;if(entry!=null&&sl!=null&&entry!==sl&&exit!=null){rr=(exit-entry)*(F.dir==="BUY"?1:-1)/Math.abs(entry-sl)}
+  const t=Date.parse($("fTime").value)||Date.now();
+  const rec={id:editId||String(Date.now())+Math.random().toString(36).slice(2,6),t,pair:$("fPair").value,dir:F.dir,lot,entry,sl,tp,exit,pl,rr,setup:F.setup,mood:F.mood,plan:F.plan===""?null:+F.plan,note:$("fNote").value.trim()};
+  if(editId)T=T.map(x=>x.id===editId?rec:x);else T.push(rec);LS.set("dfx-jurnal-lot",String(lot));save();closeSheets();render()});
+$("delBtn").onclick=()=>{if(!editId||!confirm("Hapus trade ini? Tidak bisa dibatalkan."))return;T=T.filter(x=>x.id!==editId);save();closeSheets();render()};
+$("period").addEventListener("click",e=>{const b=e.target.closest("button");if(b){P=b.dataset.p;render()}});
+/* ---- pengaturan ---- */
+$("setBtn").onclick=()=>{$("sBal").value=CFG.bal;$("sDay").value=CFG.day;$("sName").value=CFG.name;$("setSheet").classList.add("on");$("setSheet").setAttribute("aria-hidden","false")};
+$("setSave").onclick=()=>{CFG.bal=num($("sBal").value)||0;CFG.day=num($("sDay").value)||0;CFG.name=$("sName").value.trim();LS.set("dfx-jurnal-cfg",JSON.stringify(CFG));closeSheets();render()};
+/* ---- ekspor / impor ---- */
+function dl(name,text,type){const b=new Blob([text],{type}),u=URL.createObjectURL(b),a=document.createElement("a");a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),3000)}
+$("expCsv").onclick=()=>{const H=["Waktu","Pair","Arah","Lot","Entry","SL","TP","Keluar","Profit $","R","Setup","Perasaan","Sesuai rencana","Catatan"],q=v=>`"${String(v??"").replace(/"/g,'""')}"`;
+  dl("jurnal-dirmufx.csv","﻿"+[H.join(",")].concat(T.slice().sort((a,b)=>a.t-b.t).map(x=>[new Date(x.t).toLocaleString("id-ID"),x.pair,x.dir,x.lot,x.entry,x.sl,x.tp,x.exit,x.pl,x.rr!=null?x.rr.toFixed(2):"",x.setup,x.mood,x.plan==null?"":x.plan?"Ya":"Tidak",x.note].map(q).join(","))).join("\n"),"text/csv")};
+$("expJson").onclick=()=>dl("cadangan-jurnal-dirmufx.json",JSON.stringify({v:1,cfg:CFG,trades:T}),"application/json");
+$("impJson").onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const d=JSON.parse(r.result);if(!Array.isArray(d.trades))throw 0;
+  if(!confirm(`Pulihkan ${d.trades.length} trade? Data yang ada akan digabung.`))return;const ids=new Set(T.map(x=>x.id));T=T.concat(d.trades.filter(x=>!ids.has(x.id)));if(d.cfg)CFG=Object.assign(CFG,d.cfg);save();LS.set("dfx-jurnal-cfg",JSON.stringify(CFG));render()}catch(err){alert("File cadangan tidak valid.")}};r.readAsText(f);e.target.value=""};
+/* ---- bagikan rekap (promosi) ---- */
+$("shareBtn").onclick=async()=>{const arr=T.filter(x=>inPeriod(x.t)),s=stats(arr);if(!s.n){alert("Belum ada trade selesai di periode ini.");return}
+  const W=1080,H=1350,cv=document.createElement("canvas");cv.width=W;cv.height=H;const g=cv.getContext("2d");try{await document.fonts.load("800 60px 'Plus Jakarta Sans'")}catch(e){}
+  const Fn=(w,z)=>`${w} ${z}px 'Plus Jakarta Sans',system-ui,sans-serif`;g.fillStyle="#121512";g.fillRect(0,0,W,H);
+  const gr=g.createRadialGradient(W,0,40,W,0,950);gr.addColorStop(0,s.net>=0?"rgba(63,191,127,.22)":"rgba(229,72,77,.22)");gr.addColorStop(1,"rgba(0,0,0,0)");g.fillStyle=gr;g.fillRect(0,0,W,H);
+  g.save();g.translate(70,70);g.scale(.32,.32);g.lineWidth=30;g.strokeStyle="#63d297";g.lineJoin="round";g.stroke(new Path2D("M15 15H140A156.5 156.5 0 0 1 140 328H15Z"));g.fillStyle="#fff";[[87,159,10,138],[69,202,46,58],[147,114,10,160],[129,153,46,75]].forEach(r=>g.fillRect(...r));g.fillStyle="#63d297";[[207,54,10,175],[189,89,46,99]].forEach(r=>g.fillRect(...r));g.restore();
+  g.fillStyle="#fff";g.font=Fn(800,52);g.fillText("Dirmu",190,128);const wd=g.measureText("Dirmu").width;g.fillStyle="#63d297";g.fillText("FX",190+wd,128);g.fillStyle="#9aa39a";g.font=Fn(600,24);g.fillText("JURNAL TRADING",192,165);
+  const per=P==="week"?"Rekap minggu ini":P==="month"?"Rekap "+new Date().toLocaleDateString("id-ID",{month:"long",year:"numeric"}):"Rekap semua trade";
+  g.fillStyle="#9aa39a";g.font=Fn(600,34);g.fillText(per+(CFG.name?" · "+CFG.name:""),70,290);
+  g.fillStyle=s.net>=0?"#3fbf7f":"#e5484d";g.font=Fn(800,120);g.fillText(sgn(s.net),70,420);
+  if(CFG.bal){g.fillStyle="#cfd5cc";g.font=Fn(700,40);g.fillText(((s.net/CFG.bal*100)>0?"+":"")+(s.net/CFG.bal*100).toFixed(1)+"% dari modal",70,480)}
+  const box=(x,y,k,v,c)=>{g.fillStyle="#1b201b";g.beginPath();g.roundRect(x,y,450,150,22);g.fill();g.fillStyle="#9aa39a";g.font=Fn(600,30);g.fillText(k,x+30,y+55);g.fillStyle=c||"#fff";g.font=Fn(800,56);g.fillText(v,x+30,y+120)};
+  box(70,540,"Win rate",Math.round(s.wr)+"%",s.wr>=50?"#3fbf7f":"#e5484d");box(560,540,"Total trade",String(s.n));box(70,715,"Profit factor",s.pf===Infinity?"∞":s.pf.toFixed(2),s.pf>=1?"#3fbf7f":"#e5484d");box(560,715,"Menang / kalah",s.w+" / "+s.l);
+  // mini equity
+  const ser=s.ser,x0=70,y0=900,w0=W-140,h0=200,lo=Math.min(0,...ser),hi=Math.max(0,...ser),pd=(hi-lo)*.1||1,Y=v=>y0+(hi+pd-v)/((hi+pd)-(lo-pd))*h0,X=i=>x0+i/Math.max(1,ser.length-1)*w0;
+  g.strokeStyle=s.net>=0?"#3fbf7f":"#e5484d";g.lineWidth=6;g.lineJoin="round";g.beginPath();ser.forEach((v,i)=>i?g.lineTo(X(i),Y(v)):g.moveTo(X(i),Y(v)));g.stroke();
+  g.fillStyle="#1d2a3d";g.beginPath();g.roundRect(70,1160,W-140,120,22);g.fill();g.fillStyle="#fff";g.font=Fn(700,32);g.fillText("Catat jurnal gratis & pakai Signal Room di",100,1210);g.fillStyle="#63d297";g.font=Fn(800,38);g.fillText("dirmufx.github.io",100,1258);
+  const blob=await new Promise(r=>cv.toBlob(r,"image/png")),file=new File([blob],"rekap-jurnal-dirmufx.png",{type:"image/png"});
+  const text="Rekap jurnal trading saya pakai Jurnal DirmuFX. Gratis: https://dirmufx.github.io/jurnal.html";
+  try{if(navigator.canShare&&navigator.canShare({files:[file]})){await navigator.share({files:[file],text});return}}catch(e){if(e&&e.name==="AbortError")return}
+  const u=URL.createObjectURL(blob),a=document.createElement("a");a.href=u;a.download=file.name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),3000)};
+/* ---- isi otomatis dari Signal Room: jurnal.html#add?pair=XAUUSD&dir=SELL&entry=..&sl=..&tp=.. ---- */
+function fromHash(){const h=location.hash;if(!h.startsWith("#add"))return;const q=new URLSearchParams(h.split("?")[1]||"");
+  openSheet(null,{pair:q.get("pair"),dir:q.get("dir")==="SELL"?"SELL":"BUY",entry:q.get("entry")||"",sl:q.get("sl")||"",tp:q.get("tp")||"",setup:"Sinyal DirmuFX"});history.replaceState(null,"",location.pathname)}
+window.addEventListener("resize",()=>drawEq(stats(T.filter(x=>inPeriod(x.t))).ser));
+render();fromHash();
+})();
+</script>
+</body>
+</html>
