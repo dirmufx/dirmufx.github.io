@@ -8,7 +8,7 @@ jobs:
     steps:
       - run: |
           S=$(date -u -d '2026-11-23 14:25' +%s)000; E=$(date -u -d '2026-11-23 15:10' +%s)000
-          curl -s "https://api.binance.com/api/v3/klines?symbol=PAXGUSDT&interval=5m&startTime=$S&endTime=$E" | python3 -c "
+          curl -s "https://data-api.binance.vision/api/v3/klines?symbol=PAXGUSDT&interval=5m&startTime=$S&endTime=$E" | python3 -c "
           import json,sys,datetime
           for k in json.load(sys.stdin): print(datetime.datetime.utcfromtimestamp(k[0]/1000).strftime('%H:%M'),'O',k[1],'H',k[2],'L',k[3],'C',k[4])"
           echo spot; curl -s https://api.gold-api.com/price/XAU
