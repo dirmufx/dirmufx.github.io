@@ -588,6 +588,72 @@ html{scroll-behavior:auto}
 #app .hrow .r{font-weight:700;text-align:right;white-space:nowrap}
 #app .hrow .r.win{color:var(--up)}#app .hrow .r.loss{color:var(--down)}#app .hrow .r.be{color:var(--amber)}#app .hrow .r.run{color:#5b9cf5}
 @media(max-width:420px){#app .tmx .a{font-size:17px}#app .hstat .v{font-size:16px}}
+
+/* ===== tampilan sinyal v2 ===== */
+#app .pxhero{display:flex;align-items:center;gap:12px;justify-content:space-between;border-radius:18px;padding:14px 16px;margin:0 0 14px;border:1px solid #23513a;background:radial-gradient(120% 140% at 0% 0%,rgba(63,191,127,.16),transparent 60%),linear-gradient(160deg,#16211a,#141814)}
+#app .pxl{min-width:0}
+#app .pxtop{display:flex;align-items:center;gap:10px;font-size:13px;font-weight:700;flex-wrap:wrap}
+#app .pxtop b{letter-spacing:.04em;color:#e3b85c}
+#app .pxlive,#app .pxsess{display:inline-flex;align-items:center;gap:5px;color:var(--up)}
+#app .pxsess{color:#e3b85c}
+#app .pxlive::before,#app .pxsess::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor;box-shadow:0 0 0 3px rgba(255,255,255,.06)}
+#app .pxrow{display:flex;align-items:center;gap:10px;margin-top:3px;flex-wrap:wrap}
+#app .pxbig{font-size:34px;font-weight:800;letter-spacing:-.02em;line-height:1.1;font-variant-numeric:tabular-nums}
+#app .pxbig i{font-style:normal;color:#8d958a}
+#app .pxchg{font-size:13px;font-weight:800;border-radius:99px;padding:4px 10px;background:rgba(63,191,127,.14);color:var(--up);border:1px solid rgba(63,191,127,.35)}
+#app .pxchg.down{background:rgba(229,72,77,.14);color:#ff7a7f;border-color:rgba(229,72,77,.35)}
+#app .pxspark{width:120px;height:46px;flex:none}
+#app #sigcard.signal{border-radius:18px;border:1px solid var(--line);background:linear-gradient(165deg,#1d221d,#171a17)}
+#app #sigcard[data-dir="SELL"]{border-color:#6b2b2e;background:radial-gradient(120% 90% at 0% 0%,rgba(229,72,77,.22),transparent 60%),linear-gradient(165deg,#2a1719,#171a17 75%)}
+#app #sigcard[data-dir="BUY"]{border-color:#1f5a3d;background:radial-gradient(120% 90% at 0% 0%,rgba(63,191,127,.22),transparent 60%),linear-gradient(165deg,#15291e,#171a17 75%)}
+#app .sg2{padding:16px 16px 6px}
+#app .sgtop{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+#app .sgstyle{font-size:13.5px;color:var(--muted)}#app .sgstyle b{font-size:19px;color:var(--fg);font-weight:800}
+#app .sgai{font-size:12px;font-weight:700;color:#e3b85c;border:1px solid #5c4a1f;background:rgba(227,184,92,.08);border-radius:99px;padding:3px 9px}
+#app .sgstat{margin-left:auto;font-size:12.5px;font-weight:700;border-radius:99px;padding:5px 11px;border:1px solid var(--line);background:rgba(0,0,0,.25);color:#cfd5cc;white-space:nowrap}
+#app .sgstat.ok{color:var(--up);border-color:#1f5a3d;background:rgba(63,191,127,.1)}
+#app .sgstat.bad{color:#ff7a7f;border-color:#6b2b2e;background:rgba(229,72,77,.1)}
+#app .sgmain{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:14px 0 10px}
+#app .sgdir{display:flex;align-items:center;gap:10px;min-width:0}
+#app .sgarrow{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;font-size:20px;font-weight:900;flex:none;background:#2a3a55;color:#8dbbff}
+#app #sigcard[data-dir="BUY"] .sgarrow{background:linear-gradient(180deg,#45d08d,#1f9a5f);color:#06261b}
+#app #sigcard[data-dir="SELL"] .sgarrow{background:linear-gradient(180deg,#ff6b70,#c7343a);color:#2a0608}
+#app #sigcard .sigword{font-size:40px;font-weight:800;letter-spacing:.01em;line-height:1}
+#app .sgtype{font-size:14.5px;color:var(--muted);white-space:nowrap}
+#app .sgpips{text-align:right;white-space:nowrap}
+#app .sgpips b{font-size:36px;font-weight:800;line-height:1;font-variant-numeric:tabular-nums;color:#e3b85c}
+#app .sgpips b.up{color:var(--up)}#app .sgpips b.down{color:#ff7a7f}
+#app .sgpips span{display:block;font-size:12.5px;color:var(--muted);margin-top:3px}
+#app .sgline{font-size:15px;font-weight:700;font-variant-numeric:tabular-nums;color:#e8ebe4}
+#app .sgline em{font-style:normal;font-weight:600;font-size:12.5px;color:var(--muted);margin-right:4px}
+#app .sgline .sl{color:#ff8a8d}#app .sgline .tp{color:var(--up)}#app .sgline .dot{color:#5c635a;margin:0 6px}
+#app .sgbadges{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 2px}
+#app .sgbadges:empty{display:none}
+#app .sgb{font-size:12.5px;font-weight:700;border-radius:99px;padding:4px 10px;border:1px solid var(--line);background:rgba(0,0,0,.2)}
+#app .sgb.ok{color:var(--up);border-color:#1f5a3d}#app .sgb.warn{color:#e3b85c;border-color:#5c4a1f}#app .sgb.bad{color:#ff7a7f;border-color:#6b2b2e}#app .sgb.info{color:#8dbbff;border-color:#2a4670}
+#app .sgtrack{position:relative;height:6px;border-radius:99px;margin:16px 4px 4px;background:linear-gradient(90deg,rgba(229,72,77,.55) 0 25%,rgba(255,255,255,.1) 25% 100%)}
+#app .sgtrack::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#e5484d 0 2px,transparent 2px calc(25% - 1px),#fff calc(25% - 1px) calc(25% + 1px),transparent calc(25% + 1px) calc(50% - 1px),#7fd6a6 calc(50% - 1px) calc(50% + 1px),transparent calc(50% + 1px) calc(75% - 1px),#7fd6a6 calc(75% - 1px) calc(75% + 1px),transparent calc(75% + 1px) calc(100% - 2px),#3fbf7f calc(100% - 2px));height:14px;top:-4px;border-radius:2px;opacity:.9;pointer-events:none}
+#app .sgfill{position:absolute;top:0;bottom:0;left:25%;width:0;border-radius:99px;background:linear-gradient(90deg,#2fa36b,#45d08d);transition:width .4s,left .4s}
+#app .sgfill.neg{background:linear-gradient(90deg,#e5484d,#ff7a7f)}
+#app .sgdot{position:absolute;top:50%;left:25%;width:16px;height:16px;margin:-8px 0 0 -8px;border-radius:50%;background:#e9fff3;box-shadow:0 0 0 4px rgba(69,208,141,.35),0 0 14px rgba(69,208,141,.8);transition:left .4s}
+#app .sgdot.neg{background:#ffe9ea;box-shadow:0 0 0 4px rgba(229,72,77,.35),0 0 14px rgba(229,72,77,.8)}
+#app #sigcard.waiting .sgtrack,#app #sigcard.waiting .sgtl{opacity:.35}
+#app .sgtl{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin:8px 0 4px;padding:0 0}
+#app .sgtl span{width:20%;text-align:center}#app .sgtl span:first-child{text-align:left;width:10%}#app .sgtl span:last-child{text-align:right;width:15%}
+#app .sgstr{display:flex;align-items:center;gap:8px;margin:12px 0 4px}#app .sgstr b{font-size:13px}#app .sgstr .meter{flex:1;margin:0}
+#app .sgzone{padding:4px 16px 0;font-size:13.5px;color:var(--muted)}#app .sgzone b{color:var(--fg);font-variant-numeric:tabular-nums}
+#app .sgzone:empty{display:none}
+#app .sgwhy{padding:10px 16px 4px}
+#app .sgwk{font-size:12px;font-weight:800;letter-spacing:.06em;color:#e3b85c;margin-bottom:3px}
+#app .sgwt{font-size:14px;line-height:1.55;color:#d6dbd2;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+#app .sgwhy.open .sgwt{-webkit-line-clamp:unset;display:block}
+#app .sgmore{border:0;background:none;color:var(--up);font-weight:700;font-size:13.5px;padding:4px 0;cursor:pointer;font-family:inherit}
+#app .sgdet{border-top:1px solid var(--line);margin-top:6px}
+#app .sgdet>summary{list-style:none;cursor:pointer;padding:13px 16px;font-weight:700;font-size:14px;color:#cfd5cc;display:flex;justify-content:space-between}
+#app .sgdet>summary::after{content:"⌄";color:var(--muted)}#app .sgdet[open]>summary::after{content:"⌃"}
+#app .sgdet>summary::-webkit-details-marker{display:none}
+@media(max-width:400px){#app #sigcard .sigword{font-size:34px}#app .sgpips b{font-size:30px}#app .pxbig{font-size:30px}#app .pxspark{width:96px}}
+#app .sgline .g{white-space:nowrap}#app .sgdir .sigword{white-space:nowrap}#app .sgtop .sgstat{margin-left:auto}
 </style>
 </head>
 <body>
@@ -600,7 +666,7 @@ html{scroll-behavior:auto}
       <svg class="dmark" viewBox="0 0 314 343" aria-hidden="true"><path d="M15 15H140A156.5 156.5 0 0 1 140 328H15Z" fill="none" stroke="#63d297" stroke-width="30" stroke-linejoin="round"/><g fill="#fff"><rect x="87" y="159" width="10" height="138" rx="5"/><rect x="69" y="202" width="46" height="58" rx="5"/><rect x="147" y="114" width="10" height="160" rx="5"/><rect x="129" y="153" width="46" height="75" rx="5"/></g><g fill="#63d297"><rect x="207" y="54" width="10" height="175" rx="5"/><rect x="189" y="89" width="46" height="99" rx="5"/></g></svg><span class="dword"><span class="dname">Dirmu<i>FX</i></span><span class="dtrade">TRADE</span></span>
     </a>
     <div class="navlinks">
-      <a href="analisa.html">Analisa Harian</a><a href="belajar.html">Belajar</a><a href="indikator.html">Indikator</a><a href="jurnal.html">Jurnal</a><a href="#fitur">Fitur</a><a href="#cara-gabung">Cara Gabung</a><a href="#terminal">Signal Room</a><a href="#kalkulator">Kalkulator</a><a href="#materi">Materi</a><a href="#faq">FAQ</a>
+      <a href="analisa.html">Analisa Harian</a><a href="makro.html">Riset Makro</a><a href="belajar.html">Belajar</a><a href="indikator.html">Indikator</a><a href="jurnal.html">Jurnal</a><a href="#fitur">Fitur</a><a href="#cara-gabung">Cara Gabung</a><a href="#terminal">Signal Room</a><a href="#kalkulator">Kalkulator</a><a href="#materi">Materi</a><a href="#faq">FAQ</a>
     </div>
     <div class="navcta"><a class="btn ghost" href="#masuk" id="navMasuk">Masuk</a><a class="btn gold-btn" href="#daftar">Gabung</a></div>
   </div>
@@ -834,7 +900,7 @@ html{scroll-behavior:auto}
   <div class="wrap">
     <div class="foot">
       <div><a class="logo" href="#top" style="display:inline-flex"><svg class="dmark" viewBox="0 0 314 343" aria-hidden="true"><path d="M15 15H140A156.5 156.5 0 0 1 140 328H15Z" fill="none" stroke="#63d297" stroke-width="30" stroke-linejoin="round"/><g fill="#fff"><rect x="87" y="159" width="10" height="138" rx="5"/><rect x="69" y="202" width="46" height="58" rx="5"/><rect x="147" y="114" width="10" height="160" rx="5"/><rect x="129" y="153" width="46" height="75" rx="5"/></g><g fill="#63d297"><rect x="207" y="54" width="10" height="175" rx="5"/><rect x="189" y="89" width="46" height="99" rx="5"/></g></svg><span class="dword"><span class="dname">Dirmu<i>FX</i></span><span class="dtrade">TRADE</span></span></a><p style="margin:10px 0 0;max-width:42ch">Komunitas edukasi trading forex, emas &amp; crypto untuk trader Indonesia.</p></div>
-      <div><h4>Halaman</h4><a href="analisa.html">Analisa Harian</a><a href="belajar.html">Akademi</a><a href="indikator.html">Indikator DirmuFX</a><a href="jurnal.html">Jurnal Trading</a><a href="#cara-gabung">Cara Gabung</a><a href="#analisa">Signal Room</a><a href="#kalkulator">Kalkulator</a><a href="#materi">Materi</a><a href="#faq">FAQ</a></div>
+      <div><h4>Halaman</h4><a href="analisa.html">Analisa Harian</a><a href="makro.html">Riset Makro Mingguan</a><a href="belajar.html">Akademi</a><a href="indikator.html">Indikator DirmuFX</a><a href="jurnal.html">Jurnal Trading</a><a href="#cara-gabung">Cara Gabung</a><a href="#analisa">Signal Room</a><a href="#kalkulator">Kalkulator</a><a href="#materi">Materi</a><a href="#faq">FAQ</a></div>
       <div><h4>Channel</h4><a href="https://t.me/dirmufxofficial" target="_blank" rel="noopener">Telegram</a><a href="https://chat.whatsapp.com/E4zPvDufMNqAaLdo9BLSmg" target="_blank" rel="noopener">Grup WhatsApp</a><a href="https://www.tiktok.com/@dirmufxofficial" target="_blank" rel="noopener">TikTok</a><a href="https://www.instagram.com/mudirr_/" target="_blank" rel="noopener">Instagram</a><a href="https://wa.me/6285823444392" target="_blank" rel="noopener">WhatsApp</a></div>
     </div>
     <p class="risk"><b style="color:var(--fg)">Peringatan risiko:</b> Trading forex, emas, dan kripto dengan leverage memiliki risiko tinggi dan bisa menyebabkan kehilangan seluruh modal. Semua konten DirmuFX bersifat edukasi, bukan saran keuangan. Hasil masa lalu tidak menjamin hasil di masa depan.<br>© 2026 DirmuFX Trade.</p>
@@ -1129,6 +1195,11 @@ html{scroll-behavior:auto}
       <div class="mkgrp" id="mkgrp" role="tablist" aria-label="Jenis pasar"></div>
       <div class="mkpairs" id="mkpairs"></div>
     </div>
+    <div class="pxhero" id="pxHero" hidden>
+      <div class="pxl"><div class="pxtop"><b id="pxSym">XAUUSD</b><span class="pxlive" id="pxLive">Live</span><span class="pxsess" id="pxSess"></span></div>
+        <div class="pxrow"><span class="pxbig" id="pxBig">—</span><span class="pxchg" id="pxChg"></span></div></div>
+      <canvas class="pxspark" id="pxSpark" width="240" height="90"></canvas>
+    </div>
     <div class="card">
       <div class="srcbar">
         <span class="chip sim" id="srcchip">Demo</span>
@@ -1189,18 +1260,26 @@ html{scroll-behavior:auto}
         </div>
         <div class="newsalert" id="newsAlert" hidden></div>
         <div class="card signal" id="sigcard" data-dir="WAIT">
-          <div class="sighead">
-            <div>
-              <div class="h2" style="margin:0 0 6px">Sinyal entry · <span id="sigtf"></span></div>
-              <div class="sigword" id="sigword">—</div>
+          <div class="sg2">
+            <div class="sgtop"><span class="sgstyle"><b id="sgStyle">Intraday</b> · <span id="sigtf"></span></span><span class="sgai">✦ DirmuFX</span><span class="sgstat" id="sgStat">Menunggu setup</span></div>
+            <div class="sgmain">
+              <div class="sgdir"><span class="sgarrow" id="sgArrow">◆</span><span class="sigword" id="sigword">—</span><span class="sgtype" id="sgType"></span></div>
+              <div class="sgpips"><b id="sgPips">0%</b><span id="sgPipsK">kekuatan</span></div>
             </div>
-            <div style="text-align:right">
-              <div class="small muted">Kekuatan konfluensi</div>
-              <div class="num" style="font-size:20px;font-weight:700" id="sigstr">0%</div>
-              <div class="meter" style="margin-left:auto"><span id="sigbar" style="width:0"></span></div>
-            </div>
+            <div class="sgline lockable" id="sgLine">—</div>
+            <div class="sgbadges" id="sgBadges"></div>
+            <div class="sgtrack" id="sgTrack"><div class="sgfill" id="sgFill"></div><i class="sgdot" id="sgDot"></i></div>
+            <div class="sgtl" id="sgTl"><span>SL</span><span>Entry</span><span>SL+</span><span>TP1</span><span>TP MAX</span></div>
+            <div class="sgstr"><span class="small muted">Kekuatan konfluensi</span><b class="num" id="sigstr">0%</b><div class="meter"><span id="sigbar" style="width:0"></span></div></div>
           </div>
           <div class="waitnote" id="waitNote"><b>⏳ Belum ada sinyal aktif — jangan entry dulu.</b><span>Level di bawah hanya rencana jika <b id="waitLean">BUY</b> terkonfirmasi. Aktifkan notifikasi supaya tahu saat sinyal muncul.</span></div>
+          <div class="lockbar">
+            <p>Entry, SL, TP &amp; lot khusus <b>member DirmuFX</b>. Gratis dengan buka akun lewat link kami.</p>
+            <a class="btn cta" href="#member">Buka akses</a>
+          </div>
+          <div class="sgzone lockable" id="sgZone"></div>
+          <div class="sgwhy"><div class="sgwk">💡 Alasan</div><div class="sgwt" id="sigwhy"></div><button type="button" class="sgmore" id="sgMore">Selengkapnya ⌄</button></div>
+          <details class="sgdet"><summary>🧮 Semua level & hitung lot</summary>
           <div class="levels">
             <div class="lv"><div class="k">Entry</div><div class="v lockable" id="lvE">—</div></div>
             <div class="lv sl"><div class="k">Stop loss</div><div class="v lockable" id="lvSL">—</div></div>
@@ -1208,12 +1287,7 @@ html{scroll-behavior:auto}
             <div class="lv tp"><div class="k">TP 1 (1:2)</div><div class="v lockable" id="lvTP1">—</div></div>
             <div class="lv tp max"><div class="k" id="tp2k">TP MAX (1:3)</div><div class="v lockable" id="lvTP2">—</div></div>
           </div>
-          <div class="lockbar">
-            <p>Entry, SL, TP &amp; lot khusus <b>member DirmuFX</b>. Gratis dengan buka akun lewat link kami.</p>
-            <a class="btn cta" href="#member">Buka akses</a>
-          </div>
           <div class="sigfoot">
-            <div class="small muted" id="sigwhy"></div>
             <div class="row notifrow"><button class="btn primary" id="shareBtn" hidden>📤 Bagikan sinyal</button><a class="btn" id="jurnalBtn" href="jurnal.html" hidden>📒 Catat ke jurnal</a><button class="btn" id="notifBtn">Aktifkan notifikasi sinyal</button><span class="small muted" id="notifState">Bunyi + pop-up saat sinyal muncul (selama tool terbuka)</span></div>
             <div class="grid2">
               <div class="field proonly"><label for="rr">Rasio RR</label><select id="rr"><option value="3" selected>1 : 3</option></select></div>
@@ -1227,6 +1301,7 @@ html{scroll-behavior:auto}
               <div><span>Target $</span><b id="rewusd" style="color:var(--up)">—</b></div>
             </div>
           </div>
+          </details>
         </div>
         <div class="card" id="histCard">
           <div class="row" style="justify-content:space-between;margin-bottom:10px;gap:8px"><h2 style="margin:0">Riwayat & statistik sinyal</h2><span class="small muted" id="histTf"></span></div>
@@ -1283,6 +1358,7 @@ html{scroll-behavior:auto}
       <p class="fsum" id="fSum"></p>
       <div class="fnow" id="fNow"></div>
     </div>
+    <a class="ibstrip" href="makro.html" style="text-decoration:none;color:inherit;margin-bottom:14px"><p><b>🌍 Riset Makro Mingguan</b><br><span class="small muted">Bank sentral, dolar, sentimen risiko & skenario minggu ini.</span></p><span class="btn">Baca</span></a>
     <div class="card" id="fNewsCard" hidden>
       <h2>Berita terbaru</h2>
       <div class="fnews" id="fNews"></div>
@@ -1698,6 +1774,7 @@ function render(){
   $("sigwhy").textContent=why.join(" · ");
   $("shareBtn").hidden=!(on&&!isLocked());
   {const jb=$("jurnalBtn");jb.hidden=!(on&&!isLocked());if(on){const q=new URLSearchParams({pair:S.sym,dir:act.dir,entry:fx(p.entry),sl:fx(p.sl),tp:fx(p.tp2)});jb.href="jurnal.html#add?"+q}}
+  try{sigV2(a,p,act,on,tf);pxHero(d,tf)}catch(e){console.warn(e)}
   lotCalc();
   notifyCheck({...a,dir:a.shown},tf,p);
   const PRO=$("app").classList.contains("pro");
@@ -1718,6 +1795,58 @@ function render(){
   try{renderHist()}catch(e){console.warn(e)}
   draw();
 }
+
+/* ===== tampilan sinyal v2 ===== */
+function sessName(){const h=new Date().getUTCHours();return h>=12&&h<21?"New York":h>=7&&h<12?"London":h>=23||h<7?"Asia":"Sepi (antar sesi)"}
+function styleOf(tf){return tf<=15?"Scalping":tf<=60?"Intraday":"Swing"}
+function pxHero(d,tf){const el=$("pxHero");if(!d||mode()!=="live"){el.hidden=true;return}el.hidden=false;
+  const cfg=SYMS[S.sym],last=d[d.length-1].c,t24=d[d.length-1].t-864e5;let ref=d[0];for(let i=d.length-1;i>=0;i--){if(d[i].t<=t24){ref=d[i];break}}
+  const pct=(last-ref.c)/ref.c*100,txt=fx(last),k=txt.indexOf(".");
+  $("pxSym").textContent=S.sym;$("pxSess").textContent=sessName();
+  $("pxBig").innerHTML=k>0&&txt.length-k>2?esc(txt.slice(0,k+1))+"<i>"+esc(txt.slice(k+1))+"</i>":esc(txt);
+  const c=$("pxChg");c.className="pxchg"+(pct<0?" down":"");c.textContent=(pct<0?"▼ ":"▲ ")+(pct>=0?"+":"")+pct.toFixed(2)+"%";
+  const cv=$("pxSpark"),g=cv.getContext("2d"),W=cv.width,H=cv.height,arr=d.slice(-60).map(x=>x.c),lo=Math.min(...arr),hi=Math.max(...arr),Y=v=>H-6-(v-lo)/((hi-lo)||1)*(H-12),X=i=>4+i/(arr.length-1)*(W-14);
+  g.clearRect(0,0,W,H);const gr=g.createLinearGradient(0,0,0,H);gr.addColorStop(0,"rgba(227,184,92,.35)");gr.addColorStop(1,"rgba(227,184,92,0)");
+  g.beginPath();arr.forEach((v,i)=>i?g.lineTo(X(i),Y(v)):g.moveTo(X(i),Y(v)));g.lineTo(X(arr.length-1),H);g.lineTo(X(0),H);g.closePath();g.fillStyle=gr;g.fill();
+  g.beginPath();arr.forEach((v,i)=>i?g.lineTo(X(i),Y(v)):g.moveTo(X(i),Y(v)));g.strokeStyle="#e3b85c";g.lineWidth=3;g.lineJoin="round";g.stroke();
+  g.beginPath();g.arc(X(arr.length-1),Y(arr[arr.length-1]),5,0,7);g.fillStyle="#fff3d6";g.fill()}
+function sigV2(a,p,act,on,tf){
+  const cfg=SYMS[S.sym],pip=PIP[S.sym]||.1,crypto=!!cfg.crypto,dir=a.shown,live=a.live;
+  const P=v=>crypto?"$"+Math.abs(v).toLocaleString("en-US",{maximumFractionDigits:cfg.d}):Math.round(Math.abs(v)/pip).toLocaleString("id-ID");
+  const unit=crypto?"":" pips";
+  $("sgStyle").textContent=styleOf(tf);
+  $("sgArrow").textContent=dir==="BUY"?"↑":dir==="SELL"?"↓":"◆";
+  $("sgType").textContent=dir==="WAIT"?"":"· Market";
+  const st=$("sgStat"),pb=$("sgPips"),pk=$("sgPipsK"),bd=[];
+  const L=on?act.L:p,sg=(on?act.dir:(p.lean||"BUY"))==="BUY"?1:-1;
+  $("sgLine").innerHTML=`<span class="g"><em>E</em>${fx(L.entry)}</span><span class="dot">·</span><span class="g"><em>SL</em><span class="sl">${fx(act&&on&&act.be?L.entry:L.sl)}</span></span><span class="dot">·</span><span class="g"><em>TP1</em><span class="tp">${fx(L.tp1)}</span></span><span class="dot">·</span><span class="g"><em>TP MAX</em><span class="tp">${fx(L.tp2)}</span></span>`;
+  // posisi harga di track: SL=0, Entry=25, SL+=50, TP1=75, TPMAX=100
+  const r=(live-L.entry)*sg/L.risk;let pos=r<=0?25+Math.max(-1,r)*25:25+Math.min(3,r)*25;
+  if(on){
+    const mvP=(live-L.entry)*sg;pb.className=mvP>=0?"up":"down";pb.textContent=(mvP>=0?"+":"−")+P(mvP);pk.textContent="/ "+P(L.risk*3)+unit+" ke TP MAX";
+    st.className="sgstat ok";st.textContent=act.tp1?"✓ TP1 hit":act.be?"✓ SL+ aman":"● Sinyal aktif";if(mvP<0)st.className="sgstat";
+    if(act.be)bd.push(["ok","🛡 Geser SL ke entry (SL+)"]);
+    if(act.tp1)bd.push(["ok","TP1 ✓ +"+P(L.risk*2)+unit]);
+    if(r>1.2&&!act.tp1)bd.push(["warn","⚠ Entry terlewat, jangan kejar"]);
+    else if(r>0.5&&!act.be)bd.push(["warn","Harga sudah jalan, entry hati-hati"]);
+    bd.push(["info","Sejak "+hm(act.t)]);
+  }else{
+    pb.className="";pb.textContent=a.strength+"%";pk.textContent="kekuatan setup";pos=25;
+    if(act&&act.res){st.className="sgstat "+(act.res==="SL"?"bad":"ok");st.textContent=act.res==="TP"?"✓ TP MAX hit":act.res==="BE"?"Selesai BE":"✗ Kena SL";
+      bd.push([act.res==="SL"?"bad":"ok",`Sinyal terakhir ${act.dir} ${hm(act.t)}: ${act.res==="TP"?"+"+P(act.L.risk*3)+unit:act.res==="BE"?"0"+unit:"−"+P(act.L.risk)+unit}`])}
+    else{st.className="sgstat";st.textContent="⏱ Menunggu setup"}
+    if(a.newsHold)bd.push(["bad","⏸ Dijeda: berita merah"]);
+    bd.push(["info","Rencana jika "+(p.lean||"BUY")+" terkonfirmasi"]);
+  }
+  $("sgBadges").innerHTML=bd.map(b=>`<span class="sgb ${b[0]}">${esc(b[1])}</span>`).join("");
+  const neg=on&&r<0,f=$("sgFill"),dot=$("sgDot");
+  f.classList.toggle("neg",neg);dot.classList.toggle("neg",neg);
+  if(neg){f.style.left=pos+"%";f.style.width=(25-pos)+"%"}else{f.style.left="25%";f.style.width=Math.max(0,pos-25)+"%"}
+  dot.style.left=pos+"%";
+  const zw=L.risk*0.15;$("sgZone").innerHTML=`Zona entry <b>${fx(Math.min(L.entry,L.entry-sg*zw))}–${fx(Math.max(L.entry,L.entry-sg*zw))}</b> · SL ${P(L.risk)}${unit} · R:R 1:3`;
+}
+$("sgMore").addEventListener("click",()=>{const w=$("sgMore").parentElement;w.classList.toggle("open");$("sgMore").textContent=w.classList.contains("open")?"Tutup ⌃":"Selengkapnya ⌄"});
+
 const MTX=[[15,"M15"],[60,"H1"],[240,"H4"],[1440,"D1"],[10080,"W1"]];
 function trendOf(d){if(!d||d.length<60)return null;const c=d.map(x=>x.c),n=c.length-1,e20=ema(c,20)[n],e50=ema(c,50)[n],e200=ema(c,200)[n],cl=c[n];
   const sc=(cl>e50?1:-1)+(e20>e50?1:-1)+(cl>e200?1:-1)+(e50>ema(c,50)[n-5]?1:-1);return sc>=3?"up":sc<=-3?"down":"flat"}
@@ -1822,7 +1951,7 @@ async function shareSignal(){
   try{if(navigator.canShare&&navigator.canShare({files:[file]})){await navigator.share({files:[file],text:txt});return}}catch(e){if(e&&e.name==="AbortError")return}
   const url=URL.createObjectURL(blob),el=document.createElement("a");el.href=url;el.download=file.name;document.body.appendChild(el);el.click();el.remove();setTimeout(()=>URL.revokeObjectURL(url),4000);
 }
-function clearAll(msg){last=null;["lvE","lvSL","lvBE","lvTP1","lvTP2","lot","riskusd","rewusd"].forEach(i=>$(i).textContent="—");$("sigword").textContent="—";$("sigstr").textContent="0%";$("sigbar").style.width=0;$("indTbl").innerHTML="";$("lvlTbl").innerHTML="";$("sigwhy").textContent="";$("lastpx").textContent="—";renderMTF();draw(msg)}
+function clearAll(msg){last=null;try{$("pxHero").hidden=true}catch(e){}["lvE","lvSL","lvBE","lvTP1","lvTP2","lot","riskusd","rewusd"].forEach(i=>$(i).textContent="—");$("sigword").textContent="—";$("sigstr").textContent="0%";$("sigbar").style.width=0;$("indTbl").innerHTML="";$("lvlTbl").innerHTML="";$("sigwhy").textContent="";$("lastpx").textContent="—";renderMTF();draw(msg)}
 function lotCalc(){
   if(!last)return;const cfg=SYMS[S.sym],{p}=last,bal=parseFloat($("bal").value)||0,rk=parseFloat($("risk").value)||0;
   const riskUsd=bal*rk/100;let perLot=p.risk*cfg.cs;if(!cfg.quoteUSD)perLot/=p.entry;

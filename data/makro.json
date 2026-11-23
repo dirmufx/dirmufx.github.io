@@ -1,0 +1,66 @@
+{
+ "week": "Pekan 23–27 November 2026",
+ "date": "23 Nov 2026",
+ "updated": "2026-11-23T22:50:00+08:00",
+ "regime": {"label": "Pengetatan global · cenderung risk-off", "col": "down", "desc": "Hampir semua bank sentral besar sedang menaikkan suku bunga untuk melawan inflasi akibat lonjakan harga energi. Uang mahal membuat aset berisiko (saham teknologi, crypto) dan emas tertekan, sementara dolar AS menguat."},
+ "risk": {"score": -45, "label": "Risk-off sedang", "note": "Pasar masih waspada setelah saham AI anjlok awal November, tapi mulai sedikit tenang karena taruhan Fed naik bunga Desember berkurang."},
+ "summary": [
+  "Fed hampir pasti naik bunga 9 Desember (peluang ± 93%). Inilah tekanan utama untuk emas, crypto, dan mata uang selain dolar.",
+  "Bank sentral lain ikut mengetat: BoE naik ke 4%, RBA ke 4,85%, Bank Indonesia ke 6%. BoJ dan ECB diperkirakan naik di Desember.",
+  "Data PCE 25 November jadi penentu minggu ini. Inflasi tinggi = dolar makin kuat; inflasi lunak = emas dan crypto bisa lanjut memantul."
+ ],
+ "themes": [
+  ["Era bunga naik lagi", "down", "Setelah bertahun-tahun turun, suku bunga dunia naik lagi sejak pertengahan 2026 karena inflasi terdorong harga energi. Fed sudah naik di September dan pasar memperkirakan naik lagi Desember.", "Dolar kuat · emas & crypto tertekan"],
+  ["Gelembung saham AI pecah?", "down", "Saham teknologi/AI jatuh tajam sejak awal November: S&P 500 sempat turun 4,4% dalam sehari dan Nasdaq masuk fase koreksi (turun lebih dari 10% dari puncak). Investor menjual aset lain, termasuk emas dan Bitcoin, untuk menutup kerugian.", "Risk-off · volatilitas tinggi"],
+  ["Yen bersiap menguat", "up", "Bank of Japan sudah menyatakan target inflasi 2% hampir tercapai. Mayoritas ekonom memperkirakan BoJ naik ke 1,50% pada 17–18 Desember. Selisih bunga AS–Jepang bisa menyempit.", "USDJPY rawan turun"],
+  ["Rupiah di bawah tekanan", "down", "Rupiah melemah ke sekitar Rp18.245 per dolar. Bank Indonesia menaikkan BI-Rate ke 6% pada 18 November untuk menahan pelemahan, mengantisipasi Fed yang makin ketat.", "Dolar mahal untuk trader Indonesia"]
+ ],
+ "cb": [
+  ["Fed (AS)", "3,75–4,00%", "Naik 25 bp (Sep), tahan (Okt)", "8–9 Des", "Hawkish", "Peluang naik 25 bp ± 93%"],
+  ["ECB (Eropa)", "2,50%", "Naik (Sep), tahan (29 Okt)", "Des", "Hawkish", "Lagarde memberi sinyal naik ke 2,75%"],
+  ["BoE (Inggris)", "4,00%", "Naik 25 bp (5 Nov)", "17 Des", "Hawkish", "Kenaikan pencegahan karena inflasi"],
+  ["BoJ (Jepang)", "1,25%", "Naik (Sep), tahan (30 Okt)", "17–18 Des", "Hawkish", "86% ekonom perkirakan naik ke 1,50%"],
+  ["RBA (Australia)", "4,85%", "Naik 25 bp (3 Nov), voting 6–3", "7–8 Des", "Netral", "Banyak bank perkirakan ditahan"],
+  ["Bank Indonesia", "6,00%", "Naik 25 bp (18 Nov)", "Des", "Hawkish", "Fokus menjaga rupiah"]
+ ],
+ "markets": [
+  ["Indeks dolar (DXY)", "± 103,6", "Tertinggi ± 19 bulan, sedikit mereda awal pekan"],
+  ["Yield AS 10 tahun", "± 4,93%", "Turun dari ± 5,07% pekan lalu"],
+  ["Yield AS 2 tahun", "± 4,61%", "Paling peka terhadap ekspektasi Fed"],
+  ["Minyak WTI", "± $83", "Turun dari puncaknya, inflasi energi mulai mereda"],
+  ["Emas (XAUUSD)", "± $3.600", "Memantul setelah anjlok ± 9% sepekan ke $3.503"],
+  ["Bitcoin", "± $61.000", "ETF kehilangan $1,79 miliar sepekan"],
+  ["USD/IDR", "± Rp18.245", "Data BI per 17 Nov"]
+ ],
+ "assets": [
+  ["Emas", "down", "Bearish–Netral", "Bunga riil AS tinggi dan dolar kuat menekan emas. Pantulan wajar setelah turun tajam, tapi tren besar masih turun di bawah $3.700–3.800."],
+  ["EURUSD", "down", "Bearish", "Fed lebih agresif daripada ECB. Euro di dekat level terendah 2026."],
+  ["GBPUSD", "flat", "Netral", "BoE ikut naik bunga sehingga pound lebih tahan, tapi arah utamanya tetap ikut dolar."],
+  ["USDJPY", "down", "Rawan turun", "BoJ kemungkinan naik Desember dan risiko intervensi Jepang di dekat 160."],
+  ["AUDUSD", "down", "Bearish", "Mata uang berisiko yang tertekan saat pasar takut, walau RBA bunganya tinggi."],
+  ["Bitcoin & crypto", "down", "Bearish", "Bunga naik, saham AI jatuh, dan dana ETF keluar. Pasar crypto dalam kondisi sangat takut."]
+ ],
+ "scenarios": [
+  ["Skenario utama: dolar tetap kuat", 55, "PCE sesuai perkiraan (inti ± 3,2%) dan Fed tetap naik Desember.", "Emas & crypto bergerak sideways cenderung turun, EURUSD tertahan di bawah 1,10.", "down"],
+  ["Dolar makin kuat", 25, "PCE lebih tinggi dari perkiraan atau pejabat Fed bicara soal naik 50 bp.", "Emas bisa kembali ke $3.500 atau lebih rendah, BTC menguji $55.000.", "down"],
+  ["Dolar melemah", 20, "PCE lebih rendah dan pasar mulai ragu Fed naik.", "Emas memantul ke $3.700+, BTC kembali di atas $65.000, EURUSD naik ke 1,11.", "up"]
+ ],
+ "agenda": [
+  ["24 Nov", "23:00", "Keyakinan konsumen AS", "Seberapa optimis warga AS untuk belanja."],
+  ["25 Nov", "21:30", "PCE & GDP AS", "Data inflasi favorit Fed. Penentu utama arah minggu ini."],
+  ["26–27 Nov", "", "Libur Thanksgiving AS", "Volume tipis, harga bisa bergerak liar."],
+  ["4 Des", "21:30", "NFP November", "Data tenaga kerja AS."],
+  ["10 Des", "03:00", "Keputusan Fed", "Pasar memperkirakan naik 25 bp."],
+  ["17–18 Des", "", "BoE & BoJ", "BoJ diperkirakan naik ke 1,50%."]
+ ],
+ "lesson": {"title": "Kenapa bunga naik membuat emas turun?", "text": "Emas tidak memberi bunga. Saat bank sentral menaikkan suku bunga, menyimpan uang di deposito atau obligasi jadi lebih menguntungkan, jadi sebagian investor menjual emas. Bunga tinggi juga membuat dolar kuat, dan karena emas dihargai dalam dolar, harganya ikut tertekan. Sebaliknya, saat pasar mulai yakin bunga akan turun, emas biasanya naik."},
+ "sources": [
+  ["Bank Indonesia: BI-Rate naik ke 6,00% (18 Nov 2026)", "https://www.bi.go.id/id/iru/highlight-news/Pages/BI-Rate-Naik-25-bps-menjadi-6,00-persen-Memperkuat-Stabilitas,-Mendorong-Pertumbuhan-Ekonomi.aspx"],
+  ["Bank of England: Monetary Policy Report November 2026", "https://www.bankofengland.co.uk/monetary-policy-report/2026/November-2026"],
+  ["ECB: keputusan kebijakan 29 Okt 2026", "https://ecb.europa.eu/press/pr/date/2026/html/ecb.mp261029~9a493adf17.en.html"],
+  ["RBA naik ke 4,85% (3 Nov 2026)", "https://www.babypips.com/news/headline-rba-interest-rate-decision-november-2026-fifth-hike-split-vote"],
+  ["BoJ diperkirakan naik ke 1,50% Desember", "https://investinglive.com/central-banks/boj-tipped-to-hike-to-1-50-in-december-its-first-three-hike-year-in-37-years/"],
+  ["AP: aksi jual saham AI, S&P 500 turun 4,4%", "https://www.nbcchicago.com/news/national-international/ai-stocks-wall-street-reeling-sp-500-tumbles/4012949/"]
+ ],
+ "archive": []
+}
