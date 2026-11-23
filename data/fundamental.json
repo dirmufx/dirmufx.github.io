@@ -1,6 +1,6 @@
 {
  "date": "23 Nov 2026",
- "updated": "2026-11-23T05:36:37+08:00",
+ "updated": "2026-11-23T18:35:53+08:00",
  "macro": [
   [
    "Suku bunga Fed",
@@ -9,13 +9,13 @@
   ],
   [
    "Peluang Fed naik Desember",
-   "± 95–99%",
-   "Naik 25 bp ke 4,00–4,25% (CME FedWatch, 20–21 Nov)"
+   "± 93%",
+   "Turun dari ± 99% Jumat (CME FedWatch, 23 Nov)"
   ],
   [
    "Inflasi PCE",
    "3,6%",
-   "Rilis Oktober 25 Nov, perkiraan naik ke 3,8%"
+   "Data Oktober rilis 25 Nov, inti diperkirakan 3,2%"
   ],
   [
    "CPI Oktober",
@@ -29,23 +29,23 @@
   ],
   [
    "Yield obligasi AS 10 th",
-   "± 4,95%",
-   "Penutupan Jumat 20 Nov"
+   "± 4,92–4,94%",
+   "Turun dari ± 5,07% hari Rabu lalu"
+  ],
+  [
+   "Yield AS 2 th",
+   "± 4,61%",
+   "Turun 12 bp hari Jumat, tanda pasar mulai ragu Fed agresif"
   ],
   [
    "Indeks dolar (DXY)",
-   "± 103,84",
-   "Naik 4 pekan beruntun, tertinggi 19 bulan"
+   "± 103,6",
+   "Sedikit turun Senin pagi setelah naik 4 pekan"
   ],
   [
-   "Minyak Brent",
-   "± $92,5",
+   "Minyak WTI",
+   "± $83",
    "Penutupan Jumat 20 Nov"
-  ],
-  [
-   "S&P 500",
-   "6.910",
-   "Turun 3,7% hari Jumat, saham teknologi dijual"
   ]
  ],
  "agenda": [
@@ -53,19 +53,19 @@
    "23 Nov",
    "22:45",
    "PMI awal AS (November)",
-   "Gambaran awal kondisi bisnis AS. Angka kuat bisa menambah tenaga dolar."
+   "Perkiraan manufaktur 54,6 dan jasa 55,8. Angka kuat bisa menambah tenaga dolar."
   ],
   [
-   "25 Nov",
-   "08:30",
-   "CPI Australia (Oktober)",
-   "Data inflasi Australia. Penting untuk AUDUSD."
+   "24 Nov",
+   "23:00",
+   "Keyakinan konsumen AS",
+   "Perkiraan ± 92. Menunjukkan seberapa optimis warga AS untuk belanja."
   ],
   [
    "25 Nov",
    "21:30",
    "PCE & GDP AS",
-   "Data inflasi favorit Fed. Perkiraan PCE 3,8% dan inti 3,2%. Angka tinggi menguatkan dolar, menekan emas dan crypto."
+   "Data inflasi favorit Fed. Perkiraan inti PCE 3,2%. Angka tinggi menguatkan dolar, menekan emas dan crypto."
   ],
   [
    "26–27 Nov",
@@ -83,96 +83,100 @@
    "10 Des",
    "03:00",
    "Keputusan Fed",
-   "Pasar hampir yakin naik 25 bp. Kejutan ada di naik 50 bp atau batal naik."
+   "Rapat 8–9 Des. Pasar memperkirakan naik 25 bp dengan peluang ± 93%."
   ]
  ],
  "markets": {
   "XAUUSD": {
    "name": "Emas (XAUUSD)",
-   "bias": "Bearish",
+   "bias": "Bearish–Netral",
    "col": "down",
-   "sum": "Emas masih tertekan kuat. Pekan lalu turun sekitar 8,7% dan ditutup di sekitar $3.540, terendah sejak September 2025. Pasar hampir yakin Fed naikkan bunga Desember, dolar di level tertinggi 19 bulan, dan saham teknologi dijual besar-besaran.",
+   "sum": "Emas memantul ± 2% ke sekitar $3.600 setelah pekan lalu anjlok ± 9% ke $3.503, terendah 14 bulan. Pemicunya, pasar sedikit mengurangi taruhan Fed naik bunga Desember. Namun tren besar masih turun selama harga di bawah $3.700–3.800.",
    "now": [
     [
      "Harga terakhir",
-     "± $3.540"
+     "± $3.600–3.620"
     ],
     [
      "Terendah pekan lalu",
      "± $3.503"
     ],
     [
-     "Perubahan sepekan",
-     "± −8,7%"
+     "Perubahan hari ini",
+     "± +2%"
+    ],
+    [
+     "Tertinggi 2026",
+     "± $5.595"
     ]
    ],
    "plan": [
     [
      "down",
-     "Arah utama: cari peluang SELL",
-     "Selama di bawah $3.600, kenaikan lebih aman dianggap koreksi untuk jual lagi, bukan awal tren naik."
+     "Arah utama: SELL di area resistance",
+     "Pantulan ke $3.693 atau $3.800 lebih aman dipakai mencari posisi jual, selama harga belum kembali di atas $3.800."
     ],
     [
      "up",
      "Kapan boleh BUY",
-     "Hanya scalping pantulan di $3.500 atau $3.450 dengan konfirmasi sweep/MSS di chart. Setelah turun sedalam ini, pantulan tajam bisa terjadi kapan saja."
+     "Scalping pantulan dari $3.513–3.500 dengan konfirmasi sweep/MSS. Atau bila PCE 25 Nov lebih rendah dari perkiraan dan harga tembus $3.700."
     ],
     [
      "flat",
      "Manajemen risiko",
-     "Volatilitas sangat tinggi. Pakai lot lebih kecil dari biasa, SL wajib, dan hindari entry menjelang PCE 25 Nov 21:30 WITA serta saat Thanksgiving yang sepi."
+     "Volatilitas masih sangat tinggi. Lot lebih kecil dari biasa, SL wajib, hindari entry menjelang PCE 25 Nov 21:30 WITA dan saat Thanksgiving."
     ]
    ],
    "drv": [
     [
-     "Suku bunga Fed naik",
-     "down",
-     "Bearish",
-     "Peluang Fed naik 25 bp di Desember sekitar 95–99%. Bunga tinggi membuat emas, yang tidak memberi bunga, kurang menarik."
+     "Ekspektasi Fed",
+     "flat",
+     "Mulai melunak",
+     "Peluang Fed naik Desember turun dari ± 99% ke ± 93%. Ini memberi napas buat emas, tapi kenaikan bunga tetap paling mungkin."
     ],
     [
-     "Dolar & yield AS kuat",
-     "down",
-     "Bearish",
-     "DXY ± 103,84 dan yield 10 tahun ± 4,95%. Emas dihargai dalam dolar, jadi dolar kuat biasanya menekan emas."
+     "Pernyataan Bessent",
+     "up",
+     "Bullish jk. pendek",
+     "Menkeu AS memperingatkan Fed agar tidak menaikkan bunga berlebihan. Pasar membaca ini sebagai rem untuk Fed."
     ],
     [
-     "Aksi jual saham",
+     "Dolar & yield AS",
+     "flat",
+     "Campuran",
+     "DXY ± 103,6, yield 10 th ± 4,93%. Sedikit turun dari puncak, tapi masih tinggi dan menahan emas."
+    ],
+    [
+     "Pejabat Fed hawkish",
      "down",
-     "Bearish jk. pendek",
-     "S&P 500 turun 3,7% hari Jumat dan Nasdaq 100 turun 10,4% sepekan. Investor menjual emas untuk menutup kerugian. Tekanan ini bisa reda cepat begitu saham tenang."
+     "Bearish",
+     "Gubernur Fed Lisa Cook masih mendukung kenaikan bunga lagi. Waller bahkan menyebut kemungkinan naik 50 bp."
     ],
     [
      "Data PCE 25 Nov",
      "flat",
      "Penentu",
-     "Perkiraan inflasi PCE naik ke 3,8%. Angka lebih tinggi menekan emas lagi, angka lebih rendah bisa memicu pantulan."
+     "Inti PCE diperkirakan 3,2%. Angka lebih tinggi bisa menekan emas lagi, lebih rendah bisa melanjutkan pantulan."
     ],
     [
      "Sentimen analis",
      "down",
-     "Bearish",
-     "OCBC menilai tembusnya $3.800 menguatkan pandangan turun. Kini harga sudah jauh di bawahnya."
-    ],
-    [
-     "Minyak Brent",
-     "flat",
-     "Campuran",
-     "Brent ± $92,5. Minyak mahal menjaga inflasi tetap tinggi, sehingga Fed sulit melunak."
+     "Waspada",
+     "Pepperstone menilai masih terlalu cepat menyebut emas sudah di dasar."
     ]
    ],
    "lv": [
     [
      "Resistance 1",
-     "3.600"
+     "3.693"
     ],
     [
      "Support 1",
-     "3.500"
+     "3.513"
     ],
     [
      "Resistance 2",
-     "3.723"
+     "3.800"
     ],
     [
      "Support 2",
@@ -180,24 +184,24 @@
     ],
     [
      "Resistance 3",
-     "3.850"
+     "4.000"
     ],
     [
      "Support 3",
      "3.400"
     ]
    ],
-   "src": "Level dari prakiraan mingguan NordFX untuk 23–27 Nov 2026. Selalu cocokkan dengan chart terbaru."
+   "src": "Level dari ANC Trading (23 Nov 2026) dan prakiraan mingguan NordFX 23–27 Nov. Selalu cocokkan dengan chart terbaru."
   },
   "EURUSD": {
    "name": "EURUSD",
    "bias": "Bearish",
    "col": "down",
-   "sum": "Euro turun lima pekan beruntun dan sempat ke ± 1,0953, terendah 2026. Dolar sangat kuat karena Fed hampir pasti naikkan bunga. Pasar juga sudah memperkirakan ECB naik bunga Desember, jadi kabar itu tidak banyak menolong euro.",
+   "sum": "Euro sedikit memantul ke ± 1,0978 setelah turun lima pekan beruntun ke ± 1,0953, terendah 2026. Dolar agak melemah karena taruhan Fed naik bunga berkurang. Tapi selisih kebijakan Fed dan ECB masih menekan euro.",
    "now": [
     [
      "Harga terakhir",
-     "± 1,0968"
+     "± 1,0978"
     ],
     [
      "Terendah 2026",
@@ -212,17 +216,17 @@
     [
      "down",
      "Arah utama: cari peluang SELL",
-     "Selama di bawah 1,1000–1,1035, kenaikan lebih aman dipakai untuk mencari posisi jual."
+     "Selama di bawah 1,1000–1,1050, kenaikan lebih aman dipakai untuk mencari posisi jual."
     ],
     [
      "up",
      "Kapan boleh BUY",
-     "Jika PCE AS 25 Nov jauh lebih rendah dari perkiraan dan dolar berbalik turun. Tunggu harga kembali di atas 1,1000."
+     "Jika PCE AS 25 Nov lebih rendah dari perkiraan dan harga bertahan di atas 1,1000."
     ],
     [
      "flat",
      "Manajemen risiko",
-     "Volatilitas naik saat rilis PMI (23 Nov) dan PCE AS (25 Nov 21:30 WITA)."
+     "Waspada PMI zona euro hari ini (17:00 WITA) dan PMI AS 22:45 WITA, lalu PCE 25 Nov 21:30 WITA."
     ]
    ],
    "drv": [
@@ -236,7 +240,7 @@
      "Dolar AS (DXY)",
      "down",
      "Bearish",
-     "DXY ± 103,84, tertinggi 19 bulan. EURUSD bergerak hampir berlawanan dengan DXY."
+     "DXY ± 103,6, masih dekat tertinggi 19 bulan. EURUSD bergerak hampir berlawanan dengan DXY."
     ],
     [
      "Inflasi zona euro",
@@ -258,36 +262,28 @@
     ],
     [
      "Support 1",
-     "1,0953"
+     "1,0930"
     ],
     [
      "Resistance 2",
-     "1,1035"
+     "1,1050"
     ],
     [
      "Support 2",
      "1,0900"
-    ],
-    [
-     "Resistance 3",
-     "1,1090"
-    ],
-    [
-     "Support 3",
-     "1,0850"
     ]
    ],
-   "src": "Level dari prakiraan mingguan NordFX untuk 23–27 Nov 2026. Cocokkan dengan chart terbaru."
+   "src": "Level dari 1trader Forex News 23 Nov 2026. Cocokkan dengan chart terbaru."
   },
   "GBPUSD": {
    "name": "GBPUSD",
    "bias": "Bearish–Netral",
    "col": "down",
-   "sum": "Pound ditutup sekitar 1,3080 dan sempat ke ± 1,3075, terendah setahun. Dolar yang kuat menekan hampir semua mata uang. Bank of England sudah naikkan bunga ke 4,00% pada 5 November, jadi penurunan pound lebih karena dolar, bukan kelemahan Inggris saja.",
+   "sum": "Pound naik tipis ke ± 1,3101 setelah sempat ke ± 1,3075, terendah setahun. Penjualan ritel Inggris Oktober naik 0,7%, jauh di atas perkiraan. Tapi arah pound masih banyak ditentukan dolar.",
    "now": [
     [
      "Harga terakhir",
-     "± 1,3082"
+     "± 1,3101"
     ],
     [
      "Terendah setahun",
@@ -298,17 +294,17 @@
     [
      "down",
      "Arah utama: condong SELL",
-     "Selama di bawah 1,3150–1,3220, tekanan turun masih dominan."
+     "Selama di bawah 1,3150–1,3200, tekanan turun masih dominan."
     ],
     [
      "up",
      "Kapan boleh BUY",
-     "Jika dolar melemah setelah data AS atau BoE memberi sinyal naik bunga lagi."
+     "Jika PMI Inggris kuat dan dolar melemah setelah data AS, dengan harga tembus 1,3150."
     ],
     [
      "flat",
      "Manajemen risiko",
-     "Waspadai PMI Inggris (23 Nov) dan data AS 25 Nov di jam 21:30 WITA."
+     "Waspada PMI Inggris hari ini (17:30 WITA) dan data AS 25 Nov 21:30 WITA."
     ]
    ],
    "drv": [
@@ -329,6 +325,12 @@
      "down",
      "Bearish",
      "Pound cenderung melemah saat pasar global panik."
+    ],
+    [
+     "Data Inggris",
+     "up",
+     "Penahan",
+     "Ritel Oktober +0,7% (perkiraan 0%). Data kuat menambah alasan BoE naik bunga Desember."
     ]
    ],
    "lv": [
@@ -338,18 +340,18 @@
     ],
     [
      "Support 1",
-     "1,3075"
+     "1,3050"
     ],
     [
      "Resistance 2",
-     "1,3220"
+     "1,3200"
     ],
     [
      "Support 2",
      "1,3000"
     ]
    ],
-   "src": "Perkiraan zona dari harga penutupan 20 Nov 2026. Cocokkan dengan chart terbaru.",
+   "src": "Level dari 1trader Forex News 23 Nov 2026. Cocokkan dengan chart terbaru.",
    "agExtra": [
     [
      "17 Des",
@@ -363,11 +365,11 @@
    "name": "USDJPY",
    "bias": "Netral (rawan turun)",
    "col": "flat",
-   "sum": "USDJPY ditutup sekitar 158,5 setelah sempat menembus 160 pekan lalu lalu berbalik turun. Bunga AS jauh di atas Jepang, tapi Bank of Japan diperkirakan naik ke 1,50% pada 18 Desember. Di dekat 160 Jepang pernah turun tangan menguatkan yen.",
+   "sum": "USDJPY di sekitar 158,9, naik tipis di awal pekan saat pasar Jepang libur. Bunga AS jauh di atas Jepang, tapi 86% ekonom memperkirakan BoJ naik ke 1,50% Desember. Di dekat 160 risiko Jepang turun tangan menguatkan yen tinggi.",
    "now": [
     [
      "Harga terakhir",
-     "± 158,5"
+     "± 158,9"
     ],
     [
      "Tertinggi pekan lalu",
@@ -408,28 +410,28 @@
      "Risiko intervensi",
      "down",
      "Waspada",
-     "Jepang membeli yen senilai ¥15,4 triliun musim panas lalu. Di sekitar 160 risiko intervensi lagi tinggi."
+     "Pejabat Jepang mengaku waspada pada gerakan yen yang cepat dan sepihak. Di sekitar 160 risiko intervensi tinggi."
     ]
    ],
    "lv": [
     [
      "Resistance 1",
-     "159,00"
+     "158,90"
     ],
     [
      "Support 1",
-     "157,90"
+     "158,40"
     ],
     [
      "Resistance 2",
-     "160,00"
+     "160,05"
     ],
     [
      "Support 2",
-     "156,66"
+     "157,65"
     ]
    ],
-   "src": "Perkiraan zona dari harga penutupan 20 Nov 2026 dan level TradingNews. Cocokkan dengan chart terbaru.",
+   "src": "Level dari RoboForex (D1 & H4) dan Saxo, 23 Nov 2026. Cocokkan dengan chart terbaru.",
    "agExtra": [
     [
      "18 Des",
@@ -443,19 +445,19 @@
    "name": "forex (pair USD)",
    "bias": "Dolar AS kuat",
    "col": "down",
-   "sum": "Dolar AS menguat empat pekan beruntun: DXY ± 103,84, tertinggi 19 bulan, karena Fed hampir pasti menaikkan bunga Desember. Pair xxxUSD seperti EURUSD, GBPUSD dan AUDUSD (± 0,6645, terendah tahun ini) cenderung tertekan, apalagi saat saham jatuh.",
+   "sum": "Dolar AS sedikit mereda di awal pekan (DXY ± 103,6) setelah naik empat pekan beruntun. Taruhan Fed naik bunga turun ke ± 93%, tapi tetap tinggi. Pair xxxUSD seperti EURUSD, GBPUSD dan AUDUSD (± 0,6637) baru memantul tipis dan masih di dekat level terendah.",
    "now": [
     [
      "DXY",
-     "± 103,84"
+     "± 103,6"
     ],
     [
      "Yield AS 10 th",
-     "± 4,95%"
+     "± 4,93%"
     ],
     [
      "AUDUSD",
-     "± 0,6645"
+     "± 0,6637"
     ]
    ],
    "plan": [
@@ -480,7 +482,7 @@
      "Dolar AS (DXY)",
      "down",
      "Utama",
-     "DXY mendekati 104. Dolar kuat menekan EURUSD, GBPUSD, AUDUSD dan mendorong USDJPY naik."
+     "DXY masih dekat 104. Dolar kuat menekan EURUSD, GBPUSD, AUDUSD dan mendorong USDJPY naik."
     ],
     [
      "Suku bunga bank sentral",
@@ -502,40 +504,40 @@
    "name": "Bitcoin (BTCUSD)",
    "bias": "Bearish",
    "col": "down",
-   "sum": "Bitcoin turun sekitar 17% sepekan. Akhir pekan sempat jatuh ke ± $55.000, terendah dua tahun, lalu memantul ke sekitar $59.000–60.000. Pantulan ini dipicu likuidasi posisi short, sementara dana ETF masih terus keluar.",
+   "sum": "Bitcoin memantul ke atas $61.000 setelah akhir pekan jatuh ke ± $55.640, terendah dua tahun. Tapi dana ETF keluar $1,79 miliar pekan lalu, terbesar sejak Juni. Bulan ini BTC masih turun ± 22% dan pasar dalam kondisi sangat takut.",
    "now": [
     [
      "Harga terakhir",
-     "± $59.000–60.000"
+     "± $60.500–61.500"
     ],
     [
      "Terendah akhir pekan",
-     "± $55.200"
+     "± $55.640"
     ],
     [
      "ETF sepekan",
-     "± −$1,12 miliar"
+     "± −$1,79 miliar"
     ],
     [
-     "Likuidasi 24 jam",
-     "± $2,7 miliar"
+     "Fear & Greed",
+     "11 (sangat takut)"
     ]
    ],
    "plan": [
     [
      "down",
      "Arah utama: hati-hati, condong SELL",
-     "Selama di bawah $60.000–64.000, kenaikan lebih aman dianggap pantulan."
+     "Selama di bawah $61.500–64.000, kenaikan lebih aman dianggap pantulan."
     ],
     [
      "up",
      "Kapan boleh BUY",
-     "Pantulan dari $56.000 atau $52.000 dengan konfirmasi di chart, atau saat arus ETF kembali masuk beberapa hari berturut-turut."
+     "Pantulan dari $59.500 atau $55.600 dengan konfirmasi di chart, atau saat arus ETF kembali masuk beberapa hari berturut-turut."
     ],
     [
      "flat",
      "Manajemen risiko",
-     "Harga bisa naik ± $5.500 dalam beberapa jam lalu turun lagi. Pakai lot kecil dan SL wajib."
+     "Harga bisa naik-turun ribuan dolar dalam beberapa jam. Pakai lot kecil dan SL wajib, terutama saat PCE 25 Nov."
     ]
    ],
    "drv": [
@@ -543,41 +545,41 @@
      "Arus dana ETF",
      "down",
      "Bearish",
-     "ETF Bitcoin AS kehilangan ± $1,12 miliar sepekan. IBIT mencatat keluar $541 juta dalam sehari (Kamis)."
+     "ETF Bitcoin AS keluar $1,79 miliar sepekan, empat pekan beruntun. IBIT mencatat rekor keluar harian $544 juta hari Jumat."
     ],
     [
-     "Suku bunga Fed naik",
-     "down",
-     "Bearish",
-     "Bunga tinggi membuat aset tanpa imbal hasil seperti Bitcoin kurang menarik."
+     "Ekspektasi Fed",
+     "flat",
+     "Sedikit lega",
+     "Peluang Fed naik Desember turun ke ± 93%. Ini membantu pantulan, tapi kenaikan bunga masih paling mungkin."
     ],
     [
      "Saham teknologi",
      "down",
      "Bearish",
-     "Bitcoin bergerak searah Nasdaq. Nasdaq turun ± 5% hari Jumat, crypto ikut tertekan."
+     "Nasdaq turun ± 10% pekan lalu. Bitcoin cenderung searah saham teknologi. Futures Senin sedang naik."
+    ],
+    [
+     "Sentimen pasar",
+     "flat",
+     "Sangat takut",
+     "Indeks Fear & Greed di 11. Takut ekstrem kadang dekat dasar, tapi bukan jaminan."
     ],
     [
      "Likuidasi futures",
      "flat",
      "Volatilitas",
-     "± $2,7 miliar posisi leverage dipaksa tutup dalam 24 jam. Ini mempercepat penurunan, tapi juga memicu pantulan tajam."
-    ],
-    [
-     "Pandangan analis",
-     "down",
-     "Waspada",
-     "Arthur Hayes melihat $50.000 sebagai uji berikutnya jika saham terus turun. Michaël van de Poppe menilai dasar harga belum pasti."
+     "Pekan lalu ± $3,75 miliar posisi long dipaksa tutup. Leverage tinggi bikin harga mudah melonjak atau jatuh."
     ]
    ],
    "lv": [
     [
      "Resistance 1",
-     "60.000"
+     "61.500"
     ],
     [
      "Support 1",
-     "56.000"
+     "59.500"
     ],
     [
      "Resistance 2",
@@ -585,35 +587,35 @@
     ],
     [
      "Support 2",
-     "52.000"
+     "55.600"
     ]
    ],
-   "src": "Level dari analisis chart 4 jam CoinCentral, 22 Nov 2026. Cocokkan dengan chart terbaru."
+   "src": "Level dari data harga CoinCentral 23 Nov 2026 (tertinggi pantulan, penutupan mingguan terendah, low dua tahun). Cocokkan dengan chart terbaru."
   },
   "_crypto": {
    "name": "crypto",
    "bias": "Bearish (ikut Bitcoin)",
    "col": "down",
-   "sum": "Seluruh pasar crypto tertekan mengikuti Bitcoin. Ether di sekitar $1.680, Solana ± $70 dan XRP ± $0,93. Saham terkait crypto ikut jatuh: Strategy turun ± 30% dan Coinbase ± 20% sepekan.",
+   "sum": "Pasar crypto ikut memantul tipis bersama Bitcoin. Ether ± $1.720, Solana ± $72 dan XRP ± $0,94. Total kapitalisasi pasar ± $2,14 triliun, jauh di bawah $2,7 triliun awal November.",
    "now": [
     [
      "Bitcoin",
-     "± $59.000–60.000"
+     "± $60.500–61.500"
     ],
     [
      "Ether",
-     "± $1.680"
+     "± $1.720"
     ],
     [
      "Kapitalisasi pasar",
-     "± $2,03 triliun"
+     "± $2,14 triliun"
     ]
    ],
    "plan": [
     [
      "down",
      "Arah utama",
-     "Selama Bitcoin di bawah $60.000–64.000, altcoin lebih rawan turun."
+     "Selama Bitcoin di bawah $61.500–64.000, altcoin lebih rawan turun."
     ],
     [
      "up",
@@ -637,7 +639,7 @@
      "Arus dana ETF",
      "down",
      "Bearish",
-     "Dana terus keluar dari ETF Bitcoin beberapa pekan berturut-turut."
+     "ETF Bitcoin keluar empat pekan beruntun, ETF Ether delapan pekan beruntun."
     ],
     [
      "Suku bunga & dolar",
@@ -658,39 +660,46 @@
  },
  "news": [
   [
-   "22 Nov",
-   "Bitcoin kembali ke ± $60.000 setelah likuidasi $2,7 miliar",
-   "Crypto",
-   "BTC sempat jatuh ke ± $55.000 lalu naik ± $5.500 dalam delapan jam. Arthur Hayes menilai $50.000 bisa diuji bila Nasdaq terus turun.",
-   "https://coincentral.com/bitcoin-btc-price-prediction-btc-rebounds-as-arthur-hayes-flags-50000-risk"
-  ],
-  [
-   "22 Nov",
-   "Dana ETF Bitcoin terus keluar, ± $1,12 miliar sepekan",
-   "Crypto",
-   "Kamis saja keluar $582 juta, $541 juta dari IBIT. Harga memantul, tapi arus dana belum berbalik masuk.",
-   "https://www.ad-hoc-news.de/boerse/news/unternehmensnachrichten/bitcoin-s-violent-round-trip-forced-selling-cuts-both-ways-but-etf-money-keeps-walking-out/70544710"
-  ],
-  [
-   "22 Nov",
-   "Pekan ini: PCE dan GDP AS rilis sebelum Thanksgiving",
-   "Semua",
-   "Rabu 25 Nov, PCE diperkirakan naik ke 3,8% dan inti 3,2%. Kamis pasar AS libur, Jumat tutup lebih awal.",
-   "https://www.asktraders.com/analysis/week-ahead-us-gdp-and-pce-inflation-land-before-thanksgiving/"
-  ],
-  [
-   "22 Nov",
-   "Dolar makin kuat saat saham teknologi dijual",
-   "Forex",
-   "DXY mendekati 104. EURUSD ke level terendah 2026 di ± 1,0953 dan GBPUSD ke ± 1,3075, terendah setahun. Nasdaq 100 turun 10,4% sepekan.",
-   "https://www.dailyforex.com/forex-technical-analysis/2026/11/23rd-to-27th-weekly-pairs-in-focus/252056"
-  ],
-  [
-   "21 Nov",
-   "Rekap pekan: emas −8,7%, DXY naik 4 pekan beruntun",
+   "23 Nov",
+   "Emas memantul ke ± $3.600 setelah anjlok 9% sepekan",
    "Emas",
-   "Emas ditutup ± $3.543 setelah sempat ke $3.503. Peluang Fed naik Desember di atas 95%, yield 10 th ± 4,95%.",
-   "https://1trader.com/en/forex-weekly-2026-11-20/"
+   "Spot emas naik ± 2% Senin dan sempat ± $3.620. Peluang Fed naik Desember turun ke ± 93% setelah Menkeu AS Bessent memperingatkan bahaya bunga terlalu ketat.",
+   "https://tradingeconomics.com/commodity/gold/news/603349"
+  ],
+  [
+   "23 Nov",
+   "Pasar mulai kurangi taruhan Fed naik bunga",
+   "Semua",
+   "Yield AS 2 tahun turun 12 bp hari Jumat. Analis Pepperstone mengingatkan masih terlalu cepat menyebut emas sudah di dasar.",
+   "https://www.freemalaysiatoday.com/category/business/2026/11/23/gold-rebounds-as-traders-pare-bets-on-near-term-fed-rate-hikes"
+  ],
+  [
+   "23 Nov",
+   "Dana ETF Bitcoin keluar $1,79 miliar sepekan",
+   "Crypto",
+   "Terbesar sejak Juni dan keempat pekan beruntun. IBIT saja keluar $1,37 miliar. Total aset ETF Bitcoin tinggal ± $71 miliar.",
+   "https://en.cryptonomist.ch/2026/11/23/bitcoin-etf-outflows-highest-june/"
+  ],
+  [
+   "23 Nov",
+   "Bitcoin naik lagi ke atas $61.000",
+   "Crypto",
+   "BTC memantul dari terendah dua tahun ± $55.640. Tapi bulan ini masih turun ± 22% dan indeks Fear & Greed di 11 (sangat takut).",
+   "https://coincentral.com/bitcoin-btc-price-rebounds-above-61000-as-etf-outflows-reach-1-8-billion"
+  ],
+  [
+   "23 Nov",
+   "Dolar tenang di awal pekan, futures saham naik",
+   "Forex",
+   "EURUSD ± 1,0978, GBPUSD ± 1,3101, USDJPY ± 158,9. Futures S&P naik ± 1,9% setelah S&P jatuh 3,7% hari Jumat.",
+   "https://www.home.saxo/en-sg/content/articles/macro/asia-market-quick-take--23-november-2026-23112026"
+  ],
+  [
+   "23 Nov",
+   "USDJPY dekat 159, BoJ diperkirakan naik Desember",
+   "Forex",
+   "Survei Reuters: 86% ekonom memperkirakan BoJ naik ke 1,50%. Pejabat Jepang mewaspadai yen yang melemah terlalu cepat.",
+   "https://roboforex.com/beginners/analytics/forex-forecast/currencies/usd-jpy-forecast-2026-11-23"
   ]
  ]
 }
