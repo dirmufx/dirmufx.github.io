@@ -624,7 +624,7 @@ html{scroll-behavior:auto}
 #app .sgpips b{font-size:36px;font-weight:800;line-height:1;font-variant-numeric:tabular-nums;color:#e3b85c}
 #app .sgpips b.up{color:var(--up)}#app .sgpips b.down{color:#ff7a7f}
 #app .sgpips span{display:block;font-size:12.5px;color:var(--muted);margin-top:3px}
-#app .sgline{font-size:15px;font-weight:700;font-variant-numeric:tabular-nums;color:#e8ebe4}
+#app .sgline{display:flex;flex-wrap:wrap;align-items:baseline;column-gap:4px;row-gap:4px;font-size:15px;font-weight:700;font-variant-numeric:tabular-nums;color:#e8ebe4;white-space:normal;overflow:visible}
 #app .sgline em{font-style:normal;font-weight:600;font-size:12.5px;color:var(--muted);margin-right:4px}
 #app .sgline .sl{color:#ff8a8d}#app .sgline .tp{color:var(--up)}#app .sgline .dot{color:#5c635a;margin:0 6px}
 #app .sgbadges{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 2px}
@@ -1210,10 +1210,10 @@ body.dlock{overflow:hidden}
 
   <div class="vipbar" id="vipBar" hidden><b>Akses VIP belum aktif</b><a class="abtn gold sm" href="#aktivasi">Aktifkan</a></div>
   <nav class="bnav" aria-label="Menu member"><div>
-   <a href="#akun" data-n="akun"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>Beranda</a>
+   <a href="#top"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>Beranda</a>
    <a href="#analisa"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M7 4v16M17 4v16"/><rect x="4" y="8" width="6" height="7" rx="1"/><rect x="14" y="7" width="6" height="9" rx="1"/></svg>Signal<svg class="lk2" id="nLock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></a>
+   <a href="#akun" data-n="akun"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M3 8l4.5 4L12 5l4.5 7L21 8l-2 11H5z"/></svg>Member</a>
    <a href="belajar.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M3 5a2 2 0 0 1 2-1h5a2 2 0 0 1 2 2v14a2 2 0 0 0-2-2H3zM21 5a2 2 0 0 0-2-1h-5a2 2 0 0 0-2 2v14a2 2 0 0 1 2-2h7z"/></svg>Belajar</a>
-   <a href="#aktivasi" data-n="aktivasi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M3 8l4.5 4L12 5l4.5 7L21 8l-2 11H5z"/></svg>VIP</a>
    <a href="#profil" data-n="profil"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg>Akun</a>
   </div></nav>
  </div>
@@ -1822,7 +1822,7 @@ function render(){
   $("tp2k").textContent="TP MAX (1:3)";
   const U=SYMS[S.sym].crypto?(n=>"$"+(n*(PIP[S.sym]||1)).toLocaleString("en-US",{maximumFractionDigits:SYMS[S.sym].d})):(n=>n.toFixed(0)+" pips");const why=[`SL ${U(p.slPips)} · TP MAX ${U(p.slPips*3)} (SL ${(+$("slm").value||1.5).toString().replace(".",",")}× ATR, menyesuaikan volatilitas)`,`ATR ${fx(a.v.atr)}`,`ADX ${isNaN(a.v.adx)?"—":a.v.adx.toFixed(0)}${a.v.adx<20?" (sideways)":a.v.adx>25?" (tren kuat)":""}`];
   const PX=v=>SYMS[S.sym].crypto?"$"+v.toLocaleString("en-US",{maximumFractionDigits:SYMS[S.sym].d}):(v/(PIP[S.sym]||.1)).toFixed(0)+" pips";
-  if(on){const sg=act.dir==="BUY"?1:-1,mv=(a.live-act.delta-act.L.entry)*sg;
+  if(on){const sg=act.dir==="BUY"?1:-1,mv=(a.live-act.L.entry)*sg;
     const stt=act.tp1?"TP1 tercapai ✓ — sisakan posisi ke TP MAX":act.be?"SL+ tercapai — geser SL ke entry":(mv<0?"belum bergerak, harga di bawah entry":"menuju SL+");
     why.unshift(`🔒 Sinyal ${act.dir} terkunci sejak ${hm(act.t)} · entry ${fx(act.L.entry)} · harga sekarang ${fx(a.live)} (${mv>=0?"+":"−"}${PX(Math.abs(mv))}) · ${stt}`);
     if(act.be)why.push("Jangan entry baru, harga sudah lewat SL+.");else why.push("Entry di sekitar harga entry. Kalau harga sudah jauh, lebih baik tunggu sinyal berikutnya.");
@@ -1883,9 +1883,9 @@ function sigV2(a,p,act,on,tf){
   const L=on?act.L:p,sg=(on?act.dir:(p.lean||"BUY"))==="BUY"?1:-1;
   $("sgLine").innerHTML=`<span class="g"><em>E</em>${fx(L.entry)}</span><span class="dot">·</span><span class="g"><em>SL</em><span class="sl">${fx(act&&on&&act.be?L.entry:L.sl)}</span></span><span class="dot">·</span><span class="g"><em>TP1</em><span class="tp">${fx(L.tp1)}</span></span><span class="dot">·</span><span class="g"><em>TP MAX</em><span class="tp">${fx(L.tp2)}</span></span>`;
   // posisi harga di track: SL=0, Entry=25, SL+=50, TP1=75, TPMAX=100
-  const r=(live-(on?act.delta||0:0)-L.entry)*sg/L.risk;let pos=r<=0?25+Math.max(-1,r)*25:25+Math.min(3,r)*25;
+  const r=(live-L.entry)*sg/L.risk;let pos=r<=0?25+Math.max(-1,r)*25:25+Math.min(3,r)*25;
   if(on){
-    const mvP=(live-(act.delta||0)-L.entry)*sg;pb.className=mvP>=0?"up":"down";pb.textContent=(mvP>=0?"+":"−")+P(mvP);pk.textContent="/ "+P(L.risk*3)+unit+" ke TP MAX";
+    const mvP=(live-L.entry)*sg;pb.className=mvP>=0?"up":"down";pb.textContent=(mvP>=0?"+":"−")+P(mvP);pk.textContent="/ "+P(L.risk*3)+unit+" ke TP MAX";
     st.className="sgstat ok";st.textContent=act.tp1?"✓ TP1 hit":act.be?"✓ SL+ aman":"● Sinyal aktif";if(mvP<0)st.className="sgstat";
     if(act.be)bd.push(["ok","🛡 Geser SL ke entry (SL+)"]);
     if(act.tp1)bd.push(["ok","TP1 ✓ +"+P(L.risk*2)+unit]);
@@ -3030,6 +3030,9 @@ if(ON)load().catch(e=>{console.warn(e);setMsg("Gagal memuat sistem login. Cek ko
   dr.addEventListener("click",e=>{if(e.target.closest("[data-dclose]")||e.target.closest("a"))open(false)});
   document.addEventListener("keydown",e=>{if(e.key==="Escape"&&dr.classList.contains("on"))open(false)});
 })();
+</script>
+<script>
+document.querySelectorAll('#app .backbtn,#auth a[href="#top"]').forEach(b=>b.addEventListener("click",e=>{e.preventDefault();if(location.hash!=="#top")location.hash="top";else window.dispatchEvent(new HashChangeEvent("hashchange"));window.scrollTo(0,0)}));
 </script>
 </body>
 </html>
