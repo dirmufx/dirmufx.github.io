@@ -2970,7 +2970,7 @@ async function load(){
   }catch(e){console.warn(e)}
   pendingName="";
   unsub=fs.onSnapshot(ref,s=>{profile=s.data()||{};window.DFX_setMember&&window.DFX_setMember(isActive());window.DFX_setInd&&window.DFX_setInd(isActive()||!!profile.ind);paint()},e=>{console.warn(e);paint()});
-  if(LOGIN_ROUTES.includes(route)&&route!=="lupa")location.replace("#akun");else paint();
+  {const hh=decodeURIComponent(location.hash.slice(1));if(LOGIN_ROUTES.includes(hh)&&hh!=="lupa")location.replace("#akun");else paint();}
  });
 }
 $("fAuth").addEventListener("submit",async e=>{
