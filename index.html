@@ -1571,14 +1571,18 @@ async function fetchCandles(sym,tf,lim){
   if(!Array.isArray(j)||j.length<60)throw new Error("Gagal memuat data harga. Cek koneksi internet lalu tekan Refresh.");
   let out=j.map(k=>({t:k[0],o:+k[1],h:+k[2],l:+k[3],c:+k[4]}));
   S.adj=null;
-  if(cfg.spot){const sp=await goldSpot();if(sp){const off=sp-out[out.length-1].c;out=out.map(x=>({t:x.t,o:x.o+off,h:x.h+off,l:x.l+off,c:x.c+off}));S.adj=off}}
+  if(cfg.spot){const sp=await goldSpot();let off=null;
+    if(sp){off=sp-out[out.length-1].c;try{store.set("dfx-adj",JSON.stringify({off,at:Date.now()}))}catch(e){}}
+    else{try{const c=JSON.parse(store.get("dfx-adj")||"null");if(c&&Date.now()-c.at<12*36e5)off=c.off}catch(e){}}
+    if(off!=null){out=out.map(x=>({t:x.t,o:x.o+off,h:x.h+off,l:x.l+off,c:x.c+off}));S.adj=off}
+    out.off=off||0}
   return out;
 }
 async function loadLive(sym,tf,force){
   const key=sym+"|"+tf,c=S.live[key];
   if(!force&&c&&Date.now()-c.at<55000)return c.data;
-  try{const k=JSON.parse(store.get("dfx-b-"+key)||"null");if(k&&Date.now()-k.at<60000&&(!c||k.at>c.at)){S.live[key]=k;return k.data}}catch(e){}
-  const data=await fetchCandles(sym,tf);S.live[key]={data,at:Date.now()};store.set("dfx-b-"+key,JSON.stringify(S.live[key]));return data;
+  try{const k=JSON.parse(store.get("dfx-b-"+key)||"null");if(k&&Date.now()-k.at<60000&&(!c||k.at>c.at)){k.data.off=k.off||0;S.live[key]=k;return k.data}}catch(e){}
+  const data=await fetchCandles(sym,tf);S.live[key]={data,at:Date.now(),off:data.off||0};store.set("dfx-b-"+key,JSON.stringify(S.live[key]));return data;
 }
 function mode(){return S.imported[S.sym]?"imp":SYMS[S.sym].bn?"live":"nosig"}
 function currentTf(){const im=S.imported[S.sym];return im?im.tf:S.tf}
@@ -1683,21 +1687,26 @@ function activeSignal(d,tf){
   let st=-1;for(let i=n-1;i>from;i--){if(dirs[i]!=="WAIT"&&dirs[i-1]!==dirs[i]){st=i;break}}
   if(st<0)return null;
   const dir=dirs[st],sgn=dir==="BUY"?1:-1,t=closed[st].t;
-  const key="dfx-sig-"+S.sym+"-"+tf+"-"+t;let entry=closed[st].c;
-  try{const c=store.get(key);if(c)entry=+c;else store.set(key,String(entry))}catch(e){}
+  // entry dibekukan bersama selisih harga (offset PAXG→spot) saat sinyal muncul,
+  // supaya pengecekan SL/TP tetap konsisten walau offset berubah atau sumber spot gagal
+  const curOff=d.off||0,key="dfx-sig2-"+S.sym+"-"+tf+"-"+t;let entry=closed[st].c,off0=curOff;
+  try{const c=JSON.parse(store.get(key)||"null");if(c&&isFinite(c.e)){entry=c.e;off0=isFinite(c.o)?c.o:curOff}else store.set(key,JSON.stringify({e:entry,o:curOff}))}catch(e){}
+  const delta=curOff-off0;
   const pip=PIP[S.sym]||0.1,risk=slRisk(analyse(closed.slice(0,st+1),tf).v,entry,dir);
   const L={entry,sl:entry-sgn*risk,be:entry+sgn*risk,tp1:entry+sgn*risk*2,tp2:entry+sgn*risk*3,risk,slPips:risk/pip};
   let be=false,tp1=false,res=null,resT=null;
+  // toleransi ekor candle: data PAXG kadang punya ekor lebih panjang dari harga broker
+  const buf=SYMS[S.sym].spot?Math.max(risk*.08,pip*5):0,X=v=>v+delta;
   const after=d.slice(st+1);
   for(const c of after){
-    const hi=sgn>0?c.h:-c.l,lo=sgn>0?c.l:-c.h,E=sgn*entry;
-    const stop=be?E:sgn*L.sl;
-    if(lo<=stop){res=be?"BE":"SL";resT=c.t;break}
-    if(hi>=sgn*L.be)be=true;
-    if(hi>=sgn*L.tp1)tp1=true;
-    if(hi>=sgn*L.tp2){res="TP";resT=c.t;break}
+    const hi=sgn>0?c.h:-c.l,lo=sgn>0?c.l:-c.h,E=sgn*X(entry);
+    const stop=be?E:sgn*X(L.sl);
+    if(lo<=stop-buf){res=be?"BE":"SL";resT=c.t;break}
+    if(hi>=sgn*X(L.be))be=true;
+    if(hi>=sgn*X(L.tp1))tp1=true;
+    if(hi>=sgn*X(L.tp2)){res="TP";resT=c.t;break}
   }
-  return{dir,t,L,be,tp1,res,resT,age:n-1-st};
+  return{dir,t,L,be,tp1,res,resT,age:n-1-st,delta};
 }
 function plan(a,rr,slm){
   const v=a.v,e=a.live??v.close,dir=a.dir==="WAIT"?(a.norm>=0?"BUY":"SELL"):a.dir;
@@ -1760,7 +1769,7 @@ function render(){
   $("tp2k").textContent="TP MAX (1:3)";
   const U=SYMS[S.sym].crypto?(n=>"$"+(n*(PIP[S.sym]||1)).toLocaleString("en-US",{maximumFractionDigits:SYMS[S.sym].d})):(n=>n.toFixed(0)+" pips");const why=[`SL ${U(p.slPips)} · TP MAX ${U(p.slPips*3)} (SL ${(+$("slm").value||1.5).toString().replace(".",",")}× ATR, menyesuaikan volatilitas)`,`ATR ${fx(a.v.atr)}`,`ADX ${isNaN(a.v.adx)?"—":a.v.adx.toFixed(0)}${a.v.adx<20?" (sideways)":a.v.adx>25?" (tren kuat)":""}`];
   const PX=v=>SYMS[S.sym].crypto?"$"+v.toLocaleString("en-US",{maximumFractionDigits:SYMS[S.sym].d}):(v/(PIP[S.sym]||.1)).toFixed(0)+" pips";
-  if(on){const sg=act.dir==="BUY"?1:-1,mv=(a.live-act.L.entry)*sg;
+  if(on){const sg=act.dir==="BUY"?1:-1,mv=(a.live-act.delta-act.L.entry)*sg;
     const stt=act.tp1?"TP1 tercapai ✓ — sisakan posisi ke TP MAX":act.be?"SL+ tercapai — geser SL ke entry":(mv<0?"belum bergerak, harga di bawah entry":"menuju SL+");
     why.unshift(`🔒 Sinyal ${act.dir} terkunci sejak ${hm(act.t)} · entry ${fx(act.L.entry)} · harga sekarang ${fx(a.live)} (${mv>=0?"+":"−"}${PX(Math.abs(mv))}) · ${stt}`);
     if(act.be)why.push("Jangan entry baru, harga sudah lewat SL+.");else why.push("Entry di sekitar harga entry. Kalau harga sudah jauh, lebih baik tunggu sinyal berikutnya.");
@@ -1821,9 +1830,9 @@ function sigV2(a,p,act,on,tf){
   const L=on?act.L:p,sg=(on?act.dir:(p.lean||"BUY"))==="BUY"?1:-1;
   $("sgLine").innerHTML=`<span class="g"><em>E</em>${fx(L.entry)}</span><span class="dot">·</span><span class="g"><em>SL</em><span class="sl">${fx(act&&on&&act.be?L.entry:L.sl)}</span></span><span class="dot">·</span><span class="g"><em>TP1</em><span class="tp">${fx(L.tp1)}</span></span><span class="dot">·</span><span class="g"><em>TP MAX</em><span class="tp">${fx(L.tp2)}</span></span>`;
   // posisi harga di track: SL=0, Entry=25, SL+=50, TP1=75, TPMAX=100
-  const r=(live-L.entry)*sg/L.risk;let pos=r<=0?25+Math.max(-1,r)*25:25+Math.min(3,r)*25;
+  const r=(live-(on?act.delta||0:0)-L.entry)*sg/L.risk;let pos=r<=0?25+Math.max(-1,r)*25:25+Math.min(3,r)*25;
   if(on){
-    const mvP=(live-L.entry)*sg;pb.className=mvP>=0?"up":"down";pb.textContent=(mvP>=0?"+":"−")+P(mvP);pk.textContent="/ "+P(L.risk*3)+unit+" ke TP MAX";
+    const mvP=(live-(act.delta||0)-L.entry)*sg;pb.className=mvP>=0?"up":"down";pb.textContent=(mvP>=0?"+":"−")+P(mvP);pk.textContent="/ "+P(L.risk*3)+unit+" ke TP MAX";
     st.className="sgstat ok";st.textContent=act.tp1?"✓ TP1 hit":act.be?"✓ SL+ aman":"● Sinyal aktif";if(mvP<0)st.className="sgstat";
     if(act.be)bd.push(["ok","🛡 Geser SL ke entry (SL+)"]);
     if(act.tp1)bd.push(["ok","TP1 ✓ +"+P(L.risk*2)+unit]);
