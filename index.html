@@ -654,6 +654,31 @@ html{scroll-behavior:auto}
 #app .sgdet>summary::-webkit-details-marker{display:none}
 @media(max-width:400px){#app #sigcard .sigword{font-size:34px}#app .sgpips b{font-size:30px}#app .pxbig{font-size:30px}#app .pxspark{width:96px}}
 #app .sgline .g{white-space:nowrap}#app .sgdir .sigword{white-space:nowrap}#app .sgtop .sgstat{margin-left:auto}
+
+/* menu garis tiga */
+#landing .navlinks{display:none!important}
+.burger{width:42px;height:42px;border-radius:12px;border:1px solid var(--line);background:var(--panel,#1c201c);display:inline-flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;cursor:pointer;flex:none;padding:0}
+.burger span{display:block;width:18px;height:2px;border-radius:2px;background:#eef0e8}
+#landing .nav .wrap{flex-wrap:nowrap!important;padding-bottom:12px!important}
+#landing .navcta{align-items:center}
+@media(max-width:400px){#landing .navcta .btn{padding:9px 12px;font-size:14px}}
+.drawer{position:fixed;inset:0;z-index:80;visibility:hidden}
+.drawer.on{visibility:visible}
+.drawer .dbg{position:absolute;inset:0;background:rgba(0,0,0,.55);opacity:0;transition:opacity .2s}
+.drawer.on .dbg{opacity:1}
+.dpanel{position:absolute;top:0;right:0;bottom:0;width:min(340px,88vw);background:#161916;border-left:1px solid #2c322c;overflow-y:auto;padding:12px 12px max(20px,env(safe-area-inset-bottom));transform:translateX(100%);transition:transform .25s ease;font-family:"Plus Jakarta Sans",system-ui,sans-serif}
+.drawer.on .dpanel{transform:none}
+@media (prefers-reduced-motion:reduce){.dpanel,.drawer .dbg{transition:none}}
+.dhead{display:flex;justify-content:space-between;align-items:center;padding:4px 4px 8px}
+.dhead b{font-size:18px;color:#eef0e8}
+.dx{width:38px;height:38px;border-radius:11px;border:1px solid #2c322c;background:#1c201c;color:#eef0e8;font-size:22px;cursor:pointer}
+.dgrp{font-size:12px;font-weight:700;color:#5b9cf5;margin:14px 6px 6px}
+.dpanel a{display:flex;align-items:center;gap:12px;text-decoration:none;color:#eef0e8;padding:9px 8px;border-radius:12px}
+.dpanel a:hover,.dpanel a:focus-visible{background:#222722;outline:none}
+.dpanel a>span{width:38px;height:38px;border-radius:11px;background:#222722;display:grid;place-items:center;font-size:18px;flex:none}
+.dpanel a b{display:block;font-size:15px;font-weight:700}
+.dpanel a small{display:block;font-size:12.5px;color:#a6ad9f;line-height:1.35}
+body.dlock{overflow:hidden}
 </style>
 </head>
 <body>
@@ -668,9 +693,36 @@ html{scroll-behavior:auto}
     <div class="navlinks">
       <a href="analisa.html">Analisa Harian</a><a href="makro.html">Riset Makro</a><a href="belajar.html">Belajar</a><a href="indikator.html">Indikator</a><a href="jurnal.html">Jurnal</a><a href="kantor.html">Kantor</a><a href="#fitur">Fitur</a><a href="#cara-gabung">Cara Gabung</a><a href="#terminal">Signal Room</a><a href="#kalkulator">Kalkulator</a><a href="#materi">Materi</a><a href="#faq">FAQ</a>
     </div>
-    <div class="navcta"><a class="btn ghost" href="#masuk" id="navMasuk">Masuk</a><a class="btn gold-btn" href="#daftar">Gabung</a></div>
+    <div class="navcta"><a class="btn ghost" href="#masuk" id="navMasuk">Masuk</a><a class="btn gold-btn" href="#daftar">Gabung</a><button class="burger" id="burger" type="button" aria-label="Buka menu" aria-expanded="false" aria-controls="drawer"><span></span><span></span><span></span></button></div>
   </div>
 </nav>
+<div class="drawer" id="drawer" aria-hidden="true">
+  <div class="dbg" data-dclose></div>
+  <aside class="dpanel" role="dialog" aria-modal="true" aria-label="Menu DirmuFX">
+    <div class="dhead"><b>Menu</b><button class="dx" type="button" data-dclose aria-label="Tutup menu">×</button></div>
+    <div class="dgrp">Trading</div>
+    <a href="#analisa"><span>📈</span><div><b>Signal Room</b><small>Sinyal entry, SL & TP live</small></div></a>
+    <a href="analisa.html"><span>📝</span><div><b>Analisa Harian</b><small>Analisa emas, forex & crypto hari ini</small></div></a>
+    <a href="#fundamental"><span>🌐</span><div><b>Fundamental</b><small>Bias & berita terbaru tiap pair</small></div></a>
+    <a href="#kalender"><span>📅</span><div><b>Kalender Berita</b><small>Jadwal berita merah + angka aktual</small></div></a>
+    <a href="makro.html"><span>🌍</span><div><b>Riset Makro Mingguan</b><small>Bank sentral, dolar & skenario minggu ini</small></div></a>
+    <a href="indikator.html"><span>🧭</span><div><b>Indikator DirmuFX</b><small>SMC Pro + Session Pro</small></div></a>
+    <div class="dgrp">Belajar & alat</div>
+    <a href="belajar.html"><span>🎓</span><div><b>Akademi (20 bab)</b><small>Dari dasar sampai SMC, gratis</small></div></a>
+    <a href="#kalkulator" data-dclose><span>🧮</span><div><b>Kalkulator lot</b><small>Hitung lot dari modal & risiko</small></div></a>
+    <a href="jurnal.html"><span>📒</span><div><b>Jurnal Trading</b><small>Catat & evaluasi trade kamu</small></div></a>
+    <a href="#materi" data-dclose><span>📚</span><div><b>Materi</b><small>Ringkasan materi trading</small></div></a>
+    <div class="dgrp">Gabung</div>
+    <a href="#cara-gabung" data-dclose><span>🪜</span><div><b>Cara Gabung VIP</b><small>4 langkah, deposit min. $30</small></div></a>
+    <a href="#masuk" id="drMasuk"><span>👤</span><div><b>Masuk / Akun</b><small>Area member & aktivasi VIP</small></div></a>
+    <a href="https://puvip.co/la-partners/id/ztmYc1S9" target="_blank" rel="noopener"><span>🏦</span><div><b>Buka akun PU Prime</b><small>Broker partner resmi DirmuFX</small></div></a>
+    <a href="https://t.me/dirmufxofficial" target="_blank" rel="noopener"><span>✈️</span><div><b>Telegram DirmuFX</b><small>Bot sinyal 24 jam</small></div></a>
+    <a href="https://chat.whatsapp.com/E4zPvDufMNqAaLdo9BLSmg" target="_blank" rel="noopener"><span>💬</span><div><b>Grup WhatsApp</b><small>Diskusi bareng member</small></div></a>
+    <div class="dgrp">Info</div>
+    <a href="#fitur" data-dclose><span>✨</span><div><b>Fitur</b></div></a>
+    <a href="#faq" data-dclose><span>❓</span><div><b>FAQ</b></div></a>
+  </aside>
+</div>
 
 <header class="hero" id="top">
   <div class="wrap">
@@ -2909,7 +2961,7 @@ async function load(){
  let unsub=null;
  auth.onAuthStateChanged(A,async u2=>{
   user=u2;profile=null;authReady=true;if(unsub){unsub();unsub=null}
-  const nav=$("navMasuk");if(nav){nav.textContent=u2?"Akun":"Masuk";nav.href=u2?"#akun":"#masuk"}
+  const nav=$("navMasuk");if(nav){nav.textContent=u2?"Akun":"Masuk";nav.href=u2?"#akun":"#masuk"}const dm=$("drMasuk");if(dm){dm.href=u2?"#akun":"#masuk"}
   if(!u2){window.DFX_setMember&&window.DFX_setMember(false);window.DFX_setInd&&window.DFX_setInd(false);paint();return}
   const ref=fs.doc(D,"members",u2.uid);
   try{const snap=await fs.getDoc(ref);
@@ -2969,5 +3021,14 @@ if(ON)load().catch(e=>{console.warn(e);setMsg("Gagal memuat sistem login. Cek ko
 #landing .btn.gold-btn,#auth .abtn.gold,#app .btn.primary{background:var(--up)!important;border-color:var(--up)!important;color:#06261b!important}
 #app #sigcard[data-dir="WAIT"] .sigword{color:#5b9cf5}
 </style>
+<script>
+/* menu garis tiga */
+(function(){const dr=document.getElementById("drawer"),bt=document.getElementById("burger");if(!dr||!bt)return;
+  const open=o=>{dr.classList.toggle("on",o);dr.setAttribute("aria-hidden",String(!o));bt.setAttribute("aria-expanded",String(o));document.body.classList.toggle("dlock",o);if(o)setTimeout(()=>{const x=dr.querySelector(".dx");x&&x.focus()},50);else bt.focus()};
+  bt.addEventListener("click",()=>open(true));
+  dr.addEventListener("click",e=>{if(e.target.closest("[data-dclose]")||e.target.closest("a"))open(false)});
+  document.addEventListener("keydown",e=>{if(e.key==="Escape"&&dr.classList.contains("on"))open(false)});
+})();
+</script>
 </body>
 </html>
