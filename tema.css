@@ -13,3 +13,11 @@ body h1{font-weight:600!important}
 svg g[fill="#fff"]{fill:#1d2b26}
 svg path[stroke="#63d297"]{stroke:#1f7a5a}
 svg g[fill="#63d297"]{fill:#1f7a5a}
+/* ukuran huruf disamakan dengan beranda (lebih kecil & santai) */
+html body{font-size:14px!important;line-height:1.55}
+body p,body li,body .lead,body .hero p{font-size:14px}
+body h1,body .hero h1,body .lt{font-size:clamp(24px,6.6vw,30px)!important;font-weight:600!important;line-height:1.15!important;letter-spacing:-.03em!important}
+body h2,body .lvh h2{font-size:clamp(18px,4.8vw,22px)!important;font-weight:600!important}
+body h3{font-size:15px!important;font-weight:600!important}
+body .brand,body .tb b,body header b{font-size:15px}
+body .chip,body .pill{font-size:12.5px}
