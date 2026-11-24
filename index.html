@@ -891,6 +891,12 @@ html #app .bcpop button{border:0;border-radius:12px;padding:10px 4px;background:
 html #app .bcpop button[aria-pressed="true"]{background:#1f7a5a;color:#fff}
 html #app .bcbox{background:#f3f7f5!important;border:0!important;border-radius:0!important;margin:0 -16px;height:calc(100vh - 205px - env(safe-area-inset-bottom,0px));min-height:440px;border-radius:14px}
 </style>
+<style>
+html.chartmode,html.chartmode body{overflow:hidden!important;overscroll-behavior:none;height:100%}
+html.chartmode body{position:fixed;inset:0;width:100%}
+html.chartmode #app{padding-bottom:0!important}
+html.chartmode #app .bcbox{min-height:0!important}
+</style>
 </head>
 <body>
 <div id="landing">
@@ -2785,12 +2791,17 @@ async function bcPrices(){
   pop.onclick=e=>{const b=e.target.closest("button");if(!b)return;BC.st=b.dataset.st;try{localStorage.setItem("dfx-bc-st",BC.st)}catch(_){}paint();pop.hidden=true;mountBigChart()};
   document.addEventListener("click",e=>{if(!pop.hidden&&!e.target.closest(".bctype"))pop.hidden=true});
 })();
+
+function bcFit(){const v=$("v-chart"),box=$("bigChart");if(!v||v.hidden||!box)return;const nav=document.querySelector("#app .abnav");
+  const top=box.getBoundingClientRect().top+window.scrollY;const nh=nav?nav.offsetHeight:84;box.style.height=Math.max(300,window.innerHeight-top-nh-6)+"px"}
+(function(){function mode(){const on=decodeURIComponent(location.hash.slice(1))==="chart";document.documentElement.classList.toggle("chartmode",on);if(on){window.scrollTo(0,0);setTimeout(bcFit,60)}}
+  window.addEventListener("hashchange",mode);window.addEventListener("resize",bcFit);window.addEventListener("orientationchange",()=>setTimeout(bcFit,300));mode();setTimeout(mode,400)})();
 function mountBigChart(){const box=$("bigChart");if(!box)return;const key=BC.sym+"|"+BC.tf+"|"+BC.st+"|"+BC.draw;if(BC.key===key&&box.firstChild)return;BC.key=key;
   box.innerHTML='<div id="bigChartInner" style="height:100%;width:100%"></div>';
-  loadTvJs().then(()=>{new TradingView.widget({container_id:"bigChartInner",autosize:true,symbol:bcFind(BC.sym).tv,interval:BC.tf,timezone:TZ,theme:"light",style:BC.st,locale:"id",
+  loadTvJs().then(()=>{new TradingView.widget({container_id:"bigChartInner",autosize:true,symbol:bcFind(BC.sym).tv,interval:BC.tf,timezone:TZ,theme:"light",backgroundColor:"#f3f7f5",gridColor:"rgba(243,247,245,0)",style:BC.st,locale:"id",
     toolbar_bg:"#f3f7f5",hide_top_toolbar:true,hide_side_toolbar:!BC.draw,hide_legend:true,hide_volume:true,allow_symbol_change:false,save_image:false,enable_publishing:false,withdateranges:false,
     studies_overrides:{"volume.volume.transparency":100,"volume.volume ma.transparency":100},disabled_features:["create_volume_indicator_by_default","legend_widget"],overrides:{"paneProperties.background":"#f3f7f5","paneProperties.backgroundType":"solid",
-      "paneProperties.gridLinesMode":"none","paneProperties.vertGridProperties.color":"#f3f7f5","paneProperties.horzGridProperties.color":"#f3f7f5","paneProperties.vertGridProperties.style":0,"paneProperties.horzGridProperties.style":0,"paneProperties.legendProperties.showLegend":false,"paneProperties.legendProperties.showStudyTitles":false,"paneProperties.legendProperties.showSeriesTitle":false,"paneProperties.legendProperties.showSeriesOHLC":false,"paneProperties.legendProperties.showBarChange":false,"paneProperties.separatorColor":"#f3f7f5","scalesProperties.lineColor":"#f3f7f5","scalesProperties.textColor":"#5f6f68","scalesProperties.fontSize":11,
+      "paneProperties.gridLinesMode":"none","paneProperties.vertGridProperties.color":"#f3f7f5","paneProperties.horzGridProperties.color":"#f3f7f5","paneProperties.vertGridProperties.style":0,"paneProperties.horzGridProperties.style":0,"paneProperties.legendProperties.showLegend":false,"paneProperties.legendProperties.showStudyTitles":false,"paneProperties.legendProperties.showSeriesTitle":false,"paneProperties.legendProperties.showSeriesOHLC":false,"paneProperties.legendProperties.showBarChange":false,"paneProperties.separatorColor":"#f3f7f5","scalesProperties.lineColor":"#f3f7f5","scalesProperties.textColor":"#5f6f68","scalesProperties.fontSize":9,
       "mainSeriesProperties.showCountdown":true,
       "mainSeriesProperties.candleStyle.upColor":"#5f9c6f","mainSeriesProperties.candleStyle.downColor":"#c9786f","mainSeriesProperties.candleStyle.borderUpColor":"#5f9c6f","mainSeriesProperties.candleStyle.borderDownColor":"#c9786f",
       "mainSeriesProperties.candleStyle.wickUpColor":"#5f9c6f","mainSeriesProperties.candleStyle.wickDownColor":"#c9786f",
