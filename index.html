@@ -889,7 +889,7 @@ html #app .bcpop span{display:block;font-size:12px;color:#5f6f68;margin:0 0 8px 
 html #app .bcpop div{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
 html #app .bcpop button{border:0;border-radius:12px;padding:10px 4px;background:#eef4f1;font:600 13px Inter,system-ui,sans-serif;color:#3d4a44;cursor:pointer}
 html #app .bcpop button[aria-pressed="true"]{background:#1f7a5a;color:#fff}
-html #app .bcbox{height:calc(100vh - 205px - env(safe-area-inset-bottom,0px));min-height:440px;border-radius:14px}
+html #app .bcbox{background:#f3f7f5!important;border:0!important;border-radius:0!important;margin:0 -16px;height:calc(100vh - 205px - env(safe-area-inset-bottom,0px));min-height:440px;border-radius:14px}
 </style>
 </head>
 <body>
@@ -2788,9 +2788,9 @@ async function bcPrices(){
 function mountBigChart(){const box=$("bigChart");if(!box)return;const key=BC.sym+"|"+BC.tf+"|"+BC.st+"|"+BC.draw;if(BC.key===key&&box.firstChild)return;BC.key=key;
   box.innerHTML='<div id="bigChartInner" style="height:100%;width:100%"></div>';
   loadTvJs().then(()=>{new TradingView.widget({container_id:"bigChartInner",autosize:true,symbol:bcFind(BC.sym).tv,interval:BC.tf,timezone:TZ,theme:"light",style:BC.st,locale:"id",
-    toolbar_bg:"#fbfdfc",hide_top_toolbar:true,hide_side_toolbar:!BC.draw,hide_legend:false,allow_symbol_change:false,save_image:false,enable_publishing:false,withdateranges:false,
-    overrides:{"paneProperties.background":"#fbfdfc","paneProperties.backgroundType":"solid",
-      "paneProperties.vertGridProperties.color":"#eef3f0","paneProperties.horzGridProperties.color":"#eef3f0","scalesProperties.textColor":"#5f6f68","scalesProperties.lineColor":"#e3ebe7","scalesProperties.fontSize":11,
+    toolbar_bg:"#f3f7f5",hide_top_toolbar:true,hide_side_toolbar:!BC.draw,hide_legend:true,allow_symbol_change:false,save_image:false,enable_publishing:false,withdateranges:false,
+    overrides:{"paneProperties.background":"#f3f7f5","paneProperties.backgroundType":"solid",
+      "paneProperties.vertGridProperties.color":"rgba(0,0,0,0)","paneProperties.horzGridProperties.color":"rgba(0,0,0,0)","paneProperties.legendProperties.showLegend":false,"paneProperties.legendProperties.showStudyTitles":false,"paneProperties.legendProperties.showSeriesTitle":false,"paneProperties.legendProperties.showSeriesOHLC":false,"paneProperties.legendProperties.showBarChange":false,"paneProperties.separatorColor":"#f3f7f5","scalesProperties.lineColor":"#f3f7f5","scalesProperties.textColor":"#5f6f68","scalesProperties.fontSize":11,
       "mainSeriesProperties.showCountdown":true,
       "mainSeriesProperties.candleStyle.upColor":"#5f9c6f","mainSeriesProperties.candleStyle.downColor":"#c9786f","mainSeriesProperties.candleStyle.borderUpColor":"#5f9c6f","mainSeriesProperties.candleStyle.borderDownColor":"#c9786f",
       "mainSeriesProperties.candleStyle.wickUpColor":"#5f9c6f","mainSeriesProperties.candleStyle.wickDownColor":"#c9786f",
