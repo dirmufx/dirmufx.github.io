@@ -818,6 +818,28 @@ body.dlock{overflow:hidden}
 #landing .bub.a{background:#2fcf74;color:#03230f;align-self:flex-end;border-top-right-radius:4px}
 </style>
 <style>html body,html body button,html body input,html body select,html body textarea{font-family:"Inter",system-ui,-apple-system,sans-serif}html body h1,html body h2,html body h3,html body .dname,html body .dtrade,html body .atitle{font-family:"Inter Tight","Inter",system-ui,sans-serif}</style>
+<style>
+html #app .bcpair{position:relative}
+html #app .bcbtn{width:100%;display:flex;align-items:center;justify-content:space-between;gap:10px;background:#fff;border:1px solid #dae6e0;border-radius:16px;padding:10px 14px;cursor:pointer;text-align:left;font-family:Inter,system-ui,sans-serif;color:#1d2b26}
+html #app .bcbtn b{display:block;font-size:17px;font-weight:700;letter-spacing:-.01em}html #app .bcbtn b i,html #app .bcrow b i{font-style:normal;font-weight:500;color:#5f6f68;font-size:.82em}
+html #app .bcbtn small{display:block;font-size:12px;color:#5f6f68;margin-top:1px}
+html #app .bcbtn svg{width:22px;height:22px;fill:none;stroke:#5f6f68;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:transform .15s}
+html #app .bcbtn[aria-expanded="true"] svg{transform:rotate(180deg)}
+html #app .bcmenu{position:absolute;left:0;right:0;top:calc(100% + 6px);z-index:30;background:#fbfdfc;border:1px solid #dae6e0;border-radius:20px;box-shadow:0 18px 40px rgba(20,50,40,.16);overflow:hidden}
+html #app .bcsearch{display:flex;align-items:center;gap:10px;padding:14px 16px;border-bottom:1px solid #e6eeea}
+html #app .bcsearch svg{width:18px;height:18px;fill:none;stroke:#5f6f68;stroke-width:2;stroke-linecap:round;flex:none}
+html #app .bcsearch input{flex:1;border:0;outline:0;background:transparent;font:500 16px Inter,system-ui,sans-serif;color:#1d2b26}
+html #app .bclist{max-height:min(62vh,520px);overflow-y:auto;padding-bottom:6px}
+html #app .bcg{font:600 11.5px Inter,system-ui,sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#5f6f68;padding:14px 18px 6px}
+html #app .bcrow{width:100%;display:grid;grid-template-columns:minmax(0,1fr) auto 76px;align-items:center;gap:8px;padding:10px 18px;border:0;background:none;cursor:pointer;text-align:left;font-family:Inter,system-ui,sans-serif;color:#1d2b26;border-left:3px solid transparent}
+html #app .bcrow.on{background:#e6f2ec;border-left-color:#1f7a5a}
+html #app .bcrow b{display:block;font-size:15px;font-weight:700}
+html #app .bcrow small{display:block;font-size:12.5px;color:#5f6f68;margin-top:2px}
+html #app .bcrow .pr{font-size:14.5px;font-variant-numeric:tabular-nums;text-align:right}
+html #app .bcrow .ch{font-size:12.5px;text-align:right;font-variant-numeric:tabular-nums}
+html #app .bcrow .ch.up{color:#1f8a5a}html #app .bcrow .ch.dn{color:#c4473f}
+html #app .bcnone{padding:14px 18px;color:#5f6f68;font-size:14px;margin:0}
+</style>
 </head>
 <body>
 <div id="landing">
@@ -1550,7 +1572,8 @@ body.dlock{overflow:hidden}
   <!-- CHART -->
   <section class="view" id="v-chart" hidden>
     <div class="bcbar">
-      <div class="bcpair"><select id="bcSym" aria-label="Pilih pair"></select></div>
+      <div class="bcpair"><button type="button" class="bcbtn" id="bcBtn" aria-haspopup="listbox" aria-expanded="false"><span><b id="bcPair">XAU/USD</b><small id="bcSrc">Emas spot · OANDA</small></span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10l5 5 5-5"/></svg></button>
+        <div class="bcmenu" id="bcMenu" hidden><div class="bcsearch"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg><input id="bcQ" placeholder="Cari pair lain..." autocomplete="off"></div><div class="bclist" id="bcList" role="listbox"></div></div></div>
       <div class="bctf" id="bcTf" role="group" aria-label="Timeframe"></div>
     </div>
     <div class="bcbox" id="bigChart"></div>
@@ -2636,11 +2659,54 @@ function mountView(v){
 
 
 /* ================= halaman Chart (TradingView penuh, alat gambar di kiri) ================= */
-const BC={sym:(()=>{try{return localStorage.getItem("dfx-bc-sym")||"XAUUSD"}catch(e){return"XAUUSD"}})(),tf:(()=>{try{return localStorage.getItem("dfx-bc-tf")||"15"}catch(e){return"15"}})(),key:""};
-const BCNAME={XAUUSD:"Emas",XAGUSD:"Perak",EURUSD:"Euro",GBPUSD:"Pound",USDJPY:"Yen",AUDUSD:"Aussie",BTCUSD:"Bitcoin",ETHUSD:"Ethereum",SOLUSD:"Solana",BNBUSD:"BNB",XRPUSD:"XRP"};
-(function(){const sel=$("bcSym");if(!sel)return;
-  sel.innerHTML=Object.keys(TVSYM).map(k=>`<option value="${k}"${k===BC.sym?" selected":""}>${k.replace("USD","/USD")} · ${BCNAME[k]||""}</option>`).join("");
-  sel.onchange=()=>{BC.sym=sel.value;try{localStorage.setItem("dfx-bc-sym",BC.sym)}catch(e){}mountBigChart()};
+const BC={sym:(()=>{try{return localStorage.getItem("dfx-bc-sym2")||"XAUUSD"}catch(e){return"XAUUSD"}})(),tf:(()=>{try{return localStorage.getItem("dfx-bc-tf")||"15"}catch(e){return"15"}})(),key:"",px:{}};
+const BCL=[
+ {g:"Crypto",k:"BTCUSDT",b:"BTC",q:"USDT",n:"Bitcoin",tv:"BINANCE:BTCUSDT",src:"Binance"},
+ {g:"Crypto",k:"ETHUSDT",b:"ETH",q:"USDT",n:"Ethereum",tv:"BINANCE:ETHUSDT",src:"Binance"},
+ {g:"Crypto",k:"SOLUSDT",b:"SOL",q:"USDT",n:"Solana",tv:"BINANCE:SOLUSDT",src:"Binance"},
+ {g:"Crypto",k:"BNBUSDT",b:"BNB",q:"USDT",n:"BNB",tv:"BINANCE:BNBUSDT",src:"Binance"},
+ {g:"Crypto",k:"XRPUSDT",b:"XRP",q:"USDT",n:"XRP",tv:"BINANCE:XRPUSDT",src:"Binance"},
+ {g:"Crypto",k:"DOGEUSDT",b:"DOGE",q:"USDT",n:"Dogecoin",tv:"BINANCE:DOGEUSDT",src:"Binance"},
+ {g:"Forex & Emas",k:"XAUUSD",b:"XAU",q:"USD",n:"Emas spot",tv:"OANDA:XAUUSD",src:"OANDA"},
+ {g:"Forex & Emas",k:"XAGUSD",b:"XAG",q:"USD",n:"Perak spot",tv:"OANDA:XAGUSD",src:"OANDA"},
+ {g:"Forex & Emas",k:"EURUSD",b:"EUR",q:"USD",n:"Euro",tv:"FX:EURUSD",src:"FX"},
+ {g:"Forex & Emas",k:"GBPUSD",b:"GBP",q:"USD",n:"Pound",tv:"FX:GBPUSD",src:"FX"},
+ {g:"Forex & Emas",k:"USDJPY",b:"USD",q:"JPY",n:"Yen",tv:"FX:USDJPY",src:"FX"},
+ {g:"Forex & Emas",k:"AUDUSD",b:"AUD",q:"USD",n:"Aussie",tv:"FX:AUDUSD",src:"FX"},
+ {g:"Forex & Emas",k:"USDCAD",b:"USD",q:"CAD",n:"Loonie",tv:"FX:USDCAD",src:"FX"},
+ {g:"Forex & Emas",k:"USDCHF",b:"USD",q:"CHF",n:"Franc",tv:"FX:USDCHF",src:"FX"},
+ {g:"Forex & Emas",k:"NZDUSD",b:"NZD",q:"USD",n:"Kiwi",tv:"FX:NZDUSD",src:"FX"},
+ {g:"Forex & Emas",k:"GBPJPY",b:"GBP",q:"JPY",n:"Pound/Yen",tv:"FX:GBPJPY",src:"FX"},
+ {g:"Forex & Emas",k:"EURJPY",b:"EUR",q:"JPY",n:"Euro/Yen",tv:"FX:EURJPY",src:"FX"}];
+const bcFind=k=>BCL.find(x=>x.k===k)||BCL.find(x=>x.k==="XAUUSD");
+const bcFmt=v=>v==null?"":v.toLocaleString("id-ID",{maximumFractionDigits:v>=1000?2:v>=10?3:v>=1?3:5,minimumFractionDigits:v>=1000?2:v>=1?3:5});
+function bcHead(){const it=bcFind(BC.sym);$("bcPair").innerHTML=`${it.b}<i>/${it.q}</i>`;$("bcSrc").textContent=it.n+" · "+it.src}
+function bcRender(){const q=($("bcQ").value||"").trim().toUpperCase().replace(/[^A-Z]/g,"");let h="",last="";
+  const list=BCL.filter(x=>!q||x.k.includes(q)||x.n.toUpperCase().includes(q));
+  list.forEach(x=>{if(x.g!==last){h+=`<div class="bcg">${x.g.toUpperCase()}</div>`;last=x.g}const p=BC.px[x.k]||{};const ch=p.c;
+    h+=`<button type="button" role="option" class="bcrow${x.k===BC.sym?" on":""}" data-k="${x.k}"><span class="nm"><b>${x.b}<i>/${x.q}</i></b><small>${x.n}</small></span><span class="pr">${bcFmt(p.p)}</span><span class="ch ${ch==null?"":ch>=0?"up":"dn"}">${ch==null?"":(ch>=0?"+":"")+ch.toFixed(2).replace(".",",")+"%"}</span></button>`});
+  if(!list.length)h=`<p class="bcnone">Pair "${q}" belum ada di daftar.</p>`;
+  $("bcList").innerHTML=h}
+async function bcPrices(){
+  try{const cs=BCL.filter(x=>x.g==="Crypto").map(x=>x.k);
+    const r=await fetch("https://data-api.binance.vision/api/v3/ticker/24hr?symbols="+encodeURIComponent(JSON.stringify(cs)));const j=await r.json();
+    j.forEach(t=>BC.px[t.symbol]={p:+t.lastPrice,c:+t.priceChangePercent})}catch(e){}
+  try{const r=await fetch("https://data-api.binance.vision/api/v3/ticker/24hr?symbol=PAXGUSDT");const t=await r.json();
+    const g=await (await fetch("https://api.gold-api.com/price/XAU")).json();BC.px.XAUUSD={p:+g.price,c:+t.priceChangePercent}}catch(e){}
+  try{const g=await (await fetch("https://api.gold-api.com/price/XAG")).json();BC.px.XAGUSD={p:+g.price}}catch(e){}
+  try{const fx=["EUR","GBP","JPY","AUD","CAD","CHF","NZD"];
+    const now=await (await fetch("https://api.frankfurter.app/latest?from=USD&to="+fx.join(","))).json();
+    const d=new Date(now.date);d.setDate(d.getDate()-1);if(d.getDay()===0)d.setDate(d.getDate()-2);if(d.getDay()===6)d.setDate(d.getDate()-1);
+    const old=await (await fetch("https://api.frankfurter.app/"+d.toISOString().slice(0,10)+"?from=USD&to="+fx.join(","))).json();
+    BCL.filter(x=>x.src==="FX").forEach(x=>{const rate=(o)=>{const R=o.rates,b=x.b,qq=x.q;const ub=b==="USD"?1:1/R[b],uq=qq==="USD"?1:1/R[qq];return ub/uq};
+      try{const a=rate(now),b=rate(old);BC.px[x.k]={p:a,c:(a-b)/b*100}}catch(e){}})}catch(e){}
+  if(!$("bcMenu").hidden)bcRender()}
+(function(){if(!$("bcBtn"))return;bcHead();
+  const open=o=>{$("bcMenu").hidden=!o;$("bcBtn").setAttribute("aria-expanded",o);if(o){$("bcQ").value="";bcRender();bcPrices()}};
+  $("bcBtn").onclick=e=>{e.stopPropagation();open($("bcMenu").hidden)};
+  $("bcQ").oninput=bcRender;
+  $("bcList").onclick=e=>{const b=e.target.closest(".bcrow");if(!b)return;BC.sym=b.dataset.k;try{localStorage.setItem("dfx-bc-sym2",BC.sym)}catch(_){}bcHead();open(false);mountBigChart()};
+  document.addEventListener("click",e=>{if(!$("bcMenu").hidden&&!e.target.closest(".bcpair"))open(false)});
   const T=[["1","M1"],["5","M5"],["15","M15"],["30","M30"],["60","H1"],["240","H4"],["D","D1"],["W","W1"]];
   $("bcTf").innerHTML=T.map(([v,n])=>`<button type="button" data-v="${v}" aria-pressed="${v===BC.tf}">${n}</button>`).join("");
   $("bcTf").onclick=e=>{const b=e.target.closest("button");if(!b)return;BC.tf=b.dataset.v;try{localStorage.setItem("dfx-bc-tf",BC.tf)}catch(e){}
@@ -2648,7 +2714,7 @@ const BCNAME={XAUUSD:"Emas",XAGUSD:"Perak",EURUSD:"Euro",GBPUSD:"Pound",USDJPY:"
 })();
 function mountBigChart(){const box=$("bigChart");if(!box)return;const key=BC.sym+"|"+BC.tf;if(BC.key===key&&box.firstChild)return;BC.key=key;
   box.innerHTML='<div id="bigChartInner" style="height:100%;width:100%"></div>';
-  loadTvJs().then(()=>{new TradingView.widget({container_id:"bigChartInner",autosize:true,symbol:TVSYM[BC.sym],interval:BC.tf,timezone:TZ,theme:"light",style:"1",locale:"id",
+  loadTvJs().then(()=>{new TradingView.widget({container_id:"bigChartInner",autosize:true,symbol:bcFind(BC.sym).tv,interval:BC.tf,timezone:TZ,theme:"light",style:"1",locale:"id",
     toolbar_bg:"#ffffff",hide_top_toolbar:true,hide_side_toolbar:false,hide_legend:false,allow_symbol_change:false,save_image:false,enable_publishing:false,withdateranges:false,
     overrides:{"paneProperties.background":"#ffffff","paneProperties.backgroundType":"solid",
       "paneProperties.vertGridProperties.color":"#f1f4f2","paneProperties.horzGridProperties.color":"#f1f4f2","scalesProperties.textColor":"#5f6f68","scalesProperties.lineColor":"#e3ebe7",
