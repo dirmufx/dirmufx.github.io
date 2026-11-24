@@ -15,7 +15,7 @@
 <link rel="icon" href="data:image/svg+xml,<svg viewBox='0 0 314 343' xmlns='http://www.w3.org/2000/svg'><path d='M15 15H140A156.5 156.5 0 0 1 140 328H15Z' fill='none' stroke='%2363d297' stroke-width='30' stroke-linejoin='round'/><g fill='%23fff'><rect x='87' y='159' width='10' height='138' rx='5'/><rect x='69' y='202' width='46' height='58' rx='5'/><rect x='147' y='114' width='10' height='160' rx='5'/><rect x='129' y='153' width='46' height='75' rx='5'/></g><g fill='%2363d297'><rect x='207' y='54' width='10' height='175' rx='5'/><rect x='189' y='89' width='46' height='99' rx='5'/></g></svg>">
 <script src="dfx-config.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Montserrat:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Inter+Tight:wght@500;600&family=Montserrat:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
 <style>
 #landing{
   --bg:#0a0a0c; --bg2:#0f0f12; --panel:#131316; --panel2:#1b1b20; --line:#2a2a31;
@@ -3213,12 +3213,15 @@ html #landing .hero h1{max-width:none;line-height:1.1}
 /* ===== Tema santai (putih sejuk + hijau toska) ===== */
 html #landing{--bg:#f3f7f5;--bg2:#e8f0ec;--panel:#ffffff;--panel2:#eef4f1;--line:#dae6e0;--fg:#1d2b26;--muted:#5f6f68;
  --gold:#1f7a5a;--gold-hi:#2f9a72;--gold-lo:#17604a;--gold-dim:#bfe0d1;--up:#1f8a5a;--up-dim:#dff1e8;--down:#b5473f;--down-dim:#f6e0dc;
- --f-display:"DM Sans",system-ui,-apple-system,sans-serif;--f-body:"DM Sans",system-ui,-apple-system,sans-serif;--f-mono:"DM Sans",system-ui,sans-serif;
+ --f-display:"Inter Tight","Inter",system-ui,-apple-system,sans-serif;--f-body:"Inter",system-ui,-apple-system,sans-serif;--f-mono:"Inter",system-ui,sans-serif;
  color-scheme:light;background:var(--bg)!important;color:var(--fg)}
 body:has(> #landing:not([hidden])){background:#f3f7f5}
-html #landing h1,html #landing h2,html #landing h3{font-weight:600!important;color:var(--fg)}
+html #landing h1,html #landing h2,html #landing h3{font-family:"Inter Tight","Inter",system-ui,sans-serif;font-weight:600!important;color:var(--fg)}
+html #landing h1,html #landing h2{font-weight:500!important}
+html #landing{font-family:"Inter",system-ui,-apple-system,sans-serif}
+html #landing .eyebrow{font-weight:500!important;letter-spacing:.22em!important;color:var(--muted)!important}
 html #landing h2{font-size:clamp(21px,5.4vw,28px)}
-html #landing .hero h1{font-weight:600;letter-spacing:-.03em!important;font-size:clamp(28px,7.6vw,46px);line-height:1.08}
+html #landing .hero h1{font-weight:500;letter-spacing:-.035em!important;font-size:clamp(28px,7.6vw,46px);line-height:1.08}
 html #landing .hero h1 .hl{background:none;-webkit-text-fill-color:currentColor;color:var(--gold)}
 html #landing .eyebrow{color:var(--gold);font-size:11px;font-weight:600;letter-spacing:.14em!important;text-transform:uppercase!important}
 html #landing b,html #landing strong{font-weight:600}
@@ -3295,8 +3298,8 @@ html #landing .closing{background:#dff1e8;border:0}
 html #landing .pos{color:#1f8a5a}html #landing .neg{color:#b5473f}
 html #landing footer{background:#e8f0ec}
 /* menu samping */
-.dpanel{background:#f8fbf9;border-right:1px solid #dae6e0;font-family:"DM Sans",system-ui,sans-serif}
-.dlogo{color:#1d2b26;font-family:"DM Sans",system-ui,sans-serif;font-weight:700}
+.dpanel{background:#f8fbf9;border-right:1px solid #dae6e0;font-family:"Inter",system-ui,sans-serif}
+.dlogo{color:#1d2b26;font-family:"Inter",system-ui,sans-serif;font-weight:700}
 .dlogo i{color:#1f7a5a}.dlogo svg path{stroke:#1f7a5a}.dlogo svg g[fill="#fff"]{fill:#1d2b26}.dlogo svg g[fill="#63d297"]{fill:#1f7a5a}
 .dx{background:#fff;border-color:#dae6e0;color:#1d2b26}
 .dfoot{border-color:#dae6e0}
