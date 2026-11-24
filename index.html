@@ -1464,42 +1464,7 @@ body.dlock{overflow:hidden}
             <div class="indlock" id="indLock" hidden><b>🔒 Indikator SMC Pro + Session Pro</b><span>Gratis untuk member VIP, atau beli sekali Rp1.000.000.</span><a class="btn primary" href="indikator.html">Lihat & aktifkan</a></div></div>
           <p class="note" style="margin:8px 0 0">Mengikuti timeframe yang dipilih di atas. Kotak sesi tampil di M5–H1, jam WITA. Data dari sumber yang sama dengan sinyal, bisa sedikit berbeda dari broker.</p>
         </div>
-        <div class="card" id="trendCard">
-          <div class="row" style="justify-content:space-between;margin-bottom:10px;gap:8px"><h2 style="margin:0">Matriks tren</h2><span class="small muted" id="trendSum"></span></div>
-          <div class="tmx" id="mtf"></div>
-          <p class="note" id="mtfnote" style="margin:8px 0 0">Entry paling aman saat TF besar (H4 & D1) searah dengan TF entry. <button class="btn" id="mtfBtn" hidden>Muat ulang</button></p>
-        </div>
-        <div class="newsalert" id="newsAlert" hidden></div>
-        <div class="card signal" id="sigcard" data-dir="WAIT">
-          <div class="sg2">
-            <div class="sgtop"><span class="sgstyle"><b id="sgStyle">Intraday</b> · <span id="sigtf"></span></span><span class="sgai">✦ DirmuFX</span><span class="sgstat" id="sgStat">Menunggu setup</span></div>
-            <div class="sgmain">
-              <div class="sgdir"><span class="sgarrow" id="sgArrow">◆</span><span class="sigword" id="sigword">—</span><span class="sgtype" id="sgType"></span></div>
-              <div class="sgpips"><b id="sgPips">0%</b><span id="sgPipsK">kekuatan</span></div>
-            </div>
-            <div class="sgline lockable" id="sgLine">—</div>
-            <div class="sgbadges" id="sgBadges"></div>
-            <div class="sgtrack" id="sgTrack"><div class="sgfill" id="sgFill"></div><i class="sgdot" id="sgDot"></i></div>
-            <div class="sgtl" id="sgTl"><span>SL</span><span>Entry</span><span>SL+</span><span>TP1</span><span>TP MAX</span></div>
-            <div class="sgstr"><span class="small muted">Kekuatan konfluensi</span><b class="num" id="sigstr">0%</b><div class="meter"><span id="sigbar" style="width:0"></span></div></div>
-          </div>
-          <div class="waitnote" id="waitNote"><b>⏳ Belum ada sinyal aktif — jangan entry dulu.</b><span>Level di bawah hanya rencana jika <b id="waitLean">BUY</b> terkonfirmasi. Aktifkan notifikasi supaya tahu saat sinyal muncul.</span></div>
-          <div class="lockbar">
-            <p>Entry, SL, TP &amp; lot khusus <b>member DirmuFX</b>. Gratis dengan buka akun lewat link kami.</p>
-            <a class="btn cta" href="#member">Buka akses</a>
-          </div>
-          <div class="sgzone lockable" id="sgZone"></div>
-          <div class="sgwhy"><div class="sgwk">💡 Alasan</div><div class="sgwt" id="sigwhy"></div><button type="button" class="sgmore" id="sgMore">Selengkapnya ⌄</button></div>
-          <details class="sgdet"><summary>🧮 Semua level & hitung lot</summary>
-          <div class="levels">
-            <div class="lv"><div class="k">Entry</div><div class="v lockable" id="lvE">—</div></div>
-            <div class="lv sl"><div class="k">Stop loss</div><div class="v lockable" id="lvSL">—</div></div>
-            <div class="lv be"><div class="k">SL+ (1:1)</div><div class="v lockable" id="lvBE">—</div></div>
-            <div class="lv tp"><div class="k">TP 1 (1:2)</div><div class="v lockable" id="lvTP1">—</div></div>
-            <div class="lv tp max"><div class="k" id="tp2k">TP MAX (1:3)</div><div class="v lockable" id="lvTP2">—</div></div>
-          </div>
-          <div class="sigfoot">
-            <div class="row notifrow"><button class="btn primary" id="shareBtn" hidden>📤 Bagikan sinyal</button><a class="btn" id="jurnalBtn" href="jurnal.html" hidden>📒 Catat ke jurnal</a><button class="btn" id="notifBtn">Aktifkan notifikasi sinyal</button><span class="small muted" id="notifState">Bunyi + pop-up saat sinyal muncul (selama tool terbuka)</span></div>
+  <div class="pushbox" style="margin:0 0 14px" id="pushBox"><div><b>🔔 Notifikasi sinyal ke HP</b><span id="pushMsg">Muncul di layar kunci walau web tidak dibuka. Khusus member aktif.</span></div><button class="btn primary" id="pushBtn" type="button">Aktifkan</button></div>
             <div class="grid2">
               <div class="field proonly"><label for="rr">Rasio RR</label><select id="rr"><option value="3" selected>1 : 3</option></select></div>
               <div class="field proonly"><label for="slm">SL</label><select id="slm"><option value="1">1.0 × ATR</option><option value="1.5" selected>1.5 × ATR</option><option value="2">2.0 × ATR</option></select></div>
@@ -1551,6 +1516,42 @@ body.dlock{overflow:hidden}
     <div class="card calcard">
       <div class="ffbar">
         <div class="ffrow"><span class="fflbl">Dampak</span><div class="ffchips" id="ffImp"></div></div>
+        <div class="card" id="trendCard">
+          <div class="row" style="justify-content:space-between;margin-bottom:10px;gap:8px"><h2 style="margin:0">Matriks tren</h2><span class="small muted" id="trendSum"></span></div>
+          <div class="tmx" id="mtf"></div>
+          <p class="note" id="mtfnote" style="margin:8px 0 0">Entry paling aman saat TF besar (H4 & D1) searah dengan TF entry. <button class="btn" id="mtfBtn" hidden>Muat ulang</button></p>
+        </div>
+        <div class="newsalert" id="newsAlert" hidden></div>
+        <div class="card signal" id="sigcard" data-dir="WAIT">
+          <div class="sg2">
+            <div class="sgtop"><span class="sgstyle"><b id="sgStyle">Intraday</b> · <span id="sigtf"></span></span><span class="sgai">✦ DirmuFX</span><span class="sgstat" id="sgStat">Menunggu setup</span></div>
+            <div class="sgmain">
+              <div class="sgdir"><span class="sgarrow" id="sgArrow">◆</span><span class="sigword" id="sigword">—</span><span class="sgtype" id="sgType"></span></div>
+              <div class="sgpips"><b id="sgPips">0%</b><span id="sgPipsK">kekuatan</span></div>
+            </div>
+            <div class="sgline lockable" id="sgLine">—</div>
+            <div class="sgbadges" id="sgBadges"></div>
+            <div class="sgtrack" id="sgTrack"><div class="sgfill" id="sgFill"></div><i class="sgdot" id="sgDot"></i></div>
+            <div class="sgtl" id="sgTl"><span>SL</span><span>Entry</span><span>SL+</span><span>TP1</span><span>TP MAX</span></div>
+            <div class="sgstr"><span class="small muted">Kekuatan konfluensi</span><b class="num" id="sigstr">0%</b><div class="meter"><span id="sigbar" style="width:0"></span></div></div>
+          </div>
+          <div class="waitnote" id="waitNote"><b>⏳ Belum ada sinyal aktif — jangan entry dulu.</b><span>Level di bawah hanya rencana jika <b id="waitLean">BUY</b> terkonfirmasi. Aktifkan notifikasi supaya tahu saat sinyal muncul.</span></div>
+          <div class="lockbar">
+            <p>Entry, SL, TP &amp; lot khusus <b>member DirmuFX</b>. Gratis dengan buka akun lewat link kami.</p>
+            <a class="btn cta" href="#member">Buka akses</a>
+          </div>
+          <div class="sgzone lockable" id="sgZone"></div>
+          <div class="sgwhy"><div class="sgwk">💡 Alasan</div><div class="sgwt" id="sigwhy"></div><button type="button" class="sgmore" id="sgMore">Selengkapnya ⌄</button></div>
+          <details class="sgdet"><summary>🧮 Semua level & hitung lot</summary>
+          <div class="levels">
+            <div class="lv"><div class="k">Entry</div><div class="v lockable" id="lvE">—</div></div>
+            <div class="lv sl"><div class="k">Stop loss</div><div class="v lockable" id="lvSL">—</div></div>
+            <div class="lv be"><div class="k">SL+ (1:1)</div><div class="v lockable" id="lvBE">—</div></div>
+            <div class="lv tp"><div class="k">TP 1 (1:2)</div><div class="v lockable" id="lvTP1">—</div></div>
+            <div class="lv tp max"><div class="k" id="tp2k">TP MAX (1:3)</div><div class="v lockable" id="lvTP2">—</div></div>
+          </div>
+          <div class="sigfoot">
+            <div class="row notifrow"><button class="btn primary" id="shareBtn" hidden>📤 Bagikan sinyal</button><a class="btn" id="jurnalBtn" href="jurnal.html" hidden>📒 Catat ke jurnal</a><button class="btn" id="notifBtn">Aktifkan notifikasi sinyal</button><span class="small muted" id="notifState">Bunyi + pop-up saat sinyal muncul (selama tool terbuka)</span></div>
         <div class="ffrow"><span class="fflbl">Mata uang</span><div class="ffchips ffscroll" id="ffCur"></div></div>
       </div>
       <div class="ffhead"><span>Jam</span><span>Mata uang</span><span>Berita</span><span class="r">Aktual</span><span class="r">Prakiraan</span><span class="r">Sebelumnya</span></div>
@@ -3115,7 +3116,7 @@ async function load(){
  const v="10.12.2",u=`https://www.gstatic.com/firebasejs/${v}/`;
  const [app,auth,fs]=await Promise.all([import(u+"firebase-app.js"),import(u+"firebase-auth.js"),import(u+"firebase-firestore.js")]);
  const a=app.initializeApp(CFG);const A=auth.getAuth(a);A.languageCode="id";const D=fs.getFirestore(a);
- fb={A,D,auth,fs};
+ fb={A,D,auth,fs};window.DFX_pushCtx=()=>({fb,user,active:!!user&&isActive()});
  fs.onSnapshot(fs.doc(D,"settings","public"),s=>{settings=s.data()||{};window.DFX_live&&DFX_live(settings.live);if(user&&route==="aktivasi")renderWiz()},e=>console.warn(e));
  let unsub=null;
  auth.onAuthStateChanged(A,async u2=>{
@@ -3456,6 +3457,47 @@ html #app .toast{bottom:calc(92px + env(safe-area-inset-bottom,0px))}
   const _hi=window.DFX_hi;window.DFX_hi=function(u){_hi&&_hi(u);const a=document.getElementById("abAkun");if(a)a.href=u?"#akun":"#masuk"};
 })();
 </script>
+<style>
+html #app .pushbox{display:flex;align-items:center;gap:12px;justify-content:space-between;margin-top:12px;padding:12px 14px;border-radius:16px;background:#dff1e8;border:1px solid #bfe0d1;color:#1d2b26}
+html #app .pushbox b{display:block;font-size:14px}
+html #app .pushbox span{display:block;font-size:12.5px;color:#4d5f57;line-height:1.45;margin-top:2px}
+html #app .pushbox span a{color:#17604a;font-weight:600}
+html #app .pushbox .btn{flex:none}
+</style>
+<script>
+/* notifikasi push ke HP (member aktif) */
+(function(){const KEY="BE84cuoPnK5Vros-9HuJK5txaYRhmKAwmNdTvzC0nD5vcBLGZeKbbbJ8t8HaCk5MqOLlkcJNkXwR6oc7jUkID9A";const btn=document.getElementById("pushBtn"),msg=document.getElementById("pushMsg");if(!btn)return;
+  const isIOS=/iPhone|iPad|iPod/.test(navigator.userAgent),standalone=matchMedia("(display-mode: standalone)").matches||navigator.standalone===true;
+  const ok="serviceWorker"in navigator&&"PushManager"in window&&"Notification"in window;
+  const say=(h)=>{msg.innerHTML=h};
+  const b64=s=>{s=s.replace(/-/g,"+").replace(/_/g,"/");const p=s+"===".slice((s.length+3)%4);const r=atob(p);return Uint8Array.from([...r].map(c=>c.charCodeAt(0)))};
+  let on=false;
+  const paint=()=>{btn.textContent=on?"Matikan":"Aktifkan";if(on)say("Aktif. Sinyal baru akan muncul di layar pemberitahuan HP ini.")};
+  async function reg(){return navigator.serviceWorker.register("/sw.js")}
+  async function check(){if(!ok)return;try{const r=await navigator.serviceWorker.getRegistration("/");const sub=r&&await r.pushManager.getSubscription();on=!!sub&&Notification.permission==="granted";paint()}catch(e){}}
+  check();
+  btn.addEventListener("click",async()=>{
+    const c=window.DFX_pushCtx&&window.DFX_pushCtx();
+    if(!ok){say(isIOS&&!standalone?'Di iPhone, pasang web ini ke layar utama dulu, lalu buka dari ikonnya. <a href="pasang.html">Cara pasang</a>':"Browser ini belum mendukung notifikasi. Coba Chrome (Android) atau Safari dari ikon layar utama (iPhone).");return}
+    if(!c||!c.user){say('Masuk dulu ke akun member. <a href="#masuk">Masuk</a>');return}
+    if(!c.active){say('Notifikasi ke HP khusus member aktif. <a href="#akun">Cek status member</a>');return}
+    btn.disabled=true;
+    try{
+      const r=await reg();await navigator.serviceWorker.ready;
+      if(on){const sub=await r.pushManager.getSubscription();if(sub)await sub.unsubscribe();
+        await c.fb.fs.deleteDoc(c.fb.fs.doc(c.fb.D,"push",c.user.uid)).catch(()=>{});on=false;paint();say("Notifikasi dimatikan di HP ini.")}
+      else{const perm=await Notification.requestPermission();
+        if(perm!=="granted"){say("Izin notifikasi ditolak. Buka Pengaturan HP > Notifikasi, izinkan DirmuFX, lalu coba lagi.")}
+        else{let sub=await r.pushManager.getSubscription();if(!sub)sub=await r.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:b64(KEY)});
+          await c.fb.fs.setDoc(c.fb.fs.doc(c.fb.D,"push",c.user.uid),{sub:JSON.stringify(sub),ua:navigator.userAgent.slice(0,160),at:c.fb.fs.serverTimestamp()});
+          on=true;paint();
+          try{r.showNotification("Notifikasi DirmuFX aktif ✅",{body:"Sinyal baru akan muncul di sini.",icon:"/icon-192.png"})}catch(e){}}}
+    }catch(e){console.warn(e);say("Gagal mengaktifkan ("+(e.code||e.name||"error")+"). Coba lagi sebentar lagi.")}
+    btn.disabled=false;
+  });
+})();
+</script>
+
 
 
 

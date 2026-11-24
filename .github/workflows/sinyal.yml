@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
     inputs:
       mode:
-        description: "run / test / chatid"
+        description: "run / test (kirim notifikasi tes ke HP member) / chatid"
         default: "run"
         type: choice
         options: [run, test, chatid]
@@ -24,8 +24,11 @@ jobs:
           path: state.json
           key: state-${{ github.run_id }}
           restore-keys: state-
+      - name: Pasang pywebpush
+        run: pip install --quiet pywebpush
       - name: Cek sinyal
         env:
+          VAPID_PRIVATE_KEY: ${{ secrets.VAPID_PRIVATE_KEY }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           MODE: ${{ github.event.inputs.mode || 'run' }}

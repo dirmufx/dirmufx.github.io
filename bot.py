@@ -1,6 +1,6 @@
-# DirmuFX Signal Bot - kirim sinyal ke Telegram (jalan di GitHub Actions)
-# Hanya pakai library bawaan Python, tidak perlu install apa pun.
-import json, os, sys, time, urllib.request, urllib.parse, math
+# DirmuFX Signal Bot - kirim sinyal sebagai notifikasi ke HP member aktif (jalan di GitHub Actions)
+# Notifikasi HP butuh pywebpush (dipasang otomatis di workflow).
+import json, os, sys, time, urllib.request, urllib.parse, urllib.error, math, hashlib, re
 
 # ===================== PENGATURAN =====================
 PAIRS = {  # nama : (simbol Binance, ukuran 1 pip, sesuaikan ke harga emas spot?)
@@ -16,9 +16,17 @@ SIG_MIN = 0.5      # ambang konfluensi sinyal
 PRE_MIN = 0.4      # ambang "siap-siap"
 ADX_MIN = 20
 PRE_ALERT = os.environ.get("PRE_ALERT", "1") == "1"
-TOOL_URL = "https://dirmufx.github.io/#signal-room"
-IB_URL = "https://sc.myuserhub.com/?pt=224062"
-BROKER = "Windsor Brokers"
+TOOL_URL = "https://dirmufx.github.io/#analisa"
+IB_URL = "https://puvip.co/la-partners/id/ztmYc1S9"
+BROKER = "PU Prime"
+USE_TELEGRAM = os.environ.get("USE_TELEGRAM", "0") == "1"   # Telegram dimatikan, sinyal dikirim ke HP member
+# Notifikasi HP (web push)
+FB_KEY = "AIzaSyCrLgAEab88oXPJ49H7MOyaqjntLcJse1c"
+FB_PROJECT = "dirmufx"
+VAPID_PRIVATE = os.environ.get("VAPID_PRIVATE_KEY", "").strip()
+# email akun bot diturunkan dari kunci rahasia, jadi tidak bisa ditebak orang lain
+BOT_EMAIL = "pushbot-" + hashlib.sha256(("dfx-mail|" + VAPID_PRIVATE).encode()).hexdigest()[:16] + "@dirmufx-bot.web.app"
+VAPID_SUB = "mailto:admin@dirmufx.github.io"
 STATE_FILE = "state.json"
 BNIV = {1: "1m", 5: "5m", 15: "15m", 30: "30m", 60: "1h", 240: "4h"}
 TFN = {1: "M1", 5: "M5", 15: "M15", 30: "M30", 60: "H1", 240: "H4"}
@@ -50,7 +58,109 @@ def tg(method, **params):
         return json.loads(r.read().decode())
 
 
+# ---------------- notifikasi HP (web push) ----------------
+def post_json(url, body, headers=None):
+    req = urllib.request.Request(url, data=json.dumps(body).encode(), headers={"Content-Type": "application/json", **(headers or {})})
+    with urllib.request.urlopen(req, timeout=20) as r:
+        return json.loads(r.read().decode() or "{}")
+
+_tok = None
+def fb_token():
+    """Login akun bot Firebase (dibuat otomatis saat pertama kali)."""
+    global _tok
+    if _tok: return _tok
+    pw = hashlib.sha256(("dfx-bot|" + VAPID_PRIVATE).encode()).hexdigest()[:32]
+    base = "https://identitytoolkit.googleapis.com/v1/accounts:"
+    body = {"email": BOT_EMAIL, "password": pw, "returnSecureToken": True}
+    try:
+        _tok = post_json(base + "signInWithPassword?key=" + FB_KEY, body)["idToken"]
+    except urllib.error.HTTPError as e:
+        msg = e.read().decode()
+        if "EMAIL_NOT_FOUND" in msg or "INVALID_LOGIN_CREDENTIALS" in msg:
+            try:
+                _tok = post_json(base + "signUp?key=" + FB_KEY, body)["idToken"]; print("akun bot push dibuat")
+            except urllib.error.HTTPError as e2:
+                raise RuntimeError("gagal buat akun bot: " + e2.read().decode()[:200])
+        else:
+            raise RuntimeError("gagal login bot: " + msg[:200])
+    return _tok
+
+def fs_get(path):
+    url = f"https://firestore.googleapis.com/v1/projects/{FB_PROJECT}/databases/(default)/documents/{path}"
+    req = urllib.request.Request(url, headers={"Authorization": "Bearer " + fb_token()})
+    with urllib.request.urlopen(req, timeout=20) as r:
+        return json.loads(r.read().decode())
+
+def fs_delete(path):
+    url = f"https://firestore.googleapis.com/v1/projects/{FB_PROJECT}/databases/(default)/documents/{path}"
+    req = urllib.request.Request(url, method="DELETE", headers={"Authorization": "Bearer " + fb_token()})
+    try: urllib.request.urlopen(req, timeout=20)
+    except Exception as e: print("hapus langganan gagal:", e)
+
+def fval(f):
+    if not f: return None
+    for k in ("stringValue", "timestampValue", "booleanValue", "integerValue", "doubleValue"):
+        if k in f: return f[k]
+    return None
+
+def member_active(uid):
+    try:
+        d = fs_get("members/" + uid).get("fields", {})
+    except Exception as e:
+        print("cek member", uid[:6], "gagal:", e); return False
+    if fval(d.get("status")) != "active": return False
+    until = fval(d.get("until"))
+    if until:
+        try:
+            t = time.mktime(time.strptime(until[:19], "%Y-%m-%dT%H:%M:%S")) - time.timezone
+            if t <= time.time(): return False
+        except Exception: pass
+    return True
+
+def push(title, body, tag="dfx-sinyal"):
+    if not VAPID_PRIVATE:
+        print("[PUSH TIDAK TERKIRIM - VAPID_PRIVATE_KEY belum diisi]", title); return
+    try:
+        from pywebpush import webpush, WebPushException
+    except ImportError:
+        print("pywebpush belum terpasang"); return
+    try:
+        docs, page = [], ""
+        while True:
+            j = fs_get("push?pageSize=300" + (f"&pageToken={page}" if page else ""))
+            docs += j.get("documents", []); page = j.get("nextPageToken", "")
+            if not page: break
+    except Exception as e:
+        print("ambil daftar langganan gagal:", e); return
+    payload = json.dumps({"title": title, "body": body, "tag": tag, "url": "/#analisa"})
+    sent = 0
+    for doc in docs:
+        uid = doc["name"].rsplit("/", 1)[-1]
+        if not member_active(uid): continue
+        try:
+            sub = json.loads(fval(doc.get("fields", {}).get("sub")) or "{}")
+            webpush(subscription_info=sub, data=payload, vapid_private_key=VAPID_PRIVATE,
+                    vapid_claims={"sub": VAPID_SUB}, ttl=1800)
+            sent += 1
+        except WebPushException as e:
+            code = getattr(e.response, "status_code", 0)
+            print("push gagal", uid[:6], code)
+            if code in (404, 410): fs_delete("push/" + uid)
+        except Exception as e:
+            print("push gagal", uid[:6], e)
+    print(f"push terkirim ke {sent} HP member")
+
+
+def plain(text):
+    return re.sub(r"<[^>]+>", "", text)
+
 def send(text):
+    lines = [l for l in plain(text).split("\n") if l.strip()]
+    push(lines[0], "\n".join(lines[1:5]), tag="dfx-" + ("pre" if "SIAP" in lines[0] else "sig"))
+    if USE_TELEGRAM:
+        send_tg(text)
+
+def send_tg(text):
     if not TOKEN or not CHAT:
         print("[TIDAK TERKIRIM - token/chat id kosong]\n" + text)
         return
@@ -294,6 +404,6 @@ if __name__ == "__main__":
             print("ISI TELEGRAM_CHAT_ID DENGAN SALAH SATU INI:")
             for k, v in found.items(): print(f"  {k}   ->  {v}")
     elif MODE == "test":
-        send("✅ <b>Bot DirmuFX aktif.</b>\nSinyal XAUUSD (M5 scalping & M15 intraday) akan dikirim ke sini otomatis.")
+        push("Tes notifikasi DirmuFX ✅", "Kalau ini muncul, notifikasi sinyal ke HP sudah jalan.", tag="dfx-tes")
     else:
         run()
