@@ -851,6 +851,28 @@ footer .clublogo{height:22px}
 /* Signal Room: hanya kartu sinyal ke bawah */
 html #app #v-analisa #mkpick,html #app #v-analisa #pxHero,html #app #v-analisa .sghide,html #app #v-analisa .chartcard,html #app #v-analisa #indCard,html #app #v-analisa #trendCard,html #app #v-analisa #tfrow{display:none!important}
 </style>
+<style>
+html #app .tkhero{display:grid;grid-template-columns:minmax(0,1fr) 104px;align-items:center;gap:10px;background:#e4f0ea;border-radius:24px;padding:20px 18px;margin:0 0 12px}
+html #app .tkhero .tkey{font:600 10.5px Inter,system-ui,sans-serif;letter-spacing:.2em;color:#1f7a5a}
+html #app .tkhero h2{font:600 23px/1.1 "Inter Tight",Inter,system-ui,sans-serif!important;letter-spacing:-.03em;margin:8px 0;color:#1d2b26}
+html #app .tkhero p{margin:0;font-size:12.5px;line-height:1.5;color:#4d5f57}
+html #app .tkhero img{width:104px;height:auto;transform:rotate(-6deg);filter:drop-shadow(0 10px 14px rgba(20,60,45,.2))}
+html #app .tktabs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin:0 0 14px}
+html #app .tktabs button{border:0;border-radius:14px;padding:11px 4px;background:#e8f0ec;color:#1f5f47;font:600 13px Inter,system-ui,sans-serif;cursor:pointer}
+html #app .tktabs button[aria-selected="true"]{background:#1f7a5a;color:#fff}
+html #app .tkhd{margin:2px 0 10px}html #app .tkhd span{font:500 11px Inter,system-ui,sans-serif;letter-spacing:.12em;color:#5f6f68}
+html #app .tkhd h3{font:600 20px "Inter Tight",Inter,system-ui,sans-serif;letter-spacing:-.02em;margin:4px 0 0;color:#1d2b26}
+html #app .tkcard{display:block;background:#fff;border:1px solid #dae6e0;border-radius:18px;padding:14px 16px;margin:0 0 10px;text-decoration:none;color:#1d2b26}
+html #app .tkcard h4{font:600 14.5px/1.35 Inter,system-ui,sans-serif;margin:6px 0 4px}
+html #app .tkcard p{margin:0;font-size:13px;line-height:1.55;color:#4d5f57}
+html #app .tkmeta{display:flex;gap:8px;align-items:center;font-size:11.5px;color:#5f6f68}html #app .tkmeta b{background:#e8f0ec;color:#1f5f47;border-radius:99px;padding:2px 8px;font-weight:600}
+html #app .tkrow{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:0 0 6px}html #app .tkrow b{font-size:14px}
+html #app .tkline{padding:8px 0;margin:0;border-top:1px solid #eef3f0}html #app .tkline:first-of-type{border-top:0}
+html #app .tkbias{flex:none;font-size:11.5px;font-weight:600;border-radius:99px;padding:3px 9px}
+html #app .tkbias.up{background:#dff1e8;color:#17694c}html #app .tkbias.dn{background:#fbe3df;color:#a63a32}html #app .tkbias.nt{background:#f6edd6;color:#8a6414}
+html #app .tkol{margin:4px 0 0;padding-left:18px;font-size:13px;line-height:1.55;color:#4d5f57}html #app .tkol li{margin:4px 0}
+html #app .tkmore{display:block;text-align:center;background:#1f7a5a;color:#fff;border-radius:14px;padding:12px;font-weight:600;text-decoration:none;font-size:14px}
+</style>
 </head>
 <body>
 <div id="landing">
@@ -1593,6 +1615,9 @@ html #app #v-analisa #mkpick,html #app #v-analisa #pxHero,html #app #v-analisa .
 
   <!-- KALENDER -->
   <section class="view" id="v-kalender" hidden>
+    <div class="tkhero"><div><span class="tkey">TERMINAL DIRMUFX</span><h2>Pantau pasar.<br>Baca konteksnya.</h2><p>Kalender, berita, makro, dan sentimen untuk menemani analisamu.</p></div><img src="logo-club-bulat.png?v=2" alt=""></div>
+    <div class="tktabs" id="tkTabs" role="tablist"><button type="button" data-t="kal" aria-selected="true">Kalender</button><button type="button" data-t="ber" aria-selected="false">Berita</button><button type="button" data-t="mak" aria-selected="false">Makro</button><button type="button" data-t="sen" aria-selected="false">Sentimen</button></div>
+    <div class="tkpane" id="tk-kal">
     <div class="nextcard" id="calNext"></div>
     <div class="card calcard">
       <div class="ffbar">
@@ -1605,6 +1630,10 @@ html #app #v-analisa #mkpick,html #app #v-analisa #pxHero,html #app #v-analisa .
       <div class="calsrc" id="calSrc"></div>
     </div>
     <p class="note" style="margin:0 4px">Jam mengikuti zona waktu HP kamu. Merah = dampak tinggi, oranye = sedang, kuning = rendah. Hindari entry 30 menit sebelum dan sesudah berita merah.</p>
+  </div>
+    <div class="tkpane" id="tk-ber" hidden><div class="tkhd"><span>Diperbarui pagi &amp; sore</span><h3>Berita Pasar</h3></div><div id="tkBer"><p class="note">Memuat berita…</p></div></div>
+    <div class="tkpane" id="tk-mak" hidden><div class="tkhd"><span id="tkMakWeek">Riset mingguan</span><h3>Makro Global</h3></div><div id="tkMak"><p class="note">Memuat…</p></div></div>
+    <div class="tkpane" id="tk-sen" hidden><div class="tkhd"><span id="tkSenDate">Hari ini</span><h3>Sentimen per Pair</h3></div><div id="tkSen"><p class="note">Memuat…</p></div></div>
   </section>
 
   <!-- FUNDAMENTAL -->
@@ -2733,6 +2762,25 @@ function mountBigChart(){const box=$("bigChart");if(!box)return;const key=BC.sym
       "mainSeriesProperties.candleStyle.upColor":"#1f8a5a","mainSeriesProperties.candleStyle.downColor":"#c4473f","mainSeriesProperties.candleStyle.borderUpColor":"#1f8a5a","mainSeriesProperties.candleStyle.borderDownColor":"#c4473f",
       "mainSeriesProperties.candleStyle.wickUpColor":"#1f8a5a","mainSeriesProperties.candleStyle.wickDownColor":"#c4473f"}})})
   .catch(()=>{box.innerHTML='<p class="note" style="padding:16px">Chart gagal dimuat. Cek koneksi lalu buka lagi.</p>'})}
+
+/* ================= Terminal (Kalender / Berita / Makro / Sentimen) ================= */
+(function(){const tabs=$("tkTabs");if(!tabs)return;let fund=null,mak=null;
+  const esc=t=>String(t==null?"":t).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+  const col=c=>c==="up"?"up":c==="down"?"dn":"nt";
+  async function getFund(){if(fund)return fund;fund=await (await fetch("data/fundamental.json?t="+Date.now())).json();return fund}
+  async function getMak(){if(mak)return mak;mak=await (await fetch("data/makro.json?t="+Date.now())).json();return mak}
+  async function ber(){try{const d=await getFund();$("tkBer").innerHTML=(d.news||[]).map(n=>`<a class="tkcard" href="${esc(n[4]||"#")}" target="_blank" rel="noopener"><div class="tkmeta"><span>${esc(n[0])}</span><b>${esc(n[2])}</b></div><h4>${esc(n[1])}</h4><p>${esc(n[3])}</p></a>`).join("")||'<p class="note">Belum ada berita.</p>'}catch(e){$("tkBer").innerHTML='<p class="note">Berita gagal dimuat.</p>'}}
+  async function sen(){try{const d=await getFund();$("tkSenDate").textContent="Diperbarui "+(d.date||"");const m=d.markets||{};
+    $("tkSen").innerHTML=Object.keys(m).map(k=>{const x=m[k];return `<div class="tkcard"><div class="tkrow"><b>${esc(k)}</b><span class="tkbias ${col(x.col)}">${esc(x.bias)}</span></div><p>${esc(x.sum)}</p></div>`}).join("")}catch(e){$("tkSen").innerHTML='<p class="note">Sentimen gagal dimuat.</p>'}}
+  async function makro(){try{const d=await getMak();$("tkMakWeek").textContent=d.week||"Riset mingguan";
+    $("tkMak").innerHTML=`<div class="tkcard"><div class="tkrow"><b>${esc(d.regime&&d.regime.label)}</b><span class="tkbias ${col(d.regime&&d.regime.col)}">${esc(d.risk&&d.risk.label)}</span></div><p>${esc(d.regime&&d.regime.desc)}</p></div>
+      <div class="tkcard"><h4>Minggu ini dalam 30 detik</h4><ol class="tkol">${(d.summary||[]).map(x=>`<li>${esc(x)}</li>`).join("")}</ol></div>
+      <div class="tkcard"><h4>Dampak ke pasar</h4>${(d.assets||[]).map(a=>`<div class="tkrow tkline"><b>${esc(a[0])}</b><span class="tkbias ${col(a[1])}">${esc(a[2])}</span></div>`).join("")}</div>
+      <a class="tkmore" href="makro.html">Baca riset makro lengkap ›</a>`}catch(e){$("tkMak").innerHTML='<p class="note">Makro gagal dimuat.</p>'}}
+  const RUN={ber,sen,mak:makro};
+  tabs.onclick=e=>{const b=e.target.closest("button");if(!b)return;const t=b.dataset.t;
+    [...tabs.children].forEach(x=>x.setAttribute("aria-selected",x===b));["kal","ber","mak","sen"].forEach(k=>$("tk-"+k).hidden=k!==t);if(RUN[t])RUN[t]()};
+})();
 /* ================= fundamentals (manual snapshot) ================= */
 let FUND_DATE="Diperbarui 22 Nov 2026",FUND_NEWS=[];
 let FUND_MACRO=[["Suku bunga Fed","3,75–4,00%","Naik 25 bp di September, ditahan di Oktober"],["Peluang Fed naik 9 Des","± 91–95%","Menurut harga pasar berjangka"],["Inflasi PCE","3,6%","Masih jauh di atas target 2%"],["CPI Oktober","+0,4% m/m","Inti +0,3%"],["Tenaga kerja (NFP) Okt","+165 ribu","Lebih kuat dari perkiraan"],["Yield obligasi AS 10 th","± 5,0%","Tertinggi dalam beberapa tahun"],["Indeks dolar (DXY)","± 103,5","Tertinggi 19 bulan"],["Minyak Brent","± $92","Turun dari ± $117 awal November"]];
@@ -3572,7 +3620,7 @@ html #app .bcbox{height:calc(100vh - 330px - env(safe-area-inset-bottom,0px));mi
 </style>
 
 <script>
-(function(){const T={analisa:"Signal Room",chart:"Chart",kalender:"Kalender Berita",fundamental:"Fundamental",member:"Gabung Member"};
+(function(){const T={analisa:"Signal Room",chart:"Chart",kalender:"Terminal",fundamental:"Fundamental",member:"Gabung Member"};
   function up(){const h=decodeURIComponent(location.hash.slice(1));const t=document.getElementById("pgTitle");if(t&&T[h])t.textContent=T[h];
     document.querySelectorAll("#app .abnav a").forEach(a=>a.classList.toggle("on",a.dataset.k===h))}
   window.addEventListener("hashchange",up);up();
