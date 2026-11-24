@@ -847,6 +847,10 @@ html #landing .nav .logo .clublogo{height:22px}
 html #app .tlogo{display:flex;align-items:center}html #app .tlogo .clublogo{height:20px}
 footer .clublogo{height:22px}
 </style>
+<style>
+/* Signal Room: hanya kartu sinyal ke bawah */
+html #app #v-analisa #mkpick,html #app #v-analisa #pxHero,html #app #v-analisa .sghide,html #app #v-analisa .chartcard,html #app #v-analisa #indCard,html #app #v-analisa #trendCard,html #app #v-analisa #tfrow{display:none!important}
+</style>
 </head>
 <body>
 <div id="landing">
@@ -1441,7 +1445,7 @@ footer .clublogo{height:22px}
         <div class="pxrow"><span class="pxbig" id="pxBig">—</span><span class="pxchg" id="pxChg"></span></div></div>
       <canvas class="pxspark" id="pxSpark" width="240" height="90"></canvas>
     </div>
-    <div class="card">
+    <div class="card sghide">
       <div class="srcbar">
         <span class="chip sim" id="srcchip">Demo</span>
         <span class="status" id="status"></span>
@@ -1494,7 +1498,7 @@ footer .clublogo{height:22px}
             <div class="indlock" id="indLock" hidden><b>🔒 Indikator SMC Pro + Session Pro</b><span>Gratis untuk member VIP, atau beli sekali Rp1.000.000.</span><a class="btn primary" href="indikator.html">Lihat & aktifkan</a></div></div>
           <p class="note" style="margin:8px 0 0">Mengikuti timeframe yang dipilih di atas. Kotak sesi tampil di M5–H1, jam WITA. Data dari sumber yang sama dengan sinyal, bisa sedikit berbeda dari broker.</p>
         </div>
-        <div class="pushbox" style="margin:0 0 14px" id="pushBox"><div><b>🔔 Notifikasi sinyal ke HP</b><span id="pushMsg">Muncul di layar kunci walau web tidak dibuka. Khusus member aktif.</span></div><button class="btn primary" id="pushBtn" type="button">Aktifkan</button></div>
+        
         <div class="card" id="trendCard">
           <div class="row" style="justify-content:space-between;margin-bottom:10px;gap:8px"><h2 style="margin:0">Matriks tren</h2><span class="small muted" id="trendSum"></span></div>
           <div class="tmx" id="mtf"></div>
@@ -1571,6 +1575,7 @@ footer .clublogo{height:22px}
           <div class="row" style="margin-bottom:10px"><button class="btn primary" id="aiBtn">Minta analisa AI</button><span class="small muted" id="aiState"></span></div>
           <div class="ai-out" id="aiOut"></div>
         </div>
+        <div class="pushbox" style="margin:14px 0" id="pushBox"><div><b>🔔 Notifikasi sinyal ke HP</b><span id="pushMsg">Muncul di layar kunci walau web tidak dibuka. Khusus member aktif.</span></div><button class="btn primary" id="pushBtn" type="button">Aktifkan</button></div>
         <p class="disc">Sinyal dihitung otomatis dari gabungan beberapa indikator teknikal. Ini alat bantu analisa, bukan saran keuangan dan bukan jaminan profit. Harga dari penyedia data bisa sedikit berbeda dengan broker kamu. Selalu pakai stop loss.</p>
       </div>
     </div>
