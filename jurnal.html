@@ -8,7 +8,7 @@
 <meta property="og:title" content="Jurnal Trading DirmuFX (gratis)">
 <meta property="og:description" content="Catat trade, lihat win rate & kebiasaan yang bikin rugi. Gratis, langsung dari HP.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Inter+Tight:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
 <style>
 :root{--bg:#141714;--panel:#1c201c;--panel2:#242924;--line:#2c322c;--fg:#eef0e8;--muted:#a6ad9f;--blue:#5b9cf5;--up:#3fbf7f;--down:#e5484d;--amber:#e3b85c;--brand:#63d297;
  --f:"Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",sans-serif;color-scheme:dark}
@@ -17,14 +17,14 @@ html{-webkit-text-size-adjust:100%}
 body{margin:0;background:radial-gradient(900px 500px at 90% -10%,rgba(91,156,245,.09),transparent 60%),var(--bg);color:var(--fg);font-family:var(--f);font-size:15.5px;line-height:1.6;font-feature-settings:"tnum" 1;min-height:100vh}
 a{color:var(--blue)}
 button,input,select,textarea{font:inherit;color:inherit}
-.top{position:sticky;top:0;z-index:20;background:rgba(12,14,12,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.top{position:sticky;top:0;z-index:20;background:rgba(255,255,255,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
 .top .in{max-width:760px;margin:0 auto;display:flex;align-items:center;gap:10px;padding:10px 16px}
 .back{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border:1px solid var(--line);border-radius:12px;background:var(--panel);color:var(--fg);text-decoration:none}
 .brand{display:flex;align-items:center;gap:8px;flex:1;min-width:0;text-decoration:none;color:var(--fg);font-weight:800;font-size:16.5px;white-space:nowrap}
 .brand svg{width:26px;height:auto;flex:none}.brand i{font-style:normal;color:var(--brand)}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:1px solid var(--line);background:var(--panel2);border-radius:12px;padding:10px 14px;font-weight:700;font-size:14.5px;cursor:pointer;text-decoration:none;color:var(--fg);white-space:nowrap}
 .btn.pri{background:var(--brand);border-color:var(--brand);color:#06261b}
-.btn.blue{background:#2f6fd0;border-color:#2f6fd0;color:#fff}
+.btn.blue{background:#1f7a5a;border-color:#2f6fd0;color:#fff}
 .btn.sm{padding:7px 11px;font-size:13px;border-radius:10px}
 .wrap{max-width:760px;margin:0 auto;padding:18px 16px 110px}
 h1{font-size:27px;line-height:1.2;margin:4px 0 6px;letter-spacing:-.01em}
@@ -33,7 +33,7 @@ h1{font-size:27px;line-height:1.2;margin:4px 0 6px;letter-spacing:-.01em}
 .card h2{font-size:15px;color:var(--blue);margin:0 0 10px;font-weight:700}
 .seg{display:flex;gap:4px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:4px;margin:0 0 14px}
 .seg button{flex:1;border:0;background:none;border-radius:9px;padding:9px 4px;font-weight:600;color:var(--muted);cursor:pointer;font-size:14px}
-.seg button[aria-pressed="true"]{background:#2f6fd0;color:#fff}
+.seg button[aria-pressed="true"]{background:#1f7a5a;color:#fff}
 .kpi{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
 .kpi>div{background:var(--panel2);border-radius:12px;padding:10px 12px;line-height:1.3}
 .kpi .k{font-size:12.5px;color:var(--muted)}.kpi .v{font-size:21px;font-weight:800;margin-top:3px}
@@ -44,7 +44,7 @@ h1{font-size:27px;line-height:1.2;margin:4px 0 6px;letter-spacing:-.01em}
 canvas{display:block;width:100%}
 .guard{border-radius:14px;padding:12px 14px;margin:0 0 14px;font-size:14.5px;line-height:1.5;border:1px solid var(--line);background:var(--panel)}
 .guard b{display:block;font-size:15px}
-.guard.ok{border-color:#1f4d36;background:#14251b}.guard.warn{border-color:#5c4a1f;background:#241f12}.guard.stop{border-color:#6b2b2e;background:#2a1517}
+.guard.ok{border-color:#bee5d1;background:#e8f2ec}.guard.warn{border-color:#e8daba;background:#f3f0e7}.guard.stop{border-color:#e5bebf;background:#f3e7e8}
 .bars{display:grid;gap:9px}
 .bar .l{display:flex;justify-content:space-between;font-size:13.5px;gap:8px}
 .bar .t{height:7px;border-radius:99px;background:var(--panel2);overflow:hidden;margin-top:4px}
@@ -61,12 +61,12 @@ canvas{display:block;width:100%}
 .empty{text-align:center;color:var(--muted);padding:26px 10px;font-size:14.5px}
 .promo{display:grid;gap:10px}
 .promo a{display:flex;gap:12px;align-items:center;text-decoration:none;color:var(--fg);background:var(--panel2);border:1px solid var(--line);border-radius:14px;padding:12px}
-.promo .ic{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;font-size:21px;flex:none;background:#1d2a3d}
+.promo .ic{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;font-size:21px;flex:none;background:#e3ecfa}
 .promo b{display:block;font-size:15px}.promo span{color:var(--muted);font-size:13px;line-height:1.4}
-.fab{position:fixed;left:50%;transform:translateX(-50%);bottom:max(18px,env(safe-area-inset-bottom));z-index:30;box-shadow:0 10px 30px rgba(0,0,0,.45);padding:14px 22px;font-size:16px;border-radius:99px}
+.fab{position:fixed;left:50%;transform:translateX(-50%);bottom:max(18px,env(safe-area-inset-bottom));z-index:30;box-shadow:0 10px 30px rgba(20,50,40,0.1);padding:14px 22px;font-size:16px;border-radius:99px}
 .sheet{position:fixed;inset:0;z-index:50;display:none}
 .sheet.on{display:block}
-.sheet .bg{position:absolute;inset:0;background:rgba(0,0,0,.6)}
+.sheet .bg{position:absolute;inset:0;background:rgba(255,255,255,0.9)}
 .sheet .box{position:absolute;left:0;right:0;bottom:0;max-height:92vh;overflow:auto;background:var(--panel);border-top-left-radius:20px;border-top-right-radius:20px;border-top:1px solid var(--line);padding:16px 16px max(18px,env(safe-area-inset-bottom));max-width:760px;margin:0 auto}
 .sheet h3{margin:0 0 12px;font-size:18px;display:flex;justify-content:space-between;align-items:center}
 .x{border:0;background:var(--panel2);width:34px;height:34px;border-radius:10px;font-size:18px;cursor:pointer}
@@ -82,12 +82,13 @@ canvas{display:block;width:100%}
 .dirsel button[aria-pressed="true"][data-v="SELL"]{background:var(--down);border-color:var(--down);color:#fff}
 .chips{display:flex;flex-wrap:wrap;gap:6px}
 .chips button{border:1px solid var(--line);background:var(--bg);border-radius:99px;padding:6px 11px;font-size:13.5px;font-weight:600;cursor:pointer;color:var(--muted)}
-.chips button[aria-pressed="true"]{background:#1d2a3d;border-color:#2f6fd0;color:#fff}
+.chips button[aria-pressed="true"]{background:#e3ecfa;border-color:#2f6fd0;color:#1d2b26}
 .hint{font-size:12.5px;color:var(--muted);margin:2px 0 0}
 .acts{display:flex;gap:8px;margin-top:14px}.acts .btn{flex:1}
 .row{display:flex;gap:8px;flex-wrap:wrap}
 .foot{color:var(--muted);font-size:12.5px;text-align:center;margin-top:22px;line-height:1.6}
 </style>
+<link rel="stylesheet" href="tema.css">
 </head>
 <body>
 <header class="top"><div class="in">

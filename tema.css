@@ -1,0 +1,15 @@
+/* ===== Tema terang DirmuFX (dipakai semua halaman) ===== */
+:root{--bg:#f3f7f5;--bg2:#e8f0ec;--panel:#ffffff;--panel2:#eef4f1;--line:#dae6e0;--fg:#1d2b26;--muted:#5f6f68;
+ --gold:#1f7a5a;--gold-hi:#2f9a72;--gold-lo:#17604a;--gold-dim:#bfe0d1;--up:#1f8a5a;--up-dim:#dff1e8;--down:#c4473f;--down-dim:#fbe3df;
+ --blue:#1f7a5a;--brand:#1f7a5a;--amber:#b07a1a;--violet:#3a66b0;--violet-dim:#e3ecfa;
+ /* kantor */--card:#ffffff;--ink:#1d2b26;--mute:#5f6f68;--green:#1f8a5a;--red:#c4473f;
+ --f:"Inter",system-ui,-apple-system,sans-serif;--f-display:"Inter Tight","Inter",system-ui,sans-serif;--f-body:"Inter",system-ui,-apple-system,sans-serif;--f-mono:"Inter",system-ui,sans-serif;
+ color-scheme:light}
+html,body{background:#f3f7f5!important;color:#1d2b26}
+body,body button,body input,body select,body textarea{font-family:"Inter",system-ui,-apple-system,sans-serif!important}
+body h1,body h2,body h3{font-family:"Inter Tight","Inter",system-ui,sans-serif!important;letter-spacing:-.025em}
+body h1{font-weight:600!important}
+/* logo DirmuFX: lilin putih jadi gelap, garis hijau jadi toska */
+svg g[fill="#fff"]{fill:#1d2b26}
+svg path[stroke="#63d297"]{stroke:#1f7a5a}
+svg g[fill="#63d297"]{fill:#1f7a5a}

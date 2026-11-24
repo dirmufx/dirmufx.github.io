@@ -6,20 +6,20 @@
 <meta name="robots" content="noindex">
 <title>Admin Member · DirmuFX</title>
 <script src="dfx-config.js"></script>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Inter+Tight:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
 <style>
 :root{--bg:#141714;--bg2:#181c18;--panel:#1c201c;--panel2:#242924;--line:#2c322c;--fg:#eef0e8;--muted:#a6ad9f;--gold:#5b9cf5;--up:#66cf92;--up-dim:#163a27;--down:#e86a64;color-scheme:dark}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--fg);font-family:"Plus Jakarta Sans",system-ui,sans-serif;font-size:15px;line-height:1.5}
 .w{max-width:760px;margin:0 auto;padding:22px max(16px,env(safe-area-inset-left,0px)) 40px}
 h1{font-family:"Plus Jakarta Sans",sans-serif;font-size:24px;margin:0}
-h1 i{font-style:normal;color:#63d297}
+h1 i{font-style:normal;color:#1f7a5a}
 .top{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:16px}
 .muted{color:var(--muted);font-size:13.5px}
 .btn{font:inherit;font-weight:600;font-size:14px;border-radius:10px;padding:9px 14px;border:1px solid var(--line);background:var(--panel2);color:var(--fg);cursor:pointer}
 .btn.gold{background:var(--up);color:#06261b;border:0}
-.btn.ok{background:var(--up-dim);color:var(--up);border-color:#1d5c46}
-.btn.no{background:#2a1418;color:var(--down);border-color:#5a2530}
+.btn.ok{background:var(--up-dim);color:var(--up);border-color:#17604a}
+.btn.no{background:#f3e7e9;color:var(--down);border-color:#e4bec6}
 .box{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:18px}
 input{width:100%;font:inherit;color:var(--fg);background:var(--bg2);border:1px solid var(--line);border-radius:10px;padding:11px 12px;margin-top:8px}
 .tabs{display:flex;gap:6px;overflow-x:auto;margin:14px 0 10px}
@@ -27,12 +27,12 @@ input{width:100%;font:inherit;color:var(--fg);background:var(--bg2);border:1px s
 .m{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px;margin-top:10px;display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}
 .m b{font-size:15px}.m .mt5{font-family:"Plus Jakarta Sans",sans-serif;color:var(--gold);font-size:14px}
 .st{font-size:12px;font-weight:600;border-radius:999px;padding:3px 10px;margin-left:6px}
-.st.pending{background:#14233a;color:var(--gold)}.st.active{background:var(--up-dim);color:var(--up)}.st.inactive{background:#3d1820;color:var(--down)}
+.st.pending{background:#e3ecfa;color:var(--gold)}.st.active{background:var(--up-dim);color:var(--up)}.st.inactive{background:#f5e5e9;color:var(--down)}
 .acts{display:flex;gap:6px}
 .err{color:var(--down)}
 select,textarea{font:inherit;color:var(--fg);background:var(--bg2);border:1px solid var(--line);border-radius:10px;padding:9px 10px}
 textarea{width:100%;min-height:110px;margin-top:8px;resize:vertical}
-.st.expired{background:#3d1820;color:var(--down)}
+.st.expired{background:#f5e5e9;color:var(--down)}
 .meta{font-size:13px;color:var(--muted);margin-top:2px}
 .acts{flex-wrap:wrap;align-items:center}
 .grid4{display:grid;grid-template-columns:1fr 1fr;gap:8px}
@@ -42,6 +42,7 @@ textarea{width:100%;min-height:110px;margin-top:8px;resize:vertical}
 .stats div{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:10px;text-align:center}
 .stats b{display:block;font-family:"Plus Jakarta Sans",sans-serif;font-size:22px}
 </style>
+<link rel="stylesheet" href="tema.css">
 </head>
 <body>
 <div class="w">

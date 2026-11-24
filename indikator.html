@@ -7,7 +7,7 @@
 <meta name="description" content="Indikator DirmuFX SMC dan Session Pro v2: struktur pasar, order block, FVG, kotak sesi, dan liquidity sweep langsung di chart Signal Room.">
 <script src="dfx-config.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Inter+Tight:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
 <style>
 :root{--bg:#141714;--bg2:#181c18;--panel:#1c201c;--panel2:#242924;--line:#2c322c;--fg:#eef0e8;--muted:#a6ad9f;--gold:#5b9cf5;--gold-hi:#8dbbff;--gold-lo:#3f80dc;--up:#66cf92;--up-dim:#163a27;--down:#e86a64;
  --f-display:"Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",sans-serif;--f-body:"Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",sans-serif;--f-mono:"Plus Jakarta Sans",system-ui,sans-serif;color-scheme:dark}
@@ -15,23 +15,23 @@
 html{-webkit-text-size-adjust:100%}
 body{margin:0;background:radial-gradient(900px 500px at 90% -10%,rgba(91,156,245,.10),transparent 60%),var(--bg);font-feature-settings:"tnum" 1;color:var(--fg);font-family:var(--f-body);font-size:16px;line-height:1.65;min-height:100vh}
 a{color:var(--gold)}
-.top{position:sticky;top:0;z-index:20;background:rgba(10,10,12,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.top{position:sticky;top:0;z-index:20;background:rgba(255,255,255,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
 .top .in{max-width:760px;margin:0 auto;display:flex;align-items:center;gap:10px;padding:10px max(16px,env(safe-area-inset-left,0px))}
 .back{display:inline-flex;align-items:center;gap:6px;text-decoration:none;color:var(--fg);font-weight:600;font-size:14px;border:1px solid var(--line);border-radius:12px;padding:7px 12px;background:var(--panel)}
 .brand{display:flex;align-items:center;gap:8px;flex:1;min-width:0;text-decoration:none;color:var(--fg)}
 .brand svg{width:26px;height:auto;flex:none}
 .brand b{font-family:var(--f-display);font-size:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 @media(max-width:430px){.back span{display:none}.back{padding:7px 9px}}
-.brand b i{font-style:normal;color:#63d297}
-.pill{font-family:var(--f-display);font-size:11px;font-weight:700;letter-spacing:.06em;border-radius:99px;padding:4px 10px;border:1px solid #2a4670;color:var(--gold);background:#121c2b;text-decoration:none;white-space:nowrap}
-.pill.ok{border-color:#1d5c46;color:var(--up);background:var(--up-dim)}
+.brand b i{font-style:normal;color:#1f7a5a}
+.pill{font-family:var(--f-display);font-size:11px;font-weight:700;letter-spacing:.06em;border-radius:99px;padding:4px 10px;border:1px solid #bfd2ef;color:var(--gold);background:#e3ecfa;text-decoration:none;white-space:nowrap}
+.pill.ok{border-color:#17604a;color:var(--up);background:var(--up-dim)}
 .wrap{max-width:760px;margin:0 auto;padding:22px max(16px,env(safe-area-inset-left,0px)) 80px}
 .hero h1{font-family:var(--f-display);font-size:30px;line-height:1.15;margin:6px 0 10px}
 .hero h1 em{font-style:normal;color:var(--gold)}
 .eyb{font-family:var(--f-display);font-size:12px;font-weight:700;letter-spacing:.22em;color:var(--up)}
 .lead{color:var(--muted);margin:0}
 .stats{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
-.stats span{font-size:13px;border:1px solid var(--line);border-radius:99px;padding:5px 12px;background:var(--panel);color:#c9c3b6}
+.stats span{font-size:13px;border:1px solid var(--line);border-radius:99px;padding:5px 12px;background:var(--panel);color:#5f6f68}
 .lvl{margin-top:30px}
 .lvh{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:10px}
 .lvh h2{font-family:var(--f-display);font-size:20px;margin:0}
@@ -41,7 +41,7 @@ a{color:var(--gold)}
 .card{display:flex;gap:14px;align-items:center;text-decoration:none;color:var(--fg);background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:14px;margin-top:8px}
 .card:active{background:var(--panel2)}
 .num{width:38px;height:38px;border-radius:12px;flex:none;display:grid;place-items:center;font-family:var(--f-display);font-weight:700;background:var(--panel2);border:1px solid var(--line);color:var(--gold)}
-.card.done .num{background:var(--up-dim);color:var(--up);border-color:#1d5c46}
+.card.done .num{background:var(--up-dim);color:var(--up);border-color:#17604a}
 .card h3{margin:0;font-size:15.5px;line-height:1.35}
 .card p{margin:2px 0 0;font-size:13px;color:var(--muted);line-height:1.45}
 .card .mt{flex:1;min-width:0}
@@ -53,24 +53,24 @@ a{color:var(--gold)}
 .lt{font-family:var(--f-display);font-size:27px;line-height:1.2;margin:8px 0 6px}
 .meta{display:flex;gap:8px;flex-wrap:wrap;align-items:center;font-size:13px;color:var(--muted);margin-bottom:18px}
 .body h3{font-family:var(--f-display);font-size:19px;margin:26px 0 8px;color:var(--fg)}
-.body p{margin:0 0 12px;color:#dcd7cc}
-.body ul,.body ol{margin:0 0 14px;padding-left:22px;color:#dcd7cc}
+.body p{margin:0 0 12px;color:#3f4d47}
+.body ul,.body ol{margin:0 0 14px;padding-left:22px;color:#3f4d47}
 .body li{margin:4px 0}
 .body b{color:var(--fg)}
-.body .k{font-family:var(--f-mono);font-size:14px;color:var(--gold-hi);background:#121c2b;border-radius:6px;padding:1px 6px}
+.body .k{font-family:var(--f-mono);font-size:14px;color:var(--gold-hi);background:#e3ecfa;border-radius:6px;padding:1px 6px}
 .fig{margin:16px 0 18px;background:var(--bg2);border:1px solid var(--line);border-radius:16px;padding:10px;overflow:hidden}
 .fig svg{display:block;width:100%;height:auto}
 .fig figcaption{font-size:12.5px;color:var(--muted);padding:8px 4px 2px;line-height:1.45}
 .box{border-radius:14px;padding:12px 14px;margin:14px 0;font-size:14.5px;line-height:1.55}
-.box.tip{background:var(--up-dim);border:1px solid #1d5c46;color:#cdeee0}
-.box.warn{background:#2a1418;border:1px solid #5a2530;color:#f3c9cf}
-.box.note{background:#121c2b;border:1px solid #2a4670;color:#cfe0ff}
+.box.tip{background:var(--up-dim);border:1px solid #bae8d8;color:#1f7a5a}
+.box.warn{background:#f3e7e9;border:1px solid #e4bec6;color:#9f2335}
+.box.note{background:#e3ecfa;border:1px solid #bfd2ef;color:#2f5fa8}
 .box b{color:inherit}
 .tbl{width:100%;border-collapse:collapse;margin:8px 0 16px;font-size:14px}
 .tblw{overflow-x:auto;-webkit-overflow-scrolling:touch}
 .tbl th,.tbl td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top}
 .tbl th{font-family:var(--f-display);font-size:12px;letter-spacing:.08em;color:var(--muted);font-weight:600}
-.tbl td{color:#dcd7cc}
+.tbl td{color:#3f4d47}
 /* quiz */
 .quiz{margin-top:28px;background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:18px}
 .quiz h3{font-family:var(--f-display);font-size:18px;margin:0 0 4px}
@@ -78,10 +78,10 @@ a{color:var(--gold)}
 .qq .q{font-weight:600;margin-bottom:8px}
 .opt{display:block;width:100%;text-align:left;font:inherit;font-size:15px;color:var(--fg);background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:11px 13px;margin-top:7px;cursor:pointer}
 .opt.right{border-color:var(--up);background:var(--up-dim)}
-.opt.wrong{border-color:var(--down);background:#2a1418}
+.opt.wrong{border-color:var(--down);background:#f3e7e9}
 .opt:disabled{cursor:default}
-.exp{font-size:14px;margin-top:8px;color:#cdeee0}
-.exp.bad{color:#f3c9cf}
+.exp{font-size:14px;margin-top:8px;color:#1f7a5a}
+.exp.bad{color:#9f2335}
 .score{margin-top:16px;font-weight:700;font-family:var(--f-display)}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;font:inherit;font-weight:700;font-size:15px;border-radius:14px;padding:12px 16px;cursor:pointer;border:1px solid var(--line);background:var(--panel2);color:var(--fg);text-decoration:none}
 .btn.gold{background:var(--up);color:#06261b;border:0}
@@ -92,7 +92,7 @@ a{color:var(--gold)}
 .nav2 a.r{text-align:right}
 .lockc{position:relative;margin-top:6px}
 .lockc .fade{max-height:170px;overflow:hidden;-webkit-mask-image:linear-gradient(#000 30%,transparent);mask-image:linear-gradient(#000 30%,transparent)}
-.lockcard{background:linear-gradient(160deg,#0f1a2a,#131316 70%);border:1px solid #2a4670;border-radius:18px;padding:20px;text-align:center}
+.lockcard{background:linear-gradient(160deg,#e3ecfa,#ffffff 70%);border:1px solid #bfd2ef;border-radius:18px;padding:20px;text-align:center}
 .lockcard svg{width:36px;height:36px;color:var(--gold)}
 .lockcard h3{font-family:var(--f-display);font-size:19px;margin:8px 0 6px}
 .lockcard p{color:var(--muted);margin:0 0 14px;font-size:14px}
@@ -108,17 +108,18 @@ a{color:var(--gold)}
 <style>
 .prod{background:var(--panel);border-radius:18px;padding:18px;margin-top:14px}
 .prod h2{font-size:20px;margin:0 0 4px;font-weight:800}
-.prod p{margin:0 0 10px;color:#dcd7cc}
-.prod ul{margin:0;padding-left:20px;color:#dcd7cc}.prod li{margin:4px 0}
-.price{margin-top:22px;background:var(--panel);border:1px solid #2a4670;border-radius:20px;padding:20px}
+.prod p{margin:0 0 10px;color:#3f4d47}
+.prod ul{margin:0;padding-left:20px;color:#3f4d47}.prod li{margin:4px 0}
+.price{margin-top:22px;background:var(--panel);border:1px solid #bfd2ef;border-radius:20px;padding:20px}
 .price .row{display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding:8px 0;border-bottom:1px solid var(--line)}
 .price .row:last-of-type{border-bottom:0}
 .price .row b{font-size:20px;font-weight:800}.price .row .free{color:var(--up)}
 .price .btn{width:100%;margin-top:14px}
 .st{margin-top:14px;border-radius:14px;padding:12px 14px;font-size:15px}
-.st.ok{background:var(--up-dim);color:#cdeee0}.st.wait{background:#121c2b;color:#dbe7ff}
-.payb{margin-top:12px;border:1px dashed #2a4670;border-radius:14px;padding:12px 14px;white-space:pre-wrap;font-size:14.5px}
+.st.ok{background:var(--up-dim);color:#1f7a5a}.st.wait{background:#e3ecfa;color:#2f5fa8}
+.payb{margin-top:12px;border:1px dashed #bfd2ef;border-radius:14px;padding:12px 14px;white-space:pre-wrap;font-size:14.5px}
 </style>
+<link rel="stylesheet" href="tema.css">
 </head>
 <body>
 <header class="top"><div class="in">

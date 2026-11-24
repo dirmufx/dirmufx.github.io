@@ -12,7 +12,7 @@
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="icon" href="icon-192.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Inter+Tight:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
 <style>
 :root{--bg:#0d0f0d;--panel:#171a17;--panel2:#20241f;--line:#2b302a;--fg:#eef0e8;--muted:#a3aa9c;--blue:#5b9cf5;--brand:#63d297;--amber:#e3b85c;
  --f:"Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",sans-serif;color-scheme:dark}
@@ -22,20 +22,20 @@ html{-webkit-text-size-adjust:100%}
 body{margin:0;background:radial-gradient(800px 420px at 85% -10%,rgba(99,210,151,.10),transparent 60%),var(--bg);color:var(--fg);font-family:var(--f);font-size:15.5px;line-height:1.6;min-height:100vh}
 a{color:var(--blue)}
 button{font:inherit;color:inherit}
-.top{position:sticky;top:0;z-index:20;background:rgba(12,14,12,.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.top{position:sticky;top:0;z-index:20;background:rgba(255,255,255,0.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
 .top .in{max-width:640px;margin:0 auto;display:flex;align-items:center;gap:10px;padding:10px 16px}
 .back{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border:1px solid var(--line);border-radius:12px;background:var(--panel);color:var(--fg);text-decoration:none;font-size:20px}
 .brand{display:flex;align-items:center;gap:8px;flex:1;min-width:0;text-decoration:none;color:var(--fg);font-weight:800;font-size:16.5px;white-space:nowrap}
 .brand svg{width:24px;height:auto;flex:none}.brand i{font-style:normal;color:var(--brand)}
 .wrap{max-width:640px;margin:0 auto;padding:20px 16px 90px}
 .hero{display:flex;gap:16px;align-items:center;margin:4px 0 18px}
-.hero img{width:76px;height:76px;border-radius:18px;flex:none;box-shadow:0 8px 24px rgba(0,0,0,.45),0 0 0 1px var(--line)}
+.hero img{width:76px;height:76px;border-radius:18px;flex:none;box-shadow:0 8px 24px rgba(20,50,40,0.1),0 0 0 1px var(--line)}
 h1{font-size:25px;line-height:1.2;margin:0 0 4px;letter-spacing:-.01em}
 .lead{color:var(--muted);margin:0;font-size:14.5px}
 .note{border-radius:14px;padding:12px 14px;margin:0 0 14px;font-size:14.5px;line-height:1.5;border:1px solid var(--line);background:var(--panel)}
 .note b{display:block;font-size:15px;margin-bottom:2px}
-.note.warn{border-color:#5c4a1f;background:#231e11}
-.note.ok{border-color:#1f4d36;background:#12241a}
+.note.warn{border-color:#e8daba;background:#f3f0e7}
+.note.ok{border-color:#bee5d1;background:#e7f3ec}
 .note .row{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:1px solid var(--line);background:var(--panel2);border-radius:12px;padding:10px 14px;font-weight:700;font-size:14.5px;cursor:pointer;text-decoration:none;color:var(--fg)}
 .btn.pri{background:var(--brand);border-color:var(--brand);color:#06261b}
@@ -55,7 +55,7 @@ ol.steps p{margin:0;color:var(--muted);font-size:14.5px}
 .ic svg{width:16px;height:16px}
 .pill{display:inline-block;background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:1px 8px;font-weight:700;color:var(--fg);font-size:14px;white-space:nowrap}
 /* mini mockup */
-.mock{margin:10px 0 2px;background:#0a0b0a;border:1px solid var(--line);border-radius:14px;padding:10px;max-width:300px}
+.mock{margin:10px 0 2px;background:#ffffff;border:1px solid var(--line);border-radius:14px;padding:10px;max-width:300px}
 .mock .bar{display:flex;align-items:center;justify-content:space-between;background:var(--panel2);border-radius:10px;padding:7px 10px;font-size:12.5px;color:var(--muted)}
 .mock .bar .hl{outline:2px solid var(--brand);outline-offset:2px;border-radius:6px;color:var(--fg)}
 .mock .menu{margin-top:8px;background:var(--panel);border-radius:10px;overflow:hidden}
@@ -82,6 +82,7 @@ details p{margin:8px 0 0;color:var(--muted);font-size:14.5px}
 .toast.on{opacity:1}
 a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
 </style>
+<link rel="stylesheet" href="tema.css">
 </head>
 <body>
 <header class="top"><div class="in">
