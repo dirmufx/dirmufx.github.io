@@ -75,7 +75,7 @@ html{scroll-behavior:smooth;padding-top:env(safe-area-inset-top,0px);padding-bot
   linear-gradient(rgba(42,42,49,.35) 1px,transparent 1px) 0 0/100% 44px,
   linear-gradient(90deg,rgba(42,42,49,.35) 1px,transparent 1px) 0 0/44px 100%;
   -webkit-mask-image:linear-gradient(180deg,#000 40%,transparent);mask-image:linear-gradient(180deg,#000 40%,transparent);pointer-events:none}
-#landing .hero .wrap{position:relative;display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:40px;align-items:center}
+#landing .hero .wrap{position:relative;display:grid;grid-template-columns:minmax(0,1fr);gap:40px;align-items:center}
 @media(max-width:860px){#landing .hero .wrap{grid-template-columns:minmax(0,1fr)}}
 #landing .hero h1{font-size:clamp(36px,7vw,64px);font-weight:700;letter-spacing:-.01em;margin-top:14px}
 #landing .hero .lead{font-size:17px}
@@ -751,41 +751,8 @@ body.dlock{overflow:hidden}
         <span class="chip"><b>24 jam</b> bot sinyal Telegram</span>
       </div>
     </div>
-    <aside class="quotecard" aria-label="Harga emas live">
-      <div class="qhead"><span class="eyebrow" style="letter-spacing:.16em">XAUUSD · Gold Spot</span><span class="live">Live</span></div>
-      <div class="tvq" id="tvQuote"></div>
-      <div class="miniStats">
-        <div><span>Risiko per posisi</span><b>1–2%</b></div>
-        <div><span>Risk/Reward</span><b>1 : 3</b></div>
-      </div>
-      <div class="qfoot"><span>Hitung lot sebelum entry.</span><a class="btn" style="padding:8px 14px;font-size:13px" href="#kalkulator">Ke kalkulator</a></div>
-    </aside>
   </div>
 </header>
-
-<section id="channel" style="padding-top:24px">
-  <div class="wrap">
-    <div class="sec-head"><span class="eyebrow">Channel resmi</span><h2>Ikuti DirmuFX di sini saja</h2></div>
-    <div class="channels">
-      <a class="ch" href="https://chat.whatsapp.com/E4zPvDufMNqAaLdo9BLSmg" target="_blank" rel="noopener">
-        <span class="ic"><svg viewBox="0 0 24 24" fill="#2fd39b"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.8 14.1c-.2.7-1.4 1.3-2 1.4-.5.1-1.2.1-1.9-.1-.4-.1-1-.3-1.7-.6-3-1.3-4.9-4.3-5.1-4.5-.1-.2-1.2-1.6-1.2-3.1s.8-2.2 1-2.5c.3-.3.6-.4.8-.4h.6c.2 0 .4 0 .6.5l.9 2.1c.1.2.1.4 0 .5l-.3.5-.4.5c-.1.1-.3.3-.1.6.2.3.8 1.2 1.6 2 1.1 1 2 1.3 2.3 1.4.3.1.4.1.6-.1l.8-1c.2-.3.4-.2.6-.1l2 1c.3.1.5.2.5.3.1.1.1.7-.1 1.4Z"/></svg></span>
-        <h3>Grup WhatsApp</h3><p>Diskusi, info market, dan update komunitas.</p><span class="h">Gabung grup</span></a>
-      <a class="ch" href="https://t.me/dirmufxofficial" target="_blank" rel="noopener">
-        <span class="ic"><svg viewBox="0 0 24 24" fill="#2aa3df"><path d="M21.5 4.3 18.4 19c-.2 1-.9 1.3-1.7.8l-4.7-3.5-2.3 2.2c-.3.3-.5.5-1 .5l.3-4.8 8.8-7.9c.4-.3-.1-.5-.6-.2L6.3 13 1.6 11.6c-1-.3-1-1 .2-1.5L20.1 3c.8-.3 1.6.2 1.4 1.3Z"/></svg></span>
-        <h3>Telegram</h3><p>Info market, berita, dan diskusi harian.</p><span class="h">t.me/dirmufxofficial</span></a>
-      <a class="ch" href="https://www.tiktok.com/@dirmufxofficial" target="_blank" rel="noopener">
-        <span class="ic"><svg viewBox="0 0 24 24" fill="#f2efe8"><path d="M16.6 3c.4 2.3 1.9 3.8 4.1 4v3.1c-1.5 0-2.9-.4-4.1-1.2v6.2c0 3.3-2.7 5.9-6 5.9s-6-2.6-6-5.9 2.7-6 6-6c.3 0 .6 0 .9.1v3.2a2.8 2.8 0 1 0 2 2.7V3h3.1Z"/></svg></span>
-        <h3>TikTok</h3><p>Video edukasi singkat dan live trading.</p><span class="h">@dirmufxofficial</span></a>
-      <a class="ch" href="https://www.instagram.com/mudirr_/" target="_blank" rel="noopener">
-        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#f472b6" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="#f472b6" stroke="none"/></svg></span>
-        <h3>Instagram</h3><p>Update harian, analisa, dan konten edukasi.</p><span class="h">@mudirr_</span></a>
-      <a class="ch" href="https://wa.me/6285823444392" target="_blank" rel="noopener">
-        <span class="ic"><svg viewBox="0 0 24 24" fill="#2fd39b"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.8 14.1c-.2.7-1.4 1.3-2 1.4-.5.1-1.2.1-1.9-.1-.4-.1-1-.3-1.7-.6-3-1.3-4.9-4.3-5.1-4.5-.1-.2-1.2-1.6-1.2-3.1s.8-2.2 1-2.5c.3-.3.6-.4.8-.4h.6c.2 0 .4 0 .6.5l.9 2.1c.1.2.1.4 0 .5l-.3.5-.4.5c-.1.1-.3.3-.1.6.2.3.8 1.2 1.6 2 1.1 1 2 1.3 2.3 1.4.3.1.4.1.6-.1l.8-1c.2-.3.4-.2.6-.1l2 1c.3.1.5.2.5.3.1.1.1.7-.1 1.4Z"/></svg></span>
-        <h3>WhatsApp Admin</h3><p>Pertanyaan dan verifikasi member.</p><span class="h">0858-2344-4392</span></a>
-    </div>
-    <p class="warn"><span aria-hidden="true">⚠️</span><span>Waspada akun palsu. Admin resmi hanya <b>@dirmufxtrader</b> di Telegram. DirmuFX tidak pernah meminta transfer dana untuk dikelola.</span></p>
-  </div>
-</section>
 
 <section id="fitur">
   <div class="wrap">
@@ -942,6 +909,30 @@ body.dlock{overflow:hidden}
       <details><summary>Bagaimana cara memakai kalkulator lot?</summary><p>Isi saldo, persentase risiko, dan jarak stop loss dalam pips. Kalkulator menampilkan lot yang aman beserta nilai rugi dan target dalam dolar dan rupiah. Untuk akun cent, pilih "Cent (USC)".</p></details>
       <details><summary>Bagaimana cara bergabung dengan komunitas?</summary><p>Buka akun PU Prime lewat link partner DirmuFX, deposit minimal $30, lalu kirim nomor akun MT5 ke admin via WhatsApp. Langkah lengkapnya ada di bagian <a href="#cara-gabung" style="color:var(--gold)">Cara Gabung</a>. Info market juga ada di Telegram <b>t.me/dirmufxofficial</b>.</p></details>
     </div>
+  </div>
+</section>
+
+<section id="channel" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head"><span class="eyebrow">Channel resmi</span><h2>Ikuti DirmuFX di sini saja</h2></div>
+    <div class="channels">
+      <a class="ch" href="https://chat.whatsapp.com/E4zPvDufMNqAaLdo9BLSmg" target="_blank" rel="noopener">
+        <span class="ic"><svg viewBox="0 0 24 24" fill="#2fd39b"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.8 14.1c-.2.7-1.4 1.3-2 1.4-.5.1-1.2.1-1.9-.1-.4-.1-1-.3-1.7-.6-3-1.3-4.9-4.3-5.1-4.5-.1-.2-1.2-1.6-1.2-3.1s.8-2.2 1-2.5c.3-.3.6-.4.8-.4h.6c.2 0 .4 0 .6.5l.9 2.1c.1.2.1.4 0 .5l-.3.5-.4.5c-.1.1-.3.3-.1.6.2.3.8 1.2 1.6 2 1.1 1 2 1.3 2.3 1.4.3.1.4.1.6-.1l.8-1c.2-.3.4-.2.6-.1l2 1c.3.1.5.2.5.3.1.1.1.7-.1 1.4Z"/></svg></span>
+        <h3>Grup WhatsApp</h3><p>Diskusi, info market, dan update komunitas.</p><span class="h">Gabung grup</span></a>
+      <a class="ch" href="https://t.me/dirmufxofficial" target="_blank" rel="noopener">
+        <span class="ic"><svg viewBox="0 0 24 24" fill="#2aa3df"><path d="M21.5 4.3 18.4 19c-.2 1-.9 1.3-1.7.8l-4.7-3.5-2.3 2.2c-.3.3-.5.5-1 .5l.3-4.8 8.8-7.9c.4-.3-.1-.5-.6-.2L6.3 13 1.6 11.6c-1-.3-1-1 .2-1.5L20.1 3c.8-.3 1.6.2 1.4 1.3Z"/></svg></span>
+        <h3>Telegram</h3><p>Info market, berita, dan diskusi harian.</p><span class="h">t.me/dirmufxofficial</span></a>
+      <a class="ch" href="https://www.tiktok.com/@dirmufxofficial" target="_blank" rel="noopener">
+        <span class="ic"><svg viewBox="0 0 24 24" fill="#f2efe8"><path d="M16.6 3c.4 2.3 1.9 3.8 4.1 4v3.1c-1.5 0-2.9-.4-4.1-1.2v6.2c0 3.3-2.7 5.9-6 5.9s-6-2.6-6-5.9 2.7-6 6-6c.3 0 .6 0 .9.1v3.2a2.8 2.8 0 1 0 2 2.7V3h3.1Z"/></svg></span>
+        <h3>TikTok</h3><p>Video edukasi singkat dan live trading.</p><span class="h">@dirmufxofficial</span></a>
+      <a class="ch" href="https://www.instagram.com/mudirr_/" target="_blank" rel="noopener">
+        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#f472b6" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="#f472b6" stroke="none"/></svg></span>
+        <h3>Instagram</h3><p>Update harian, analisa, dan konten edukasi.</p><span class="h">@mudirr_</span></a>
+      <a class="ch" href="https://wa.me/6285823444392" target="_blank" rel="noopener">
+        <span class="ic"><svg viewBox="0 0 24 24" fill="#2fd39b"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.8 14.1c-.2.7-1.4 1.3-2 1.4-.5.1-1.2.1-1.9-.1-.4-.1-1-.3-1.7-.6-3-1.3-4.9-4.3-5.1-4.5-.1-.2-1.2-1.6-1.2-3.1s.8-2.2 1-2.5c.3-.3.6-.4.8-.4h.6c.2 0 .4 0 .6.5l.9 2.1c.1.2.1.4 0 .5l-.3.5-.4.5c-.1.1-.3.3-.1.6.2.3.8 1.2 1.6 2 1.1 1 2 1.3 2.3 1.4.3.1.4.1.6-.1l.8-1c.2-.3.4-.2.6-.1l2 1c.3.1.5.2.5.3.1.1.1.7-.1 1.4Z"/></svg></span>
+        <h3>WhatsApp Admin</h3><p>Pertanyaan dan verifikasi member.</p><span class="h">0858-2344-4392</span></a>
+    </div>
+    <p class="warn"><span aria-hidden="true">⚠️</span><span>Waspada akun palsu. Admin resmi hanya <b>@dirmufxtrader</b> di Telegram. DirmuFX tidak pernah meminta transfer dana untuk dikelola.</span></p>
   </div>
 </section>
 
@@ -1496,9 +1487,7 @@ body.dlock{overflow:hidden}
 "use strict";
 const $=id=>document.getElementById(id);
 /* live gold quote (TradingView) */
-(function(){const box=$("tvQuote");box.innerHTML='<div class="tradingview-widget-container" style="height:100%"><div class="tradingview-widget-container__widget"></div></div>';
-  const sc=document.createElement("script");sc.async=true;sc.src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js";
-  sc.text=JSON.stringify({symbol:"OANDA:XAUUSD",width:"100%",isTransparent:false,backgroundColor:"#131316",colorTheme:"dark",locale:"id"});box.firstChild.appendChild(sc)})();
+
 
 /* ===== kalkulator ===== */
 // cs = ukuran kontrak per 1 lot standar, pip = ukuran 1 pip, d = desimal harga
