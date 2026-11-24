@@ -3398,6 +3398,43 @@ html #landing footer{padding-bottom:10px}
     if(el)el.textContent=n;if(ak)ak.href=u?"#akun":"#masuk"};
 })();
 </script>
+<style>
+/* ===== Tema terang untuk Signal Room & halaman akun ===== */
+html #app,html #auth{--bg:#f3f7f5;--bg2:#e8f0ec;--panel:#ffffff;--panel2:#eef4f1;--line:#dae6e0;--fg:#1d2b26;--muted:#5f6f68;
+ --gold:#1f7a5a;--gold-hi:#2f9a72;--gold-lo:#17604a;--gold-dim:#bfe0d1;--up:#1f8a5a;--up-dim:#dff1e8;--down:#c4473f;--down-dim:#fbe3df;
+ --violet:#3a66b0;--violet-dim:#e3ecfa;--amber:#b07a1a;--amber-dim:#fbf0d9;
+ --f-display:"Inter Tight","Inter",system-ui,-apple-system,sans-serif;--f-body:"Inter",system-ui,-apple-system,sans-serif;--f-mono:"Inter",system-ui,sans-serif;
+ color-scheme:light;background:var(--bg)!important;color:var(--fg)}
+body:has(> #app:not([hidden])),body:has(> #auth:not([hidden])){background:#f3f7f5}
+html #app h1,html #app h2,html #app h3,html #auth h1,html #auth h2{font-family:"Inter Tight","Inter",system-ui,sans-serif;font-weight:600}
+html #app .dname,html #auth .dname{color:#1d2b26}html #app .dname i,html #auth .dname i{color:#1f7a5a}
+html #app .dmark path,html #auth .dmark path{stroke:#1f7a5a}html #app .dmark g[fill="#fff"],html #auth .dmark g[fill="#fff"]{fill:#1d2b26}html #app .dmark g[fill="#63d297"],html #auth .dmark g[fill="#63d297"]{fill:#1f7a5a}
+html #app .btn.primary,html #auth .abtn.gold{background:#1f7a5a!important;border-color:#1f7a5a!important;color:#fff!important}
+html #app .top{background:rgba(255,255,255,.95);border-color:var(--line)}
+html #app .tabs a,html #app .tabs button{color:var(--muted)}
+html #app .brand b{background:none;-webkit-text-fill-color:#1f7a5a;color:#1f7a5a;text-shadow:none}
+html #app .chip.imp,html #app .lv.be,html #app .waitnote,html #app .lockbar{background:#e3ecfa}
+html #app .tvwide,html #app .tvtape,html #app .tvbox,html #app .qbox{background:#fff}
+html #app .tf[aria-pressed="true"]{border-color:#bfe0d1}
+html #app .itg[aria-pressed="true"]{border-color:#bfe0d1}
+html #app .mkgrp button[aria-selected="true"]{background:#1f7a5a}
+html #app .mkpairs button[aria-pressed="true"]{border-color:#1f7a5a;background:#dff1e8}
+html #app .mkpairs button[aria-pressed="true"] span{color:#17694c}
+html #app .ffchips button[aria-pressed="true"]{background:#1f7a5a;border-color:#1f7a5a}
+html #app .ffday{background:#eef4f1}
+html #app .tmx>div.cur{border-color:#1f7a5a}
+html #app .ibstrip,html #app .hero{border-color:#bfe0d1}
+html #app .nextcard.soon{border-color:#bfd2ef}
+html #app .smcset input[type=checkbox]{accent-color:#1f7a5a}
+/* kartu harga & kartu sinyal tetap gelap (seperti kartu khusus) */
+html #app .pxhero,html #app #sigcard{--fg:#eef0e8;--muted:#a6ad9f;--line:#2c322c;--panel:#1c201c;--panel2:#242924;--up:#66cf92;--up-dim:#163a27;--down:#e86a64;--down-dim:#3a1c1b;--violet:#8db4f0;--violet-dim:#22324d;--amber:#e3b85c;color:#eef0e8}
+html #app .pxhero{background:linear-gradient(160deg,#17604a,#0f3d2f)!important;border-color:#17604a!important}
+html #app #sigcard.signal{background:linear-gradient(165deg,#1d2b26,#14201c)}
+html #auth svg g[fill="#fff"],html #app .top svg g[fill="#fff"]{fill:#1d2b26}html #auth svg path[stroke="#63d297"]{stroke:#1f7a5a}html #auth svg g[fill="#63d297"]{fill:#1f7a5a}
+html #app #sigcard .waitnote,html #app #sigcard .lockbar,html #app #sigcard .chip.imp,html #app #sigcard .lv.be{background:#1b2a3d}
+
+</style>
+
 
 
 
