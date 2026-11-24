@@ -3620,8 +3620,8 @@ html #app .bcbox{height:calc(100vh - 330px - env(safe-area-inset-bottom,0px));mi
 </style>
 
 <script>
-(function(){const T={analisa:"Signal Room",chart:"Chart",kalender:"Terminal",fundamental:"Fundamental",member:"Gabung Member"};
-  function up(){const h=decodeURIComponent(location.hash.slice(1));const t=document.getElementById("pgTitle");if(t&&T[h])t.textContent=T[h];
+(function(){const T={analisa:"Signal Room",chart:"Chart",kalender:"",fundamental:"Fundamental",member:"Gabung Member"};
+  function up(){const h=decodeURIComponent(location.hash.slice(1));const t=document.getElementById("pgTitle");if(t&&h in T){t.textContent=T[h];t.hidden=!T[h]}
     document.querySelectorAll("#app .abnav a").forEach(a=>a.classList.toggle("on",a.dataset.k===h))}
   window.addEventListener("hashchange",up);up();
   const _hi=window.DFX_hi;window.DFX_hi=function(u){_hi&&_hi(u);const a=document.getElementById("abAkun");if(a)a.href=u?"#akun":"#masuk"};
