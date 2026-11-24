@@ -926,6 +926,10 @@ html #app .rbar i{position:absolute;left:0;top:0;bottom:0;border-radius:99px;bac
 html #app .rbar em{position:absolute;top:-2px;width:2px;height:10px;background:#9fb3aa}
 html #app .rnow{font-size:11.5px;color:#5f6f68;margin-top:6px}html #app .rnow b{color:#1d2b26}
 </style>
+<style>
+/* menu bawah tetap di bawah saat digeser (perbaikan iOS Safari) */
+html #app .abnav,html #landing .lbnav{position:fixed!important;bottom:0!important;left:0;right:0;top:auto!important;-webkit-transform:translate3d(0,0,0);transform:translate3d(0,0,0);-webkit-backdrop-filter:none!important;backdrop-filter:none!important;background:#fff!important;will-change:transform}
+</style>
 </head>
 <body>
 <div id="landing">
