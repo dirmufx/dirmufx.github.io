@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0a0a0c">
+<title>Pasang DirmuFX di HP · iPhone & Android</title>
+<meta name="description" content="Cara memasang DirmuFX sebagai ikon aplikasi di layar utama iPhone dan Android. Gratis, tanpa App Store atau Play Store.">
+<meta property="og:title" content="Pasang aplikasi DirmuFX di HP kamu">
+<meta property="og:description" content="Sekali pasang, buka sinyal & analisa langsung dari ikon di layar utama.">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" href="icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+<style>
+:root{--bg:#0d0f0d;--panel:#171a17;--panel2:#20241f;--line:#2b302a;--fg:#eef0e8;--muted:#a3aa9c;--blue:#5b9cf5;--brand:#63d297;--amber:#e3b85c;
+ --f:"Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",sans-serif;color-scheme:dark}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:radial-gradient(800px 420px at 85% -10%,rgba(99,210,151,.10),transparent 60%),var(--bg);color:var(--fg);font-family:var(--f);font-size:15.5px;line-height:1.6;min-height:100vh}
+a{color:var(--blue)}
+button{font:inherit;color:inherit}
+.top{position:sticky;top:0;z-index:20;background:rgba(12,14,12,.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.top .in{max-width:640px;margin:0 auto;display:flex;align-items:center;gap:10px;padding:10px 16px}
+.back{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border:1px solid var(--line);border-radius:12px;background:var(--panel);color:var(--fg);text-decoration:none;font-size:20px}
+.brand{display:flex;align-items:center;gap:8px;flex:1;min-width:0;text-decoration:none;color:var(--fg);font-weight:800;font-size:16.5px;white-space:nowrap}
+.brand svg{width:24px;height:auto;flex:none}.brand i{font-style:normal;color:var(--brand)}
+.wrap{max-width:640px;margin:0 auto;padding:20px 16px 90px}
+.hero{display:flex;gap:16px;align-items:center;margin:4px 0 18px}
+.hero img{width:76px;height:76px;border-radius:18px;flex:none;box-shadow:0 8px 24px rgba(0,0,0,.45),0 0 0 1px var(--line)}
+h1{font-size:25px;line-height:1.2;margin:0 0 4px;letter-spacing:-.01em}
+.lead{color:var(--muted);margin:0;font-size:14.5px}
+.note{border-radius:14px;padding:12px 14px;margin:0 0 14px;font-size:14.5px;line-height:1.5;border:1px solid var(--line);background:var(--panel)}
+.note b{display:block;font-size:15px;margin-bottom:2px}
+.note.warn{border-color:#5c4a1f;background:#231e11}
+.note.ok{border-color:#1f4d36;background:#12241a}
+.note .row{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:1px solid var(--line);background:var(--panel2);border-radius:12px;padding:10px 14px;font-weight:700;font-size:14.5px;cursor:pointer;text-decoration:none;color:var(--fg)}
+.btn.pri{background:var(--brand);border-color:var(--brand);color:#06261b}
+.btn.wide{width:100%;padding:13px 14px;font-size:15.5px;margin:0 0 14px}
+.seg{display:flex;gap:4px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:4px;margin:0 0 16px}
+.seg button{flex:1;border:0;background:none;border-radius:10px;padding:10px 4px;font-weight:700;color:var(--muted);cursor:pointer;font-size:14.5px}
+.seg button[aria-pressed="true"]{background:var(--panel2);color:var(--fg);box-shadow:0 0 0 1px var(--line)}
+.os[hidden]{display:none}
+.browser{font-size:13.5px;color:var(--muted);margin:0 0 12px}
+ol.steps{list-style:none;margin:0;padding:0;counter-reset:s}
+ol.steps>li{counter-increment:s;position:relative;padding:0 0 18px 46px}
+ol.steps>li::before{content:counter(s);position:absolute;left:0;top:0;width:32px;height:32px;border-radius:50%;background:var(--brand);color:#06261b;font-weight:800;display:flex;align-items:center;justify-content:center;font-size:15px}
+ol.steps>li:not(:last-child)::after{content:"";position:absolute;left:15.5px;top:36px;bottom:4px;width:1px;background:var(--line)}
+ol.steps b.t{display:block;font-size:16px;line-height:1.35;margin:4px 0 4px}
+ol.steps p{margin:0;color:var(--muted);font-size:14.5px}
+.ic{display:inline-flex;align-items:center;justify-content:center;vertical-align:-6px;width:26px;height:26px;border-radius:7px;background:var(--panel2);border:1px solid var(--line);margin:0 2px}
+.ic svg{width:16px;height:16px}
+.pill{display:inline-block;background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:1px 8px;font-weight:700;color:var(--fg);font-size:14px;white-space:nowrap}
+/* mini mockup */
+.mock{margin:10px 0 2px;background:#0a0b0a;border:1px solid var(--line);border-radius:14px;padding:10px;max-width:300px}
+.mock .bar{display:flex;align-items:center;justify-content:space-between;background:var(--panel2);border-radius:10px;padding:7px 10px;font-size:12.5px;color:var(--muted)}
+.mock .bar .hl{outline:2px solid var(--brand);outline-offset:2px;border-radius:6px;color:var(--fg)}
+.mock .menu{margin-top:8px;background:var(--panel);border-radius:10px;overflow:hidden}
+.mock .menu div{padding:8px 11px;font-size:13px;border-bottom:1px solid var(--line);color:var(--muted);display:flex;justify-content:space-between}
+.mock .menu div:last-child{border-bottom:0}
+.mock .menu .hl{color:var(--fg);background:rgba(99,210,151,.12);font-weight:700}
+.home{display:flex;gap:14px;margin-top:10px}
+.home span{display:flex;flex-direction:column;align-items:center;gap:4px;font-size:11.5px;color:var(--muted)}
+.home i{display:block;width:46px;height:46px;border-radius:12px;background:var(--panel2)}
+.home img{width:46px;height:46px;border-radius:12px}
+.home .me{color:var(--fg)}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:16px;margin:18px 0 14px}
+.card h2{font-size:16px;margin:0 0 8px}
+.card ul{margin:0;padding-left:18px;color:var(--muted);font-size:14.5px}
+.card li{margin:4px 0}
+details{border-top:1px solid var(--line);padding:11px 0}
+details:last-child{border-bottom:1px solid var(--line)}
+summary{font-weight:700;cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:10px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";color:var(--muted);font-weight:500}
+details[open] summary::after{content:"−"}
+details p{margin:8px 0 0;color:var(--muted);font-size:14.5px}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--brand);color:#06261b;font-weight:700;padding:10px 16px;border-radius:12px;font-size:14px;opacity:0;pointer-events:none;transition:opacity .2s}
+.toast.on{opacity:1}
+a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
+</style>
+</head>
+<body>
+<header class="top"><div class="in">
+  <a class="back" href="index.html" aria-label="Kembali ke beranda">‹</a>
+  <a class="brand" href="index.html"><svg viewBox="0 0 314 343" aria-hidden="true"><path d="M15 15H140A156.5 156.5 0 0 1 140 328H15Z" fill="none" stroke="#63d297" stroke-width="30" stroke-linejoin="round"/><g fill="#fff"><rect x="87" y="159" width="10" height="138" rx="5"/><rect x="69" y="202" width="46" height="58" rx="5"/><rect x="147" y="114" width="10" height="160" rx="5"/><rect x="129" y="153" width="46" height="75" rx="5"/></g><g fill="#63d297"><rect x="207" y="54" width="10" height="175" rx="5"/><rect x="189" y="89" width="46" height="99" rx="5"/></g></svg><span>Dirmu<i>FX</i></span></a>
+</div></header>
+
+<main class="wrap">
+  <div class="hero">
+    <img src="icon-192.png" alt="Ikon aplikasi DirmuFX">
+    <div>
+      <h1>Pasang DirmuFX di HP</h1>
+      <p class="lead">Jadikan ikon di layar utama, buka sinyal dan analisa sekali ketuk. Gratis, tanpa App Store atau Play Store.</p>
+    </div>
+  </div>
+
+  <div class="note ok" id="installed" hidden><b>✅ DirmuFX sudah terpasang</b>Kamu sedang membuka DirmuFX dari ikon di layar utama. Tidak perlu pasang lagi.</div>
+
+  <div class="note warn" id="inapp" hidden>
+    <b>⚠️ Buka dulu di browser</b>
+    Kamu membuka halaman ini dari dalam aplikasi lain (Instagram, TikTok, Telegram, dll). Di sini tombol pasang tidak muncul. Salin link, lalu tempel di <span id="inappBr">Safari</span>.
+    <div class="row"><button class="btn pri" data-copy>Salin link</button></div>
+  </div>
+
+  <button class="btn pri wide" id="installBtn" hidden>📲 Pasang aplikasi sekarang</button>
+
+  <div class="seg" role="group" aria-label="Pilih jenis HP">
+    <button type="button" data-os="ios" aria-pressed="true">📱 iPhone</button>
+    <button type="button" data-os="android" aria-pressed="false">🤖 Android</button>
+  </div>
+
+  <!-- iPhone -->
+  <section class="os" id="os-ios">
+    <p class="browser">Pakai <b>Safari</b> (bisa juga Chrome di iOS 16.4 ke atas).</p>
+    <ol class="steps">
+      <li><b class="t">Buka website di Safari</b>
+        <p>Ketik <span class="pill">dirmufx.github.io</span> di Safari, atau ketuk tombol di bawah untuk menyalin link.</p>
+        <div style="margin-top:8px"><button class="btn" data-copy>Salin link</button></div>
+      </li>
+      <li><b class="t">Ketuk tombol Bagikan <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#5b9cf5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M8 7l4-4 4 4"/><path d="M6 11H5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-8a1 1 0 0 0-1-1h-1"/></svg></span></b>
+        <p>Ikon kotak dengan panah ke atas, ada di bar bawah layar. Di iOS terbaru, ketuk dulu tombol <span class="pill">•••</span> di pojok bawah, lalu pilih <span class="pill">Bagikan</span>.</p>
+        <div class="mock" aria-hidden="true"><div class="bar"><span>‹ ›</span><span>dirmufx.github.io</span><span class="hl">⬆︎ •••</span></div></div>
+      </li>
+      <li><b class="t">Pilih “Tambah ke Layar Utama”</b>
+        <p>Geser daftar menu ke bawah sampai ketemu <span class="pill">Tambah ke Layar Utama ⊞</span>. Kalau HP berbahasa Inggris: <span class="pill">Add to Home Screen</span>.</p>
+        <div class="mock" aria-hidden="true"><div class="menu"><div><span>Salin</span><span>⧉</span></div><div><span>Tambah ke Daftar Bacaan</span><span>○○</span></div><div class="hl"><span>Tambah ke Layar Utama</span><span>⊞</span></div><div><span>Cari di Halaman</span><span>⌕</span></div></div></div>
+      </li>
+      <li><b class="t">Ketuk “Tambah”</b>
+        <p>Nama otomatis <span class="pill">DirmuFX</span>. Kalau ada pilihan <span class="pill">Buka sebagai Aplikasi Web</span>, biarkan menyala. Lalu ketuk <span class="pill">Tambah</span> di pojok kanan atas.</p>
+      </li>
+      <li><b class="t">Selesai, buka dari ikon</b>
+        <p>Ikon DirmuFX muncul di layar utama. Ketuk ikon itu, web terbuka layar penuh seperti aplikasi biasa.</p>
+        <div class="home" aria-hidden="true"><span><i></i>Kamera</span><span><i></i>Foto</span><span class="me"><img src="icon-192.png" alt="">DirmuFX</span><span><i></i>Telegram</span></div>
+      </li>
+    </ol>
+  </section>
+
+  <!-- Android -->
+  <section class="os" id="os-android" hidden>
+    <p class="browser">Pakai <b>Google Chrome</b>. Untuk Samsung Internet, lihat catatan di langkah 2.</p>
+    <ol class="steps">
+      <li><b class="t">Buka website di Chrome</b>
+        <p>Ketik <span class="pill">dirmufx.github.io</span> di Chrome, atau salin link di bawah lalu tempel di Chrome.</p>
+        <div style="margin-top:8px"><button class="btn" data-copy>Salin link</button></div>
+      </li>
+      <li><b class="t">Ketuk titik tiga <span class="pill">⋮</span> di pojok kanan atas</b>
+        <p>Kalau muncul tombol hijau <span class="pill">Pasang aplikasi sekarang</span> di atas halaman ini, ketuk saja itu, lalu lompat ke langkah 4.</p>
+        <p style="margin-top:6px">Samsung Internet: ketuk <span class="pill">≡</span> di bawah kanan, pilih <span class="pill">Tambahkan halaman ke</span> → <span class="pill">Layar Depan</span>.</p>
+        <div class="mock" aria-hidden="true"><div class="bar"><span>⌂</span><span>dirmufx.github.io</span><span class="hl">⋮</span></div></div>
+      </li>
+      <li><b class="t">Pilih “Instal aplikasi” atau “Tambahkan ke layar utama”</b>
+        <p>Nama menu bisa beda sedikit tergantung versi Chrome. Pilih salah satu yang ada.</p>
+        <div class="mock" aria-hidden="true"><div class="menu"><div><span>Tab baru</span><span>＋</span></div><div><span>Histori</span><span>↺</span></div><div class="hl"><span>Tambahkan ke layar utama</span><span>📲</span></div><div><span>Setelan</span><span>⚙︎</span></div></div></div>
+      </li>
+      <li><b class="t">Ketuk “Instal” atau “Tambah”</b>
+        <p>Kalau ditanya lagi, pilih <span class="pill">Tambahkan otomatis</span> atau seret ikon ke layar utama.</p>
+      </li>
+      <li><b class="t">Selesai, buka dari ikon</b>
+        <p>Ikon DirmuFX muncul di layar utama atau di laci aplikasi. Ketuk untuk membuka layar penuh.</p>
+        <div class="home" aria-hidden="true"><span><i></i>Galeri</span><span><i></i>WhatsApp</span><span class="me"><img src="icon-192.png" alt="">DirmuFX</span><span><i></i>Chrome</span></div>
+      </li>
+    </ol>
+  </section>
+
+  <div class="card">
+    <h2>Kenapa dipasang?</h2>
+    <ul>
+      <li>Buka Signal Room, kalender berita, dan kalkulator lot sekali ketuk.</li>
+      <li>Layar penuh, tanpa bar alamat browser.</li>
+      <li>Tetap masuk akun, tidak perlu login ulang.</li>
+      <li>Selalu versi terbaru, tidak perlu update manual.</li>
+    </ul>
+  </div>
+
+  <h2 style="font-size:17px;margin:22px 0 4px">Masalah yang sering muncul</h2>
+  <details><summary>Menu “Tambah ke Layar Utama” tidak ada</summary>
+    <p>Biasanya karena web dibuka dari dalam Instagram, TikTok, Telegram, atau WhatsApp. Salin link, lalu buka di Safari (iPhone) atau Chrome (Android). Di iPhone, geser menu Bagikan sampai paling bawah. Kalau tetap tidak ada, ketuk <b>Edit Tindakan</b> lalu tambahkan.</p></details>
+  <details><summary>Harus login lagi setelah dipasang</summary>
+    <p>Di iPhone, aplikasi dari layar utama menyimpan login terpisah dari Safari. Login sekali saja di dalam aplikasi, setelah itu tersimpan.</p></details>
+  <details><summary>Cara menghapus ikon</summary>
+    <p>Tekan lama ikon DirmuFX, lalu pilih <b>Hapus</b> (iPhone) atau <b>Copot/Hapus</b> (Android). Data akun kamu tidak ikut terhapus.</p></details>
+  <details><summary>Apakah aman dan gratis?</summary>
+    <p>Aman dan gratis. Ini hanya pintasan ke website resmi dirmufx.github.io, tidak memasang file apa pun dari luar.</p></details>
+
+  <div style="margin-top:22px;display:flex;gap:8px;flex-wrap:wrap">
+    <a class="btn pri" href="index.html#analisa">Buka Signal Room</a>
+    <a class="btn" href="index.html">Kembali ke beranda</a>
+  </div>
+</main>
+<div class="toast" id="toast" role="status">Link disalin</div>
+
+<script>
+(function(){
+  var ua=navigator.userAgent||"";
+  var isIOS=/iPhone|iPad|iPod/i.test(ua)||(navigator.platform==="MacIntel"&&navigator.maxTouchPoints>1);
+  var isAndroid=/Android/i.test(ua);
+  var inApp=/Instagram|FBAN|FBAV|FB_IAB|musical_ly|BytedanceWebview|TikTok|Telegram|Line\/|WhatsApp|Snapchat|Twitter/i.test(ua);
+  var standalone=window.matchMedia("(display-mode: standalone)").matches||navigator.standalone===true;
+  var URL_SITE="https://dirmufx.github.io/";
+
+  function show(os){
+    document.querySelectorAll("[data-os]").forEach(function(b){b.setAttribute("aria-pressed",b.dataset.os===os?"true":"false")});
+    document.getElementById("os-ios").hidden=os!=="ios";
+    document.getElementById("os-android").hidden=os!=="android";
+  }
+  document.querySelectorAll("[data-os]").forEach(function(b){b.addEventListener("click",function(){show(b.dataset.os)})});
+  show(isAndroid?"android":"ios");
+
+  if(standalone)document.getElementById("installed").hidden=false;
+  else if(inApp){document.getElementById("inapp").hidden=false;document.getElementById("inappBr").textContent=isAndroid?"Chrome":"Safari";}
+
+  var t=document.getElementById("toast");
+  function toast(m){t.textContent=m;t.classList.add("on");setTimeout(function(){t.classList.remove("on")},1800)}
+  document.querySelectorAll("[data-copy]").forEach(function(b){b.addEventListener("click",function(){
+    var done=function(){toast("Link disalin, tempel di "+(isAndroid?"Chrome":"Safari"))};
+    if(navigator.clipboard&&window.isSecureContext){navigator.clipboard.writeText(URL_SITE).then(done,fallback)}else fallback();
+    function fallback(){var i=document.createElement("textarea");i.value=URL_SITE;i.setAttribute("readonly","");i.style.position="fixed";i.style.opacity="0";document.body.appendChild(i);i.select();try{document.execCommand("copy");done()}catch(e){toast("Salin manual: dirmufx.github.io")}document.body.removeChild(i)}
+  })});
+
+  // Tombol pasang langsung (Chrome Android, bila tersedia)
+  var deferred=null,btn=document.getElementById("installBtn");
+  window.addEventListener("beforeinstallprompt",function(e){e.preventDefault();deferred=e;if(!standalone)btn.hidden=false});
+  btn.addEventListener("click",function(){if(!deferred)return;deferred.prompt();deferred.userChoice.finally(function(){deferred=null;btn.hidden=true})});
+  window.addEventListener("appinstalled",function(){btn.hidden=true;toast("DirmuFX terpasang ✅")});
+})();
+</script>
+</body>
+</html>
