@@ -713,6 +713,7 @@ body.dlock{overflow:hidden}
 #landing .livepill b{display:inline-flex;align-items:center;gap:5px;background:#e5484d;color:#fff;font-size:11px;font-weight:800;border-radius:999px;padding:2px 8px;letter-spacing:.04em}
 #landing .livepill b::before{content:"";width:6px;height:6px;border-radius:50%;background:#fff;animation:pulse 1.4s infinite}
 #landing .hero h1{font-size:clamp(32px,8.4vw,58px);font-weight:800;letter-spacing:-.025em;line-height:1.08;margin-top:16px}
+#landing .livepill[hidden]+h1{margin-top:4px}
 #landing .hero h1 .hl{display:block;background:linear-gradient(90deg,#7ff5b2,#3ad57f 55%,#c9f27a);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:#4fe08f}
 #landing .hero .lead{font-size:15.5px;margin-top:12px}
 #landing .cta.two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:22px;max-width:460px}
@@ -773,6 +774,24 @@ body.dlock{overflow:hidden}
 #landing .seg2 button[aria-pressed="true"].neutral{background:#10281a}
 #landing .closing{background:radial-gradient(70% 120% at 50% 0%,rgba(79,224,143,.16),transparent 70%),var(--panel);border-color:rgba(79,224,143,.25)}
 #landing .ch .h{color:#4fe08f}
+/* menu ringkas */
+.dpanel{display:flex;flex-direction:column;padding:14px 12px 0}
+.dhead{padding:4px 6px 12px;border-bottom:1px solid #1e3427;margin-bottom:8px}
+.dlogo{display:flex;align-items:center;gap:8px;font-weight:800;font-size:17px;color:#eef5ef;font-family:"Plus Jakarta Sans",system-ui,sans-serif}
+.dlogo svg{width:22px;height:auto}.dlogo i{font-style:normal;color:#4fe08f}
+.dx{width:36px;height:36px;border-radius:50%;background:transparent;border-color:#1e3427;font-size:20px}
+.dlist{flex:1}
+.dlist hr{border:0;border-top:1px solid #1e3427;margin:8px 6px}
+.dpanel .dlist a{gap:14px;padding:11px 10px;border-radius:12px;color:#c9d6cc}
+.dpanel .dlist a svg{width:20px;height:20px;flex:none;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;opacity:.9}
+.dpanel .dlist a b{font-size:15px;font-weight:600;flex:1}
+.dpanel .dlist a.on{background:#13281b;color:#4fe08f;box-shadow:inset 3px 0 0 #4fe08f}
+.dpanel .dlist a>span.onl{width:auto;height:auto;background:none;border-radius:0;font-size:12px}
+.dpanel .onl{font-size:12px;color:#4fe08f;display:inline-flex;align-items:center;gap:5px}
+.dpanel .onl::before{content:"";width:7px;height:7px;border-radius:50%;background:#4fe08f}
+.dfoot{position:sticky;bottom:0;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px 6px max(16px,env(safe-area-inset-bottom));margin-top:10px;background:#0a1610;border-top:1px solid #1e3427}
+.dpanel .dfoot a{padding:10px 8px;font-weight:600;color:#eef5ef}
+.dpanel .dfoot a.dreg{background:linear-gradient(180deg,#5ff09c,#2fcf74);color:#03230f;border-radius:12px;padding:11px 18px;font-weight:800}
 /* langkah gabung interaktif */
 #landing .jsteps.acc{grid-template-columns:minmax(0,1fr);gap:10px;max-width:640px}
 #landing .jsteps.acc .jstep{flex-direction:row;flex-wrap:wrap;align-items:center;gap:6px 14px;cursor:pointer;padding:14px 16px;overflow:hidden}
@@ -818,37 +837,35 @@ body.dlock{overflow:hidden}
 <div class="drawer" id="drawer" aria-hidden="true">
   <div class="dbg" data-dclose></div>
   <aside class="dpanel" role="dialog" aria-modal="true" aria-label="Menu DirmuFX">
-    <div class="dhead"><b>Menu</b><button class="dx" type="button" data-dclose aria-label="Tutup menu">×</button></div>
-    <div class="dgrp">Trading</div>
-    <a href="#analisa"><span>📈</span><div><b>Signal Room</b><small>Sinyal entry, SL & TP live</small></div></a>
-    <a href="analisa.html"><span>📝</span><div><b>Analisa Harian</b><small>Analisa emas, forex & crypto hari ini</small></div></a>
-    <a href="#fundamental"><span>🌐</span><div><b>Fundamental</b><small>Bias & berita terbaru tiap pair</small></div></a>
-    <a href="#kalender"><span>📅</span><div><b>Kalender Berita</b><small>Jadwal berita merah + angka aktual</small></div></a>
-    <a href="makro.html"><span>🌍</span><div><b>Riset Makro Mingguan</b><small>Bank sentral, dolar & skenario minggu ini</small></div></a>
-    <a href="indikator.html"><span>🧭</span><div><b>Indikator DirmuFX</b><small>SMC Pro + Session Pro</small></div></a>
-    <div class="dgrp">Belajar & alat</div>
-    <a href="belajar.html"><span>🎓</span><div><b>Akademi (20 bab)</b><small>Dari dasar sampai SMC, gratis</small></div></a>
-    <a href="#kalkulator" data-dclose><span>🧮</span><div><b>Kalkulator lot</b><small>Hitung lot dari modal & risiko</small></div></a>
-    <a href="jurnal.html"><span>📒</span><div><b>Jurnal Trading</b><small>Catat & evaluasi trade kamu</small></div></a>
-    <a href="kantor.html"><span>🏢</span><div><b>Kantor DirmuFX</b><small>Tim analisa XAUUSD live</small></div></a>
-    <a href="pasang.html"><span>📲</span><div><b>Pasang di HP</b><small>Jadikan ikon aplikasi di iPhone & Android</small></div></a>
-    <a href="#materi" data-dclose><span>📚</span><div><b>Materi</b><small>Ringkasan materi trading</small></div></a>
-    <div class="dgrp">Gabung</div>
-    <a href="#cara-gabung" data-dclose><span>🪜</span><div><b>Cara Gabung VIP</b><small>4 langkah, deposit min. $30</small></div></a>
-    <a href="#masuk" id="drMasuk"><span>👤</span><div><b>Masuk / Akun</b><small>Area member & aktivasi VIP</small></div></a>
-    <a href="https://puvip.co/la-partners/id/ztmYc1S9" target="_blank" rel="noopener"><span>🏦</span><div><b>Buka akun PU Prime</b><small>Broker partner resmi DirmuFX</small></div></a>
-    <a href="https://t.me/dirmufxofficial" target="_blank" rel="noopener"><span>✈️</span><div><b>Telegram DirmuFX</b><small>Bot sinyal 24 jam</small></div></a>
-    <a href="https://chat.whatsapp.com/E4zPvDufMNqAaLdo9BLSmg" target="_blank" rel="noopener"><span>💬</span><div><b>Grup WhatsApp</b><small>Diskusi bareng member</small></div></a>
-    <div class="dgrp">Info</div>
-    <a href="#fitur" data-dclose><span>✨</span><div><b>Fitur</b></div></a>
-    <a href="#faq" data-dclose><span>❓</span><div><b>FAQ</b></div></a>
+    <div class="dhead"><span class="dlogo"><svg viewBox="0 0 314 343" aria-hidden="true"><path d="M15 15H140A156.5 156.5 0 0 1 140 328H15Z" fill="none" stroke="#63d297" stroke-width="30" stroke-linejoin="round"/><g fill="#fff"><rect x="87" y="159" width="10" height="138" rx="5"/><rect x="69" y="202" width="46" height="58" rx="5"/><rect x="147" y="114" width="10" height="160" rx="5"/><rect x="129" y="153" width="46" height="75" rx="5"/></g><g fill="#63d297"><rect x="207" y="54" width="10" height="175" rx="5"/><rect x="189" y="89" width="46" height="99" rx="5"/></g></svg><span>Dirmu<i>FX</i></span></span><button class="dx" type="button" data-dclose aria-label="Tutup menu">×</button></div>
+    <nav class="dlist">
+    <a href="#top" class="on" data-dclose><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/></svg><b>Beranda</b></a>
+    <a href="#analisa"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg><b>Signal Room</b></a>
+    <a href="analisa.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h9l4 4v14H6z"/><path d="M9 12h7M9 16h7M9 8h3"/></svg><b>Analisa Harian</b></a>
+    <a href="#fundamental"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.5 3 14.5 0 18M12 3c-3 3.5-3 14.5 0 18"/></svg><b>Fundamental</b></a>
+    <a href="#kalender"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/></svg><b>Kalender Berita</b></a>
+    <a href="makro.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4l-5 2v14l5-2 6 2 5-2V4l-5 2z"/><path d="M9 4v14M15 6v14"/></svg><b>Riset Makro</b></a>
+    <hr>
+    <a href="belajar.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11v5c3 2 9 2 12 0v-5"/></svg><b>Akademi</b></a>
+    <a href="indikator.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 17a8 8 0 1 1 16 0"/><path d="M12 17l4-5"/></svg><b>Indikator</b></a>
+    <a href="#kalkulator" data-dclose><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 7h8M8 12h2M14 12h2M8 16h2M14 16h2"/></svg><b>Kalkulator lot</b></a>
+    <a href="jurnal.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z"/><path d="M5 17a3 3 0 0 1 3-3h11"/></svg><b>Jurnal Trading</b></a>
+    <a href="kantor.html"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="1"/><path d="M9 7h2M13 7h2M9 11h2M13 11h2M10 21v-4h4v4"/></svg><b>Kantor DirmuFX</b></a>
+    <a href="pasang.html"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></svg><b>Pasang di HP</b></a>
+    <hr>
+    <a href="#cara-gabung" data-dclose><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h5v-5h5v-5h5V5"/></svg><b>Cara Gabung</b></a>
+    <a href="#channel" data-dclose><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z"/></svg><b>Komunitas</b></a>
+    <a href="#faq" data-dclose><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 3.5 2.3c-.7.3-1 .9-1 1.7M12 17h.01"/></svg><b>FAQ</b></a>
+    <a href="https://wa.me/6285823444392?text=Halo%20admin%20DirmuFX" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 14v-2a8 8 0 0 1 16 0v2"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/></svg><b>Tanya admin</b><span class="onl">online</span></a>
+    </nav>
+    <div class="dfoot"><a href="#masuk" id="drMasuk">Masuk</a><a class="dreg" href="#daftar">Daftar gratis</a></div>
   </aside>
 </div>
 
 <header class="hero" id="top">
   <div class="wrap">
     <div>
-      <a class="livepill" href="#analisa"><b>LIVE</b>Signal Room aktif · Buka</a>
+      <a class="livepill" id="livePill" href="https://www.tiktok.com/@dirmufxofficial/live" target="_blank" rel="noopener" hidden><b>LIVE</b>Sedang live di TikTok · Tonton</a>
       <h1>Trading lebih terarah,<span class="hl">bukan asal tebak.</span></h1>
       <p class="lead">Sinyal, analisa, kalender berita, dan kalkulator risiko untuk forex, emas (XAUUSD), dan crypto. Gratis dibuka dari HP.</p>
       <div class="cta two">
@@ -3095,11 +3112,11 @@ async function load(){
  const [app,auth,fs]=await Promise.all([import(u+"firebase-app.js"),import(u+"firebase-auth.js"),import(u+"firebase-firestore.js")]);
  const a=app.initializeApp(CFG);const A=auth.getAuth(a);A.languageCode="id";const D=fs.getFirestore(a);
  fb={A,D,auth,fs};
- fs.onSnapshot(fs.doc(D,"settings","public"),s=>{settings=s.data()||{};if(user&&route==="aktivasi")renderWiz()},e=>console.warn(e));
+ fs.onSnapshot(fs.doc(D,"settings","public"),s=>{settings=s.data()||{};window.DFX_live&&DFX_live(settings.live);if(user&&route==="aktivasi")renderWiz()},e=>console.warn(e));
  let unsub=null;
  auth.onAuthStateChanged(A,async u2=>{
   user=u2;profile=null;authReady=true;if(unsub){unsub();unsub=null}
-  const nav=$("navMasuk");if(nav){nav.textContent=u2?"Akun":"Masuk";nav.href=u2?"#akun":"#masuk"}const dm=$("drMasuk");if(dm){dm.href=u2?"#akun":"#masuk"}
+  const nav=$("navMasuk");if(nav){nav.textContent=u2?"Akun":"Masuk";nav.href=u2?"#akun":"#masuk"}const dm=$("drMasuk");if(dm){dm.href=u2?"#akun":"#masuk";dm.textContent=u2?"Akun saya":"Masuk"}
   if(!u2){window.DFX_setMember&&window.DFX_setMember(false);window.DFX_setInd&&window.DFX_setInd(false);paint();return}
   const ref=fs.doc(D,"members",u2.uid);
   try{const snap=await fs.getDoc(ref);
@@ -3159,6 +3176,13 @@ if(ON)load().catch(e=>{console.warn(e);setMsg("Gagal memuat sistem login. Cek ko
 #landing .btn.gold-btn,#auth .abtn.gold,#app .btn.primary{background:var(--up)!important;border-color:var(--up)!important;color:#06261b!important}
 #app #sigcard[data-dir="WAIT"] .sigword{color:#5b9cf5}
 </style>
+<script>
+/* label LIVE TikTok: tampil hanya saat admin menyalakan live (mati sendiri setelah batas waktu) */
+(function(){const el=document.getElementById("livePill");let t=null;
+  window.DFX_live=function(v){clearTimeout(t);const until=v&&v.on?Number(v.until)||0:0;const on=until>Date.now();el.hidden=!on;
+    if(v&&v.url)el.href=v.url;if(on)t=setTimeout(()=>{el.hidden=true},Math.min(until-Date.now(),2147483000))};
+})();
+</script>
 <script>
 /* pita analisa hari ini + langkah gabung interaktif */
 (function(){

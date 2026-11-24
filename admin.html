@@ -59,6 +59,12 @@ textarea{width:100%;min-height:110px;margin-top:8px;resize:vertical}
  <div id="panel" hidden>
   <p class="muted" id="who" style="margin:0"></p>
   <div class="stats"><div><b id="nP">0</b><span class="muted">Menunggu</span></div><div><b id="nA">0</b><span class="muted">Aktif</span></div><div><b id="nE">0</b><span class="muted">Berakhir</span></div><div><b id="nT">0</b><span class="muted">Total</span></div></div>
+  <div class="box" id="liveBox" style="margin-top:12px">
+   <b>🔴 Live TikTok</b>
+   <p class="muted" style="margin:4px 0 10px">Nyalakan saat kamu mulai live. Label LIVE muncul di halaman depan website dan mati sendiri setelah 4 jam.</p>
+   <button class="btn" id="liveBtn" style="width:100%;padding:12px">Memuat…</button>
+   <p class="muted" id="liveMsg" style="margin:8px 0 0"></p>
+  </div>
   <div class="tabs"><button class="btn" data-f="pending" aria-pressed="true">Menunggu</button><button class="btn" data-f="active" aria-pressed="false">Aktif</button><button class="btn" data-f="expired" aria-pressed="false">Berakhir</button><button class="btn" data-f="inactive" aria-pressed="false">Nonaktif</button><button class="btn" data-f="all" aria-pressed="false">Semua</button><button class="btn" data-f="set" aria-pressed="false">⚙ Harga &amp; Rekening</button><button class="btn" data-f="an" aria-pressed="false">📈 Analisa harian</button></div>
   <div id="listWrap">
    <input id="q" placeholder="Cari nama, email, atau nomor MT5" style="margin-top:0">
@@ -160,6 +166,14 @@ $("aPub").onclick=async()=>{const mk=$("aMk").value==="Lainnya"?$("aOther").valu
  catch(e){$("aMsg").textContent="Gagal: "+e.code+" (cek Rules Firestore sudah diperbarui)"}
  $("aPub").disabled=false};
 $("q").oninput=draw;
+let liveOn=false;
+function paintLive(v){const until=v&&v.on?Number(v.until)||0:0;liveOn=until>Date.now();const b=$("liveBtn");
+ b.textContent=liveOn?"⏹ Matikan label LIVE":"▶ Saya mulai live sekarang";b.className=liveOn?"btn":"btn gold";
+ $("liveMsg").textContent=liveOn?"LIVE tampil sampai "+new Date(until).toLocaleTimeString("id-ID",{hour:"2-digit",minute:"2-digit"})+". Matikan saat live selesai.":"Label LIVE sedang tidak tampil."}
+async function loadLive(){try{const s=await fs.getDoc(fs.doc(D,"settings","public"));paintLive((s.data()||{}).live)}catch(e){$("liveMsg").textContent="Gagal memuat: "+e.code}}
+$("liveBtn").onclick=async()=>{const v=liveOn?{on:false,until:0}:{on:true,until:Date.now()+4*3600e3};$("liveBtn").disabled=true;
+ try{await fs.setDoc(fs.doc(D,"settings","public"),{live:v,updatedAt:fs.serverTimestamp()},{merge:true});paintLive(v)}
+ catch(e){$("liveMsg").textContent="Gagal menyimpan: "+e.code}$("liveBtn").disabled=false};
 async function loadSet(){try{const s=await fs.getDoc(fs.doc(D,"settings","public"));const v=s.data()||{};const pr=v.prices||{};
  $("pLife").value=v.lifetime||1000000;$("pInd").value=v.indPrice||1000000;$("pay").value=v.pay||""}catch(e){$("setMsg").textContent="Gagal memuat: "+e.code}}
 $("saveSet").onclick=async()=>{const lifetime=Number(String($("pLife").value).replace(/\D/g,""))||1000000;
@@ -171,7 +185,7 @@ $("out").onclick=()=>auth.signOut(A);
 auth.onAuthStateChanged(A,u2=>{
  if(unsub){unsub();unsub=null}
  $("login").hidden=!!u2;$("panel").hidden=!u2;$("out").hidden=!u2;
- if(!u2)return;$("who").textContent="Masuk sebagai "+u2.email;loadSet();
+ if(!u2)return;$("who").textContent="Masuk sebagai "+u2.email;loadSet();loadLive();
  unsub=fs.onSnapshot(fs.query(fs.collection(D,"members"),fs.orderBy("createdAt","desc")),s=>{rows=s.docs.map(d=>({id:d.id,...d.data()}));draw()},
   e=>{$("list").innerHTML='<p class="err">Akun ini bukan admin atau aturan Firestore belum dipasang.</p>'});
 });
