@@ -685,6 +685,118 @@ html{scroll-behavior:auto}
 .dpanel a b{display:block;font-size:15px;font-weight:700}
 .dpanel a small{display:block;font-size:12.5px;color:#a6ad9f;line-height:1.35}
 body.dlock{overflow:hidden}
+
+/* ===== Tampilan baru landing (gaya hijau menyala) ===== */
+#landing{--bg:#06100b;--bg2:#08150e;--panel:#0d1b13;--panel2:#132619;--line:#1e3427;--fg:#eef5ef;--muted:#93a89a;
+  --gold:#4fe08f;--gold-hi:#b9f6d3;--gold-lo:#27b866;--gold-dim:#1d5a37;--up:#4fe08f;--up-dim:#0f3a24}
+#landing{background:radial-gradient(900px 600px at 15% -5%,rgba(46,204,113,.18),transparent 60%),radial-gradient(700px 500px at 110% 20%,rgba(46,204,113,.10),transparent 60%),var(--bg)}
+#landing .eyebrow{letter-spacing:0;text-transform:none;font-size:14px}
+#landing .btn{border-radius:14px}
+#landing .btn.gold-btn{background:linear-gradient(180deg,#5ff09c,#2fcf74);color:#03230f;box-shadow:0 8px 24px rgba(47,207,116,.28),inset 0 1px 0 rgba(255,255,255,.35)}
+#landing .btn.ghost{background:rgba(255,255,255,.03)}
+#landing .nav{background:rgba(6,16,11,.82);border-bottom:1px solid rgba(79,224,143,.12)}
+#landing .nav .wrap{justify-content:flex-start}
+#landing .nav .logo{margin-right:auto}
+#landing .nav .burger{order:-1;background:rgba(255,255,255,.04);border-color:var(--line)}
+#landing .dname{font-size:19px}
+/* menu samping dari kiri */
+.dpanel{left:0;right:auto;border-left:0;border-right:1px solid #1e3427;background:#0a1610;transform:translateX(-100%)}
+.dgrp{color:#4fe08f}
+.dpanel a:hover,.dpanel a:focus-visible{background:#13251a}
+.dpanel a>span{background:#13251a}
+/* hero */
+#landing .hero{padding-block:34px 30px}
+#landing .hero::before{background:radial-gradient(70% 60% at 20% 0%,rgba(79,224,143,.16),transparent 70%),linear-gradient(rgba(79,224,143,.06) 1px,transparent 1px) 0 0/100% 46px,linear-gradient(90deg,rgba(79,224,143,.06) 1px,transparent 1px) 0 0/46px 100%}
+#landing .hero .wrap{grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:36px}
+@media(max-width:860px){#landing .hero .wrap{grid-template-columns:minmax(0,1fr);gap:26px}}
+#landing .livepill{display:inline-flex;align-items:center;gap:8px;text-decoration:none;font-size:12.5px;color:var(--muted);background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:999px;padding:5px 12px 5px 6px}
+#landing .livepill b{display:inline-flex;align-items:center;gap:5px;background:#e5484d;color:#fff;font-size:11px;font-weight:800;border-radius:999px;padding:2px 8px;letter-spacing:.04em}
+#landing .livepill b::before{content:"";width:6px;height:6px;border-radius:50%;background:#fff;animation:pulse 1.4s infinite}
+#landing .hero h1{font-size:clamp(32px,8.4vw,58px);font-weight:800;letter-spacing:-.025em;line-height:1.08;margin-top:16px}
+#landing .hero h1 .hl{display:block;background:linear-gradient(90deg,#7ff5b2,#3ad57f 55%,#c9f27a);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:#4fe08f}
+#landing .hero .lead{font-size:15.5px;margin-top:12px}
+#landing .cta.two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:22px;max-width:460px}
+#landing .cta.two .btn{padding:13px 12px}
+#landing .hstats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin-top:22px;max-width:460px;border-top:1px solid var(--line);padding-top:14px}
+#landing .hstats div{padding-right:10px}
+#landing .hstats div+div{border-left:1px solid var(--line);padding-left:12px}
+#landing .hstats b{display:block;font-size:20px;font-weight:800;line-height:1.2}
+#landing .hstats span{font-size:12px;color:var(--muted);line-height:1.3;display:block}
+/* mockup signal room */
+#landing .hmock{position:relative;margin-top:12px;background:linear-gradient(180deg,rgba(19,38,25,.9),rgba(9,21,14,.95));border:1px solid rgba(79,224,143,.22);border-radius:24px;padding:14px;box-shadow:0 30px 80px rgba(0,0,0,.5),0 0 60px rgba(47,207,116,.12)}
+#landing .hm-top{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:26px 0 12px}
+#landing .hm-top .t{display:flex;align-items:center;gap:7px;font-weight:700;font-size:13.5px}
+#landing .hm-top .t svg{width:18px}
+#landing .hm-tabs{display:flex;background:rgba(0,0,0,.35);border-radius:999px;padding:3px;font-size:12px}
+#landing .hm-tabs span{padding:4px 11px;border-radius:999px;color:var(--muted)}
+#landing .hm-tabs span.on{background:#2fcf74;color:#03230f;font-weight:700}
+#landing .hm-card{background:rgba(0,0,0,.28);border:1px solid var(--line);border-radius:18px;padding:14px}
+#landing .hm-row{display:flex;justify-content:space-between;align-items:center;gap:8px}
+#landing .hm-pair{font-weight:800;font-size:16px}
+#landing .hm-pair small{display:block;font-weight:500;color:var(--muted);font-size:12px}
+#landing .hm-buy{background:rgba(79,224,143,.16);color:#4fe08f;border:1px solid rgba(79,224,143,.35);font-weight:800;font-size:12px;border-radius:9px;padding:4px 10px}
+#landing .hm-big{font-size:clamp(30px,9vw,40px);font-weight:800;color:#4fe08f;letter-spacing:-.02em;margin:8px 0 2px;line-height:1}
+#landing .hm-sub{font-size:12px;color:var(--muted)}
+#landing .hm-chart{display:block;width:100%;height:74px;margin:10px 0 6px}
+#landing .hm-lv{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+#landing .hm-lv div{background:rgba(255,255,255,.03);border-radius:10px;padding:7px 8px;font-size:11px;color:var(--muted)}
+#landing .hm-lv b{display:block;color:var(--fg);font-size:13px;filter:blur(4px)}
+#landing .hm-note{font-size:11px;color:var(--muted);margin:10px 2px 0}
+#landing .hm-float{position:absolute;right:-6px;top:-22px;display:flex;align-items:center;gap:8px;background:#0e1f15;border:1px solid rgba(79,224,143,.3);border-radius:14px;padding:7px 11px;font-size:12px;box-shadow:0 10px 30px rgba(0,0,0,.4)}
+#landing .hm-float i{width:24px;height:24px;border-radius:8px;background:#229ED9;display:grid;place-items:center;font-style:normal;font-size:13px}
+#landing .hm-float b{display:block;font-size:12.5px}
+#landing .hm-float small{color:var(--muted)}
+@media(max-width:420px){#landing .hm-float{right:6px}}
+/* pita analisa hari ini */
+#landing .tick{display:flex;align-items:center;border-block:1px solid var(--line);background:rgba(0,0,0,.35);overflow:hidden;font-size:13px;white-space:nowrap}
+#landing .tick .lbl{flex:none;display:flex;align-items:center;gap:7px;padding:10px 14px;font-weight:700;background:var(--bg);position:relative;z-index:1;box-shadow:12px 0 16px var(--bg)}
+#landing .tick .lbl::before{content:"";width:7px;height:7px;border-radius:50%;background:#e3b85c}
+#landing .tick .run{display:flex;gap:26px;padding-left:20px;animation:tickrun 38s linear infinite;text-decoration:none;color:inherit}
+#landing .tick .it b{font-weight:800;margin-right:6px}
+#landing .tick .up{color:#4fe08f}#landing .tick .dn{color:#f05d6c}#landing .tick .nt{color:#e3b85c}
+@keyframes tickrun{to{transform:translateX(-50%)}}
+@media (prefers-reduced-motion:reduce){#landing .tick .run{animation:none;overflow-x:auto}}
+/* bagian terang: fitur */
+#landing #fitur{background:linear-gradient(180deg,#eef6f0,#e3efe6);color:#0b1a11;border-radius:28px 28px 0 0;margin-top:8px}
+#landing #fitur .eyebrow{color:#1f9d57}
+#landing #fitur h2{color:#0b1a11;letter-spacing:-.02em}
+#landing #fitur .feat{background:#fff;border:1px solid #d5e5da;box-shadow:0 10px 30px rgba(15,60,35,.08)}
+#landing #fitur .feat h3{color:#0b1a11}
+#landing #fitur .feat p{color:#4d6356}
+#landing #fitur .feat .ic{background:linear-gradient(140deg,#d9f7e5,#f3fbf6);border-color:#bfe6cd;color:#1f9d57}
+#landing h2{letter-spacing:-.02em;font-weight:800}
+/* kartu umum */
+#landing .feat,#landing .jstep,#landing .plan,#landing .topic,#landing .faq details,#landing .ch,#landing .jreq{border-radius:20px}
+#landing .term{background:linear-gradient(135deg,#0f2116,#08150e);border-color:rgba(79,224,143,.18)}
+#landing .plan.vip{background:linear-gradient(160deg,#123522,var(--panel) 60%)}
+#landing .cout{background:linear-gradient(160deg,#0f2618,var(--bg2) 60%)}
+#landing .seg2 button[aria-pressed="true"].neutral{background:#10281a}
+#landing .closing{background:radial-gradient(70% 120% at 50% 0%,rgba(79,224,143,.16),transparent 70%),var(--panel);border-color:rgba(79,224,143,.25)}
+#landing .ch .h{color:#4fe08f}
+/* langkah gabung interaktif */
+#landing .jsteps.acc{grid-template-columns:minmax(0,1fr);gap:10px;max-width:640px}
+#landing .jsteps.acc .jstep{flex-direction:row;flex-wrap:wrap;align-items:center;gap:6px 14px;cursor:pointer;padding:14px 16px;overflow:hidden}
+#landing .jsteps.acc .jstep::before{background:rgba(255,255,255,.06);color:var(--muted);flex:none}
+#landing .jsteps.acc .jstep h3{flex:1;font-size:16px}
+#landing .jsteps.acc .jstep>:not(h3){flex-basis:100%;margin-left:46px}
+#landing .jsteps.acc .jstep:not(.on)>:not(h3){display:none}
+#landing .jsteps.acc .jstep.on{border-color:rgba(79,224,143,.45);background:linear-gradient(180deg,#10261a,var(--panel))}
+#landing .jsteps.acc .jstep.on::before{background:#2fcf74;color:#03230f}
+#landing .jsteps.acc .jstep .jbar{position:absolute;left:0;bottom:0;height:3px;width:0;margin:0;background:#4fe08f;flex-basis:auto}
+#landing .jsteps.acc.auto .jstep.on .jbar{display:block;animation:jfill 6s linear forwards}
+@keyframes jfill{to{width:100%}}
+@media(max-width:420px){#landing .jsteps.acc .jstep>:not(h3){margin-left:0}}
+/* tanya admin */
+#landing .askadm{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:22px;align-items:center;background:linear-gradient(160deg,#0f2618,#08150e);border:1px solid rgba(79,224,143,.2);border-radius:24px;padding:24px}
+@media(max-width:760px){#landing .askadm{grid-template-columns:minmax(0,1fr)}}
+#landing .askadm h2{font-size:clamp(24px,6vw,32px)}
+#landing .chatbox{background:rgba(0,0,0,.3);border:1px solid var(--line);border-radius:18px;padding:14px;display:flex;flex-direction:column;gap:9px}
+#landing .chatbox .who{display:flex;align-items:center;gap:9px;font-size:13px;font-weight:700}
+#landing .chatbox .who i{width:30px;height:30px;border-radius:50%;background:#1d5a37;display:grid;place-items:center;font-style:normal}
+#landing .chatbox .who small{display:block;color:#4fe08f;font-weight:500;font-size:11.5px}
+#landing .bub{max-width:85%;font-size:13.5px;line-height:1.45;padding:9px 12px;border-radius:14px}
+#landing .bub.u{background:#1a2b20;align-self:flex-start;border-top-left-radius:4px}
+#landing .bub.a{background:#2fcf74;color:#03230f;align-self:flex-end;border-top-right-radius:4px}
 </style>
 </head>
 <body>
@@ -693,13 +805,14 @@ body.dlock{overflow:hidden}
 
 <nav class="nav">
   <div class="wrap">
+    <button class="burger" id="burger" type="button" aria-label="Buka menu" aria-expanded="false" aria-controls="drawer"><span></span><span></span><span></span></button>
     <a class="logo" href="#top" aria-label="DirmuFX Trade beranda">
       <svg class="dmark" viewBox="0 0 314 343" aria-hidden="true"><path d="M15 15H140A156.5 156.5 0 0 1 140 328H15Z" fill="none" stroke="#63d297" stroke-width="30" stroke-linejoin="round"/><g fill="#fff"><rect x="87" y="159" width="10" height="138" rx="5"/><rect x="69" y="202" width="46" height="58" rx="5"/><rect x="147" y="114" width="10" height="160" rx="5"/><rect x="129" y="153" width="46" height="75" rx="5"/></g><g fill="#63d297"><rect x="207" y="54" width="10" height="175" rx="5"/><rect x="189" y="89" width="46" height="99" rx="5"/></g></svg><span class="dword"><span class="dname">Dirmu<i>FX</i></span><span class="dtrade">TRADE</span></span>
     </a>
     <div class="navlinks">
       <a href="analisa.html">Analisa Harian</a><a href="makro.html">Riset Makro</a><a href="belajar.html">Belajar</a><a href="indikator.html">Indikator</a><a href="jurnal.html">Jurnal</a><a href="kantor.html">Kantor</a><a href="#fitur">Fitur</a><a href="#cara-gabung">Cara Gabung</a><a href="#terminal">Signal Room</a><a href="#kalkulator">Kalkulator</a><a href="#materi">Materi</a><a href="#faq">FAQ</a>
     </div>
-    <div class="navcta"><a class="btn ghost" href="#masuk" id="navMasuk">Masuk</a><a class="btn gold-btn" href="#daftar">Gabung</a><button class="burger" id="burger" type="button" aria-label="Buka menu" aria-expanded="false" aria-controls="drawer"><span></span><span></span><span></span></button></div>
+    <div class="navcta"><a class="btn ghost" href="#masuk" id="navMasuk">Masuk</a><a class="btn gold-btn" href="#daftar">Gabung</a></div>
   </div>
 </nav>
 <div class="drawer" id="drawer" aria-hidden="true">
@@ -735,24 +848,35 @@ body.dlock{overflow:hidden}
 <header class="hero" id="top">
   <div class="wrap">
     <div>
-      <div class="hero-logo"><svg class="dmark" viewBox="0 0 314 343" aria-hidden="true"><path d="M15 15H140A156.5 156.5 0 0 1 140 328H15Z" fill="none" stroke="#63d297" stroke-width="30" stroke-linejoin="round"/><g fill="#fff"><rect x="87" y="159" width="10" height="138" rx="5"/><rect x="69" y="202" width="46" height="58" rx="5"/><rect x="147" y="114" width="10" height="160" rx="5"/><rect x="129" y="153" width="46" height="75" rx="5"/></g><g fill="#63d297"><rect x="207" y="54" width="10" height="175" rx="5"/><rect x="189" y="89" width="46" height="99" rx="5"/></g></svg><span class="dword"><span class="dname">Dirmu<i>FX</i></span><span class="dtrade">TRADE</span></span></div>
-      <span class="eyebrow">Komunitas trading forex, emas &amp; crypto</span>
-      <h1>Trading lebih terarah, bukan asal tebak.</h1>
-      <p class="lead">Forex, emas (XAUUSD), sampai Bitcoin dan altcoin. DirmuFX membantu kamu membaca pasar dengan analisa, sinyal, kalender berita, dan manajemen risiko yang jelas, bukan ikut-ikutan FOMO.</p>
-      <div class="cta">
-        <a class="btn gold-btn" href="#analisa">Masuk Signal Room
+      <a class="livepill" href="#analisa"><b>LIVE</b>Signal Room aktif · Buka</a>
+      <h1>Trading lebih terarah,<span class="hl">bukan asal tebak.</span></h1>
+      <p class="lead">Sinyal, analisa, kalender berita, dan kalkulator risiko untuk forex, emas (XAUUSD), dan crypto. Gratis dibuka dari HP.</p>
+      <div class="cta two">
+        <a class="btn gold-btn" href="#analisa">Signal Room
           <svg viewBox="0 0 20 20" fill="none"><path d="M5 10h10M11 6l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-        <a class="btn ghost" href="https://t.me/dirmufxofficial" target="_blank" rel="noopener">Gabung Telegram</a>
-        <a class="btn ghost" href="https://chat.whatsapp.com/E4zPvDufMNqAaLdo9BLSmg" target="_blank" rel="noopener">Gabung Grup WA</a>
+        <a class="btn ghost" href="#cara-gabung">Cara gabung</a>
       </div>
-      <div class="chips">
-        <span class="chip"><b>Forex</b> pair mayor</span><span class="chip"><b>Emas</b> XAUUSD</span><span class="chip"><b>Crypto</b> BTC, ETH &amp; altcoin</span>
-        <span class="chip"><b>Scalping</b>, intraday &amp; swing</span>
-        <span class="chip"><b>24 jam</b> bot sinyal Telegram</span>
+      <div class="hstats">
+        <div><b>20 bab</b><span>akademi trading gratis</span></div>
+        <div><b>24 jam</b><span>bot sinyal Telegram</span></div>
+        <div><b>3 pasar</b><span>forex, emas &amp; crypto</span></div>
       </div>
     </div>
+    <a class="hmock" href="#analisa" style="text-decoration:none;color:inherit" aria-label="Buka Signal Room">
+      <div class="hm-float"><i>✈️</i><div><b>Sinyal baru masuk</b><small>Telegram · barusan</small></div></div>
+      <div class="hm-top"><span class="t"><svg viewBox="0 0 314 343" aria-hidden="true"><path d="M15 15H140A156.5 156.5 0 0 1 140 328H15Z" fill="none" stroke="#63d297" stroke-width="30" stroke-linejoin="round"/><g fill="#fff"><rect x="87" y="159" width="10" height="138" rx="5"/><rect x="69" y="202" width="46" height="58" rx="5"/><rect x="147" y="114" width="10" height="160" rx="5"/><rect x="129" y="153" width="46" height="75" rx="5"/></g><g fill="#63d297"><rect x="207" y="54" width="10" height="175" rx="5"/><rect x="189" y="89" width="46" height="99" rx="5"/></g></svg>Signal Room</span><span class="hm-tabs"><span class="on">Sinyal</span><span>Tren</span></span></div>
+      <div class="hm-card">
+        <div class="hm-row"><span class="hm-pair">XAUUSD<small>Emas · M15</small></span><span class="hm-buy">BUY</span></div>
+        <div class="hm-big">+63 pips</div>
+        <div class="hm-sub">Berjalan sejak entry</div>
+        <svg class="hm-chart" viewBox="0 0 300 74" preserveAspectRatio="none" aria-hidden="true"><defs><linearGradient id="hmg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4fe08f" stop-opacity=".35"/><stop offset="1" stop-color="#4fe08f" stop-opacity="0"/></linearGradient></defs><path d="M0 62 L25 58 L50 60 L75 50 L100 52 L125 42 L150 44 L175 34 L200 30 L225 32 L250 20 L275 16 L300 8 L300 74 L0 74Z" fill="url(#hmg)"/><path d="M0 62 L25 58 L50 60 L75 50 L100 52 L125 42 L150 44 L175 34 L200 30 L225 32 L250 20 L275 16 L300 8" fill="none" stroke="#4fe08f" stroke-width="2.5"/></svg>
+        <div class="hm-lv"><div>Entry<b>3.6xx</b></div><div>SL<b>3.6xx</b></div><div>TP MAX<b>3.6xx</b></div></div>
+      </div>
+      <p class="hm-note">Contoh tampilan. Entry, SL, dan TP asli terbuka untuk member.</p>
+    </a>
   </div>
 </header>
+<div class="tick" aria-label="Analisa hari ini"><span class="lbl">Analisa hari ini</span><a class="run" id="tickRun" href="#fundamental"><span class="it">Memuat bias pasar…</span></a></div>
 
 <section id="fitur">
   <div class="wrap">
@@ -933,6 +1057,23 @@ body.dlock{overflow:hidden}
         <h3>WhatsApp Admin</h3><p>Pertanyaan dan verifikasi member.</p><span class="h">0858-2344-4392</span></a>
     </div>
     <p class="warn"><span aria-hidden="true">⚠️</span><span>Waspada akun palsu. Admin resmi hanya <b>@dirmufxtrader</b> di Telegram. DirmuFX tidak pernah meminta transfer dana untuk dikelola.</span></p>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="askadm">
+      <div>
+        <h2>Bingung mulai dari mana? Tanya admin dulu, gratis.</h2>
+        <p class="lead">Tidak perlu punya akun dulu. Ceritakan modal dan tujuan tradingmu, admin bantu arahkan.</p>
+        <div class="cta"><a class="btn gold-btn" href="https://wa.me/6285823444392?text=Halo%20admin%20DirmuFX%2C%20saya%20mau%20tanya%20cara%20mulai." target="_blank" rel="noopener">Chat admin di WhatsApp</a></div>
+      </div>
+      <div class="chatbox" aria-hidden="true">
+        <div class="who"><i>💬</i><div>Admin DirmuFX<small>● online</small></div></div>
+        <div class="bub u">Halo, saya baru mau mulai. Modal $50 cocoknya gimana?</div>
+        <div class="bub a">Halo! Dengan $50, mulai dari risiko 1% per posisi dan lot kecil. Nanti admin kirim panduan Signal Room dan cara daftarnya.</div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -3018,6 +3159,27 @@ if(ON)load().catch(e=>{console.warn(e);setMsg("Gagal memuat sistem login. Cek ko
 #landing .btn.gold-btn,#auth .abtn.gold,#app .btn.primary{background:var(--up)!important;border-color:var(--up)!important;color:#06261b!important}
 #app #sigcard[data-dir="WAIT"] .sigword{color:#5b9cf5}
 </style>
+<script>
+/* pita analisa hari ini + langkah gabung interaktif */
+(function(){
+  const run=document.getElementById("tickRun");
+  if(run)fetch("data/fundamental.json?t="+Date.now()).then(r=>r.json()).then(d=>{
+    const m=d.markets||{};const it=Object.keys(m).map(k=>{const b=String(m[k].bias||"");const c=m[k].col==="up"?"up":m[k].col==="down"?"dn":"nt";
+      const ar=c==="up"?"▲":c==="dn"?"▼":"◆";return '<span class="it"><b>'+k+'</b><span class="'+c+'">'+ar+" "+b.toUpperCase()+"</span></span>"}).join("");
+    if(it)run.innerHTML=it+it;
+  }).catch(()=>{run.innerHTML='<span class="it">Lihat bias pasar terbaru di tab Fundamental</span>'});
+  const js=document.querySelector("#cara-gabung .jsteps");if(!js)return;
+  const st=[...js.querySelectorAll(".jstep")];js.classList.add("acc");
+  st.forEach(x=>{const b=document.createElement("i");b.className="jbar";x.appendChild(b)});
+  let i=0,tm=null;const red=matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const set=n=>{i=n;st.forEach((x,k)=>x.classList.toggle("on",k===n))};
+  const stop=()=>{js.classList.remove("auto");clearInterval(tm);tm=null};
+  set(0);
+  if(!red&&"IntersectionObserver"in window){js.classList.add("auto");
+    new IntersectionObserver((e,o)=>{if(e[0].isIntersecting&&js.classList.contains("auto")&&!tm){tm=setInterval(()=>{const n=(i+1)%st.length;set(n);st[n].querySelector(".jbar").style.animation="none";void st[n].offsetWidth;st[n].querySelector(".jbar").style.animation=""},6000)}},{threshold:.4}).observe(js)}
+  st.forEach((x,k)=>x.addEventListener("click",e=>{if(e.target.closest("a,button"))return;stop();set(k)}));
+})();
+</script>
 <script>
 /* menu garis tiga */
 (function(){const dr=document.getElementById("drawer"),bt=document.getElementById("burger");if(!dr||!bt)return;
