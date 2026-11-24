@@ -897,6 +897,11 @@ html.chartmode body{position:fixed;inset:0;width:100%}
 html.chartmode #app{padding-bottom:0!important}
 html.chartmode #app .bcbox{min-height:0!important}
 </style>
+<style>
+html #app #bigChart{overflow:hidden!important;position:relative}
+html #app #bigChart #bigChartInner{position:absolute;top:-2px;left:-2px;right:-2px;bottom:-2px;width:auto!important;height:auto!important}
+html #app #bigChart iframe{border:0!important;display:block}
+</style>
 </head>
 <body>
 <div id="landing">
@@ -2797,7 +2802,7 @@ function bcFit(){const v=$("v-chart"),box=$("bigChart");if(!v||v.hidden||!box)re
 (function(){function mode(){const on=decodeURIComponent(location.hash.slice(1))==="chart";document.documentElement.classList.toggle("chartmode",on);if(on){window.scrollTo(0,0);setTimeout(bcFit,60)}}
   window.addEventListener("hashchange",mode);window.addEventListener("resize",bcFit);window.addEventListener("orientationchange",()=>setTimeout(bcFit,300));mode();setTimeout(mode,400)})();
 function mountBigChart(){const box=$("bigChart");if(!box)return;const key=BC.sym+"|"+BC.tf+"|"+BC.st+"|"+BC.draw;if(BC.key===key&&box.firstChild)return;BC.key=key;
-  box.innerHTML='<div id="bigChartInner" style="height:100%;width:100%"></div>';
+  box.innerHTML='<div id="bigChartInner"></div>';
   loadTvJs().then(()=>{new TradingView.widget({container_id:"bigChartInner",autosize:true,symbol:bcFind(BC.sym).tv,interval:BC.tf,timezone:TZ,theme:"light",backgroundColor:"#f3f7f5",gridColor:"rgba(243,247,245,0)",style:BC.st,locale:"id",
     toolbar_bg:"#f3f7f5",hide_top_toolbar:true,hide_side_toolbar:!BC.draw,hide_legend:true,hide_volume:true,allow_symbol_change:false,save_image:false,enable_publishing:false,withdateranges:false,
     studies_overrides:{"volume.volume.transparency":100,"volume.volume ma.transparency":100},disabled_features:["create_volume_indicator_by_default","legend_widget"],overrides:{"paneProperties.background":"#f3f7f5","paneProperties.backgroundType":"solid",
