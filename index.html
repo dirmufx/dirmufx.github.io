@@ -908,6 +908,24 @@ html #app #v-analisa #sigcard{zoom:.82}
 html #app #v-analisa .card:not(#sigcard),html #app #v-analisa .pushbox,html #app #v-analisa .ibstrip{zoom:.9}
 html #app #v-analisa .disc{font-size:11.5px}
 </style>
+<style>
+html #app .runwrap{background:#fff;border:1px solid #bfe0d1;border-radius:18px;padding:12px 14px;margin:0 0 12px}
+html #app .runhd{display:flex;align-items:center;gap:8px;font:700 13.5px Inter,system-ui,sans-serif;color:#17604a;margin:0 0 8px}
+html #app .runhd .dot{width:8px;height:8px;border-radius:50%;background:#1f8a5a;box-shadow:0 0 0 4px rgba(31,138,90,.18);animation:pulse 1.4s infinite}
+html #app .runhd small{background:#dff1e8;border-radius:99px;padding:1px 8px;font-size:11px}
+html #app .runc{border-top:1px solid #eef3f0;padding:10px 0 4px}html #app .runc:first-of-type{border-top:0;padding-top:2px}
+html #app .rtop{display:flex;align-items:center;gap:8px}
+html #app .rd{font:700 11.5px Inter,system-ui,sans-serif;border-radius:8px;padding:3px 8px}
+html #app .runc.BUY .rd{background:#dff1e8;color:#17694c}html #app .runc.SELL .rd{background:#fbe3df;color:#a63a32}
+html #app .rt{flex:1;font-size:11.5px;color:#5f6f68}
+html #app .rp{font:700 15px Inter,system-ui,sans-serif;font-variant-numeric:tabular-nums}
+html #app .runc .up{color:#1f8a5a}html #app .runc .dn{color:#c4473f}
+html #app .rlv{display:flex;flex-wrap:wrap;gap:4px 12px;margin:8px 0 6px;font-size:12px;color:#5f6f68}html #app .rlv b{color:#1d2b26;font-variant-numeric:tabular-nums}html #app .rlv i{font-style:normal;font-size:10px;background:#f6edd6;color:#8a6414;border-radius:6px;padding:0 5px}
+html #app .rbar{position:relative;height:6px;border-radius:99px;background:linear-gradient(90deg,#fbe3df 0 25%,#e8f0ec 25%)}
+html #app .rbar i{position:absolute;left:0;top:0;bottom:0;border-radius:99px;background:#1f7a5a}
+html #app .rbar em{position:absolute;top:-2px;width:2px;height:10px;background:#9fb3aa}
+html #app .rnow{font-size:11.5px;color:#5f6f68;margin-top:6px}html #app .rnow b{color:#1d2b26}
+</style>
 </head>
 <body>
 <div id="landing">
@@ -1562,6 +1580,7 @@ html #app #v-analisa .disc{font-size:11.5px}
           <p class="note" id="mtfnote" style="margin:8px 0 0">Entry paling aman saat TF besar (H4 & D1) searah dengan TF entry. <button class="btn" id="mtfBtn" hidden>Muat ulang</button></p>
         </div>
         <div class="newsalert" id="newsAlert" hidden></div>
+        <div class="runwrap" id="runCard" hidden></div>
         <div class="card signal" id="sigcard" data-dir="WAIT">
           <div class="sg2">
             <div class="sgtop"><span class="sgstyle"><b id="sgStyle">Intraday</b> · <span id="sigtf"></span></span><span class="sgai">✦ DirmuFX</span><span class="sgstat" id="sgStat">Menunggu setup</span></div>
@@ -2110,7 +2129,7 @@ function render(){
   $("sigwhy").textContent=why.join(" · ");
   $("shareBtn").hidden=!(on&&!isLocked());
   {const jb=$("jurnalBtn");jb.hidden=!(on&&!isLocked());if(on){const q=new URLSearchParams({pair:S.sym,dir:act.dir,entry:fx(p.entry),sl:fx(p.sl),tp:fx(p.tp2)});jb.href="jurnal.html#add?"+q}}
-  try{sigV2(a,p,act,on,tf);pxHero(d,tf)}catch(e){console.warn(e)}
+  try{sigV2(a,p,act,on,tf);pxHero(d,tf);runCard(d)}catch(e){console.warn(e)}
   lotCalc();
   notifyCheck({...a,dir:a.shown},tf,p);
   const PRO=$("app").classList.contains("pro");
@@ -2231,7 +2250,7 @@ function renderHist(){
       .catch(()=>{HIST.busy=false;$("histList").innerHTML='<div class="small muted">Gagal memuat riwayat. Coba Refresh.</div>'});
     if(!HIST.res||HIST.resKey!==S.sym+"|"+tf)return}
   paintHist()}
-function paintHist(){const tf=currentTf(),R0=HIST.res;if(!R0)return;const r=R0.list;
+function paintHist(){const tf=currentTf(),R0=HIST.res;if(!R0)return;const r=R0.list;window.RUNSIG=r.filter(x=>/run/.test(x.res));try{runCard()}catch(e){}
   const done=r.filter(x=>!/run/.test(x.res)),win=done.filter(x=>x.res==="tp"||x.res==="tp1").length,sl=done.filter(x=>x.res==="sl").length;
   const wr=done.length?Math.round(win/done.length*100):0,R=done.reduce((a,x)=>a+(x.res==="tp"?3:x.res==="tp1"?2:x.res==="sl"?-1:0),0);
   $("histTf").textContent=S.sym+" · "+tfName(tf);
@@ -2242,6 +2261,18 @@ function paintHist(){const tf=currentTf(),R0=HIST.res;if(!R0)return;const r=R0.l
   const days=Math.max(1,Math.round((Date.now()-R0.from)/864e5));
   $("histNote").textContent=`Dihitung ulang dari data ${tfName(tf)} ± ${days} hari terakhir memakai aturan sinyal yang sama dengan sinyal live. Menang = TP1 (1:2) tercapai. 10 sinyal terakhir ditampilkan. Hasil masa lalu tidak menjamin hasil berikutnya.`}
 
+
+/* ===== sinyal yang sedang berjalan ===== */
+let RUNLAST=null;
+function runCard(d){if(d&&d.length)RUNLAST=d[d.length-1].c;const el=$("runCard");if(!el)return;const L=(window.RUNSIG||[]).slice(-3).reverse();
+  if(!L.length||RUNLAST==null){el.hidden=true;return}el.hidden=false;const pip=PIP[S.sym]||0.1;
+  el.innerHTML=`<div class="runhd"><span class="dot"></span>Sinyal berjalan <small>${L.length}</small></div>`+L.map(x=>{const sg=x.dir==="BUY"?1:-1,sl=x.res==="tp1run"?x.entry:x.entry-sg*x.risk,tp1=x.entry+sg*x.risk*2,tp2=x.entry+sg*x.risk*3;
+    const pp=Math.round((RUNLAST-x.entry)*sg/pip);const up=pp>=0;
+    const prog=Math.max(0,Math.min(100,((RUNLAST-(x.entry-sg*x.risk))*sg)/(x.risk*4)*100));
+    return `<div class="runc ${x.dir}"><div class="rtop"><span class="rd">${x.dir}</span><span class="rt">${new Date(x.t).toLocaleDateString("id-ID",{day:"numeric",month:"short"})} · ${hm(x.t)} · ${tfName(currentTf())}</span><span class="rp ${up?"up":"dn"}">${up?"+":""}${pp} pips</span></div>
+      <div class="rlv lockable"><span>Entry <b>${fx(x.entry)}</b></span><span>SL <b class="dn">${fx(sl)}</b>${x.res==="tp1run"?" <i>BE</i>":""}</span><span>TP1 <b class="up">${fx(tp1)}</b>${x.res==="tp1run"?" ✓":""}</span><span>TP MAX <b class="up">${fx(tp2)}</b></span></div>
+      <div class="rbar"><i style="width:${prog}%"></i><em style="left:25%"></em><em style="left:75%"></em></div>
+      <div class="rnow">Harga sekarang <b>${fx(RUNLAST)}</b> · ${x.res==="tp1run"?"TP1 sudah tercapai, SL pindah ke entry":"Belum kena TP1"}</div></div>`}).join("")}
 /* ===== peringatan berita merah ===== */
 const NEWS_CUR={XAUUSD:["USD"],EURUSD:["EUR","USD"],GBPUSD:["GBP","USD"],USDJPY:["USD","JPY"],AUDUSD:["AUD","USD"]};
 let NEWS_ITEMS=null;
