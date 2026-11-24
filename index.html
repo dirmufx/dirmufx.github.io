@@ -873,6 +873,24 @@ html #app .tkbias.up{background:#dff1e8;color:#17694c}html #app .tkbias.dn{backg
 html #app .tkol{margin:4px 0 0;padding-left:18px;font-size:13px;line-height:1.55;color:#4d5f57}html #app .tkol li{margin:4px 0}
 html #app .tkmore{display:block;text-align:center;background:#1f7a5a;color:#fff;border-radius:14px;padding:12px;font-weight:600;text-decoration:none;font-size:14px}
 </style>
+<style>
+html #app #v-chart .bcbar{gap:6px;margin:0 0 8px}
+html #app .bchead{display:flex;align-items:center;gap:8px}
+html #app .bchead .bcpair{flex:1;min-width:0}
+html #app .bchead .bcbtn{border:0;background:transparent;padding:4px 2px;justify-content:flex-start;gap:8px}
+html #app .bchead .bcbtn span{min-width:0}
+html #app .bctools{display:flex;gap:6px;flex:none}
+html #app .bcic{width:42px;height:42px;border-radius:14px;border:0;background:#e8f0ec;display:grid;place-items:center;cursor:pointer;color:#1f5f47}
+html #app .bcic svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+html #app .bcic[aria-pressed="true"]{background:#1f7a5a;color:#fff}
+html #app .bctype{position:relative}
+html #app .bcpop{position:absolute;right:0;top:calc(100% + 8px);z-index:35;width:260px;background:#fbfdfc;border:1px solid #dae6e0;border-radius:18px;padding:12px;box-shadow:0 16px 36px rgba(20,50,40,.16)}
+html #app .bcpop span{display:block;font-size:12px;color:#5f6f68;margin:0 0 8px 2px}
+html #app .bcpop div{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+html #app .bcpop button{border:0;border-radius:12px;padding:10px 4px;background:#eef4f1;font:600 13px Inter,system-ui,sans-serif;color:#3d4a44;cursor:pointer}
+html #app .bcpop button[aria-pressed="true"]{background:#1f7a5a;color:#fff}
+html #app .bcbox{height:calc(100vh - 205px - env(safe-area-inset-bottom,0px));min-height:440px;border-radius:14px}
+</style>
 </head>
 <body>
 <div id="landing">
@@ -1606,8 +1624,14 @@ html #app .tkmore{display:block;text-align:center;background:#1f7a5a;color:#fff;
   <!-- CHART -->
   <section class="view" id="v-chart" hidden>
     <div class="bcbar">
-      <div class="bcpair"><button type="button" class="bcbtn" id="bcBtn" aria-haspopup="listbox" aria-expanded="false"><span><b id="bcPair">XAU/USD</b><small id="bcSrc">Emas spot · OANDA</small></span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10l5 5 5-5"/></svg></button>
+      <div class="bchead"><div class="bcpair"><button type="button" class="bcbtn" id="bcBtn" aria-haspopup="listbox" aria-expanded="false"><span><b id="bcPair">XAU/USD</b><small id="bcSrc">Emas spot · OANDA</small></span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10l5 5 5-5"/></svg></button>
         <div class="bcmenu" id="bcMenu" hidden><div class="bcsearch"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg><input id="bcQ" placeholder="Cari pair lain..." autocomplete="off"></div><div class="bclist" id="bcList" role="listbox"></div></div></div>
+        <div class="bctools">
+          <button type="button" class="bcic" id="bcDraw" aria-pressed="true" title="Alat gambar"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l4-1 11-11-3-3L5 16z"/><path d="M14 6l3 3"/></svg></button>
+          <div class="bctype"><button type="button" class="bcic" id="bcTypeBtn" aria-expanded="false" title="Tipe chart"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4v16h16"/><path d="M8 16v-4M12 16V8M16 16v-6"/></svg></button>
+            <div class="bcpop" id="bcPop" hidden><span>Tipe chart</span><div><button type="button" data-st="1">Candle</button><button type="button" data-st="2">Line</button><button type="button" data-st="3">Area</button></div></div></div>
+        </div>
+      </div>
       <div class="bctf" id="bcTf" role="group" aria-label="Timeframe"></div>
     </div>
     <div class="bcbox" id="bigChart"></div>
@@ -2700,7 +2724,7 @@ function mountView(v){
 
 
 /* ================= halaman Chart (TradingView penuh, alat gambar di kiri) ================= */
-const BC={sym:(()=>{try{return localStorage.getItem("dfx-bc-sym2")||"XAUUSD"}catch(e){return"XAUUSD"}})(),tf:(()=>{try{return localStorage.getItem("dfx-bc-tf")||"15"}catch(e){return"15"}})(),key:"",px:{}};
+const BC={sym:(()=>{try{return localStorage.getItem("dfx-bc-sym2")||"XAUUSD"}catch(e){return"XAUUSD"}})(),tf:(()=>{try{return localStorage.getItem("dfx-bc-tf")||"15"}catch(e){return"15"}})(),key:"",px:{},st:(()=>{try{return localStorage.getItem("dfx-bc-st")||"1"}catch(e){return"1"}})(),draw:(()=>{try{return localStorage.getItem("dfx-bc-draw")!=="0"}catch(e){return true}})()};
 const BCL=[
  {g:"Crypto",k:"BTCUSDT",b:"BTC",q:"USDT",n:"Bitcoin",tv:"BINANCE:BTCUSDT",src:"Binance"},
  {g:"Crypto",k:"ETHUSDT",b:"ETH",q:"USDT",n:"Ethereum",tv:"BINANCE:ETHUSDT",src:"Binance"},
@@ -2753,14 +2777,25 @@ async function bcPrices(){
   $("bcTf").onclick=e=>{const b=e.target.closest("button");if(!b)return;BC.tf=b.dataset.v;try{localStorage.setItem("dfx-bc-tf",BC.tf)}catch(e){}
     [...$("bcTf").children].forEach(x=>x.setAttribute("aria-pressed",x===b));mountBigChart()};
 })();
-function mountBigChart(){const box=$("bigChart");if(!box)return;const key=BC.sym+"|"+BC.tf;if(BC.key===key&&box.firstChild)return;BC.key=key;
+
+(function(){if(!$("bcDraw"))return;const d=$("bcDraw"),tb=$("bcTypeBtn"),pop=$("bcPop");
+  const paint=()=>{d.setAttribute("aria-pressed",BC.draw);[...pop.querySelectorAll("button")].forEach(b=>b.setAttribute("aria-pressed",b.dataset.st===BC.st))};paint();
+  d.onclick=()=>{BC.draw=!BC.draw;try{localStorage.setItem("dfx-bc-draw",BC.draw?"1":"0")}catch(e){}paint();mountBigChart()};
+  tb.onclick=e=>{e.stopPropagation();pop.hidden=!pop.hidden;tb.setAttribute("aria-expanded",!pop.hidden)};
+  pop.onclick=e=>{const b=e.target.closest("button");if(!b)return;BC.st=b.dataset.st;try{localStorage.setItem("dfx-bc-st",BC.st)}catch(_){}paint();pop.hidden=true;mountBigChart()};
+  document.addEventListener("click",e=>{if(!pop.hidden&&!e.target.closest(".bctype"))pop.hidden=true});
+})();
+function mountBigChart(){const box=$("bigChart");if(!box)return;const key=BC.sym+"|"+BC.tf+"|"+BC.st+"|"+BC.draw;if(BC.key===key&&box.firstChild)return;BC.key=key;
   box.innerHTML='<div id="bigChartInner" style="height:100%;width:100%"></div>';
-  loadTvJs().then(()=>{new TradingView.widget({container_id:"bigChartInner",autosize:true,symbol:bcFind(BC.sym).tv,interval:BC.tf,timezone:TZ,theme:"light",style:"1",locale:"id",
-    toolbar_bg:"#ffffff",hide_top_toolbar:true,hide_side_toolbar:false,hide_legend:false,allow_symbol_change:false,save_image:false,enable_publishing:false,withdateranges:false,
-    overrides:{"paneProperties.background":"#ffffff","paneProperties.backgroundType":"solid",
-      "paneProperties.vertGridProperties.color":"#f1f4f2","paneProperties.horzGridProperties.color":"#f1f4f2","scalesProperties.textColor":"#5f6f68","scalesProperties.lineColor":"#e3ebe7",
-      "mainSeriesProperties.candleStyle.upColor":"#1f8a5a","mainSeriesProperties.candleStyle.downColor":"#c4473f","mainSeriesProperties.candleStyle.borderUpColor":"#1f8a5a","mainSeriesProperties.candleStyle.borderDownColor":"#c4473f",
-      "mainSeriesProperties.candleStyle.wickUpColor":"#1f8a5a","mainSeriesProperties.candleStyle.wickDownColor":"#c4473f"}})})
+  loadTvJs().then(()=>{new TradingView.widget({container_id:"bigChartInner",autosize:true,symbol:bcFind(BC.sym).tv,interval:BC.tf,timezone:TZ,theme:"light",style:BC.st,locale:"id",
+    toolbar_bg:"#fbfdfc",hide_top_toolbar:true,hide_side_toolbar:!BC.draw,hide_legend:false,allow_symbol_change:false,save_image:false,enable_publishing:false,withdateranges:false,
+    overrides:{"paneProperties.background":"#fbfdfc","paneProperties.backgroundType":"solid",
+      "paneProperties.vertGridProperties.color":"#eef3f0","paneProperties.horzGridProperties.color":"#eef3f0","scalesProperties.textColor":"#5f6f68","scalesProperties.lineColor":"#e3ebe7","scalesProperties.fontSize":11,
+      "mainSeriesProperties.showCountdown":true,
+      "mainSeriesProperties.candleStyle.upColor":"#5f9c6f","mainSeriesProperties.candleStyle.downColor":"#c9786f","mainSeriesProperties.candleStyle.borderUpColor":"#5f9c6f","mainSeriesProperties.candleStyle.borderDownColor":"#c9786f",
+      "mainSeriesProperties.candleStyle.wickUpColor":"#5f9c6f","mainSeriesProperties.candleStyle.wickDownColor":"#c9786f",
+      "mainSeriesProperties.lineStyle.color":"#1f7a5a","mainSeriesProperties.lineStyle.linewidth":2,
+      "mainSeriesProperties.areaStyle.color1":"rgba(31,122,90,.25)","mainSeriesProperties.areaStyle.color2":"rgba(31,122,90,.02)","mainSeriesProperties.areaStyle.linecolor":"#1f7a5a","mainSeriesProperties.areaStyle.linewidth":2}})})
   .catch(()=>{box.innerHTML='<p class="note" style="padding:16px">Chart gagal dimuat. Cek koneksi lalu buka lagi.</p>'})}
 
 /* ================= Terminal (Kalender / Berita / Makro / Sentimen) ================= */
@@ -3620,7 +3655,7 @@ html #app .bcbox{height:calc(100vh - 330px - env(safe-area-inset-bottom,0px));mi
 </style>
 
 <script>
-(function(){const T={analisa:"Signal Room",chart:"Chart",kalender:"",fundamental:"Fundamental",member:"Gabung Member"};
+(function(){const T={analisa:"Signal Room",chart:"",kalender:"",fundamental:"Fundamental",member:"Gabung Member"};
   function up(){const h=decodeURIComponent(location.hash.slice(1));const t=document.getElementById("pgTitle");if(t&&h in T){t.textContent=T[h];t.hidden=!T[h]}
     document.querySelectorAll("#app .abnav a").forEach(a=>a.classList.toggle("on",a.dataset.k===h))}
   window.addEventListener("hashchange",up);up();
