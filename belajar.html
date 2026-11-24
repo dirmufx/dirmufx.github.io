@@ -7,10 +7,10 @@
 <meta name="description" content="Belajar trading XAUUSD dari dasar: istilah, candlestick, tren, manajemen risiko, sampai SMC dan fundamental. Lengkap dengan kuis.">
 <script src="dfx-config.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Inter+Tight:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Inter+Tight:wght@500;600;700&display=swap">
 <style>
 :root{--bg:#141714;--bg2:#181c18;--panel:#1c201c;--panel2:#242924;--line:#2c322c;--fg:#eef0e8;--muted:#a6ad9f;--gold:#5b9cf5;--gold-hi:#8dbbff;--gold-lo:#3f80dc;--up:#66cf92;--up-dim:#163a27;--down:#e86a64;
- --f-display:"Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",sans-serif;--f-body:"Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",sans-serif;--f-mono:"Plus Jakarta Sans",system-ui,sans-serif;color-scheme:dark}
+ --f-display:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;--f-body:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;--f-mono:"Inter",system-ui,sans-serif;color-scheme:dark}
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
 body{margin:0;background:radial-gradient(900px 500px at 90% -10%,rgba(91,156,245,.10),transparent 60%),var(--bg);font-feature-settings:"tnum" 1;color:var(--fg);font-family:var(--f-body);font-size:16px;line-height:1.65;min-height:100vh}
@@ -126,7 +126,7 @@ function chart(cl,o={}){
  (o.lines||[]).forEach(l=>vals.push(l.v));(o.zones||[]).forEach(z=>vals.push(z.a,z.b));(o.boxes||[]).forEach(z=>vals.push(z.a,z.b));(o.labels||[]).forEach(z=>vals.push(z.v));
  let mn=Math.min(...vals),mx=Math.max(...vals);const pd=(mx-mn)*.08||1;mn-=pd;mx+=pd;
  const y=v=>T+(mx-v)/(mx-mn)*(H-T-P),n=cs.length,step=(W-P-R)/n,x=i=>P+step*(i+.5),bw=Math.max(3,Math.min(18,step*.62));
- let s=`<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" font-family="Plus Jakarta Sans,system-ui,sans-serif">`;
+ let s=`<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" font-family="Inter,system-ui,sans-serif">`;
  for(let k=1;k<4;k++){const yy=T+(H-T-P)*k/4;s+=`<line x1="${P}" x2="${W-P}" y1="${yy}" y2="${yy}" stroke="#1f1f25" stroke-width="1"/>`}
  (o.zones||[]).forEach(z=>{const c=z.c||COL.gold;s+=`<rect x="${z.x1!=null?x(z.x1)-step/2:P}" y="${y(Math.max(z.a,z.b))}" width="${(z.x1!=null?W-R-(x(z.x1)-step/2):W-P-R)}" height="${Math.abs(y(z.a)-y(z.b))}" fill="${c}" fill-opacity=".14" stroke="${c}" stroke-opacity=".5" stroke-dasharray="4 4"/>`;
    if(z.t)s+=`<text x="${W-R+6}" y="${(y(z.a)+y(z.b))/2+4}" fill="${c}" font-size="13" font-weight="600">${z.t}</text>`});
@@ -180,7 +180,7 @@ function rc(o){
  const pw=W-AX,step=pw/(n+(o.space==null?3:o.space)),bw=Math.max(2,step*.68);
  const X=i=>step*(i+.5)+2,Y=v=>TP+(mx-v)/(mx-mn)*(MH-TP);
  const uid="c"+Math.floor(Math.random()*1e9);
- let s=`<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" font-family="Plus Jakarta Sans,system-ui,sans-serif" style="background:${TV.bg};border-radius:12px"><defs><clipPath id="${uid}"><rect x="0" y="0" width="${pw}" height="${MH}"/></clipPath></defs>`;
+ let s=`<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" font-family="Inter,system-ui,sans-serif" style="background:${TV.bg};border-radius:12px"><defs><clipPath id="${uid}"><rect x="0" y="0" width="${pw}" height="${MH}"/></clipPath></defs>`;
  // grid + axis
  const st=niceStep(mx-mn,o.ticks||6),d=o.dec==null?2:o.dec;
  for(let v=Math.ceil(mn/st)*st;v<=mx;v+=st){const y=Y(v);s+=`<line x1="0" x2="${pw}" y1="${y}" y2="${y}" stroke="${TV.grid}"/><text x="${pw+6}" y="${y+4}" fill="${TV.axis}" font-size="15">${fmtP(v,d)}</text>`}
@@ -324,7 +324,7 @@ const FIG={
 };
 function anatomySvg(){const c=(x,o,cl,h,l,col)=>{const t=Math.min(o,cl),b=Math.max(o,cl);return `<line x1="${x}" x2="${x}" y1="${h}" y2="${l}" stroke="${col}" stroke-width="3"/><rect x="${x-26}" y="${t}" width="52" height="${b-t}" rx="2" fill="${col}"/>`};
  const lab=(x,yy,t,col="#d1d4dc",a="start")=>`<line x1="${a==="start"?x-36:x+36}" x2="${a==="start"?x-6:x+6}" y1="${yy}" y2="${yy}" stroke="#4a525c" stroke-dasharray="3 3"/><text x="${x}" y="${yy+4}" fill="${col}" font-size="17" font-weight="600" text-anchor="${a}">${t}</text>`;
- return `<svg viewBox="0 0 640 260" xmlns="http://www.w3.org/2000/svg" font-family="Plus Jakarta Sans,system-ui" style="background:${TV.bg};border-radius:12px">${c(190,190,80,40,225,TV.up)}${c(450,80,190,40,225,TV.dn)}
+ return `<svg viewBox="0 0 640 260" xmlns="http://www.w3.org/2000/svg" font-family="Inter,system-ui" style="background:${TV.bg};border-radius:12px">${c(190,190,80,40,225,TV.up)}${c(450,80,190,40,225,TV.dn)}
  ${lab(232,40,"High")}${lab(232,80,"Close",TV.up)}${lab(232,190,"Open",TV.up)}${lab(232,225,"Low")}${lab(132,135,"Body","#d1d4dc","end")}
  ${lab(492,40,"High")}${lab(492,80,"Open",TV.dn)}${lab(492,190,"Close",TV.dn)}${lab(492,225,"Low")}${lab(392,60,"Wick","#d1d4dc","end")}
  <text x="190" y="252" fill="${TV.up}" font-size="18" font-weight="700" text-anchor="middle">Bullish</text><text x="450" y="252" fill="${TV.dn}" font-size="18" font-weight="700" text-anchor="middle">Bearish</text></svg>`}

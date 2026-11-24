@@ -8,10 +8,10 @@
 <meta property="og:title" content="Jurnal Trading DirmuFX (gratis)">
 <meta property="og:description" content="Catat trade, lihat win rate & kebiasaan yang bikin rugi. Gratis, langsung dari HP.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Inter+Tight:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Inter+Tight:wght@500;600;700&display=swap">
 <style>
 :root{--bg:#141714;--panel:#1c201c;--panel2:#242924;--line:#2c322c;--fg:#eef0e8;--muted:#a6ad9f;--blue:#5b9cf5;--up:#3fbf7f;--down:#e5484d;--amber:#e3b85c;--brand:#63d297;
- --f:"Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",sans-serif;color-scheme:dark}
+ --f:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;color-scheme:dark}
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
 body{margin:0;background:radial-gradient(900px 500px at 90% -10%,rgba(91,156,245,.09),transparent 60%),var(--bg);color:var(--fg);font-family:var(--f);font-size:15.5px;line-height:1.6;font-feature-settings:"tnum" 1;min-height:100vh}
@@ -222,7 +222,7 @@ function render(){
   drawEq(s.ser);guard();analysis(arr);list(arr);
 }
 function drawEq(ser){const cv=$("eq"),W=cv.clientWidth||600,H=170,dpr=window.devicePixelRatio||1;cv.width=W*dpr;cv.height=H*dpr;const g=cv.getContext("2d");g.setTransform(dpr,0,0,dpr,0,0);g.clearRect(0,0,W,H);
-  if(ser.length<2){g.fillStyle="#a6ad9f";g.font="14px Plus Jakarta Sans,system-ui";g.textAlign="center";g.fillText("Grafik saldo muncul setelah ada trade yang selesai",W/2,H/2);return}
+  if(ser.length<2){g.fillStyle="#a6ad9f";g.font="14px Inter,system-ui";g.textAlign="center";g.fillText("Grafik saldo muncul setelah ada trade yang selesai",W/2,H/2);return}
   const lo=Math.min(0,...ser),hi=Math.max(0,...ser),pad=(hi-lo)*.12||1,Y=v=>8+(hi+pad-v)/((hi+pad)-(lo-pad))*(H-16),X=i=>4+i/(ser.length-1)*(W-8);
   g.strokeStyle="#2c322c";g.setLineDash([4,4]);g.beginPath();g.moveTo(0,Y(0));g.lineTo(W,Y(0));g.stroke();g.setLineDash([]);
   const end=ser[ser.length-1],col=end>=0?"#3fbf7f":"#e5484d",gr=g.createLinearGradient(0,0,0,H);gr.addColorStop(0,end>=0?"rgba(63,191,127,.28)":"rgba(229,72,77,.28)");gr.addColorStop(1,"rgba(0,0,0,0)");
@@ -305,8 +305,8 @@ $("impJson").onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new Fil
   if(!confirm(`Pulihkan ${d.trades.length} trade? Data yang ada akan digabung.`))return;const ids=new Set(T.map(x=>x.id));T=T.concat(d.trades.filter(x=>!ids.has(x.id)));if(d.cfg)CFG=Object.assign(CFG,d.cfg);save();LS.set("dfx-jurnal-cfg",JSON.stringify(CFG));render()}catch(err){alert("File cadangan tidak valid.")}};r.readAsText(f);e.target.value=""};
 /* ---- bagikan rekap (promosi) ---- */
 $("shareBtn").onclick=async()=>{const arr=T.filter(x=>inPeriod(x.t)),s=stats(arr);if(!s.n){alert("Belum ada trade selesai di periode ini.");return}
-  const W=1080,H=1350,cv=document.createElement("canvas");cv.width=W;cv.height=H;const g=cv.getContext("2d");try{await document.fonts.load("800 60px 'Plus Jakarta Sans'")}catch(e){}
-  const Fn=(w,z)=>`${w} ${z}px 'Plus Jakarta Sans',system-ui,sans-serif`;g.fillStyle="#121512";g.fillRect(0,0,W,H);
+  const W=1080,H=1350,cv=document.createElement("canvas");cv.width=W;cv.height=H;const g=cv.getContext("2d");try{await document.fonts.load("800 60px 'Inter'")}catch(e){}
+  const Fn=(w,z)=>`${w} ${z}px 'Inter',system-ui,sans-serif`;g.fillStyle="#121512";g.fillRect(0,0,W,H);
   const gr=g.createRadialGradient(W,0,40,W,0,950);gr.addColorStop(0,s.net>=0?"rgba(63,191,127,.22)":"rgba(229,72,77,.22)");gr.addColorStop(1,"rgba(0,0,0,0)");g.fillStyle=gr;g.fillRect(0,0,W,H);
   g.save();g.translate(70,70);g.scale(.32,.32);g.lineWidth=30;g.strokeStyle="#63d297";g.lineJoin="round";g.stroke(new Path2D("M15 15H140A156.5 156.5 0 0 1 140 328H15Z"));g.fillStyle="#fff";[[87,159,10,138],[69,202,46,58],[147,114,10,160],[129,153,46,75]].forEach(r=>g.fillRect(...r));g.fillStyle="#63d297";[[207,54,10,175],[189,89,46,99]].forEach(r=>g.fillRect(...r));g.restore();
   g.fillStyle="#fff";g.font=Fn(800,52);g.fillText("Dirmu",190,128);const wd=g.measureText("Dirmu").width;g.fillStyle="#63d297";g.fillText("FX",190+wd,128);g.fillStyle="#9aa39a";g.font=Fn(600,24);g.fillText("JURNAL TRADING",192,165);
