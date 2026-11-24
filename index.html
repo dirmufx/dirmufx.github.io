@@ -3123,8 +3123,9 @@ async function load(){
   user=u2;profile=null;authReady=true;if(unsub){unsub();unsub=null}
   window.DFX_hi&&DFX_hi(u2);const nav=$("navMasuk");if(nav){nav.textContent=u2?"Akun":"Daftar";nav.href=u2?"#akun":"#daftar"}const dm=$("drMasuk");if(dm){dm.href=u2?"#akun":"#masuk";dm.textContent=u2?"Akun saya":"Masuk"}const dg=document.querySelector(".dfoot .dreg");if(dg)dg.hidden=!!u2;
   if(!u2){window.DFX_setMember&&window.DFX_setMember(false);window.DFX_setInd&&window.DFX_setInd(false);paint();return}
+  {const hh=decodeURIComponent(location.hash.slice(1));if(LOGIN_ROUTES.includes(hh)&&hh!=="lupa")location.replace("#akun")}
   const ref=fs.doc(D,"members",u2.uid);
-  try{const snap=await fs.getDoc(ref);
+  try{const snap=await Promise.race([fs.getDoc(ref),new Promise((_,r)=>setTimeout(()=>r(new Error("timeout")),8000))]);
    if(!snap.exists())await fs.setDoc(ref,{name:(pendingName||u2.displayName||"").slice(0,60),email:u2.email||"",mt5:"",path:"",plan:0,status:"pending",createdAt:fs.serverTimestamp(),updatedAt:fs.serverTimestamp()});
   }catch(e){console.warn(e)}
   pendingName="";
@@ -3143,7 +3144,8 @@ $("fAuth").addEventListener("submit",async e=>{
    pendingName=nm;const c=await auth.createUserWithEmailAndPassword(A,em,pw);
    try{await auth.updateProfile(c.user,{displayName:nm})}catch(_){}
    setMsg("Akun berhasil dibuat.","ok");
-  }else{await auth.signInWithEmailAndPassword(A,em,pw);setMsg("")}
+  }else{await Promise.race([auth.signInWithEmailAndPassword(A,em,pw),new Promise((_,r)=>setTimeout(()=>r({message:"Koneksi lambat. Cek internet lalu coba lagi."}),20000))]);setMsg("Berhasil masuk…","ok");
+   const hh=decodeURIComponent(location.hash.slice(1));if(LOGIN_ROUTES.includes(hh))location.replace("#akun")}
  }catch(err){setMsg(err.code?errText(err):err.message,"err")}
  $("aSubmit").disabled=false;
 });
