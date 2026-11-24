@@ -930,6 +930,12 @@ html #app .rnow{font-size:11.5px;color:#5f6f68;margin-top:6px}html #app .rnow b{
 /* menu bawah tetap di bawah saat digeser (perbaikan iOS Safari) */
 html #app .abnav,html #landing .lbnav{position:fixed!important;bottom:0!important;left:0;right:0;top:auto!important;-webkit-transform:translate3d(0,0,0);transform:translate3d(0,0,0);-webkit-backdrop-filter:none!important;backdrop-filter:none!important;background:#fff!important;will-change:transform}
 </style>
+<style>
+html #app #bigChart .lwcd{position:absolute;right:4px;z-index:3;font:600 10px Inter,system-ui,sans-serif;color:#fff;border-radius:4px;padding:2px 5px;pointer-events:none;font-variant-numeric:tabular-nums}
+html #app #bigChart .lwcd.up{background:#16a34a}html #app #bigChart .lwcd.dn{background:#111}
+html #app #bigChart #bigChartInner{touch-action:none}
+html #app #bigChart .lwreset{position:absolute;left:10px;bottom:34px;z-index:4;border:1px solid #dae6e0;background:#fff;color:#1f5f47;font:600 11.5px Inter,system-ui,sans-serif;border-radius:99px;padding:6px 11px;cursor:pointer}
+</style>
 </head>
 <body>
 <div id="landing">
@@ -1667,7 +1673,7 @@ html #app .abnav,html #landing .lbnav{position:fixed!important;bottom:0!importan
       <div class="bchead"><div class="bcpair"><button type="button" class="bcbtn" id="bcBtn" aria-haspopup="listbox" aria-expanded="false"><span><b id="bcPair">XAU/USD</b><small id="bcSrc">Emas spot · OANDA</small></span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10l5 5 5-5"/></svg></button>
         <div class="bcmenu" id="bcMenu" hidden><div class="bcsearch"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg><input id="bcQ" placeholder="Cari pair lain..." autocomplete="off"></div><div class="bclist" id="bcList" role="listbox"></div></div></div>
         <div class="bctools">
-          <button type="button" class="bcic" id="bcDraw" aria-pressed="true" title="Alat gambar"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l4-1 11-11-3-3L5 16z"/><path d="M14 6l3 3"/></svg></button>
+          <button type="button" class="bcic" id="bcDraw" aria-pressed="false" title="Mode gambar (alat gambar TradingView)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l4-1 11-11-3-3L5 16z"/><path d="M14 6l3 3"/></svg></button>
           <div class="bctype"><button type="button" class="bcic" id="bcTypeBtn" aria-expanded="false" title="Tipe chart"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4v16h16"/><path d="M8 16v-4M12 16V8M16 16v-6"/></svg></button>
             <div class="bcpop" id="bcPop" hidden><span>Tipe chart</span><div><button type="button" data-st="1">Candle</button><button type="button" data-st="2">Line</button><button type="button" data-st="3">Area</button></div></div></div>
         </div>
@@ -2776,7 +2782,7 @@ function mountView(v){
 
 
 /* ================= halaman Chart (TradingView penuh, alat gambar di kiri) ================= */
-const BC={sym:(()=>{try{return localStorage.getItem("dfx-bc-sym2")||"XAUUSD"}catch(e){return"XAUUSD"}})(),tf:(()=>{try{return localStorage.getItem("dfx-bc-tf")||"15"}catch(e){return"15"}})(),key:"",px:{},st:(()=>{try{return localStorage.getItem("dfx-bc-st")||"1"}catch(e){return"1"}})(),draw:(()=>{try{return localStorage.getItem("dfx-bc-draw")!=="0"}catch(e){return true}})()};
+const BC={sym:(()=>{try{return localStorage.getItem("dfx-bc-sym2")||"XAUUSD"}catch(e){return"XAUUSD"}})(),tf:(()=>{try{return localStorage.getItem("dfx-bc-tf")||"15"}catch(e){return"15"}})(),key:"",px:{},st:(()=>{try{return localStorage.getItem("dfx-bc-st")||"1"}catch(e){return"1"}})(),draw:(()=>{try{return localStorage.getItem("dfx-bc-draw2")==="1"}catch(e){return false}})()};
 const BCL=[
  {g:"Crypto",k:"BTCUSDT",b:"BTC",q:"USDT",n:"Bitcoin",tv:"BINANCE:BTCUSDT",src:"Binance"},
  {g:"Crypto",k:"ETHUSDT",b:"ETH",q:"USDT",n:"Ethereum",tv:"BINANCE:ETHUSDT",src:"Binance"},
@@ -2832,7 +2838,7 @@ async function bcPrices(){
 
 (function(){if(!$("bcDraw"))return;const d=$("bcDraw"),tb=$("bcTypeBtn"),pop=$("bcPop");
   const paint=()=>{d.setAttribute("aria-pressed",BC.draw);[...pop.querySelectorAll("button")].forEach(b=>b.setAttribute("aria-pressed",b.dataset.st===BC.st))};paint();
-  d.onclick=()=>{BC.draw=!BC.draw;try{localStorage.setItem("dfx-bc-draw",BC.draw?"1":"0")}catch(e){}paint();mountBigChart()};
+  d.onclick=()=>{BC.draw=!BC.draw;try{localStorage.setItem("dfx-bc-draw2",BC.draw?"1":"0")}catch(e){}paint();mountBigChart()};
   tb.onclick=e=>{e.stopPropagation();pop.hidden=!pop.hidden;tb.setAttribute("aria-expanded",!pop.hidden)};
   pop.onclick=e=>{const b=e.target.closest("button");if(!b)return;BC.st=b.dataset.st;try{localStorage.setItem("dfx-bc-st",BC.st)}catch(_){}paint();pop.hidden=true;mountBigChart()};
   document.addEventListener("click",e=>{if(!pop.hidden&&!e.target.closest(".bctype"))pop.hidden=true});
@@ -2842,7 +2848,48 @@ function bcFit(){const v=$("v-chart"),box=$("bigChart");if(!v||v.hidden||!box)re
   const top=box.getBoundingClientRect().top+window.scrollY;const nh=nav?nav.offsetHeight:84;box.style.height=Math.max(300,window.innerHeight-top-nh-6)+"px"}
 (function(){function mode(){const on=decodeURIComponent(location.hash.slice(1))==="chart";document.documentElement.classList.toggle("chartmode",on);if(on){window.scrollTo(0,0);setTimeout(bcFit,60)}}
   window.addEventListener("hashchange",mode);window.addEventListener("resize",bcFit);window.addEventListener("orientationchange",()=>setTimeout(bcFit,300));mode();setTimeout(mode,400)})();
+
+/* ===== chart bebas geser (Lightweight Charts) untuk emas & crypto ===== */
+const LWSRC={XAUUSD:{bn:"PAXGUSDT",gold:1},BTCUSDT:{bn:"BTCUSDT"},ETHUSDT:{bn:"ETHUSDT"},SOLUSDT:{bn:"SOLUSDT"},BNBUSDT:{bn:"BNBUSDT"},XRPUSDT:{bn:"XRPUSDT"},DOGEUSDT:{bn:"DOGEUSDT"}};
+const LWIV={"1":"1m","5":"5m","15":"15m","30":"30m","60":"1h","240":"4h","D":"1d","W":"1w"};
+const LWSEC={"1":60,"5":300,"15":900,"30":1800,"60":3600,"240":14400,"D":86400,"W":604800};
+let LW=null;window.DFX_LW=()=>LW;
+function lwStop(){if(!LW)return;try{LW.ws&&LW.ws.close()}catch(e){}clearInterval(LW.tick);clearInterval(LW.poll);try{LW.ro&&LW.ro.disconnect()}catch(e){}try{LW.chart.remove()}catch(e){}LW=null}
+function loadLWJs(){if(window.LightweightCharts)return Promise.resolve();return new Promise((ok,no)=>{const sc=document.createElement("script");sc.src="https://unpkg.com/lightweight-charts@5.0.8/dist/lightweight-charts.standalone.production.js";sc.onload=ok;sc.onerror=no;document.head.appendChild(sc)})}
+async function lwGoldOff(){try{const g=await (await fetch("https://api.gold-api.com/price/XAU")).json();const p=await (await fetch("https://data-api.binance.vision/api/v3/ticker/price?symbol=PAXGUSDT")).json();return +g.price-(+p.price)}catch(e){return 0}}
+async function mountLW(box){const sym=BC.sym,tf=BC.tf,src=LWSRC[sym],myKey=BC.key;
+  box.innerHTML='<div id="bigChartInner"></div><div class="lwcd" id="lwCd"></div>';
+  try{await loadLWJs();
+    const r=await fetch(`https://data-api.binance.vision/api/v3/klines?symbol=${src.bn}&interval=${LWIV[tf]}&limit=500`);const j=await r.json();
+    const off=src.gold?await lwGoldOff():0;if(BC.key!==myKey)return;
+    const L=window.LightweightCharts,el=$("bigChartInner");
+    const dec=sym==="XAUUSD"?2:(+j[j.length-1][4]>=100?2:+j[j.length-1][4]>=1?3:5);
+    const chart=L.createChart(el,{autoSize:true,layout:{background:{type:"solid",color:"#f3f7f5"},textColor:"#5f6f68",fontSize:10,fontFamily:"Inter,system-ui,sans-serif",attributionLogo:true},
+      grid:{vertLines:{visible:false},horzLines:{visible:false}},rightPriceScale:{borderVisible:false,scaleMargins:{top:.12,bottom:.12}},
+      timeScale:{borderVisible:false,timeVisible:true,secondsVisible:false,rightOffset:6},
+      crosshair:{mode:0},localization:{locale:"id-ID",priceFormatter:v=>v.toLocaleString("id-ID",{minimumFractionDigits:dec,maximumFractionDigits:dec})},
+      handleScroll:{mouseWheel:true,pressedMouseMove:true,horzTouchDrag:true,vertTouchDrag:true},handleScale:{axisPressedMouseMove:true,mouseWheel:true,pinch:true}});
+    const tz=8*3600;const bars=j.map(k=>({time:k[0]/1000+tz,open:+k[1]+off,high:+k[2]+off,low:+k[3]+off,close:+k[4]+off}));
+    let ser;
+    if(BC.st==="2")ser=chart.addSeries(L.LineSeries,{color:"#1f7a5a",lineWidth:2});
+    else if(BC.st==="3")ser=chart.addSeries(L.AreaSeries,{lineColor:"#1f7a5a",topColor:"rgba(31,122,90,.25)",bottomColor:"rgba(31,122,90,.02)",lineWidth:2});
+    else ser=chart.addSeries(L.CandlestickSeries,{upColor:"#16a34a",downColor:"#111111",borderUpColor:"#16a34a",borderDownColor:"#111111",wickUpColor:"#16a34a",wickDownColor:"#111111"});
+    const conv=b=>BC.st==="1"?b:{time:b.time,value:b.close};
+    ser.setData(bars.map(conv));chart.timeScale().scrollToRealTime();
+    const free=()=>{chart.priceScale("right").applyOptions({autoScale:false})};el.addEventListener("touchstart",free,{passive:true,capture:true});el.addEventListener("mousedown",free,{capture:true});
+    const rb=document.createElement("button");rb.type="button";rb.className="lwreset";rb.textContent="Pas-kan";rb.onclick=()=>{chart.priceScale("right").applyOptions({autoScale:true});chart.timeScale().scrollToRealTime()};box.appendChild(rb);
+    LW={chart,ser,last:bars[bars.length-1]};
+    const upd=b=>{if(!LW)return;LW.last=b;ser.update(conv(b))};
+    try{const ws=new WebSocket(`wss://stream.binance.com:9443/ws/${src.bn.toLowerCase()}@kline_${LWIV[tf]}`);LW.ws=ws;
+      ws.onmessage=e=>{const k=JSON.parse(e.data).k;upd({time:k.t/1000+tz,open:+k.o+off,high:+k.h+off,low:+k.l+off,close:+k.c+off})}}catch(e){}
+    const cd=$("lwCd"),sec=LWSEC[tf];
+    LW.tick=setInterval(()=>{if(!LW||!cd)return;const now=Date.now()/1000+tz,left=Math.max(0,Math.floor(LW.last.time+sec-now));const h=Math.floor(left/3600),m=Math.floor(left%3600/60),ss=left%60;
+      const y=ser.priceToCoordinate(LW.last.close);cd.textContent=(h?h+":"+String(m).padStart(2,"0"):m)+":"+String(ss).padStart(2,"0");cd.style.top=(y==null?-99:y+12)+"px";
+      cd.className="lwcd "+(LW.last.close>=LW.last.open?"up":"dn")},1000);
+  }catch(e){box.innerHTML='<p class="note" style="padding:16px">Chart gagal dimuat. Cek koneksi lalu buka lagi.</p>'}}
 function mountBigChart(){const box=$("bigChart");if(!box)return;const key=BC.sym+"|"+BC.tf+"|"+BC.st+"|"+BC.draw;if(BC.key===key&&box.firstChild)return;BC.key=key;
+  lwStop();
+  if(!BC.draw&&LWSRC[BC.sym]){mountLW(box);return}
   box.innerHTML='<div id="bigChartInner"></div>';
   loadTvJs().then(()=>{new TradingView.widget({container_id:"bigChartInner",autosize:true,symbol:bcFind(BC.sym).tv,interval:BC.tf,timezone:TZ,theme:"light",backgroundColor:"#f3f7f5",gridColor:"rgba(243,247,245,0)",style:BC.st,locale:"id",
     toolbar_bg:"#f3f7f5",hide_top_toolbar:true,hide_side_toolbar:!BC.draw,hide_legend:true,hide_volume:true,allow_symbol_change:false,save_image:false,enable_publishing:false,withdateranges:false,
