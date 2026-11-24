@@ -15,7 +15,7 @@
 <link rel="icon" href="data:image/svg+xml,<svg viewBox='0 0 314 343' xmlns='http://www.w3.org/2000/svg'><path d='M15 15H140A156.5 156.5 0 0 1 140 328H15Z' fill='none' stroke='%2363d297' stroke-width='30' stroke-linejoin='round'/><g fill='%23fff'><rect x='87' y='159' width='10' height='138' rx='5'/><rect x='69' y='202' width='46' height='58' rx='5'/><rect x='147' y='114' width='10' height='160' rx='5'/><rect x='129' y='153' width='46' height='75' rx='5'/></g><g fill='%2363d297'><rect x='207' y='54' width='10' height='175' rx='5'/><rect x='189' y='89' width='46' height='99' rx='5'/></g></svg>">
 <script src="dfx-config.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Montserrat:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
 <style>
 #landing{
   --bg:#0a0a0c; --bg2:#0f0f12; --panel:#131316; --panel2:#1b1b20; --line:#2a2a31;
@@ -3209,6 +3209,107 @@ html .dpanel .dlist a b{font-size:14px}
 html .dpanel .dlist a{padding:10px 10px}
 html #landing .hero h1{max-width:none;line-height:1.1}
 </style>
+<style>
+/* ===== Tema santai (krem + hijau zaitun) ===== */
+html #landing{--bg:#f6f1e7;--bg2:#efe8da;--panel:#fffdf8;--panel2:#f3eee2;--line:#e5dccb;--fg:#2c3a1f;--muted:#6f7562;
+ --gold:#4f6b2c;--gold-hi:#6f8f45;--gold-lo:#3f5822;--gold-dim:#cfdcb7;--up:#4a7a2a;--up-dim:#e2ecd3;--down:#b5473f;--down-dim:#f6e0dc;
+ --f-display:"DM Sans",system-ui,-apple-system,sans-serif;--f-body:"DM Sans",system-ui,-apple-system,sans-serif;--f-mono:"DM Sans",system-ui,sans-serif;
+ color-scheme:light;background:var(--bg)!important;color:var(--fg)}
+body:has(> #landing:not([hidden])){background:#f6f1e7}
+html #landing h1,html #landing h2,html #landing h3{font-weight:600!important;color:var(--fg)}
+html #landing h2{font-size:clamp(21px,5.4vw,28px)}
+html #landing .hero h1{font-weight:600;letter-spacing:-.03em!important;font-size:clamp(28px,7.6vw,46px);line-height:1.08}
+html #landing .hero h1 .hl{background:none;-webkit-text-fill-color:currentColor;color:var(--gold)}
+html #landing .eyebrow{color:var(--gold);font-size:11px;font-weight:600;letter-spacing:.14em!important;text-transform:uppercase!important}
+html #landing b,html #landing strong{font-weight:600}
+/* tombol */
+html #landing .btn{border-radius:12px;font-weight:600;border-color:var(--line);background:var(--panel);color:var(--fg);box-shadow:none}
+html #landing .btn.gold-btn{background:#4f6b2c!important;border-color:#4f6b2c!important;color:#fff!important;box-shadow:0 3px 0 #3a5020!important}
+html #landing .btn.ghost{background:var(--panel)}
+/* header */
+html #landing .nav{background:rgba(246,241,231,.9);border-bottom:1px solid var(--line)}
+html #landing .burger{background:var(--panel);border-color:var(--line)}
+html #landing .burger span{background:var(--fg)}
+html #landing .dname{color:var(--fg)}
+html #landing .dname i{color:#4f6b2c}
+html #landing .dtrade{color:var(--muted)}
+html #landing .dmark path{stroke:#4f6b2c}html #landing .dmark g[fill="#fff"]{fill:#2c3a1f}html #landing .dmark g[fill="#63d297"]{fill:#4f6b2c}
+/* hero */
+html #landing .hero::before{background:none!important}
+html #landing .hero{padding-block:22px 26px}
+html #landing .livepill{background:var(--panel);border-color:var(--line);color:var(--muted)}
+html #landing .hstats{border-color:var(--line)}html #landing .hstats div+div{border-color:var(--line)}
+html #landing .hstats b{color:var(--fg)}
+html #landing .hmock{background:#ece6d6;border:1px solid var(--line);box-shadow:none;border-radius:26px}
+html #landing .hm-top .t svg path{stroke:#4f6b2c}html #landing .hm-top .t svg g[fill="#fff"]{fill:#2c3a1f}html #landing .hm-top .t svg g[fill="#63d297"]{fill:#4f6b2c}
+html #landing .hm-tabs{background:#fffdf8}
+html #landing .hm-tabs span.on{background:#4f6b2c;color:#fff}
+html #landing .hm-card{background:var(--panel);border-color:var(--line)}
+html #landing .hm-buy{background:#e2ecd3;border-color:#c9dbb0;color:#3f6a22}
+html #landing .hm-big{color:#3f6a22}
+html #landing .hm-chart path[fill="none"]{stroke:#4f6b2c}
+html #landing .hm-chart stop{stop-color:#7a9a4f}
+html #landing .hm-lv div{background:var(--panel2)}
+html #landing .hm-float{background:#fffdf8;border-color:var(--line);box-shadow:0 8px 20px rgba(60,50,20,.08)}
+/* pita analisa */
+html #landing .tick{background:#fffdf8;border-color:var(--line)}
+html #landing .tick .lbl{background:#fffdf8;box-shadow:12px 0 16px #fffdf8}
+html #landing .tick .up{color:#3f7d2c}html #landing .tick .dn{color:#b5473f}html #landing .tick .nt{color:#9a7420}
+/* kartu */
+html #landing .feat,html #landing .jstep,html #landing .plan,html #landing .topic,html #landing .faq details,html #landing .ch,html #landing .jreq,html #landing .calc,html #landing .warn{background:var(--panel);border:1px solid var(--line);box-shadow:none}
+html #landing #fitur{background:transparent;border-radius:0;margin-top:0}
+html #landing #fitur .feat{background:var(--panel);border-color:var(--line);box-shadow:none}
+html #landing #fitur .feat h3{color:var(--fg)}html #landing #fitur .feat p{color:var(--muted)}
+html #landing .feat .ic,html #landing #fitur .feat .ic{border:0;border-radius:14px;color:#4f6b2c;background:#e2ecd3}
+html #landing #fitur .feat:nth-child(2) .ic{background:#f4e4cc;color:#9a6a2a}
+html #landing #fitur .feat:nth-child(3) .ic{background:#f3dfe0;color:#a0474b}
+html #landing #fitur .feat:nth-child(4) .ic{background:#f3ecc4;color:#8a7420}
+html #landing .term{background:#ece6d6;border-color:var(--line)}
+html #landing .tp{background:var(--panel)}html #landing .tp b{color:var(--gold)}
+html #landing .sigmock{background:var(--panel)}
+html #landing .plan.vip{background:#ece6d6;border-color:#cfdcb7}
+html #landing .plan .pname{color:var(--gold)}
+html #landing .cout{background:#ece6d6;border-color:var(--line)}
+html #landing .ctabs{background:var(--panel2)}
+html #landing .ctabs button[aria-selected="true"]{background:#4f6b2c;color:#fff;box-shadow:none}
+html #landing .fld input,html #landing .fld select{background:#fff;font-size:16px}
+html #landing .seg2 button{background:#fff}
+html #landing .seg2 button[aria-pressed="true"].neutral{background:#e2ecd3;border-color:#4f6b2c;color:#3f5822}
+html #landing .topic .lvl.b{color:#3f6a22;border-color:#c9dbb0;background:#e2ecd3}
+html #landing .topic .lvl.m{color:#8a6420;border-color:#ead6b1;background:#f4e4cc}
+html #landing .topic .lvl.a{color:#a0474b;border-color:#ecc9ca;background:#f3dfe0}
+html #landing .faq summary::after{color:var(--gold)}
+html #landing .ch .ic{background:var(--panel2)}html #landing .ch .h{color:var(--gold)}
+html #landing .jcopy{background:var(--panel2);color:var(--gold)}
+html #landing .jcopy button{background:#fff}
+html #landing .jsteps.acc .jstep::before{background:var(--panel2);color:var(--muted)}
+html #landing .jsteps.acc .jstep.on{background:#f0f4e6;border-color:#c9dbb0}
+html #landing .jsteps.acc .jstep.on::before{background:#4f6b2c;color:#fff}
+html #landing .jsteps.acc .jstep .jbar{background:#4f6b2c}
+html #landing .askadm{background:#ece6d6;border-color:var(--line)}
+html #landing .chatbox{background:var(--panel);border-color:var(--line)}
+html #landing .chatbox .who i{background:#e2ecd3}html #landing .chatbox .who small{color:#3f7d2c}
+html #landing .bub.u{background:var(--panel2);color:var(--fg)}
+html #landing .bub.a{background:#4f6b2c;color:#fff}
+html #landing .closing{background:#e2ecd3;border:0}
+html #landing .pos{color:#3f7d2c}html #landing .neg{color:#b5473f}
+html #landing footer{background:#efe8da}
+/* menu samping */
+.dpanel{background:#fbf8f1;border-right:1px solid #e5dccb;font-family:"DM Sans",system-ui,sans-serif}
+.dlogo{color:#2c3a1f;font-family:"DM Sans",system-ui,sans-serif;font-weight:700}
+.dlogo i{color:#4f6b2c}.dlogo svg path{stroke:#4f6b2c}.dlogo svg g[fill="#fff"]{fill:#2c3a1f}.dlogo svg g[fill="#63d297"]{fill:#4f6b2c}
+.dx{background:#fff;border-color:#e5dccb;color:#2c3a1f}
+.dfoot{border-color:#e5dccb}
+.dpanel .dfoot a{background:#fff;border-color:#e5dccb;color:#2c3a1f}
+.dpanel .dfoot a.dreg{background:#4f6b2c;color:#fff}
+.dlist hr{border-color:#e5dccb}
+.dpanel .dlist a{color:#3d4a2e}
+.dpanel .dlist a:hover,.dpanel .dlist a:focus-visible{background:#efe9dc}
+.dpanel .dlist a.on{background:#e2ecd3;color:#3f5822;box-shadow:none}
+.dpanel .onl{color:#3f7d2c}.dpanel .onl::before{background:#3f7d2c}
+.drawer .dbg{background:rgba(44,58,31,.35)}
+</style>
+
 <script>
 /* label LIVE TikTok: tampil hanya saat admin menyalakan live (mati sendiri setelah batas waktu) */
 (function(){const el=document.getElementById("livePill");let t=null;
