@@ -3852,5 +3852,13 @@ html #app .pushbox .btn{flex:none}
 <script>
 document.querySelectorAll('#app .backbtn,#auth a[href="#top"]').forEach(b=>b.addEventListener("click",e=>{e.preventDefault();if(location.hash!=="#top")location.hash="top";else window.dispatchEvent(new HashChangeEvent("hashchange"));window.scrollTo(0,0)}));
 </script>
+<script>
+/* menu bawah selalu menempel di dasar layar (iOS Safari: zoom/toolbar) */
+(function(){const vv=window.visualViewport;if(!vv)return;
+  function fix(){const off=vv.offsetTop+vv.height-window.innerHeight;
+    document.querySelectorAll("#app .abnav,#landing .lbnav").forEach(n=>{n.style.transform=Math.abs(off)>1?`translate3d(0,${off}px,0)`:"translate3d(0,0,0)"})}
+  vv.addEventListener("resize",fix);vv.addEventListener("scroll",fix);window.addEventListener("scroll",fix,{passive:true});fix()})();
+</script>
+<style>html,body{overflow-x:clip}</style>
 </body>
 </html>
