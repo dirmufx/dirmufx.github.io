@@ -1,77 +1,71 @@
 {
  "date": "25 Nov 2026",
- "updated": "2026-11-25T05:36:34+08:00",
+ "updated": "2026-11-25T18:36:29+08:00",
  "macro": [
   [
    "Suku bunga Fed",
    "3,75–4,00%",
-   "Naik 25 bp di September, ditahan di Oktober"
+   "Ditahan di Oktober, dua anggota ingin naik"
   ],
   [
    "Peluang Fed naik Desember",
-   "± 96% (25 bp)",
-   "CME FedWatch. Naik 50 bp sudah tidak diperhitungkan"
+   "± 96–97% (25 bp)",
+   "CME FedWatch. Peluang naik lagi Januari ± 66%"
   ],
   [
    "Inflasi PCE (Sep)",
    "3,6% (inti 3,1%)",
-   "Data Oktober rilis 25 Nov 21:30 WITA. PCE inti diperkirakan naik ke 3,2%"
+   "Data Oktober rilis malam ini 21:30 WITA. Perkiraan 3,8% (inti 3,2%)"
+  ],
+  [
+   "GDP AS Q3 (revisi)",
+   "perkiraan ± 3,4–3,5%",
+   "Rilis bersama PCE malam ini"
   ],
   [
    "Keyakinan konsumen AS Nov",
    "103,3",
-   "Jauh di atas perkiraan ± 92,5. Tertinggi sejak Januari 2025"
-  ],
-  [
-   "CPI Oktober",
-   "+0,4% m/m",
-   "Lebih panas dari harapan, inti +0,3%"
+   "Naik dari 91,9. Tertinggi hampir dua tahun"
   ],
   [
    "Tenaga kerja (NFP) Okt",
    "+165 ribu",
-   "Jauh di atas perkiraan 65 ribu"
+   "Jauh di atas perkiraan. Data November rilis 4 Des"
   ],
   [
    "Yield obligasi AS 10 th",
-   "± 4,91%",
-   "Sedikit turun, masih dekat 5%"
+   "± 4,86%",
+   "Turun dari ± 4,93% kemarin"
   ],
   [
    "Indeks dolar (DXY)",
-   "± 104,2",
-   "Range Selasa 104,14–104,40. Senin sempat tertinggi tahun ini"
+   "± 103,85",
+   "Turun 0,44% Selasa. Support 103,80, resistance 104,25"
   ],
   [
    "Minyak Brent",
-   "± $86–87",
-   "WTI ± $79–80. Tertekan harapan diplomasi AS–Iran"
+   "± $91",
+   "WTI ± $81,6. Naik-turun karena kabar serangan kapal di Selat Hormuz"
   ]
  ],
  "agenda": [
   [
    "25 Nov",
    "21:30",
-   "PCE & GDP AS",
+   "PCE, GDP & klaim pengangguran AS",
    "Data inflasi favorit Fed. PCE inti diperkirakan 3,2%. Angka tinggi menguatkan dolar, menekan emas dan crypto."
+  ],
+  [
+   "26 Nov",
+   "03:00",
+   "Beige Book Fed",
+   "Laporan kondisi ekonomi dari 12 wilayah Fed. Bisa memberi petunjuk arah bunga."
   ],
   [
    "26–27 Nov",
    "",
    "Libur Thanksgiving AS",
    "Pasar AS tutup Kamis, Jumat tutup lebih awal. Volume tipis, harga bisa bergerak liar."
-  ],
-  [
-   "27 Nov",
-   "",
-   "Jatuh tempo opsi BTC",
-   "Opsi Bitcoin ± $6,8 miliar jatuh tempo di Deribit. Harga bisa naik-turun tajam."
-  ],
-  [
-   "29 Nov",
-   "",
-   "Rapat OPEC+",
-   "Keputusan produksi minyak. Bisa menggerakkan harga minyak dan ekspektasi inflasi."
   ],
   [
    "4 Des",
@@ -83,48 +77,48 @@
    "10 Des",
    "03:00",
    "Keputusan Fed",
-   "Rapat 8–9 Des. Pasar memperkirakan naik 25 bp dengan peluang ± 96%."
+   "Rapat 8–9 Des. Pasar memperkirakan naik 25 bp dengan peluang ± 96–97%."
   ]
  ],
  "markets": {
   "XAUUSD": {
    "name": "Emas (XAUUSD)",
-   "bias": "Bearish–Netral",
+   "bias": "Bearish",
    "col": "down",
-   "sum": "Emas kembali turun ke sekitar $3.600 setelah data keyakinan konsumen AS jauh lebih kuat dari perkiraan. Pantulan pagi tertahan di ± $3.650. Pasar kini menunggu PCE malam ini. Selama harga di bawah $3.700, tren besar masih turun.",
+   "sum": "Emas jatuh lebih dari 2% Selasa ke ± $3.557 dan kini tertahan di ± $3.545–3.560. Aksi jual saham chip memaksa sebagian pemain menjual emas untuk menutup kerugian. Fed hampir pasti naik Desember, jadi tren besar masih turun. Pasar menunggu PCE malam ini.",
    "now": [
     [
      "Harga terakhir",
-     "± $3.600–3.610"
+     "± $3.545–3.560"
     ],
     [
-     "Puncak pantulan Selasa",
-     "± $3.650"
+     "Terendah Selasa",
+     "± $3.552"
     ],
     [
-     "Terendah pekan lalu",
-     "± $3.503"
+     "Puncak Selasa (Asia)",
+     "± $3.679"
     ],
     [
-     "RSI harian",
-     "± 33 (dekat jenuh jual)"
+     "Turun sejak awal Nov",
+     "± 8%"
     ]
    ],
    "plan": [
     [
      "down",
      "Arah utama: SELL di area resistance",
-     "Pantulan ke $3.650–3.700 lebih aman dipakai mencari posisi jual, selama harga belum tutup di atas $3.700."
+     "Pantulan ke $3.600–3.620 lebih aman dipakai mencari posisi jual, selama harga belum kembali di atas $3.680."
     ],
     [
      "up",
      "Kapan boleh BUY",
-     "Scalping pantulan dari $3.585 atau $3.540 dengan konfirmasi sweep/MSS. Atau bila PCE malam ini lebih rendah dari perkiraan dan harga tembus $3.700."
+     "Scalping pantulan dari $3.540 atau $3.500 dengan konfirmasi sweep/MSS. Atau bila PCE malam ini lebih rendah dari perkiraan dan harga tutup di atas $3.620."
     ],
     [
      "flat",
      "Manajemen risiko",
-     "Volatilitas tinggi. Lot lebih kecil dari biasa, SL wajib. Hindari entry menjelang PCE 21:30 WITA dan saat libur Thanksgiving."
+     "Volatilitas tinggi (gerak 2–4% per hari). Lot lebih kecil, SL wajib. Hindari entry menjelang PCE 21:30 WITA dan saat libur Thanksgiving."
     ]
    ],
    "drv": [
@@ -132,101 +126,101 @@
      "Ekspektasi Fed",
      "down",
      "Bearish",
-     "Peluang naik 25 bp Desember ± 96%. Pejabat Fed tidak menutup kemungkinan naik lagi setelahnya."
+     "Peluang naik 25 bp Desember ± 96%. Pejabat Fed Williams bilang inflasi yang bandel butuh kebijakan lebih ketat."
     ],
     [
-     "Data AS kuat",
+     "Jual paksa (margin call)",
      "down",
      "Bearish",
-     "Keyakinan konsumen 103,3, jauh di atas perkiraan. Ekonomi kuat memberi Fed alasan tetap ketat."
+     "Saham chip/AI jatuh Selasa (Nvidia ± -6%). Investor menjual emas dan perak untuk menutup kerugian."
     ],
     [
      "Dolar AS",
-     "down",
-     "Bearish",
-     "DXY ± 104,2, dekat tertinggi tahun ini. Dolar kuat biasanya menekan emas."
+     "flat",
+     "Melemah tipis",
+     "DXY turun ke ± 103,85. Ini sedikit membantu emas, tapi dolar masih dekat level tinggi."
     ],
     [
      "Yield AS",
-     "flat",
-     "Masih tinggi",
-     "Yield 10 th ± 4,91%. Emas (tanpa bunga) belum terlalu menarik."
+     "up",
+     "Mulai turun",
+     "Yield 10 th turun ke ± 4,86%. Jika terus turun, tekanan ke emas berkurang."
     ],
     [
      "Data PCE malam ini",
      "flat",
      "Penentu",
-     "PCE inti diperkirakan 3,2%. Lebih tinggi bisa menekan emas, lebih rendah bisa membuka jalan ke $3.700."
+     "Perkiraan 3,8% (inti 3,2%). Lebih tinggi bisa menekan emas ke $3.500, lebih rendah bisa memicu pantulan ke $3.600+."
     ],
     [
-     "Aksi beli murah",
-     "up",
-     "Bullish jk. pendek",
-     "RSI dekat jenuh jual. Pembeli masih masuk di sekitar $3.540–3.600."
+     "Isu tarif & Timur Tengah",
+     "flat",
+     "Belum berdampak",
+     "Rencana tarif baru AS dan serangan kapal di Hormuz belum memicu beli emas sebagai aset aman."
     ]
    ],
    "lv": [
     [
      "Resistance 1",
-     "3.650"
+     "3.600"
     ],
     [
      "Support 1",
-     "3.585"
-    ],
-    [
-     "Resistance 2",
-     "3.700"
-    ],
-    [
-     "Support 2",
      "3.540"
     ],
     [
+     "Resistance 2",
+     "3.620"
+    ],
+    [
+     "Support 2",
+     "3.500"
+    ],
+    [
      "Resistance 3",
-     "3.800"
+     "3.680"
     ],
     [
      "Support 3",
-     "3.500"
+     "3.450"
     ]
    ],
-   "src": "Level dari Kitco, 1Trader dan KuCoin/Coinpaper (24 Nov 2026): support $3.600/$3.585/$3.540, resistance $3.650/$3.700/$3.800, low pekan lalu $3.503. Selalu cocokkan dengan chart terbaru."
+   "src": "Level dari FinanceFeeds/CNBC dan TraderFactor (25 Nov 2026): range dasar $3.540–3.620, bull $3.680, bear $3.500 (Pepperstone). $3.450 adalah angka bulat tambahan. Selalu cocokkan dengan chart terbaru."
   },
   "EURUSD": {
    "name": "EURUSD",
    "bias": "Bearish",
    "col": "down",
-   "sum": "Euro pulih ke ± 1,093 setelah Senin jatuh ke 1,0880, terendah tahun ini. Dolar sedikit mengendur, tapi data konsumen AS yang kuat membatasi kenaikan. Selama Fed lebih agresif dari ECB, tekanan turun masih dominan.",
+   "sum": "Euro bergerak di ± 1,094–1,096 setelah dolar melemah tipis Selasa. Harga masih di dalam saluran turun sejak 6 Nov dan Senin sempat ke level terendah 19 bulan. Kabar ECB kemungkinan naik Desember sedikit menahan penurunan.",
    "now": [
     [
      "Harga terakhir",
-     "± 1,0920–1,0935"
+     "± 1,0940–1,0960"
     ],
     [
-     "Range Selasa (pagi)",
-     "1,0896–1,0937"
+     "Terendah pagi ini",
+     "1,0931"
     ],
     [
      "Terendah Senin",
-     "1,0881"
+     "± 1,0880"
     ]
    ],
    "plan": [
     [
      "down",
      "Arah utama: cari peluang SELL",
-     "Selama di bawah 1,0950–1,1000, kenaikan lebih aman dipakai untuk mencari posisi jual."
+     "Selama di bawah 1,0962–1,1000, kenaikan lebih aman dipakai untuk mencari posisi jual."
     ],
     [
      "up",
      "Kapan boleh BUY",
-     "Jika PCE AS malam ini lebih rendah dari perkiraan dan harga kembali di atas 1,1000."
+     "Jika PCE AS malam ini lebih rendah dari perkiraan dan harga tutup di atas 1,1000."
     ],
     [
      "flat",
      "Manajemen risiko",
-     "Harga dekat terendah tahun ini, pantulan tajam bisa terjadi. Waspada PCE 21:30 WITA."
+     "Harga dekat terendah 19 bulan, pantulan tajam bisa terjadi. Waspada PCE 21:30 WITA."
     ]
    ],
    "drv": [
@@ -234,35 +228,35 @@
      "Fed vs ECB",
      "down",
      "Bearish",
-     "ECB menahan bunga 2,65% di Oktober, sementara Fed diperkirakan naik Desember. Selisih bunga menguntungkan dolar."
+     "Fed diperkirakan naik Desember (± 97%) dan mungkin lagi Januari. Selisih bunga masih menguntungkan dolar."
+    ],
+    [
+     "ECB condong naik",
+     "up",
+     "Penahan",
+     "Pejabat ECB Sleijpen bilang kenaikan Desember kemungkinan besar. Survei Reuters: semua ekonom menduga naik ke 2,75%."
     ],
     [
      "Dolar AS (DXY)",
-     "down",
-     "Bearish",
-     "DXY ± 104,2, dekat tertinggi tahun ini. EURUSD bergerak hampir berlawanan dengan DXY."
-    ],
-    [
-     "PMI zona euro",
-     "down",
-     "Bearish",
-     "PMI jasa 51,2, di bawah perkiraan 51,8. Ekonomi Eropa melambat."
-    ],
-    [
-     "ECB mulai waspada",
      "flat",
-     "Penahan",
-     "Pejabat ECB Simkus bilang pengetatan mungkin perlu di 2027 bila inflasi bertahan. Ini sedikit menahan penurunan euro."
+     "Melemah tipis",
+     "DXY turun ke ± 103,85. EURUSD bergerak hampir berlawanan dengan DXY."
+    ],
+    [
+     "Tren teknikal",
+     "down",
+     "Bearish",
+     "Masih di saluran turun sejak 6 Nov. RSI 4 jam ± 46."
     ]
    ],
    "lv": [
     [
      "Resistance 1",
-     "1,0950"
+     "1,0962"
     ],
     [
      "Support 1",
-     "1,0900"
+     "1,0912"
     ],
     [
      "Resistance 2",
@@ -270,32 +264,32 @@
     ],
     [
      "Support 2",
-     "1,0880"
+     "1,0879"
     ],
     [
      "Resistance 3",
-     "1,1090"
+     "1,1050"
     ],
     [
      "Support 3",
-     "1,0800"
+     "1,0833"
     ]
    ],
-   "src": "Level dari DailyForex dan Newsquawk (24 Nov 2026): 1,0900, 1,0880 (low Senin), 1,1000, MA 21 hari 1,1088. Cocokkan dengan chart terbaru."
+   "src": "Level dari FXEmpire dan MQL5 (25 Nov 2026): pivot 1,0947/1,0962, R1 1,1000, S1 1,0912, support 1,0879 lalu 1,0833. 1,1050 adalah angka bantu. Cocokkan dengan chart terbaru."
   },
   "GBPUSD": {
    "name": "GBPUSD",
-   "bias": "Bearish",
+   "bias": "Bearish–Netral",
    "col": "down",
-   "sum": "Pound pulih tipis ke ± 1,306 setelah Senin turun ke ± 1,301. Dolar sedikit mengendur Selasa. Tapi 1,3000 masih jadi level penting, dan harapan BoE naik lagi Desember mulai mereda.",
+   "sum": "Pound naik tipis ke ± 1,308–1,310 karena dolar melemah Selasa. Tapi harga masih di bawah pivot 1,3125. Harapan BoE naik lagi 17 Des sudah berkurang setelah inflasi Inggris lebih rendah dari perkiraan.",
    "now": [
     [
      "Harga terakhir",
-     "± 1,3055–1,3065"
+     "± 1,3080–1,3105"
     ],
     [
-     "Range Selasa (pagi)",
-     "1,3024–1,3072"
+     "Terendah pagi ini",
+     "1,3068"
     ],
     [
      "Level kunci",
@@ -306,12 +300,12 @@
     [
      "down",
      "Arah utama: condong SELL",
-     "Selama di bawah 1,3110–1,3145, tekanan turun masih dominan. Fokus ke tembusnya 1,3000."
+     "Selama di bawah 1,3125–1,3171, tekanan turun masih dominan. Target dekat 1,3060 lalu 1,3009."
     ],
     [
      "up",
      "Kapan boleh BUY",
-     "Pantulan dari 1,3000 dengan konfirmasi, atau jika dolar melemah setelah PCE AS malam ini dan harga tembus 1,3145."
+     "Jika dolar melemah setelah PCE AS malam ini dan harga tutup di atas 1,3171."
     ],
     [
      "flat",
@@ -321,57 +315,57 @@
    ],
    "drv": [
     [
-     "Dolar AS kuat",
-     "down",
-     "Bearish",
-     "Dolar dekat level tertinggi tahun ini, menekan hampir semua mata uang."
+     "Dolar AS",
+     "flat",
+     "Melemah tipis",
+     "DXY turun ke ± 103,85, tapi Fed hampir pasti naik Desember."
     ],
     [
      "Bank of England",
      "flat",
      "Melunak",
-     "BoE sudah naik di November. Setelah data inflasi terbaru, harapan naik lagi 17 Des mulai berkurang."
+     "Inflasi Inggris 18 Nov di bawah perkiraan. Peluang naik 17 Des turun ke ± 79% (Jumat lalu)."
     ],
     [
-     "PMI Inggris",
+     "Tren teknikal",
      "down",
      "Bearish",
-     "PMI komposit November turun ke 52,3. Ekonomi Inggris sedikit melambat."
+     "Harga masih di bawah pivot 1,3125. RSI 4 jam ± 46."
     ],
     [
      "Sentimen risiko",
      "flat",
      "Campuran",
-     "Saham pulih, tapi dana lebih banyak masuk ke aset AS."
+     "Saham teknologi jatuh Selasa, Dow justru naik. Belum ada arah jelas."
     ]
    ],
    "lv": [
     [
      "Resistance 1",
-     "1,3075"
+     "1,3125"
     ],
     [
      "Support 1",
-     "1,3010"
+     "1,3060"
     ],
     [
      "Resistance 2",
-     "1,3145"
+     "1,3171"
     ],
     [
      "Support 2",
-     "1,2980"
+     "1,3009"
     ],
     [
      "Resistance 3",
-     "1,3195"
+     "1,3200"
     ],
     [
      "Support 3",
-     "1,2930"
+     "1,2980"
     ]
    ],
-   "src": "Level dari range Newsquawk (23–24 Nov 2026), pivot TPFx dan angka bulat 1,3000. Cocokkan dengan chart terbaru.",
+   "src": "Level dari FXEmpire dan MQL5 (25 Nov 2026): pivot 1,3088/1,3125, R2 1,3171, support 1,3060/1,3009. 1,3200 dan 1,2980 angka bantu. Cocokkan dengan chart terbaru.",
    "agExtra": [
     [
      "17 Des",
@@ -385,15 +379,15 @@
    "name": "USDJPY",
    "bias": "Netral (rawan intervensi)",
    "col": "flat",
-   "sum": "USDJPY bertahan di ± 159,5, di atas semua rata-rata harian utama. Yen tetap lemah karena selisih bunga besar. Pasar masih menduga BoJ naik Desember, dan di dekat 160 risiko Jepang turun tangan tetap tinggi.",
+   "sum": "USDJPY menguji 159,50 di sesi Tokyo lalu bergerak di ± 159,3. Harga masih di atas rata-rata 200 hari (± 158,95). Yen tetap lemah, tapi pejabat Jepang terus memberi peringatan, jadi ruang naik ke 160 terbatas.",
    "now": [
     [
      "Harga terakhir",
-     "± 159,5"
+     "± 159,30"
     ],
     [
-     "Range Selasa (pagi)",
-     "158,75–159,58"
+     "Range hari ini",
+     "159,00–159,50"
     ],
     [
      "Level waspada",
@@ -409,12 +403,12 @@
     [
      "down",
      "Peluang SELL",
-     "Jika ada kabar intervensi atau BoJ memberi sinyal tegas naik bunga, penurunan bisa cepat dan dalam."
+     "Jika ada kabar intervensi, BoJ memberi sinyal tegas naik bunga, atau harga tutup di bawah 158,70."
     ],
     [
      "up",
      "Peluang BUY",
-     "Jika PCE AS tinggi dan dolar menguat lagi, USDJPY bisa menguji 160. Pakai target pendek."
+     "Jika PCE AS tinggi dan dolar menguat lagi, USDJPY bisa menguji 159,50–160. Pakai target pendek."
     ]
    ],
    "drv": [
@@ -425,43 +419,43 @@
      "Bunga AS jauh lebih tinggi dari bunga BoJ 1,25%, jadi dana masih memilih dolar."
     ],
     [
-     "Bank of Japan",
-     "up",
+     "Yield AS turun",
+     "down",
      "Penahan",
-     "Inflasi Oktober 2,3%, tertinggi sejak Nov 2025. Pasar menduga BoJ naik Desember lalu lagi di Maret."
+     "Yield 10 th turun ke ± 4,86%. Ini sedikit mengurangi daya tarik dolar terhadap yen."
     ],
     [
-     "Sentimen risiko",
-     "up",
-     "Bullish",
-     "Saat saham naik, yen sebagai aset aman kurang dicari."
+     "Bank of Japan",
+     "down",
+     "Penahan",
+     "Pasar menduga BoJ naik Desember. Kenaikan bisa menguatkan yen."
     ],
     [
      "Risiko intervensi",
      "down",
      "Waspada",
-     "Pejabat Jepang sudah memberi peringatan lisan. Di sekitar 160 risiko intervensi tinggi."
+     "Jepang sudah memberi peringatan resmi soal yen lemah. Di sekitar 160 risiko intervensi tinggi."
     ]
    ],
    "lv": [
     [
      "Resistance 1",
-     "160,00"
+     "159,50"
     ],
     [
      "Support 1",
-     "158,75"
+     "159,00"
     ],
     [
      "Resistance 2",
-     "160,50"
+     "160,00"
     ],
     [
      "Support 2",
-     "158,49"
+     "158,70"
     ]
    ],
-   "src": "Level dari range Newsquawk dan pivot TPFx (24 Nov 2026) plus angka bulat 160. Cocokkan dengan chart terbaru.",
+   "src": "Level dari MQL5/Market Outlook (25 Nov 2026): high 159,50, low 159,00, MA 200 hari ± 158,95, MA 21/100 hari ± 158,75, angka bulat 160. Cocokkan dengan chart terbaru.",
    "agExtra": [
     [
      "18 Des",
@@ -475,31 +469,31 @@
    "name": "forex (pair USD)",
    "bias": "Dolar AS kuat",
    "col": "down",
-   "sum": "Dolar sedikit mengendur Selasa (DXY ± 104,2) setelah Senin mencetak tertinggi tahun ini. Tapi keyakinan konsumen AS melonjak ke 103,3 dan Fed hampir pasti naik Desember, jadi dolar tetap kuat. AUDUSD ± 0,662–0,664, dekat terendah setahun.",
+   "sum": "Dolar melemah tipis Selasa (DXY ± 103,85) seiring yield AS turun ke ± 4,86%. Tapi Fed hampir pasti naik Desember, jadi dolar tetap kuat secara umum. AUDUSD ± 0,656–0,666 meski inflasi Australia 4,9%, di atas perkiraan.",
    "now": [
     [
      "DXY",
-     "± 104,2"
+     "± 103,85"
     ],
     [
      "Yield AS 10 th",
-     "± 4,91%"
+     "± 4,86%"
     ],
     [
      "AUDUSD",
-     "± 0,662–0,664"
+     "± 0,656–0,666"
     ]
    ],
    "plan": [
     [
      "down",
      "Arah utama",
-     "Pair xxxUSD (AUDUSD, EURUSD, GBPUSD) condong turun selama dolar kuat dan DXY di atas 103,7."
+     "Pair xxxUSD (AUDUSD, EURUSD, GBPUSD) condong turun selama dolar kuat dan DXY di atas 103,80."
     ],
     [
      "up",
      "Kapan berbalik",
-     "Jika PCE malam ini lebih rendah dari perkiraan atau Fed memberi sinyal berhenti menaikkan bunga."
+     "Jika PCE malam ini lebih rendah dari perkiraan dan DXY tutup di bawah 103,80 (target 103,47)."
     ],
     [
      "flat",
@@ -510,21 +504,21 @@
    "drv": [
     [
      "Dolar AS (DXY)",
-     "down",
+     "flat",
      "Utama",
-     "DXY dekat tertinggi tahun ini. Range Selasa 104,14–104,40."
+     "DXY ± 103,85 di atas support 103,80. Resistance 104,25 lalu 104,54."
     ],
     [
      "Suku bunga bank sentral",
      "flat",
      "Utama",
-     "Fed hampir pasti naik Desember (± 96%). ECB menahan, BoJ condong naik. Yang paling agresif biasanya menang."
+     "Fed hampir pasti naik Desember (± 97%). ECB dan BoE juga condong naik. Yang paling agresif biasanya menang."
     ],
     [
      "Data AS kuat",
      "down",
      "Bullish USD",
-     "Keyakinan konsumen 103,3 jauh di atas perkiraan. Data kuat mendukung Fed tetap ketat."
+     "Keyakinan konsumen 103,3, tertinggi hampir dua tahun. Data kuat mendukung Fed tetap ketat."
     ]
    ],
    "lv": [],
@@ -534,40 +528,40 @@
    "name": "Bitcoin (BTCUSD)",
    "bias": "Bearish",
    "col": "down",
-   "sum": "Bitcoin bertahan di sekitar $60.000 setelah lonjakan Senin ke ± $64.500 hilang. ETF Bitcoin AS keluar lima hari beruntun, Senin ± $570 juta, dan total November mendekati $5 miliar. Sentimen masih sangat takut.",
+   "sum": "Bitcoin turun lagi di bawah $60.000 ke ± $59.000–59.300, turun ± 2% dalam 24 jam. ETF Bitcoin AS masih keluar: Selasa ± $231 juta setelah Senin ± $570 juta. Saham teknologi juga jatuh. Sentimen masih sangat takut.",
    "now": [
     [
      "Harga terakhir",
-     "± $60.000–60.400"
+     "± $59.000–59.300"
     ],
     [
-     "Range 24 jam",
-     "± $59.420–64.480"
+     "Perubahan 24 jam",
+     "± -2%"
     ],
     [
-     "Terendah pekan lalu",
-     "± $55.300–55.700"
+     "Puncak Senin",
+     "± $64.500"
     ],
     [
      "Fear & Greed",
-     "11 (sangat takut)"
+     "13 (sangat takut)"
     ]
    ],
    "plan": [
     [
      "down",
      "Arah utama: hati-hati, condong SELL",
-     "Selama di bawah $63.000–65.000, kenaikan lebih aman dianggap pantulan."
+     "Selama di bawah $60.000–64.500, kenaikan lebih aman dianggap pantulan."
     ],
     [
      "up",
      "Kapan boleh BUY",
-     "Pantulan dari $58.000 atau $55.700 dengan konfirmasi di chart, atau saat arus ETF kembali masuk beberapa hari berturut-turut."
+     "Pantulan dari $57.000 atau $55.300 dengan konfirmasi di chart, atau saat arus ETF kembali masuk beberapa hari berturut-turut."
     ],
     [
      "flat",
      "Manajemen risiko",
-     "Harga bisa naik-turun ribuan dolar dalam beberapa jam. Lot kecil dan SL wajib, terutama saat PCE malam ini dan jatuh tempo opsi 27 Nov."
+     "Harga bisa naik-turun ribuan dolar dalam beberapa jam. Lot kecil dan SL wajib, terutama saat PCE malam ini dan libur Thanksgiving."
     ]
    ],
    "drv": [
@@ -575,7 +569,7 @@
      "Arus dana ETF",
      "down",
      "Bearish",
-     "ETF Bitcoin AS keluar lima hari beruntun. Senin 23 Nov keluar ± $570 juta, IBIT ± $509 juta. Total November mendekati $5 miliar."
+     "ETF Bitcoin AS keluar ± $231 juta Selasa (IBIT ± $175 juta) dan ± $570 juta Senin."
     ],
     [
      "Ekspektasi Fed",
@@ -585,35 +579,35 @@
     ],
     [
      "Saham teknologi",
-     "flat",
-     "Campuran",
-     "Reli Nvidia memudar Selasa, dan dana tidak ikut masuk ke crypto."
+     "down",
+     "Bearish",
+     "Nasdaq -1,5% dan Nvidia ± -6% Selasa. Crypto ikut tertekan."
     ],
     [
      "Sentimen pasar",
      "flat",
      "Sangat takut",
-     "Fear & Greed di 11, tiga hari beruntun. Takut ekstrem kadang dekat dasar, tapi bukan jaminan."
+     "Fear & Greed di 13, naik sedikit dari 11. Takut ekstrem kadang dekat dasar, tapi bukan jaminan."
     ],
     [
-     "Likuidasi & opsi",
+     "Funding rate",
      "flat",
-     "Volatilitas",
-     "± $825 juta posisi dilikuidasi dalam 24 jam. Opsi BTC ± $6,8 miliar jatuh tempo Jumat 27 Nov."
+     "Negatif",
+     "Funding sebagian kontrak perpetual negatif. Banyak posisi jual terbuka, bisa memicu lonjakan singkat bila tertekan."
     ]
    ],
    "lv": [
     [
      "Resistance 1",
-     "64.500"
+     "60.000"
     ],
     [
      "Support 1",
-     "59.400"
+     "58.000"
     ],
     [
      "Resistance 2",
-     "68.000"
+     "64.500"
     ],
     [
      "Support 2",
@@ -621,39 +615,39 @@
     ],
     [
      "Resistance 3",
-     "73.000"
+     "68.000"
     ],
     [
      "Support 3",
      "55.300"
     ]
    ],
-   "src": "Level dari crypto.news, CryptoTicker dan The Block (24 Nov 2026): low 24 jam, high Senin, MA 21/200 hari di $68.000–73.000, low dua tahun ± $55.300. Cocokkan dengan chart terbaru."
+   "src": "Level dari angka bulat $60.000/$58.000, high Senin ± $64.500 dan level 24 Nov (MA ± $68.000, low dua tahun ± $55.300). Harga dari CoinGabbar/CoinGecko dan CoinCodex (25 Nov 2026). Cocokkan dengan chart terbaru."
   },
   "_crypto": {
    "name": "crypto",
    "bias": "Bearish (ikut Bitcoin)",
    "col": "down",
-   "sum": "Altcoin ikut tertahan bersama Bitcoin. Ether ± $1.700 setelah Senin sempat $1.838, Solana ± $70, XRP ± $0,92. ETF Ether juga keluar ± $85 juta Senin.",
+   "sum": "Altcoin ikut turun bersama Bitcoin. Ether ± $1.650–1.660, Solana ± $69. Total pasar crypto ± $2,0–2,1 triliun. ETF Ether keluar lagi ± $64 juta Selasa.",
    "now": [
     [
      "Bitcoin",
-     "± $60.000–60.400"
+     "± $59.000–59.300"
     ],
     [
      "Ether",
-     "± $1.700"
+     "± $1.650–1.660"
     ],
     [
      "Solana",
-     "± $70"
+     "± $69"
     ]
    ],
    "plan": [
     [
      "down",
      "Arah utama",
-     "Selama Bitcoin di bawah $63.000–65.000, altcoin lebih rawan turun."
+     "Selama Bitcoin di bawah $60.000–64.500, altcoin lebih rawan turun."
     ],
     [
      "up",
@@ -677,7 +671,7 @@
      "Arus dana ETF",
      "down",
      "Bearish",
-     "ETF Bitcoin keluar lima hari beruntun. ETF Ether keluar ± $85 juta, ETF Solana dan XRP juga sedikit keluar."
+     "ETF Ether keluar ± $64 juta Selasa dan ± $85 juta Senin. ETF Solana hanya masuk ± $0,7 juta."
     ],
     [
      "Suku bunga & dolar",
@@ -686,10 +680,10 @@
      "Fed yang menaikkan bunga dan dolar kuat biasanya menekan crypto."
     ],
     [
-     "Dana baru",
+     "Dominasi Bitcoin",
      "down",
-     "Bearish",
-     "Arus keluar ETF di semua koin besar. Tanda dana baru belum masuk."
+     "Bearish alt",
+     "Dominasi BTC ± 56–58%. Dana lebih memilih BTC daripada altcoin."
     ]
    ],
    "lv": [],
@@ -698,46 +692,46 @@
  },
  "news": [
   [
-   "24 Nov",
-   "Emas turun ke $3.600 setelah data konsumen AS melonjak",
+   "25 Nov",
+   "Emas tertahan di $3.560 setelah anjlok 2%",
    "Emas",
-   "Keyakinan konsumen AS naik ke 103,3, jauh di atas perkiraan ± 92,5. Emas turun hampir 1% ke ± $3.602 dan kini menguji support $3.600.",
-   "https://www.kitco.com/news/article/2026-11-24/gold-price-testing-support-near-3600-us-consumer-confidence-sees-sharp-rise"
+   "Emas jatuh lebih dari 2% Selasa karena aksi jual saham chip dan taruhan Fed naik bunga. Pasar kini menunggu PCE. Level penting: $3.500 di bawah dan $3.680 di atas.",
+   "https://financefeeds.com/gold-price-today-3559-wednesday-pce-test-after-2-percent-slide-bull-3680-bear-3500/"
   ],
   [
-   "24 Nov",
-   "Keyakinan konsumen AS tertinggi sejak awal 2025",
-   "Semua",
-   "Indeks naik 11,4 poin ke 103,3. Warga AS lebih yakin soal pekerjaan. Data ini menguatkan alasan Fed untuk naikkan bunga Desember.",
-   "https://stockanalysis.com/news/consumer-confidence-jumps-november-2026/"
-  ],
-  [
-   "24 Nov",
-   "ETF Bitcoin keluar lagi $570 juta, total November dekati $5 miliar",
+   "25 Nov",
+   "ETF crypto AS keluar lagi ± $295 juta",
    "Crypto",
-   "Bitcoin sempat di bawah $60.000. IBIT milik BlackRock menyumbang ± $509 juta dana keluar. Hanya Fidelity yang mencatat dana masuk kecil.",
-   "https://www.theblock.co/news/markets/2026-11-24-bitcoin-etfs-another-570-million-net-outflows-november-total-nears-5-billion-btc-dips-below-60k-445548"
+   "ETF Bitcoin keluar ± $231 juta dan ETF Ether ± $64 juta pada Selasa. IBIT milik BlackRock menyumbang sebagian besar dana keluar.",
+   "https://financefeeds.com/us-crypto-etfs-record-294-8-million-in-outflows-as-blackrock-leads-bitcoin-and-ethereum-withdrawals/"
   ],
   [
-   "24 Nov",
-   "Emas tertahan menjelang data PCE",
-   "Emas",
-   "Pasar menunggu PCE Oktober yang rilis Rabu. Inflasi tinggi bisa menekan emas ke $3.500, sedangkan angka lebih rendah bisa membuka jalan ke $3.700.",
-   "https://www.kucoin.com/news/flash/gold-price-drops-toward-3-600-ahead-of-us-inflation-data"
+   "25 Nov",
+   "Bitcoin kembali di bawah $60.000 jelang PCE",
+   "Crypto",
+   "BTC ± $59.300, turun ± 1,6% dalam 24 jam. Fear & Greed di 13. Saham teknologi yang jatuh ikut menekan crypto.",
+   "https://www.coingabbar.com/en/crypto-market-update-today-bitcoin-price-pce-gdp-fed-hike-risks"
   ],
   [
-   "24 Nov",
-   "Euro tetap tertekan dekat terendah tahun ini",
+   "25 Nov",
+   "Dolar stabil jelang PCE, DXY bertahan di 103,80",
    "Forex",
-   "EURUSD pulih tipis ke ± 1,093 setelah Senin jatuh ke 1,088. Analis menilai arah turun masih utuh selama Fed lebih agresif dari ECB.",
-   "https://www.dailyforex.com/forex-technical-analysis/2026/11/eurusd-signal-24-november-2026/252124"
+   "Dolar diam setelah turun 0,44% Selasa. FedWatch: peluang naik Desember 97%. Pejabat ECB menyebut kenaikan Desember kemungkinan besar.",
+   "https://fxempire.com/forecasts/article/us-dollar-price-forecast-dollar-steadies-before-pce-dxy-holds-103-80-as-eur-usd-gbp-usd-stall-below-pivots-1647073"
   ],
   [
-   "24 Nov",
-   "Bitcoin tertahan di $60.000, sentimen sangat takut",
-   "Crypto",
-   "Lonjakan Senin ke $64.400 hilang. Indeks Fear & Greed di 11 tiga hari beruntun. Opsi ± $6,8 miliar jatuh tempo Jumat.",
-   "https://cryptoticker.io/en/bitcoin-price-etf-outflows-570-million-ibit/"
+   "25 Nov",
+   "USDJPY uji 159,50, inflasi Australia mengejutkan",
+   "Forex",
+   "USDJPY bergerak 159,00–159,50. Inflasi Australia Oktober 4,9%, di atas perkiraan 4,7%. PCE AS diperkirakan naik ke 3,8%.",
+   "https://www.mql5.com/en/blogs/post/782092"
+  ],
+  [
+   "25 Nov",
+   "Yield AS 10 tahun turun ke 4,86%",
+   "Semua",
+   "Yield turun dari ± 4,93% sehari sebelumnya. Brent di sekitar $91 per barel.",
+   "https://tradingeconomics.com/united-states/government-bond-yield"
   ]
  ]
 }
