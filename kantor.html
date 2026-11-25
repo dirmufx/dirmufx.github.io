@@ -80,7 +80,15 @@ button:focus-visible{outline:2px solid var(--green);outline-offset:1px}
 .work .hd{animation:bob .5s infinite}
 @keyframes blink{50%{opacity:.35}}
 .work .scr{animation:blink .8s infinite}
-@media(prefers-reduced-motion:reduce){.work .hd,.work .scr{animation:none}}
+@keyframes look{0%,40%,100%{transform:translateX(0) rotate(0)}48%,62%{transform:translateX(-1.5px) rotate(-6deg)}70%,85%{transform:translateX(1.5px) rotate(6deg)}}
+@keyframes breathe{50%{transform:translateY(-1.2px)}}
+@keyframes type{0%,100%{transform:translateY(0)}25%{transform:translateY(-1.6px)}75%{transform:translateY(-.6px)}}
+.idle .hd{animation:look 7s ease-in-out infinite;transform-origin:center bottom}
+.idle .bd{animation:breathe 3.4s ease-in-out infinite;transform-box:fill-box}
+.typing .hd{animation:type .35s infinite}
+.typing .bd{animation:breathe 1s ease-in-out infinite;transform-box:fill-box}
+.away{opacity:0;transition:opacity .2s}
+@media(prefers-reduced-motion:reduce){.work .hd,.work .scr,.idle .hd,.idle .bd,.typing .hd,.typing .bd{animation:none}}
 </style>
 <link rel="stylesheet" href="tema.css?v=2">
 <style>.brand .clublogo{height:20px;width:auto;display:block}</style>
@@ -136,7 +144,7 @@ const S=[
  {id:'sari',n:'Sari',r:'Jurnal & evaluasi',step:'Jurnal',shirt:'#22c55e',hair:'#4a2c1a',skin:'#8d5524',long:1}];
 const DESK=[[1.2,2.2],[3.6,2.2],[6.0,2.2],[8.4,2.2],[1.2,4.9],[3.6,4.9],[6.0,4.9],[8.4,4.9]];
 const IDLE=['nunggu London open','kopi dulu','cek DXY','pantau XAU','siap, bos','rapihin level'];
-const st={s:S.map(()=>'Standby'),out:{},bub:{},act:-1,boss:'Standby',bossBub:''};
+const st={s:S.map(()=>'Standby'),out:{},bub:{},act:-1,boss:'Standby',bossBub:'',typing:new Set([1,4,6]),away:-1};
 const $=id=>document.getElementById(id);
 const esc=t=>String(t??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const OX=300,OY=170;
@@ -148,12 +156,13 @@ function box(x,y,w,d,h,z,top,l,r,cls=''){
     poly([P(x+w,y,z),P(x+w,y+d,z),P(x+w,y+d,z+h),P(x+w,y,z+h)],r)+
     poly([P(x,y,z+h),P(x+w,y,z+h),P(x+w,y+d,z+h),P(x,y+d,z+h)],top,cls?`class="${cls}"`:'');
 }
-function person(x,y,o,status,isBoss){
-  const [cx,sy]=P(x,y);const work=status==='Kerja';
-  let g=`<g class="${work?'work':''}"><rect x="${cx-15}" y="${sy-54}" width="30" height="38" rx="6" fill="${isBoss?'#3b2a12':'#1b2a40'}"/>`;
-  g+=`<rect x="${cx-12}" y="${sy-44}" width="24" height="30" rx="8" fill="${o.shirt}"/><g class="hd" style="transform-box:fill-box">`;
+function person(x,y,o,status,isBoss,idx){
+  const [cx,sy]=P(x,y);const work=status==='Kerja';const dl=((idx??8)*0.83%5).toFixed(2);
+  const cls=work?'work':(st.typing.has(idx)?'typing':'idle');
+  let g=`<g id="pp${idx??'b'}" class="${cls}${st.away===idx?' away':''}" style="--d:${dl}s"><rect x="${cx-15}" y="${sy-54}" width="30" height="38" rx="6" fill="${isBoss?'#3b2a12':'#1b2a40'}"/>`;
+  g+=`<g class="bd" style="animation-delay:-${dl}s"><rect x="${cx-12}" y="${sy-44}" width="24" height="30" rx="8" fill="${o.shirt}"/><g class="hd" style="transform-box:fill-box;animation-delay:-${dl}s">`;
   if(o.long)g+=`<rect x="${cx-10}" y="${sy-63}" width="20" height="21" rx="7" fill="${o.hair}"/>`;
-  g+=`<circle cx="${cx}" cy="${sy-55}" r="9" fill="${o.skin}"/><path d="M${cx-9} ${sy-56}a9 9 0 0 1 18 0q-9 -6 -18 0z" fill="${o.hair}"/></g></g>`;
+  g+=`<circle cx="${cx}" cy="${sy-55}" r="9" fill="${o.skin}"/><path d="M${cx-9} ${sy-56}a9 9 0 0 1 18 0q-9 -6 -18 0z" fill="${o.hair}"/></g></g></g>`;
   return g;
 }
 function tag(x,y,name,status){
@@ -169,6 +178,7 @@ function bubble(x,y,t){
   return `<g><rect x="${cx-w/2}" y="${sy-115}" width="${w}" height="22" rx="11" fill="#fff"/><path d="M${cx-5} ${sy-94}l5 7l5 -7z" fill="#fff"/>`+
    `<text x="${cx}" y="${sy-100}" font-size="9.5" font-weight="600" text-anchor="middle" fill="#0b1a30">${esc(t)}</text></g>`;
 }
+function bubsHTML(){let s='';S.forEach((o,i)=>{if(st.away===i)return;const [x,y]=DESK[i];s+=bubble(x+1.05,y-.25,st.bub[o.id]);});return s+bubble(5.3,7.05,st.bossBub);}
 function draw(){
   let s='<defs><linearGradient id="fl" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f3e3c3"/><stop offset="1" stop-color="#e2c99a"/></linearGradient></defs>';
   s+=poly([P(0,0),P(11,0),P(11,9),P(0,9)],'url(#fl)');
@@ -193,10 +203,10 @@ function draw(){
   const [ckx,cky]=P(0,8.2,100);s+=`<ellipse cx="${ckx}" cy="${cky}" rx="9" ry="11" fill="#fff" stroke="#0b1a30" stroke-width="2"/><path d="M${ckx} ${cky}v-6M${ckx} ${cky}l4 2" stroke="#0b1a30" stroke-width="1.6"/>`;
   const items=[];
   S.forEach((o,i)=>{const [x,y]=DESK[i];
-    items.push({d:x+y-.4,h:person(x+1.05,y-.25,o,st.s[i])});
+    items.push({d:x+y-.4,h:person(x+1.05,y-.25,o,st.s[i],0,i)});
     items.push({d:x+y+1,h:box(x,y,1.6,.9,22,0,'#f7d89a','#c99a52','#b0843f')+box(x+.15,y+.3,.55,.1,24,22,'#1b2a40','#22c55e','#16304f',st.s[i]==='Kerja'?'scr':'')+box(x+.3,y+.35,.25,.08,2,20,'#333','#222','#111')});
   });
-  items.push({d:4.6+7.0-.4,h:person(5.3,7.05,{shirt:'#0b1a30',hair:'#111',skin:'#c68642'},st.boss,1)});
+  items.push({d:4.6+7.0-.4,h:person(5.3,7.05,{shirt:'#0b1a30',hair:'#111',skin:'#c68642'},st.boss,1,8)});
   items.push({d:4.2+7.3+1.2,h:box(4.2,7.3,2.2,1,24,0,'#2b2f3a','#16181f','#0f1117')+box(4.4,7.55,.7,.12,26,24,'#111','#f5c542','#2a2a2a',st.boss==='Kerja'?'scr':'')});
   items.push({d:7.6,h:box(.15,7,0.8,1.5,52,0,'#8b5a2b','#6b4220','#5a371b')+`<text x="${P(.55,8.5,30)[0]-8}" y="${P(.55,8.5,30)[1]}" font-size="8" font-weight="800" fill="#f5c542">KOPI</text>`});
   items.push({d:10.8,h:box(10.1,.4,.6,.6,18,0,'#7c4a2a','#5c3820','#4a2c18')+`<circle cx="${P(10.4,.7,40)[0]}" cy="${P(10.4,.7,40)[1]}" r="15" fill="#16a34a"/><circle cx="${P(10.4,.7,48)[0]-7}" cy="${P(10.4,.7,48)[1]}" r="9" fill="#22c55e"/>`});
@@ -204,8 +214,7 @@ function draw(){
   items.sort((a,b)=>a.d-b.d).forEach(it=>s+=it.h);
   S.forEach((o,i)=>{const [x,y]=DESK[i];s+=tag(x+1.05,y-.25,o.n,st.s[i]);});
   s+=tag(5.3,7.05,'Mudir (bos)',st.boss);
-  S.forEach((o,i)=>{const [x,y]=DESK[i];s+=bubble(x+1.05,y-.25,st.bub[o.id]);});
-  s+=bubble(5.3,7.05,st.bossBub);
+  s+='<g id="walker"></g><g id="bubs">'+bubsHTML()+'</g>';
   $('room').innerHTML=s;
   $('pipe').innerHTML=S.map((o,i)=>`<div class="${st.s[i]==='Selesai'?'ok':st.s[i]==='Kerja'?'on':''}"><i></i>${o.step}</div>`).join('');
   $('team').innerHTML='<h2>Laporan tim</h2>'+S.map((o,i)=>`<article class="c"><header><span class="dot" style="background:${o.shirt}"></span><div><strong>${o.n}</strong><small>${o.r}</small></div><span class="st ${st.s[i]}">${st.s[i]}</span></header><p>${st.out[o.id]?esc(st.out[o.id]):'<span style="color:var(--mute)">Menunggu giliran.</span>'}</p></article>`).join('');
@@ -214,7 +223,50 @@ function draw(){
 draw();
 {const o=$('office');o.scrollLeft=(o.scrollWidth-o.clientWidth)/2;}
 let busy=false;
-setInterval(()=>{if(busy)return;const k=S[Math.floor(Math.random()*8)].id;st.bub={[k]:IDLE[Math.floor(Math.random()*IDLE.length)]};draw();},3200);
+/* ===== hidup saat santai: ngobrol, ngetik, jalan ambil kopi ===== */
+const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
+function setCls(i){const g=$('pp'+i);if(!g||st.s[i]==='Kerja')return;g.classList.toggle('typing',st.typing.has(i));g.classList.toggle('idle',!st.typing.has(i));}
+setInterval(()=>{if(busy)return;
+  let i;do{i=Math.floor(Math.random()*8)}while(i===st.away);
+  st.bub={[S[i].id]:IDLE[Math.floor(Math.random()*IDLE.length)]};$('bubs').innerHTML=bubsHTML();
+  const t=Math.floor(Math.random()*8);if(t!==st.away){st.typing.has(t)?st.typing.delete(t):st.typing.add(t);setCls(t);}
+},3200);
+function walkerSVG(o,x,y,ph,cup){
+  const [cx,sy]=P(x,y);const sw=Math.sin(ph)*4,b=Math.abs(Math.sin(ph))*1.5;
+  let g=`<g transform="translate(0 ${-b})"><ellipse cx="${cx}" cy="${sy+b}" rx="11" ry="4" fill="#000" opacity=".15"/>`;
+  g+=`<rect x="${cx-7+sw*.5}" y="${sy-16}" width="6" height="17" rx="3" fill="#24324a"/><rect x="${cx+1-sw*.5}" y="${sy-16}" width="6" height="17" rx="3" fill="#1b2a40"/>`;
+  g+=`<rect x="${cx-11}" y="${sy-42}" width="22" height="29" rx="8" fill="${o.shirt}"/>`;
+  g+=`<rect x="${cx-14}" y="${sy-38-sw*.6}" width="5" height="16" rx="2.5" fill="${o.skin}"/><rect x="${cx+9}" y="${sy-38+sw*.6}" width="5" height="16" rx="2.5" fill="${o.skin}"/>`;
+  if(cup)g+=`<rect x="${cx+9}" y="${sy-27+sw*.6}" width="8" height="9" rx="2" fill="#fff" stroke="#8b5a2b"/>`;
+  if(o.long)g+=`<rect x="${cx-10}" y="${sy-61}" width="20" height="21" rx="7" fill="${o.hair}"/>`;
+  g+=`<circle cx="${cx}" cy="${sy-53}" r="9" fill="${o.skin}"/><path d="M${cx-9} ${sy-54}a9 9 0 0 1 18 0q-9 -6 -18 0z" fill="${o.hair}"/></g>`;
+  return g;
+}
+function walk(){
+  if(busy||RM||st.away>=0)return;
+  const i=Math.floor(Math.random()*8),o=S[i],[dx,dy]=DESK[i];
+  const seat=[dx+1.05,dy-.25],side=dx+1.85,aisle=dy<4?3.75:6.45;
+  const go=[seat,[side,seat[1]],[side,aisle],[1.35,aisle<4?3.75:6.45],[1.35,7.55]];
+  const path=go.concat(go.slice(0,-1).reverse());
+  const seg=[];let L=0;for(let k=1;k<path.length;k++){const d=Math.hypot(path[k][0]-path[k-1][0],path[k][1]-path[k-1][1]);seg.push(d);L+=d;}
+  const half=go.reduce((a,_,k)=>k?a+Math.hypot(go[k][0]-go[k-1][0],go[k][1]-go[k-1][1]):0,0);
+  st.away=i;$('pp'+i)?.classList.add('away');$('bubs').innerHTML=bubsHTML();
+  const v=1.5,pause=1600;let t0=null;
+  const fr=ts=>{
+    if(busy){$('walker').innerHTML='';st.away=-1;return;}
+    if(!t0)t0=ts;let el=(ts-t0)/1000*v;
+    if(el>half)el=Math.max(half,el-pause/1000*v);
+    if(el>=L){$('walker').innerHTML='';st.away=-1;$('pp'+i)?.classList.remove('away');return;}
+    let d=el,k=0;while(k<seg.length&&d>seg[k]){d-=seg[k];k++;}
+    const a=path[k],b=path[k+1],f=seg[k]?d/seg[k]:0,x=a[0]+(b[0]-a[0])*f,y=a[1]+(b[1]-a[1])*f;
+    const atCoffee=Math.abs(((ts-t0)/1000*v)-half)<pause/1000*v&&((ts-t0)/1000*v)>=half;
+    const [bx,by]=P(x,y);
+    $('walker').innerHTML=walkerSVG(o,x,y,atCoffee?0:el*7,el>half)+(atCoffee?`<g>${bubble(x,y+.4,'ngopi dulu ☕')}</g>`:'');
+    requestAnimationFrame(fr);
+  };
+  requestAnimationFrame(fr);
+}
+setTimeout(walk,2500);setInterval(walk,11000);
 
 const MODES={scalp:{n:'Scalping',tf:'5m',bias:'1h',lvl:'asia'},intra:{n:'Intraday',tf:'15m',bias:'4h',lvl:'asia'},swing:{n:'Swing',tf:'1h',bias:'1d',lvl:'pd'}};
 let mk='scalp';
@@ -305,7 +357,7 @@ function postText(a){
 async function run(e){
   if(e)e.preventDefault();if(busy)return;
   busy=true;$('go').disabled=true;$('note').textContent='Tim sedang ambil data harga…';
-  st.s=S.map(()=>'Standby');st.out={};st.bub={};st.boss='Kerja';st.bossBub='Gas, kerjakan!';draw();
+  st.away=-1;$('walker').innerHTML='';st.s=S.map(()=>'Standby');st.out={};st.bub={};st.boss='Kerja';st.bossBub='Gas, kerjakan!';draw();
   await wait(600);st.s[0]='Kerja';st.s[1]='Kerja';st.bub={nadia:'buka kalender…',bima:'tarik data live…'};st.bossBub='';draw();
   let a;
   try{a=await analyze();}catch(err){$('note').textContent=err.message||'Gagal memuat data.';st.s=S.map(()=>'Standby');st.boss='Standby';st.bub={};draw();busy=false;$('go').disabled=false;return;}
