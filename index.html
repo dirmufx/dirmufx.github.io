@@ -949,6 +949,19 @@ html #landing .moregrid b{display:block;font-size:13px;font-weight:600;line-heig
 html #landing .moregrid small{display:block;font-size:11px;color:#5f6f68;line-height:1.3;margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 html #landing .moregrid .ar{display:none;flex:none;width:14px;height:14px;fill:none;stroke:#9fb3aa;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 </style>
+<script>
+/* ===== MODE PERKENALAN =====
+   true  = semua fitur terbuka + info VIP & PU Prime disembunyikan
+   false = kembali normal (terkunci untuk non-member, info VIP & PU Prime tampil) */
+window.DFX_PROMO=true;
+if(window.DFX_PROMO)document.documentElement.classList.add("promo");
+</script>
+<style>
+html.promo .ibLink,html.promo .ibonly,html.promo .joincard,html.promo #vipBar,html.promo #nLock,html.promo #cara-gabung,
+html.promo .moregrid a[href="#cara-gabung"],html.promo .dlist a[href="#cara-gabung"],html.promo .promo-hide,html.promo .indlock{display:none!important}
+html.promo #app .locked .lockable{filter:none!important;pointer-events:auto!important;user-select:auto!important}
+html.promo #app .locked .lockbar{display:none!important}
+</style>
 </head>
 <body>
 <div id="landing">
@@ -1179,7 +1192,7 @@ html #landing .moregrid .ar{display:none;flex:none;width:14px;height:14px;fill:n
       <details><summary>Pasti profit?</summary><p>Tidak ada. Selalu pasang stop loss dan pakai uang yang siap hilang.</p></details>
       <details><summary>Sinyalnya dari mana?</summary><p>Dari beberapa indikator teknikal yang dicek searah dengan tren timeframe besar. Dihitung dari candle yang sudah tutup, jadi tidak berubah-ubah.</p></details>
       <details><summary>Cara pakai kalkulator lot?</summary><p>Isi saldo, risiko (%), dan jarak SL dalam pips. Lot dan nilai ruginya langsung keluar. Kalau akun cent, pilih "Cent (USC)".</p></details>
-      <details><summary>Cara gabung grup?</summary><p>Buka akun PU Prime lewat link DirmuFX, deposit minimal $30, lalu isi nomor MT5 kamu. Lengkapnya ada di bagian <a href="#cara-gabung" style="color:var(--gold)">Cara Gabung</a>. Info market juga ada di Telegram <b>t.me/dirmufxofficial</b>.</p></details>
+      <details class="promo-hide"><summary>Cara gabung grup?</summary><p>Buka akun PU Prime lewat link DirmuFX, deposit minimal $30, lalu isi nomor MT5 kamu. Lengkapnya ada di bagian <a href="#cara-gabung" style="color:var(--gold)">Cara Gabung</a>. Info market juga ada di Telegram <b>t.me/dirmufxofficial</b>.</p></details>
     </div>
   </div>
 </section>
@@ -1442,20 +1455,20 @@ html #landing .moregrid .ar{display:none;flex:none;width:14px;height:14px;fill:n
    <section id="vHome">
     <div class="hd">
      <div class="av" id="hAv">DF</div>
-     <div class="hdtxt"><div class="hdname"><span id="hName">Halo</span><a class="pill wait" id="hPill" href="#aktivasi">Pilih akses ›</a></div><div class="hdmail" id="hMail"></div></div>
+     <div class="hdtxt"><div class="hdname"><span id="hName">Halo</span><a class="pill wait promo-hide" id="hPill" href="#aktivasi">Pilih akses ›</a></div><div class="hdmail" id="hMail"></div></div>
      <a class="hdbtn" id="hWa" target="_blank" rel="noopener" aria-label="Hubungi admin"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 13v-1a8 8 0 0 1 16 0v1"/><rect x="3" y="13" width="4" height="6" rx="1.5"/><rect x="17" y="13" width="4" height="6" rx="1.5"/><path d="M19 19c0 1.5-2 2.5-5 2.5"/></svg></a>
     </div>
-    <div class="vipc" id="hVip"></div>
+    <div class="vipc promo-hide" id="hVip"></div>
 
-    <div class="sec">Yang terbuka setelah VIP aktif</div>
-    <div class="lockg">
+    <div class="sec promo-hide">Yang terbuka setelah VIP aktif</div>
+    <div class="lockg promo-hide">
      <a class="lk" href="#analisa"><svg class="lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 17l6-6 4 4 8-8"/></svg><h3>Signal live</h3><p>Entry, SL, SL+, TP1 &amp; TP MAX</p><div class="sk"></div><div class="sk"></div></a>
      <a class="lk" href="#analisa"><svg class="lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 8h8M8 12h8M8 16h5"/></svg><h3>Kalkulator &amp; Multi-TF</h3><p>Lot otomatis, arah M1–D1</p><div class="sk"></div><div class="sk"></div></a>
      <a class="lk" id="lkGroup" href="#aktivasi"><svg class="lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 5h12v9H8l-4 3z"/><path d="M16 9h4v9l-3-2h-7v-2"/></svg><h3>Grup VIP</h3><p>Diskusi &amp; analisa harian</p><div class="sk"></div><div class="sk"></div></a>
      <a class="lk" id="lkModul" href="#aktivasi"><svg class="lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M3 5a2 2 0 0 1 2-1h5a2 2 0 0 1 2 2v14a2 2 0 0 0-2-2H3zM21 5a2 2 0 0 0-2-1h-5a2 2 0 0 0-2 2v14a2 2 0 0 1 2-2h7z"/></svg><h3>Akademi VIP</h3><p>11 bab Menengah &amp; Lanjutan</p><div class="sk"></div><div class="sk"></div></a>
     </div>
 
-    <div class="paths" id="hPaths">
+    <div class="paths promo-hide" id="hPaths">
      <div class="pcols">
       <div class="pcol hi"><span class="tag">Tanpa biaya</span><h4>Gratis via Broker</h4><dl style="margin:0"><dt>Biaya</dt><dd>Rp0 selamanya</dd><dt>Syarat</dt><dd>Deposit min $30 di PU Prime</dd><dt>Aktif</dt><dd>Dicek admin</dd></dl></div>
       <div class="pcol"><h4 style="margin-top:2px">VIP Seumur Hidup</h4><dl style="margin:0"><dt>Biaya</dt><dd>Rp1.000.000 sekali bayar</dd><dt>Syarat</dt><dd>Tidak perlu akun broker</dd><dt>Aktif</dt><dd>Setelah transfer dikonfirmasi</dd></dl></div>
@@ -1509,7 +1522,7 @@ html #landing .moregrid .ar{display:none;flex:none;width:14px;height:14px;fill:n
 </div>
 
 <div id="app" hidden>
-<script>(function(){try{var q=new URLSearchParams(location.search).get("pro");if(q==="1")localStorage.setItem("dfx-pro","1");if(q==="0")localStorage.removeItem("dfx-pro");if(localStorage.getItem("dfx-pro")==="1")document.getElementById("app").classList.add("pro")}catch(e){}})();</script>
+<script>(function(){try{var q=new URLSearchParams(location.search).get("pro");if(q==="1")localStorage.setItem("dfx-pro","1");if(q==="0")localStorage.removeItem("dfx-pro");if(localStorage.getItem("dfx-pro")==="1"||window.DFX_PROMO)document.getElementById("app").classList.add("pro")}catch(e){}})();</script>
 
 <header class="top">
   <div class="wrap">
@@ -2641,7 +2654,7 @@ $("smcSetBtn").onclick=()=>{const box=$("smcSet"),open=box.hidden;if(open)smcSet
 window.DFXI=DFXI;window.DFX_lastData=()=>last;window.DFX_setInd=on=>{IND.access=!!on;store.set("dfx-ind",on?"1":"0");drawInd()};
 function drawInd(){
   const cv=$("indCv");if(!cv||S.view!=="analisa")return;
-  const ok=IND.access||$("app").classList.contains("pro");
+  const ok=window.DFX_PROMO||IND.access||$("app").classList.contains("pro");
   $("indLock").hidden=ok;cv.parentElement.classList.toggle("locked",!ok);
   const d=last&&last.d,tf=last?last.tf:S.tf,cfg=SYMS[S.sym];
   if(!ok){DFXI.draw(cv,d,{smc:false,sess:false,tf,pip:PIP[S.sym]||.1,dec:cfg.d});return}
@@ -3062,7 +3075,7 @@ $("aiBtn").addEventListener("click",async()=>{
 });
 
 /* ================= IB / member access ================= */
-function isLocked(){return IB.gate&&store.get("dfx-member")!=="1"}
+function isLocked(){if(window.DFX_PROMO)return false;return IB.gate&&store.get("dfx-member")!=="1"}
 function applyLock(){document.body.classList.toggle("locked",isLocked())}
 (function setupIB(){
   const link=/^https?:\/\//.test(IB.link)?IB.link:"";
@@ -3293,7 +3306,7 @@ window.DFX_authRoute=h=>{
  route=h;
  if(LOGIN_ROUTES.includes(h)){mode=h;if(user&&h!=="lupa"){location.replace("#akun");return}setMsg("")}
  else if(!user){mode="masuk";if(authReady)setMsg(ON?"Masuk dulu untuk membuka halaman member.":"")}
- if(h==="aktivasi")wizOverride=null;
+ if(h==="aktivasi"&&window.DFX_PROMO){location.replace("#akun");return}if(h==="aktivasi")wizOverride=null;
  paint();
 };
 
