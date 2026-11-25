@@ -126,7 +126,7 @@ button:focus-visible{outline:2px solid var(--green);outline-offset:1px}
 </section>
 
 <section class="band jur" style="padding-top:0">
-  <h2>Jurnal Sari</h2>
+  <h2>Jurnal Condeng</h2>
   <ul id="jurnal"></ul>
 </section>
 <p class="foot band">Harga dari Binance (PAXG) yang disesuaikan ke harga emas spot, kalender dari data mingguan DirmuFX. Bisa berbeda sedikit dengan harga broker. Analisa otomatis, bukan saran keuangan. <a href="https://t.me/dirmufxofficial">t.me/dirmufxofficial</a></p>
@@ -134,14 +134,14 @@ button:focus-visible{outline:2px solid var(--green);outline-offset:1px}
 <script>
 {
 const S=[
- {id:'nadia',n:'Nadia',r:'Berita & fundamental',step:'Berita',shirt:'#e85d75',hair:'#2b1a12',skin:'#e0ac69',long:1},
- {id:'bima',n:'Bima',r:'Scanner market',step:'Scan',shirt:'#3b82f6',hair:'#111',skin:'#c68642'},
- {id:'raka',n:'Raka',r:'Analis teknikal',step:'Teknikal',shirt:'#f59e0b',hair:'#1a1a1a',skin:'#8d5524'},
- {id:'laras',n:'Laras',r:'Cek konfluensi',step:'Konfluensi',shirt:'#a855f7',hair:'#3a2316',skin:'#f1c27d',long:1},
- {id:'dimas',n:'Dimas',r:'Entry planner',step:'Entry',shirt:'#14b8a6',hair:'#111',skin:'#e0ac69'},
- {id:'tio',n:'Tio',r:'Risk manager',step:'Risiko',shirt:'#ef4444',hair:'#222',skin:'#c68642'},
- {id:'mei',n:'Mei',r:'Copywriter Telegram',step:'Posting',shirt:'#ec4899',hair:'#111',skin:'#f1c27d',long:1},
- {id:'sari',n:'Sari',r:'Jurnal & evaluasi',step:'Jurnal',shirt:'#22c55e',hair:'#4a2c1a',skin:'#8d5524',long:1}];
+ {id:'nadia',n:'Ammar',r:'Berita & fundamental',step:'Berita',shirt:'#e85d75',hair:'#2b1a12',skin:'#e0ac69'},
+ {id:'bima',n:'Bate',r:'Scanner market',step:'Scan',shirt:'#3b82f6',hair:'#111',skin:'#c68642'},
+ {id:'raka',n:'Nuccang',r:'Analis teknikal',step:'Teknikal',shirt:'#f59e0b',hair:'#1a1a1a',skin:'#8d5524'},
+ {id:'laras',n:'Ocang',r:'Cek konfluensi',step:'Konfluensi',shirt:'#a855f7',hair:'#3a2316',skin:'#f1c27d'},
+ {id:'dimas',n:'To\'dang',r:'Entry planner',step:'Entry',shirt:'#14b8a6',hair:'#111',skin:'#e0ac69'},
+ {id:'tio',n:'Madong',r:'Risk manager',step:'Risiko',shirt:'#ef4444',hair:'#222',skin:'#c68642'},
+ {id:'mei',n:'Ikram',r:'Copywriter Telegram',step:'Posting',shirt:'#ec4899',hair:'#111',skin:'#f1c27d'},
+ {id:'sari',n:'Condeng',r:'Jurnal & evaluasi',step:'Jurnal',shirt:'#22c55e',hair:'#4a2c1a',skin:'#8d5524'}];
 const DESK=[[1.2,2.2],[3.6,2.2],[6.0,2.2],[8.4,2.2],[1.2,4.9],[3.6,4.9],[6.0,4.9],[8.4,4.9]];
 const IDLE=['nunggu London open','kopi dulu','cek DXY','pantau XAU','siap, bos','rapihin level'];
 const st={s:S.map(()=>'Standby'),out:{},bub:{},act:-1,boss:'Standby',bossBub:'',typing:new Set([1,4,6]),away:-1};
@@ -299,7 +299,7 @@ async function analyze(){
   const off=sp?sp-dRaw[dRaw.length-1].c:null;
   const d=adj(dRaw,off),b=adj(bRaw,off);
   const price=d[d.length-1].c,A=atr(d),R=rsi(d.map(x=>x.c));
-  // Nadia: berita USD high impact
+  // Ammar: berita USD high impact
   const now=Date.now();
   const usd=cal.filter(e=>e.country==='USD'&&e.impact==='High'&&!e.allDay).map(e=>({...e,ts:Date.parse(e.date)}));
   const near=usd.filter(e=>e.ts>now-30*60e3&&e.ts<now+4*36e5).sort((a,b)=>a.ts-b.ts);
@@ -307,12 +307,12 @@ async function analyze(){
   const tWita=ts=>new Date(ts).toLocaleString('id-ID',{timeZone:'Asia/Makassar',weekday:'short',hour:'2-digit',minute:'2-digit'})+' WITA';
   const news=near.length?{ok:false,txt:`Hati-hati: ${near.map(e=>e.title).slice(0,2).join(', ')} (${tWita(near[0].ts)}). Berita USD berdampak tinggi dalam 4 jam.`,bub:'ada news merah!'}
     :{ok:true,txt:nextE?`Aman 4 jam ke depan. Berita USD merah berikutnya: ${nextE.title}, ${tWita(nextE.ts)}.`:'Tidak ada berita USD berdampak tinggi di kalender minggu ini.',bub:'kalender aman'};
-  // Bima: tren
+  // Bate: tren
   const bc=b.map(x=>x.c),e50=ema(bc,50),e200=ema(bc,200),bl=b.length-1;
   const trend=e50[bl]>e200[bl]&&bc[bl]>e50[bl]?'up':e50[bl]<e200[bl]&&bc[bl]<e50[bl]?'down':'side';
   const tName={up:'naik (bullish)',down:'turun (bearish)',side:'sideways'}[trend];
   const scan=`Harga ${f2(price)}. Tren ${M.bias.toUpperCase()} ${tName}: EMA50 ${f2(e50[bl])}, EMA200 ${f2(e200[bl])}. ATR ${M.tf} ${f2(A)}, RSI ${R.toFixed(0)}.`;
-  // Raka: SnR, Fibo, sweep
+  // Nuccang: SnR, Fibo, sweep
   const pv=pivots(d.slice(-160));const lv=[...pv.H.map(x=>x.p),...pv.L.map(x=>x.p)];
   const sup=lv.filter(p=>p<price).sort((a,b)=>b-a)[0],res=lv.filter(p=>p>price).sort((a,b)=>a-b)[0];
   const lastH=pv.H[pv.H.length-1],lastL=pv.L[pv.L.length-1];
@@ -326,7 +326,7 @@ async function analyze(){
   const rec=d.slice(-12);let sweep=null;
   if(Math.min(...rec.map(x=>x.l))<rL&&price>rL)sweep='bull';else if(Math.max(...rec.map(x=>x.h))>rH&&price<rH)sweep='bear';
   const tek=`Support ${sup?f2(sup):'-'}, resistance ${res?f2(res):'-'}. ${fib?`Golden zone Fibo ${f2(fib.lo)}–${f2(fib.hi)}${fib.inZone?' (harga di dalam zona)':''}.`:'Swing terakhir terlalu kecil untuk Fibo.'} Range ${rName} ${f2(rL)}–${f2(rH)}${sweep?`, ada sweep ${sweep==='bull'?'low':'high'}`:''}.`;
-  // Laras: konfluensi
+  // Ocang: konfluensi
   const dir=trend==='up'?'BUY':trend==='down'?'SELL':sweep==='bull'?'BUY':sweep==='bear'?'SELL':(R<40?'BUY':'SELL');
   const isB=dir==='BUY',why=[];let sc=0;
   const add=(ok,pts,txt)=>{why.push({ok,txt});if(ok)sc+=pts;};
@@ -338,7 +338,7 @@ async function analyze(){
   add(news.ok,5,'Tidak ada news merah dekat');
   if(!news.ok)sc=Math.max(0,sc-15);
   const dec=sc>=60?dir:'WAIT';
-  // Dimas & Tio
+  // To'dang & Madong
   let plan=null;
   if(dec!=='WAIT'){const swing=isB?(lastL&&lastL.p<price?lastL.p:price-A*1.5):(lastH&&lastH.p>price?lastH.p:price+A*1.5);
     let risk=Math.abs(price-swing)+A*.25;risk=Math.min(Math.max(risk,A*.8),A*3);const s=isB?1:-1;
