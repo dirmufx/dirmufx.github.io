@@ -333,14 +333,14 @@ function anatomySvg(){const c=(x,o,cl,h,l,col)=>{const t=Math.min(o,cl),b=Math.m
 const L=[];
 L.push({id:"pengenalan",lvl:"dasar",min:5,t:"Apa itu trading emas (XAUUSD)?",d:"Cara kerja trading emas, buy & sell, broker, dan risikonya",
 body:()=>`<p><b>XAUUSD</b> adalah harga 1 troy ons emas (sekitar 31,1 gram) dalam dolar Amerika. Kalau di layar tertulis 3850,00, artinya 1 ons emas sedang dihargai 3.850 dolar.</p>
-<p>Saat trading emas di broker seperti PU Prime, kamu <b>tidak membeli emas fisik</b>. Kamu memperdagangkan <b>CFD</b> (Contract for Difference), yaitu kontrak yang mengikuti naik-turunnya harga. Keuntungan atau kerugianmu adalah selisih harga saat posisi dibuka dan ditutup.</p>
+<p>Saat trading emas di broker seperti Windsor, kamu <b>tidak membeli emas fisik</b>. Kamu memperdagangkan <b>CFD</b> (Contract for Difference), yaitu kontrak yang mengikuti naik-turunnya harga. Keuntungan atau kerugianmu adalah selisih harga saat posisi dibuka dan ditutup.</p>
 <h3>Bisa untung saat naik maupun turun</h3>
 <ul><li><b>BUY</b> (beli): kamu memperkirakan harga akan <b>naik</b>. Untung jika harga ditutup lebih tinggi dari harga masukmu.</li>
 <li><b>SELL</b> (jual): kamu memperkirakan harga akan <b>turun</b>. Untung jika harga ditutup lebih rendah dari harga masukmu.</li></ul>
 ${fig(FIG.buy(),"Contoh BUY di XAUUSD M15: masuk saat harga di bawah, posisi ditutup setelah harga naik. Selisihnya menjadi keuntungan.")}
 ${fig(FIG.sell(),"Contoh SELL: masuk saat harga di atas, posisi ditutup setelah harga turun.")}
 <h3>Siapa saja yang terlibat?</h3>
-<ul><li><b>Broker</b> (misalnya PU Prime): perusahaan perantara yang menyediakan harga dan tempat membuka posisi.</li>
+<ul><li><b>Broker</b> (misalnya Windsor): perusahaan perantara yang menyediakan harga dan tempat membuka posisi.</li>
 <li><b>Platform</b>: aplikasi untuk trading, umumnya <b>MetaTrader 5 (MT5)</b>, tersedia di HP dan komputer.</li>
 <li><b>Akun trading</b>: tempat dana (modal) disimpan. Ada akun <b>demo</b> (uang virtual) dan <b>real</b> (uang sungguhan).</li></ul>
 <h3>Kenapa emas populer?</h3>
@@ -386,7 +386,7 @@ quiz:[{q:"Sesi mana yang biasanya paling volatil untuk emas?",o:["Asia","Overlap
 {q:"Apa yang sebaiknya dilakukan menjelang berita berdampak tinggi?",o:["Tambah lot agar untung besar","Hindari posisi baru sekitar waktu rilis","Hapus stop loss"],a:1,e:"Spread melebar dan harga bisa melompat. Lebih aman menunggu."}]});
 
 L.push({id:"mt5",lvl:"dasar",min:6,t:"Mengenal MT5 & jenis order",d:"Market order, Buy/Sell Limit, Buy/Sell Stop, cara pasang SL & TP",
-body:()=>`<p>MetaTrader 5 (MT5) adalah aplikasi yang dipakai untuk membuka posisi di PU Prime. Bagian yang paling sering dipakai:</p>
+body:()=>`<p>MetaTrader 5 (MT5) adalah aplikasi yang dipakai untuk membuka posisi di Windsor. Bagian yang paling sering dipakai:</p>
 <ul><li><b>Quotes / Market Watch</b>: daftar simbol dan harganya. Cari simbol emas (misalnya XAUUSD dengan akhiran sesuai jenis akunmu).</li><li><b>Chart</b>: grafik harga.</li><li><b>Trade</b>: posisi yang sedang terbuka, balance, equity, margin.</li><li><b>History</b>: riwayat transaksi.</li></ul>
 <h3>Market order (langsung)</h3>
 <p>Posisi dibuka saat itu juga di harga sekarang. Pilih <b>Buy by Market</b> atau <b>Sell by Market</b>.</p>
@@ -569,7 +569,7 @@ ${fig(FIG.rr(),"Level sinyal DirmuFX pada chart: Entry, Stop loss, SL+ (1:1), TP
 <ol><li><b>Entry</b> di sekitar harga yang tertera. Kalau harga sudah lari jauh, lebih baik lewati.</li><li>Pasang <b>Stop loss</b> sesuai kartu sejak awal.</li><li>Saat harga mencapai <b>SL+ (1:1)</b>, geser SL ke harga entry. Sejak titik ini posisimu bebas risiko.</li><li>Di <b>TP1 (1:2)</b>, ambil sebagian untung (misalnya tutup 50%).</li><li>Sisanya biarkan berjalan ke <b>TP MAX (1:3)</b>.</li></ol>
 <h3>Ukuran lot</h3><p>Isi <b>Saldo</b> dan <b>Risiko %</b> di kalkulator kartu sinyal. Lot dihitung otomatis dari jarak SL. Jangan menaikkan lot di luar hitungan kalkulator.</p>
 ${box("warn","Sinyal bukan jaminan. Akan ada sinyal yang kena SL. Dengan RR 1:3 dan risiko kecil per posisi, beberapa kekalahan tetap bisa tertutup oleh satu kemenangan.")}
-${box("note","Harga di Signal Room bisa sedikit berbeda dengan harga broker. Selalu cocokkan dengan harga di MT5 PU Prime sebelum entry.")}`,
+${box("note","Harga di Signal Room bisa sedikit berbeda dengan harga broker. Selalu cocokkan dengan harga di MT5 Windsor sebelum entry.")}`,
 quiz:[{q:"Status TUNGGU berarti…",o:["Entry sekarang","Belum ada sinyal aktif, jangan entry","Tutup semua posisi"],a:1,e:"Level saat TUNGGU hanya rencana jika sinyal terkonfirmasi."},
 {q:"Saat harga mencapai SL+ (1:1), yang dilakukan adalah…",o:["Menambah lot","Menggeser SL ke harga entry","Menghapus TP"],a:1,e:"Posisi menjadi bebas risiko (break even)."},
 {q:"Di TP1 (1:2), langkah yang disarankan…",o:["Tutup sebagian posisi","Buka posisi berlawanan","Pindahkan SL lebih jauh"],a:0,e:"Ambil sebagian untung, sisanya ke TP MAX."}]});

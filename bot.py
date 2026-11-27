@@ -17,8 +17,8 @@ PRE_MIN = 0.4      # ambang "siap-siap"
 ADX_MIN = 20
 PRE_ALERT = os.environ.get("PRE_ALERT", "1") == "1"
 TOOL_URL = "https://dirmufx.github.io/#analisa"
-IB_URL = "https://puvip.co/la-partners/id/ztmYc1S9"
-BROKER = "PU Prime"
+IB_URL = "https://sc.myuserhub.com/?pt=224062"
+BROKER = "Windsor Brokers"
 USE_TELEGRAM = os.environ.get("USE_TELEGRAM", "0") == "1"   # Telegram dimatikan, sinyal dikirim ke HP member
 # Notifikasi HP (web push)
 FB_KEY = "AIzaSyCrLgAEab88oXPJ49H7MOyaqjntLcJse1c"
